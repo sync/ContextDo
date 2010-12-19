@@ -162,6 +162,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 }
 
 #pragma mark -
+#pragma mark Groups
+
+- (void)refreshGroupsWithPage:(NSInteger)page
+{
+	NSString *notificationName = GroupsDidLoadNotification;
+	NSString *path = @"groupsWithPage";
+	
+	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
+	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
+}
+
+#pragma mark -
 #pragma mark Content Management
 
 - (void)downloadContentForUrl:(NSString *)url withObject:(id)object path:(NSString *)path notificationName:(NSString *)notificationName
@@ -208,6 +220,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 			[self parseRegister:request];
 		} else if ([path isEqualToString:@"resetPasswordWithUsername"]) {
 			[self parseResetPassword:request];
+		} else if ([path isEqualToString:@"groupsWithPage"]) {
+			[self parseGroups:request];
 		}
 	}
 	

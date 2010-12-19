@@ -51,5 +51,47 @@
 	}
 }
 
+- (void)parseGroups:(ASIHTTPRequest *)request
+{
+	NSString *responseString = [request responseString];
+	if ([responseString length] != 0)  {
+		NSError *error = nil;
+		
+		SBJsonParser *json = [[[SBJsonParser alloc]init] autorelease];
+		
+		//	"group": {
+		//		"created_at": "2010-12-19T05:21:31Z",
+		//		"id": 2,
+		//		"name": "Foo",
+		//		"updated_at": "2010-12-19T05:21:31Z"
+		//	}
+		
+		NSMutableArray *content = [NSMutableArray array];
+		
+		NSArray *groupsArray = [[[json objectWithString:responseString error:&error]niledNull]valueForKey:@"group"];
+		
+		if (!error && groupsArray) {
+			for (NSDictionary *groupDict in groupsArray) {
+				NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+				// 2010-07-24T05:26:28Z
+				[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+				Group *group = [Group groupWithId:[[groupDict valueForKey:@"id"]niledNull]
+											 name:[[groupDict valueForKey:@"name"]niledNull]
+									   modifiedAt:[dateFormatter dateFromString:[[groupDict valueForKey:@"updated_at"]niledNull]]];
+				if (group) {
+					[content addObject:group];
+				}
+			}
+		}
+		
+		NSDictionary *info = request.userInfo;
+		[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
+										 [NSArray arrayWithArray:content], @"groups",
+										 [info valueForKey:@"object"], @"object",
+										 nil
+										 ]];
+	}
+}
+
 
 @end

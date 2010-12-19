@@ -57,6 +57,10 @@
 		2489C72E12BDDA5300C1A58A /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489C2C612BDDA5200C1A58A /* ASIInputStream.m */; };
 		2489C72F12BDDA5300C1A58A /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489C2C812BDDA5200C1A58A /* ASINetworkQueue.m */; };
 		2489C8F912BDDA5300C1A58A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489C53D12BDDA5200C1A58A /* Reachability.m */; };
+		2489C9CD12BDEB1E00C1A58A /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489C9CC12BDEB1E00C1A58A /* Group.m */; };
+		2489CA0612BDF05800C1A58A /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CA0512BDF05800C1A58A /* GroupsViewController.m */; };
+		2489CA0912BDF08400C1A58A /* GroupsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CA0812BDF08400C1A58A /* GroupsDataSource.m */; };
+		2489CA0B12BDF09D00C1A58A /* GroupsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2489CA0A12BDF09D00C1A58A /* GroupsView.xib */; };
 		24CA33D212AA5FFD00A69C85 /* UIImage+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CA33D112AA5FFD00A69C85 /* UIImage+Extensions.m */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		3A034842125BF49C00F49FA6 /* NSDate+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03483F125BF49C00F49FA6 /* NSDate+Extensions.m */; };
@@ -173,6 +177,13 @@
 		2489C53C12BDDA5200C1A58A /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		2489C53D12BDDA5200C1A58A /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2489C57C12BDDA5200C1A58A /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
+		2489C9CB12BDEB1E00C1A58A /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
+		2489C9CC12BDEB1E00C1A58A /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Group.m; sourceTree = "<group>"; };
+		2489CA0412BDF05800C1A58A /* GroupsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsViewController.h; sourceTree = "<group>"; };
+		2489CA0512BDF05800C1A58A /* GroupsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsViewController.m; sourceTree = "<group>"; };
+		2489CA0712BDF08400C1A58A /* GroupsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsDataSource.h; sourceTree = "<group>"; };
+		2489CA0812BDF08400C1A58A /* GroupsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsDataSource.m; sourceTree = "<group>"; };
+		2489CA0A12BDF09D00C1A58A /* GroupsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupsView.xib; sourceTree = "<group>"; };
 		24CA33D012AA5FFD00A69C85 /* UIImage+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extensions.h"; sourceTree = "<group>"; };
 		24CA33D112AA5FFD00A69C85 /* UIImage+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extensions.m"; sourceTree = "<group>"; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -435,6 +446,18 @@
 			path = Gallager;
 			sourceTree = "<group>";
 		};
+		2489CA0312BDF04000C1A58A /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				2489CA0712BDF08400C1A58A /* GroupsDataSource.h */,
+				2489CA0812BDF08400C1A58A /* GroupsDataSource.m */,
+				2489CA0412BDF05800C1A58A /* GroupsViewController.h */,
+				2489CA0512BDF05800C1A58A /* GroupsViewController.m */,
+				2489CA0A12BDF09D00C1A58A /* GroupsView.xib */,
+			);
+			name = Groups;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -486,13 +509,6 @@
 				248921D7128EE18000DC9712 /* LoginView.xib */,
 			);
 			name = Login;
-			sourceTree = "<group>";
-		};
-		3A034B10125C840400F49FA6 /* Account */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Account;
 			sourceTree = "<group>";
 		};
 		3A034D43125D629A00F49FA6 /* Settings */ = {
@@ -574,6 +590,8 @@
 		3A57FFA411FFB24F00248D1D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2489C9CB12BDEB1E00C1A58A /* Group.h */,
+				2489C9CC12BDEB1E00C1A58A /* Group.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -623,8 +641,8 @@
 				3A034906125C4A3B00F49FA6 /* Login */,
 				3A034905125C4A2D00F49FA6 /* Register */,
 				2434D66512B59EAC007B8A13 /* Reset */,
-				3A034B10125C840400F49FA6 /* Account */,
 				3A034D43125D629A00F49FA6 /* Settings */,
+				2489CA0312BDF04000C1A58A /* Groups */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -703,6 +721,7 @@
 				2489C5C912BDDA5200C1A58A /* whiteArrow.png in Resources */,
 				2489C5CA12BDDA5200C1A58A /* whiteArrow@2x.png in Resources */,
 				2489C5CB12BDDA5200C1A58A /* README in Resources */,
+				2489CA0B12BDF09D00C1A58A /* GroupsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -757,6 +776,9 @@
 				2489C72E12BDDA5300C1A58A /* ASIInputStream.m in Sources */,
 				2489C72F12BDDA5300C1A58A /* ASINetworkQueue.m in Sources */,
 				2489C8F912BDDA5300C1A58A /* Reachability.m in Sources */,
+				2489C9CD12BDEB1E00C1A58A /* Group.m in Sources */,
+				2489CA0612BDF05800C1A58A /* GroupsViewController.m in Sources */,
+				2489CA0912BDF08400C1A58A /* GroupsDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

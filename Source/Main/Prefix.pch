@@ -14,6 +14,7 @@
 	#import <MapKit/MapKit.h>
 	#import "Define.h"
 	#import "NSObject+Extensions.h"
+	#import "Group.h"
 	#import "APIServices.h"
 	#import "AppDelegate.h"
 #endif

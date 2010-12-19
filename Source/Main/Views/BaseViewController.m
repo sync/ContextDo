@@ -51,7 +51,7 @@
 
 - (void)setupNavigationBar
 {
-	self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:129.0/255.0 green:179.0/255.0 blue:1.0/255.0 alpha:1.0];
+	
 }
 
 - (void)setupToolbar
