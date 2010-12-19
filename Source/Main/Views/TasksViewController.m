@@ -31,12 +31,30 @@
 #pragma mark -
 #pragma mark Setup
 
+- (BOOL)isTodayTasks
+{
+	return [self.group.name isEqualToString:TodaysTasksPlacholder];
+}
+
+- (NSString *)nowDue
+{
+	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	// 2010-07-24
+	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
+	return [dateFormatter stringFromDate:[NSDate date]];
+}
+
 - (void)setupDataSource
 {
 	[super setupDataSource];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
+	if (!self.isTodayTasks) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
+		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
+	} else {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueDidLoadNotification object:nil];
+		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueDidLoadNotification];
+	}
 	
 	self.tasksDataSource = [[[TasksDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksDataSource;
@@ -108,7 +126,11 @@
 	} else {
 		if ([task.name isEqualToString:ShowMorePlaceholder]) {
 			self.page += 1;
-			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId page:self.page];
+			if (!self.isTodayTasks) {
+				[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId page:self.page];
+			} else {
+				[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue page:self.page];
+			}
 		}
 	}
 	
@@ -129,7 +151,11 @@
 {
 	self.page = 1;
 	
-	[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId page:self.page];
+	if (!self.isTodayTasks) {
+		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId page:self.page];
+	} else {
+		[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue page:self.page];
+	}
 }
 
 #pragma mark -
@@ -139,6 +165,7 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDidLoadNotification];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDueDidLoadNotification];
 	
 	[group release];
 	[tasks release];

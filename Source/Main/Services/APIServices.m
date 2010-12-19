@@ -181,7 +181,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *notificationName = TasksDidLoadNotification;
 	NSString *path = @"refreshTasksWithGroupId";
 	
-	NSString *url = TASKSURL(BASE_URL, TASKS_PATH, groupId);
+	NSString *url = TASKSURL(BASE_URL, TASKS_PATH, groupId, page);
+	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
+}
+
+- (void)refreshTasksWithDue:(NSString *)due page:(NSInteger)page
+{
+	NSString *notificationName = TasksDueDidLoadNotification;
+	NSString *path = @"refreshTasksWithDue";
+	
+	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due, page);
 	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
 }
 
@@ -234,7 +243,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 			[self parseResetPassword:request];
 		} else if ([path isEqualToString:@"groupsWithPage"]) {
 			[self parseGroups:request];
-		} else if ([path isEqualToString:@"refreshTasksWithGroupId"]) {
+		} else if ([path isEqualToString:@"refreshTasksWithGroupId"]|| 
+				   [path isEqualToString:@"refreshTasksWithDue"]) {
 			[self parseTasks:request];
 		}
 	}

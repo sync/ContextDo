@@ -83,15 +83,25 @@
 		[self.groups addObjectsFromArray:newGroups];
 	}
 	
-	[self.groupsDataSource.content addObjectsFromArray:self.groups];
+	NSMutableArray *section1 = [NSMutableArray array];
+	
+	[section1 addObjectsFromArray:self.groups];
 	
 	
 	if (showMore) {
 		Group *showMoreGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
 											 name:ShowMorePlaceholder
 									   modifiedAt:nil];
-		[self.groupsDataSource.content addObject:showMoreGroup];
+		[section1 addObject:showMoreGroup];
 	}
+	
+	[self.groupsDataSource.content addObject:section1];
+	
+	Group *todayGroup = [Group groupWithId:[NSNumber numberWithInt:-1]
+										 name:TodaysTasksPlacholder
+								   modifiedAt:nil];
+	
+	[self.groupsDataSource.content addObject:[NSArray arrayWithObject:todayGroup]];
 	
 	[self.tableView reloadData];
 }
@@ -111,6 +121,8 @@
 		if ([group.name isEqualToString:ShowMorePlaceholder]) {
 			self.page += 1;
 			[[APIServices sharedAPIServices]refreshGroupsWithPage:self.page];
+		} else {
+			// todo today's tasks
 		}
 	}
 	

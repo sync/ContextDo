@@ -31,7 +31,8 @@
 #define GROUPS_PATH @"/groups.json"
 // Task
 #define TASKS_PATH @"/tasks.json"
-#define TASKSURL(base, path, groupId) [NSString stringWithFormat:@"%@/groups/%@%@", base, groupId, path]
+#define TASKSURL(base, path, groupId, page) [NSString stringWithFormat:@"%@/groups/%@%@?page=%d", base, groupId, path, page]
+#define TASKSDUEURL(base, path, due, page) [NSString stringWithFormat:@"%@?q=%@&page=%d", CTXDOURL(base, path), due, page]
 
 // Notifications
 #define PlacemarkDidChangeNotification @"PlacemarkDidChangeNotification"
@@ -40,3 +41,4 @@
 #define UserDidResetPasswordNotification @"UserDidResetPasswordNotification"
 #define GroupsDidLoadNotification @"GroupsDidLoadNotification"
 #define TasksDidLoadNotification @"TasksDidLoadNotification"
+#define TasksDueDidLoadNotification @"TasksDueDidLoadNotification"

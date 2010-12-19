@@ -8,6 +8,19 @@
 	return [self objectForIndexPath:indexPath];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	if (self.content.count == 0) {
+		return nil;
+	}
+	
+	if (section == 1) {
+		return @"All";
+	}
+	
+	return @"Groups";
+}
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
 {
