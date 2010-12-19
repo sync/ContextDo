@@ -1,0 +1,15 @@
+[submodule "Source/External/asihttprequest"]
+	path = Source/External/asihttprequest
+	url = git://github.com/pokeb/asi-http-request.git
+[submodule "Source/External/json-framework"]
+	path = Source/External/json-framework
+	url = git://github.com/stig/json-framework
+[submodule "Source/External/MBProgressHUD"]
+	path = Source/External/MBProgressHUD
+	url = git://github.com/sync/MBProgressHUD.git
+[submodule "Source/External/NSDate-Extensions"]
+	path = Source/External/NSDate-Extensions
+	url = git://github.com/sync/NSDate-Extensions.git
+[submodule "Source/External/EGOTableViewPullRefresh"]
+	path = Source/External/EGOTableViewPullRefresh
+	url = git://github.com/enormego/EGOTableViewPullRefresh.git

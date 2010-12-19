@@ -1,0 +1,8 @@
+Right after cloning the project, don't forget to 
+update the submodules:
+
+If you have a recent version of git, you
+can do this easily by executing the following command:
+
+- git submodule update --init --recursive
+- then make sure you close and reopen your project on Xcode.
