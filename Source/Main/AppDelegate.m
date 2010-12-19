@@ -94,6 +94,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (void)refreshAllControllers
 {
 	[self enableGPS];
+	[[APIServices sharedAPIServices]refreshGroupsWithPage:1];
 }
 
 /**
