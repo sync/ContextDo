@@ -127,7 +127,7 @@
 				// 2010-07-24T05:26:28Z
 				[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
 				Task *task = [Task taskWithId:[[taskDic valueForKey:@"id"]niledNull]
-										title:[[taskDic valueForKey:@"title"]niledNull] 
+										title:[[taskDic valueForKey:@"name"]niledNull] 
 									 location:[[taskDic valueForKey:@"location"]niledNull]
 								   modifiedAt:[dateFormatter dateFromString:[[taskDic valueForKey:@"updated_at"]niledNull]]];
 				task.action = [[taskDic valueForKey:@"action"]niledNull];
