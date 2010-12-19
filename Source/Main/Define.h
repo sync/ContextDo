@@ -29,10 +29,11 @@
 #define RESET_PASSWORD_PATH @"/users/password.json"
 // Groups
 #define GROUPS_PATH @"/groups.json"
+#define GROUPSURL(base, path, page) [NSString stringWithFormat:@"%@?page=%d", CTXDOURL(base, path), page]
 // Task
 #define TASKS_PATH @"/tasks.json"
 #define TASKSURL(base, path, groupId, page) [NSString stringWithFormat:@"%@/groups/%@%@?page=%d", base, groupId, path, page]
-#define TASKSDUEURL(base, path, due, page) [NSString stringWithFormat:@"%@?q=%@&page=%d", CTXDOURL(base, path), due, page]
+#define TASKSDUEURL(base, path, due, page) [NSString stringWithFormat:@"%@?due=%@&page=%d", CTXDOURL(base, path), due, page]
 
 // Notifications
 #define PlacemarkDidChangeNotification @"PlacemarkDidChangeNotification"

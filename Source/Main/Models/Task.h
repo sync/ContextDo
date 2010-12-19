@@ -22,8 +22,8 @@
 @property (nonatomic, readonly) CLLocationDistance distance;
 
 + (Task *)taskWithId:(NSNumber *)aTaskId
-			   title:(NSString *)aTitle
-			location:(NSString *)location
+				name:(NSString *)aName
+			location:(NSString *)aLocation
 		  modifiedAt:(NSDate *)aModifiedAt;
 
 @end

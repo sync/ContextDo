@@ -5,11 +5,12 @@
 #define TodaysTasksPlacholder @"Today's Tasks"
 
 
-@interface TasksViewController : BaseTableViewRefreshController {
+@interface TasksViewController : BaseTableViewRefreshController <UISearchDisplayDelegate> {
 
 }
 
 @property (nonatomic, retain) TasksDataSource *tasksDataSource;
+@property (nonatomic, retain) TasksDataSource *searchTasksDataSource;
 
 @property (nonatomic) NSInteger page;
 

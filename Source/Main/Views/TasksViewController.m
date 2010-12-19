@@ -4,13 +4,14 @@
 
 - (void)reloadTasks:(NSArray *)newTasks removeCache:(BOOL)removeCache showMore:(BOOL)showMore;
 - (void)refreshTasks;
+- (void)reloadSearchTasks:(NSArray *)newTasks;
 
 @end
 
 
 @implementation TasksViewController
 
-@synthesize tasksDataSource, tasks, page, group;
+@synthesize tasksDataSource, tasks, page, group, searchTasksDataSource;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -61,6 +62,15 @@
 	[self refreshTasks];
 }
 
+- (void)setupSearchDataSource
+{
+	[super setupSearchDataSource];
+	
+	self.searchTasksDataSource = [[[TasksDataSource alloc]init]autorelease];
+	self.searchDisplayController.searchResultsTableView.dataSource = self.searchTasksDataSource;
+	[self refreshTasks];
+}
+
 #pragma mark -
 #pragma mark Content reloading
 
@@ -105,11 +115,20 @@
 	
 	if (showMore) {
 		Task *showMore = [Task taskWithId:[NSNumber numberWithInt:NSNotFound] 
-									title: ShowMorePlaceholder
+									 name: ShowMorePlaceholder
 								 location:nil 
 							   modifiedAt:nil];
 		[self.tasksDataSource.content addObject:showMore];
 	}
+	
+	[self.tableView reloadData];
+}
+
+- (void)reloadSearchTasks:(NSArray *)newTasks
+{
+	[self.searchTasksDataSource resetContent];
+	
+	[self.searchTasksDataSource.content addObjectsFromArray:newTasks];
 	
 	[self.tableView reloadData];
 }
@@ -119,7 +138,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-	Task *task  = [self.tasksDataSource taskForIndexPath:indexPath];
+	Task *task  = nil;
+	if (self.searchDisplayController.active) {
+		[self.tasksDataSource taskForIndexPath:indexPath];
+	} else {
+		[self.searchTasksDataSource taskForIndexPath:indexPath];
+	}
 	
 	if (task.taskId.integerValue != NSNotFound) {
 		
@@ -159,6 +183,17 @@
 }
 
 #pragma mark -
+#pragma mark Search
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+	self.searchString = searchText;
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", self.searchString];
+	NSArray *filteredTasks = [self.tasks filteredArrayUsingPredicate:predicate];
+	[self reloadSearchTasks:filteredTasks];
+}
+
+#pragma mark -
 #pragma mark Dealloc
 
 - (void)dealloc
@@ -170,6 +205,7 @@
 	[group release];
 	[tasks release];
 	[tasksDataSource release];
+	[searchTasksDataSource release];
 	
 	[super dealloc];
 }

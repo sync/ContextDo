@@ -113,13 +113,51 @@
 		//		"latitude": -27.451533000000001, 
 		//		"location": "38 Skyring Terrace, Newstead QLD 4006, Australia", 
 		//		"longitude": 153.04731799999999, 
-		//		"title": "My Task", 
+		//		"name": "My Task", 
 		//		"updated_at": "2010-12-19T08:19:22Z"
 		//	}
+		
 		
 		NSMutableArray *content = [NSMutableArray array];
 		
 		NSArray *tasksArray = [[[json objectWithString:responseString error:&error]niledNull]valueForKey:@"task"];
+		
+		// todo remove
+		if (tasksArray.count == 0) {
+			error = nil;
+			tasksArray = [NSArray arrayWithObjects:
+						  [NSDictionary dictionaryWithObjectsAndKeys:
+						   [NSNull null], @"action",
+						   @"0412639224", @"contact_detail",
+						   @"Bodaniel Jeanes", @"contact_name",
+						   @"2010-12-19T08:16:49Z", @"created_at",
+						   @"2010-12-25T00:01:00Z", @"due_at",
+						   [NSNumber numberWithInteger:1], @"group_id",
+						   @"Travel to Sydney", @"group_name",
+						   [NSNumber numberWithInteger:1], @"id",
+						   [NSNumber numberWithDouble:-27.451533000000001], @"latitude",
+						   @"38 Skyring Terrace, Newstead QLD 4006, Australia", @"location",
+						   [NSNumber numberWithDouble:153.04731799999999], @"longitude",
+						   @"Catch the bus", @"name",
+						   @"2010-12-19T08:19:22Z", @"updated_at",
+						   nil],
+						  [NSDictionary dictionaryWithObjectsAndKeys:
+						   [NSNull null], @"action",
+						   @"0412639224", @"contact_detail",
+						   @"Bodaniel Jeanes", @"contact_name",
+						   @"2010-12-20T09:16:49Z", @"created_at",
+						   @"2010-12-25T10:01:00Z", @"due_at",
+						   [NSNumber numberWithInteger:1], @"group_id",
+						   @"Travel to Sydney", @"group_name",
+						   [NSNumber numberWithInteger:2], @"id",
+						   [NSNumber numberWithDouble:-27.4563023], @"latitude",
+						   @"Fortitude Valley, QLD 4006, Australia", @"location",
+						   [NSNumber numberWithDouble:153.03345], @"longitude",
+						   @"Catch the train", @"name",
+						   @"2010-12-19T08:19:22Z", @"updated_at",
+						   nil],
+						  nil];
+		}
 		
 		if (!error && tasksArray) {
 			for (NSDictionary *taskDic in tasksArray) {
@@ -127,7 +165,7 @@
 				// 2010-07-24T05:26:28Z
 				[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
 				Task *task = [Task taskWithId:[[taskDic valueForKey:@"id"]niledNull]
-										title:[[taskDic valueForKey:@"name"]niledNull] 
+										 name:[[taskDic valueForKey:@"name"]niledNull] 
 									 location:[[taskDic valueForKey:@"location"]niledNull]
 								   modifiedAt:[dateFormatter dateFromString:[[taskDic valueForKey:@"updated_at"]niledNull]]];
 				task.action = [[taskDic valueForKey:@"action"]niledNull];

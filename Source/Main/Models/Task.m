@@ -6,17 +6,17 @@
 @synthesize modifiedAt, groupId, latitude, longitude, groupName, completedAt;
 
 + (Task *)taskWithId:(NSNumber *)aTaskId
-			   title:(NSString *)aTitle
+				name:(NSString *)aName
 			location:(NSString *)aLocation
 		  modifiedAt:(NSDate *)aModifiedAt
 {
-	if (!aTaskId || !aTitle) {
+	if (!aTaskId || !aName) {
 		return nil;
 	}
 	
 	Task *task = [[[Task alloc]init]autorelease];
 	task.taskId = aTaskId;
-	task.name = aTitle;
+	task.name = aName;
 	task.location = aLocation;
 	task.modifiedAt = aModifiedAt;
 	

@@ -169,7 +169,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *notificationName = GroupsDidLoadNotification;
 	NSString *path = @"groupsWithPage";
 	
-	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
+	NSString *url = GROUPSURL(BASE_URL, GROUPS_PATH, page);
 	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
 }
 
