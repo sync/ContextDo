@@ -19,7 +19,7 @@
 
 // URL
 // contextdo.heroku.com
-#define BASE_URL @"http://192.168.1.16:3000"
+#define BASE_URL @"http://contextdo.heroku.com"
 #define CTXDOURL(base, path) [NSString stringWithFormat:@"%@%@", base, path]
 // Login
 #define LOGIN_PATH @"/api_token.json"

@@ -13,11 +13,6 @@
 #pragma mark -
 #pragma mark Setup
 
-- (void)viewWillAppear:(BOOL)animated
-{
-	[self.navigationController setNavigationBarHidden:FALSE animated:animated];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 	

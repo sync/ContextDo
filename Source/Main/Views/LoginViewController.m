@@ -5,6 +5,7 @@
 @interface LoginViewController (private)
 
 - (void)shouldLogin;
+- (void)shouldRegister;
 
 @end
 
@@ -14,11 +15,6 @@
 
 #pragma mark -
 #pragma mark Setup
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	[self.navigationController setNavigationBarHidden:TRUE animated:animated];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,6 +38,12 @@
 - (void)setupNavigationBar
 {
 	[super setupNavigationBar];
+	
+	UIBarButtonItem *registerItem = [[[UIBarButtonItem alloc]initWithTitle:@"Register"
+																	 style:UIBarButtonItemStyleBordered
+																	target:self
+																	action:@selector(shouldRegister)]autorelease];
+	self.navigationItem.rightBarButtonItem = registerItem;
 	
 	UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"cancel" style:UIBarButtonItemStylePlain target:nil action:nil];
 	self.navigationItem.backBarButtonItem = backBarButtonItem;
@@ -67,7 +69,7 @@
 											  password:self.passwordTextField.text];
 }
 
-- (IBAction)shouldRegister
+- (void)shouldRegister
 {
 	RegisterViewController *controller = [[[RegisterViewController alloc]initWithNibName:@"RegisterView"
 																				  bundle:nil]autorelease];

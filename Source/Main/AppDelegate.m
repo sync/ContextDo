@@ -80,7 +80,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	} else {
 		[self enableGPS];
 	}
-	[self enableGPS];
 }
 
 - (void)enableGPS
