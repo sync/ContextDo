@@ -70,16 +70,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-//	NSString *apiToken = [APIServices sharedAPIServices].apiToken;
-//	if (apiToken.length == 0) {
-//		if ([APIServices sharedAPIServices].username.length > 0 && [APIServices sharedAPIServices].password.length > 0) {
-//			[[APIServices sharedAPIServices]loginWithUsername:[APIServices sharedAPIServices].username password:[APIServices sharedAPIServices].password];
-//		} else {
-//			[self showLoginView:FALSE];
-//		}
-//	} else {
-//		[self enableGPS];
-//	}
+	NSString *apiToken = [APIServices sharedAPIServices].apiToken;
+	if (apiToken.length == 0) {
+		if ([APIServices sharedAPIServices].username.length > 0 && [APIServices sharedAPIServices].password.length > 0) {
+			[[APIServices sharedAPIServices]loginWithUsername:[APIServices sharedAPIServices].username password:[APIServices sharedAPIServices].password];
+		} else {
+			[self showLoginView:FALSE];
+		}
+	} else {
+		[self enableGPS];
+	}
 	[self enableGPS];
 }
 

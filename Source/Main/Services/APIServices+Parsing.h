@@ -7,5 +7,6 @@
 - (void)parseRegister:(ASIHTTPRequest *)request;
 - (void)parseResetPassword:(ASIHTTPRequest *)request;
 - (void)parseGroups:(ASIHTTPRequest *)request;
+- (void)parseTasks:(ASIHTTPRequest *)request;
 
 @end

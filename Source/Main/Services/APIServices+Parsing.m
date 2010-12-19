@@ -93,5 +93,65 @@
 	}
 }
 
+- (void)parseTasks:(ASIHTTPRequest *)request
+{
+	NSString *responseString = [request responseString];
+	if ([responseString length] != 0)  {
+		NSError *error = nil;
+		
+		SBJsonParser *json = [[[SBJsonParser alloc]init] autorelease];
+		
+		//	"task": {
+		//		"action": null, 
+		//		"contact_detail": "0412639224", 
+		//		"contact_name": "Bodaniel Jeanes", 
+		//		"created_at": "2010-12-19T08:16:49Z", 
+		//		"due_at": "2010-12-25T00:01:00Z", 
+		//		"group_id": 1, 
+		//		"group_name": "Foo", 
+		//		"id": 1, 
+		//		"latitude": -27.451533000000001, 
+		//		"location": "38 Skyring Terrace, Newstead QLD 4006, Australia", 
+		//		"longitude": 153.04731799999999, 
+		//		"title": "My Task", 
+		//		"updated_at": "2010-12-19T08:19:22Z"
+		//	}
+		
+		NSMutableArray *content = [NSMutableArray array];
+		
+		NSArray *tasksArray = [[[json objectWithString:responseString error:&error]niledNull]valueForKey:@"task"];
+		
+		if (!error && tasksArray) {
+			for (NSDictionary *taskDic in tasksArray) {
+				NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+				// 2010-07-24T05:26:28Z
+				[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+				Task *task = [Task taskWithId:[[taskDic valueForKey:@"id"]niledNull]
+										title:[[taskDic valueForKey:@"title"]niledNull] 
+									 location:[[taskDic valueForKey:@"location"]niledNull]
+								   modifiedAt:[dateFormatter dateFromString:[[taskDic valueForKey:@"updated_at"]niledNull]]];
+				task.action = [[taskDic valueForKey:@"action"]niledNull];
+				task.contactDetail = [[taskDic valueForKey:@"contact_detail"]niledNull];
+				task.contactName = [[taskDic valueForKey:@"contact_name"]niledNull];
+				task.dueAt = [dateFormatter dateFromString:[[taskDic valueForKey:@"due_at"]niledNull]];
+				task.groupId = [[taskDic valueForKey:@"group_id"]niledNull];
+				task.groupName = [[taskDic valueForKey:@"group_name"]niledNull];
+				task.latitude = [[taskDic valueForKey:@"latitude"]niledNull];
+				task.longitude = [[taskDic valueForKey:@"longitude"]niledNull];
+				if (task) {
+					[content addObject:task];
+				}
+			}
+		}
+		
+		NSDictionary *info = request.userInfo;
+		[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
+										 [NSArray arrayWithArray:content], @"tasks",
+										 [info valueForKey:@"object"], @"object",
+										 nil
+										 ]];
+	}
+}
+
 
 @end

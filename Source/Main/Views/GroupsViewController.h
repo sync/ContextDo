@@ -13,6 +13,4 @@
 
 @property (nonatomic, readonly) NSMutableArray *groups;
 
-- (void)reloadGroups:(NSArray *)newGroups removeCache:(BOOL)removeCache showMore:(BOOL)showMore;
-
 @end

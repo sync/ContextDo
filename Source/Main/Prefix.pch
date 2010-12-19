@@ -15,6 +15,7 @@
 	#import "Define.h"
 	#import "NSObject+Extensions.h"
 	#import "Group.h"
+	#import "Task.h"
 	#import "APIServices.h"
 	#import "AppDelegate.h"
 #endif

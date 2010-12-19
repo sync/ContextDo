@@ -15,5 +15,6 @@
 - (void)resetPasswordWithUsername:(NSString *)username;
 
 - (void)refreshGroupsWithPage:(NSInteger)page;
+- (void)refreshTasksWithGroupId:(NSNumber *)groupId page:(NSInteger)page;
 
 @end

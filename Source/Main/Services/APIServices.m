@@ -174,6 +174,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 }
 
 #pragma mark -
+#pragma mark Tasks
+
+- (void)refreshTasksWithGroupId:(NSNumber *)groupId page:(NSInteger)page
+{
+	NSString *notificationName = TasksDidLoadNotification;
+	NSString *path = @"refreshTasksWithGroupId";
+	
+	NSString *url = TASKSURL(BASE_URL, TASKS_PATH, groupId);
+	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
+}
+
+#pragma mark -
 #pragma mark Content Management
 
 - (void)downloadContentForUrl:(NSString *)url withObject:(id)object path:(NSString *)path notificationName:(NSString *)notificationName
@@ -222,6 +234,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 			[self parseResetPassword:request];
 		} else if ([path isEqualToString:@"groupsWithPage"]) {
 			[self parseGroups:request];
+		} else if ([path isEqualToString:@"refreshTasksWithGroupId"]) {
+			[self parseTasks:request];
 		}
 	}
 	

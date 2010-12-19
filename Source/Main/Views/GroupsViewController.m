@@ -1,8 +1,10 @@
 #import "GroupsViewController.h"
+#import "TasksViewController.h"
 
 @interface GroupsViewController (private)
 
 - (void)refreshGroups;
+- (void)reloadGroups:(NSArray *)newGroups removeCache:(BOOL)removeCache showMore:(BOOL)showMore;
 
 @end
 
@@ -102,7 +104,9 @@
 	Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
 	
 	if (group.groupId.integerValue != NSNotFound) {
-		
+		TasksViewController *controller = [[[TasksViewController alloc]initWithNibName:@"TasksView" bundle:nil]autorelease];
+		controller.group = group;
+		[self.navigationController pushViewController:controller animated:TRUE];
 	} else {
 		if ([group.name isEqualToString:ShowMorePlaceholder]) {
 			self.page += 1;

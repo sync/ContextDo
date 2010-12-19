@@ -21,13 +21,16 @@
 #define BASE_URL @"http://192.168.1.16:3000"
 #define CTXDOURL(base, path) [NSString stringWithFormat:@"%@%@", base, path]
 // Login
-#define LOGIN_PATH @"/profile/api_token.json"
+#define LOGIN_PATH @"/api_token.json"
 // Register
 #define REGISTER_PATH @"/users.json"
 // Reset
 #define RESET_PASSWORD_PATH @"/users/password.json"
 // Groups
 #define GROUPS_PATH @"/groups.json"
+// Task
+#define TASKS_PATH @"/tasks.json"
+#define TASKSURL(base, path, groupId) [NSString stringWithFormat:@"%@/groups/%@%@", base, groupId, path]
 
 // Notifications
 #define PlacemarkDidChangeNotification @"PlacemarkDidChangeNotification"
@@ -35,3 +38,4 @@
 #define UserDidRegisterNotification @"UserDidRegisterNotification"
 #define UserDidResetPasswordNotification @"UserDidResetPasswordNotification"
 #define GroupsDidLoadNotification @"GroupsDidLoadNotification"
+#define TasksDidLoadNotification @"TasksDidLoadNotification"
