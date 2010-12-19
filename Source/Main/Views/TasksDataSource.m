@@ -29,7 +29,14 @@
 	} else {
 		cell.distanceLabel.text = nil;
 	}
-	cell.detailTextLabel.text = nil;
+	
+	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc]init]autorelease];
+	[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+	[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+	
+	[dateFormatter setDoesRelativeDateFormatting:YES];
+	
+	cell.detailTextLabel.text = [dateFormatter stringFromDate:task.dueAt];
 	
     return cell;
 }
