@@ -17,6 +17,7 @@
 @property (nonatomic, copy) NSString *groupName;
 @property (nonatomic, copy) NSNumber *latitude;
 @property (nonatomic, copy) NSNumber *longitude;
+@property (nonatomic, copy) NSDate *completedAt;
 
 @property (nonatomic, readonly) CLLocationDistance distance;
 

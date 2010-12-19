@@ -134,6 +134,7 @@
 				task.contactDetail = [[taskDic valueForKey:@"contact_detail"]niledNull];
 				task.contactName = [[taskDic valueForKey:@"contact_name"]niledNull];
 				task.dueAt = [dateFormatter dateFromString:[[taskDic valueForKey:@"due_at"]niledNull]];
+				task.completedAt = [dateFormatter dateFromString:[[taskDic valueForKey:@"completed_at"]niledNull]];
 				task.groupId = [[taskDic valueForKey:@"group_id"]niledNull];
 				task.groupName = [[taskDic valueForKey:@"group_name"]niledNull];
 				task.latitude = [[taskDic valueForKey:@"latitude"]niledNull];

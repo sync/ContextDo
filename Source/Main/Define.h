@@ -18,6 +18,7 @@
 #define RegionShouldUpdateThresholdInMeters 1000.0
 
 // URL
+// contextdo.heroku.com
 #define BASE_URL @"http://192.168.1.16:3000"
 #define CTXDOURL(base, path) [NSString stringWithFormat:@"%@%@", base, path]
 // Login

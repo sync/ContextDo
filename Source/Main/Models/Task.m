@@ -3,7 +3,7 @@
 @implementation Task
 
 @synthesize taskId, action, contactDetail, contactName, dueAt, location, name;
-@synthesize modifiedAt, groupId, latitude, longitude, groupName;
+@synthesize modifiedAt, groupId, latitude, longitude, groupName, completedAt;
 
 + (Task *)taskWithId:(NSNumber *)aTaskId
 			   title:(NSString *)aTitle
@@ -31,6 +31,7 @@
 
 - (void)dealloc
 {
+	[completedAt release];
 	[taskId release];
 	[action release];
 	[contactDetail release];
