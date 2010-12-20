@@ -14,11 +14,11 @@
 		return nil;
 	}
 	
-	if (section == 1) {
-		return @"All";
+	if (section == 0) {
+		return@"Smart Groups";
 	}
 	
-	return @"Groups";
+	return @"My Groups";
 }
 
 // Customize the appearance of table view cells.
@@ -30,6 +30,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GroupsCellIdentifier] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 	
 	Group *group = [self groupForIndexPath:indexPath];
@@ -37,6 +38,15 @@
 	cell.textLabel.text = group.name;
 	
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if (indexPath.section == 0) {
+		return FALSE;
+	}
+	
+	return TRUE;
 }
 
 @end

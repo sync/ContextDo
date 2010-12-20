@@ -68,6 +68,7 @@
 		2489CADD12BE1D6700C1A58A /* TasksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2489CADC12BE1D6700C1A58A /* TasksView.xib */; };
 		2489CDFF12BED64B00C1A58A /* GroupEditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CDFD12BED64B00C1A58A /* GroupEditionViewController.m */; };
 		2489CE0012BED64B00C1A58A /* GroupEditionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2489CDFE12BED64B00C1A58A /* GroupEditionView.xib */; };
+		2489CE5E12BF1EB300C1A58A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2489CE5D12BF1EB300C1A58A /* Settings.bundle */; };
 		24CA33D212AA5FFD00A69C85 /* UIImage+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CA33D112AA5FFD00A69C85 /* UIImage+Extensions.m */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		3A034842125BF49C00F49FA6 /* NSDate+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03483F125BF49C00F49FA6 /* NSDate+Extensions.m */; };
@@ -203,6 +204,7 @@
 		2489CDFC12BED64B00C1A58A /* GroupEditionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupEditionViewController.h; sourceTree = "<group>"; };
 		2489CDFD12BED64B00C1A58A /* GroupEditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupEditionViewController.m; sourceTree = "<group>"; };
 		2489CDFE12BED64B00C1A58A /* GroupEditionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupEditionView.xib; sourceTree = "<group>"; };
+		2489CE5D12BF1EB300C1A58A /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		24CA33D012AA5FFD00A69C85 /* UIImage+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extensions.h"; sourceTree = "<group>"; };
 		24CA33D112AA5FFD00A69C85 /* UIImage+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extensions.m"; sourceTree = "<group>"; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -587,6 +589,7 @@
 				3A57FED811FFB24F00248D1D /* Images */,
 				3A57FED511FFB24F00248D1D /* Info.plist */,
 				3A035468125FFFBB00F49FA6 /* Entitlements.plist */,
+				2489CE5D12BF1EB300C1A58A /* Settings.bundle */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -779,6 +782,7 @@
 				2489CA0B12BDF09D00C1A58A /* GroupsView.xib in Resources */,
 				2489CADD12BE1D6700C1A58A /* TasksView.xib in Resources */,
 				2489CE0012BED64B00C1A58A /* GroupEditionView.xib in Resources */,
+				2489CE5E12BF1EB300C1A58A /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

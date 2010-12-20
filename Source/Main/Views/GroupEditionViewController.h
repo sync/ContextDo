@@ -5,17 +5,7 @@
 	
 }
 
-@property (nonatomic, copy) NSString *interest;
-@property (nonatomic, retain) NSIndexPath *indexPath;
-@property (nonatomic, retain) IBOutlet UITextField *interestLabel;
-
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, retain) Group *group;
+@property (nonatomic, retain) IBOutlet UITextField *groupLabel;
 
 @end
-
-@protocol ProfileEditionViewControllerDelegate <NSObject>
-
-- (void)profileEditionViewController:(GroupEditionViewController *)controller doneEditingWithInterest:(NSString *)interest forIndexPath:(NSIndexPath *)indexPath;
-
-@end
-

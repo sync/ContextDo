@@ -1,11 +1,11 @@
 #import "GroupsViewController.h"
 #import "TasksViewController.h"
+#import "GroupEditionViewController.h"
 
 @interface GroupsViewController (private)
 
 - (void)refreshGroups;
 - (void)reloadGroups:(NSArray *)newGroups removeCache:(BOOL)removeCache showMore:(BOOL)showMore;
-- (void)shouldLogout;
 - (void)shdouldAddGroup;
 
 @end
@@ -38,11 +38,7 @@
 {
 	[super setupNavigationBar];
 	
-	UIBarButtonItem *logoutItem = [[[UIBarButtonItem alloc]initWithTitle:@"Logout"
-																   style:UIBarButtonItemStyleBordered
-																  target:self
-																  action:@selector(shouldLogout)]autorelease];
-	self.navigationItem.leftBarButtonItem = logoutItem;
+	self.navigationItem.leftBarButtonItem = self.editButtonItem;
 	
 	UIBarButtonItem *addItem = [[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 																			 target:self
@@ -59,6 +55,7 @@
 	
 	self.groupsDataSource = [[[GroupsDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.groupsDataSource;
+	self.tableView.allowsSelectionDuringEditing = TRUE;
 	[self refreshGroups];
 }
 
@@ -101,27 +98,37 @@
 		[self.groups addObjectsFromArray:newGroups];
 	}
 	
-	NSMutableArray *section1 = [NSMutableArray array];
+	Group *todayGroup = [Group groupWithId:[NSNumber numberWithInt:-1]
+									  name:TodaysTasksPlacholder
+								modifiedAt:nil];
 	
-	[section1 addObjectsFromArray:self.groups];
+	[self.groupsDataSource.content addObject:[NSArray arrayWithObject:todayGroup]];
 	
+	NSMutableArray *section2 = [NSMutableArray array];
+	
+	[section2 addObjectsFromArray:self.groups];
 	
 	if (showMore) {
 		Group *showMoreGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
 											 name:ShowMorePlaceholder
 									   modifiedAt:nil];
-		[section1 addObject:showMoreGroup];
+		[section2 addObject:showMoreGroup];
 	}
 	
-	[self.groupsDataSource.content addObject:section1];
-	
-	Group *todayGroup = [Group groupWithId:[NSNumber numberWithInt:-1]
-										 name:TodaysTasksPlacholder
-								   modifiedAt:nil];
-	
-	[self.groupsDataSource.content addObject:[NSArray arrayWithObject:todayGroup]];
+	[self.groupsDataSource.content addObject:section2];
 	
 	[self.tableView reloadData];
+}
+
+#pragma mark -
+#pragma mark Editing
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+	[super setEditing:editing animated:animated];
+	
+	[self.tableView setEditing:editing animated:animated];
+	[self reloadGroups:nil removeCache:FALSE showMore:!editing];
 }
 
 #pragma mark -
@@ -132,15 +139,19 @@
 	Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
 	
 	if (group.groupId.integerValue != NSNotFound) {
-		TasksViewController *controller = [[[TasksViewController alloc]initWithNibName:@"TasksView" bundle:nil]autorelease];
-		controller.group = group;
-		[self.navigationController pushViewController:controller animated:TRUE];
+		if (group.groupId.integerValue == -1 || !self.editing) {
+			TasksViewController *controller = [[[TasksViewController alloc]initWithNibName:@"TasksView" bundle:nil]autorelease];
+			controller.group = group;
+			[self.navigationController pushViewController:controller animated:TRUE];
+		} else {
+			GroupEditionViewController *controller = [[[GroupEditionViewController alloc]initWithNibName:@"GroupEditionView" bundle:nil]autorelease];
+			controller.group = group;
+			[self.navigationController pushViewController:controller animated:TRUE];
+		}
 	} else {
 		if ([group.name isEqualToString:ShowMorePlaceholder]) {
 			self.page += 1;
 			[[APIServices sharedAPIServices]refreshGroupsWithPage:self.page];
-		} else {
-			// todo today's tasks
 		}
 	}
 	
@@ -162,19 +173,6 @@
 	self.page = 1;
 	
 	[[APIServices sharedAPIServices]refreshGroupsWithPage:page];
-}
-
-- (void)shouldLogout
-{
-	// clear apiKey
-	[APIServices sharedAPIServices].apiToken = nil;
-	// clear username / password
-	[APIServices sharedAPIServices].username = nil;
-	[APIServices sharedAPIServices].password = nil;
-	// clear all sessions + cookies
-	[ASIHTTPRequest clearSession];
-	// go back to user login
-	[[AppDelegate sharedAppDelegate]showLoginView:FALSE];
 }
 
 - (void)shdouldAddGroup

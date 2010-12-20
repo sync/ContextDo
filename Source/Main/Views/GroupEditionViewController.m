@@ -8,7 +8,7 @@
 
 @implementation GroupEditionViewController
 
-@synthesize interestLabel, interest, indexPath, delegate;
+@synthesize groupLabel, group;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -16,17 +16,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.title = (self.interest) ? @"Edit Interest" : @"Add Interest";
+	self.title = (self.group) ? @"Edit Group" : @"Add Group";
 	
-	self.interestLabel.text = self.interest;
-	[self.interestLabel becomeFirstResponder];
+	self.groupLabel.text = self.group.name;
+	[self.groupLabel becomeFirstResponder];
 }
 
 - (void)viewDidUnload
 {
 	[super viewDidUnload];
 	
-	self.interestLabel = nil;
+	self.groupLabel = nil;
 }
 
 - (void)setupNavigationBar
@@ -55,7 +55,7 @@
 - (void)doneEditing
 {
 	[self.navigationController popViewControllerAnimated:TRUE];
-	[self.delegate profileEditionViewController:self doneEditingWithInterest:self.interestLabel.text forIndexPath:self.indexPath];
+	// todo save
 }
 
 #pragma mark -
@@ -63,9 +63,8 @@
 
 - (void)dealloc
 {
-	[interest release];
-	[indexPath release];
-	[interestLabel release];
+	[group release];
+	[groupLabel release];
 	
 	[super dealloc];
 }

@@ -47,7 +47,7 @@
 						<int key="NSvFlags">274</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBUISearchBar" id="258203767">
+							<object class="IBUISearchBar" id="1059325566">
 								<reference key="NSNextResponder" ref="836498833"/>
 								<int key="NSvFlags">290</int>
 								<string key="NSFrameSize">{320, 44}</string>
@@ -103,7 +103,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<float key="IBUIRowHeight">44</float>
 						<float key="IBUISectionHeaderHeight">10</float>
 						<float key="IBUISectionFooterHeight">10</float>
-						<reference key="IBUITableHeaderView" ref="258203767"/>
+						<reference key="IBUITableHeaderView" ref="1059325566"/>
 					</object>
 				</object>
 				<string key="NSFrameSize">{320, 416}</string>
@@ -121,7 +121,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
-			<object class="IBUISearchDisplayController" id="967336108">
+			<object class="IBUISearchDisplayController" id="777802405">
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 		</object>
@@ -155,8 +155,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchBar</string>
-						<reference key="source" ref="967336108"/>
-						<reference key="destination" ref="258203767"/>
+						<reference key="source" ref="777802405"/>
+						<reference key="destination" ref="1059325566"/>
 					</object>
 					<int key="connectionID">10</int>
 				</object>
@@ -164,30 +164,22 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchDisplayController</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="967336108"/>
+						<reference key="destination" ref="777802405"/>
 					</object>
 					<int key="connectionID">11</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchContentsController</string>
-						<reference key="source" ref="967336108"/>
+						<reference key="source" ref="777802405"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">12</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">searchResultsDataSource</string>
-						<reference key="source" ref="967336108"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">13</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchResultsDelegate</string>
-						<reference key="source" ref="967336108"/>
+						<reference key="source" ref="777802405"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">14</int>
@@ -195,7 +187,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="967336108"/>
+						<reference key="source" ref="777802405"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">15</int>
@@ -203,7 +195,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="258203767"/>
+						<reference key="source" ref="1059325566"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">16</int>
@@ -243,18 +235,18 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="object" ref="836498833"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="258203767"/>
+							<reference ref="1059325566"/>
 						</object>
 						<reference key="parent" ref="225183005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">8</int>
-						<reference key="object" ref="258203767"/>
+						<reference key="object" ref="1059325566"/>
 						<reference key="parent" ref="836498833"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">9</int>
-						<reference key="object" ref="967336108"/>
+						<reference key="object" ref="777802405"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</object>

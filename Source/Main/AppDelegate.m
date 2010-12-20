@@ -7,6 +7,7 @@
 - (void)enableGPS;
 - (void)locationDidFix;
 - (void)locationDidStop;
+- (void)logout:(BOOL)showingLogin animated:(BOOL)animated;
 
 @end
 
@@ -34,6 +35,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
     // Override point for customization after application launch.
+	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
+															 [NSNumber numberWithBool:FALSE], ShouldResetCredentialsAtStartup,
+															 nil]];
 	
 	// Add the navigation controller's view to the window and display.
     [window addSubview:self.navigationController.view];
@@ -70,6 +74,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+	[[NSUserDefaults standardUserDefaults]synchronize];
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	if ([userDefaults boolForKey:ShouldResetCredentialsAtStartup]) {
+		// clear all request previous credentials
+		[self logout:FALSE animated:FALSE];
+		// set it back to it's default value
+		[userDefaults setBool:FALSE forKey:ShouldResetCredentialsAtStartup];
+		[[NSUserDefaults standardUserDefaults]synchronize];
+	}
+	
+	
 	NSString *apiToken = [APIServices sharedAPIServices].apiToken;
 	if (apiToken.length == 0) {
 		if ([APIServices sharedAPIServices].username.length > 0 && [APIServices sharedAPIServices].password.length > 0) {
@@ -95,6 +110,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	[self enableGPS];
 	[[APIServices sharedAPIServices]refreshGroupsWithPage:1];
+}
+
+- (void)logout:(BOOL)showingLogin animated:(BOOL)animated
+{
+	// clear apiKey
+	[APIServices sharedAPIServices].apiToken = nil;
+	// clear username / password
+	[APIServices sharedAPIServices].username = nil;
+	[APIServices sharedAPIServices].password = nil;
+	// clear all sessions + cookies
+	[ASIHTTPRequest clearSession];
+	// go back to user login
+	if (showingLogin) {
+		[[AppDelegate sharedAppDelegate]showLoginView:animated];
+	}
 }
 
 /**

@@ -8,6 +8,7 @@
 #define UsernameUserDefaults @"UsernameUserDefaults"
 #define PasswordUserDefaults @"PasswordUserDefaults"
 #define APITokenUserDefaults @"APITokenUserDefaults"
+#define ShouldResetCredentialsAtStartup @"ShouldResetCredentialsAtStartup"
 
 // Developer
 #define APITokenEabled TRUE
