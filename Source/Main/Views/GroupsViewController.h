@@ -2,7 +2,7 @@
 #import "BaseTableViewRefreshController.h"
 #import "GroupsDataSource.h"
 
-@interface GroupsViewController : BaseTableViewRefreshController {
+@interface GroupsViewController : BaseTableViewRefreshController <GroupsDataSourceDelegate> {
 
 }
 

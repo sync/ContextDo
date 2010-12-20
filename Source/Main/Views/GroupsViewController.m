@@ -54,6 +54,7 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
 	
 	self.groupsDataSource = [[[GroupsDataSource alloc]init]autorelease];
+	self.groupsDataSource.delegate = self;
 	self.tableView.dataSource = self.groupsDataSource;
 	self.tableView.allowsSelectionDuringEditing = TRUE;
 	[self refreshGroups];
@@ -129,6 +130,23 @@
 	
 	[self.tableView setEditing:editing animated:animated];
 	[self reloadGroups:nil removeCache:FALSE showMore:!editing];
+}
+
+#pragma mark -
+#pragma mark GroupsDataSourceDelegate
+
+- (void)groupsDataSource:(GroupsDataSource *)dataSource 
+	  commitEditingStyle:(UITableViewCellEditingStyle)editingStyle 
+	   forRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		[self.groups removeObjectAtIndex:indexPath.row];
+		[self reloadGroups:nil removeCache:FALSE showMore:FALSE];
+		
+		if (!self.editing) {
+			// TODO update
+		}
+	}
 }
 
 #pragma mark -

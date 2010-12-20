@@ -3,6 +3,8 @@
 
 @implementation GroupsDataSource
 
+@synthesize delegate;
+
 - (Group *)groupForIndexPath:(NSIndexPath *)indexPath
 {
 	return [self objectForIndexPath:indexPath];
@@ -47,6 +49,11 @@
 	}
 	
 	return TRUE;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[self.delegate groupsDataSource:self commitEditingStyle:editingStyle forRowAtIndexPath:indexPath];
 }
 
 @end
