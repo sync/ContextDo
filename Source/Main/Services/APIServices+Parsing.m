@@ -122,43 +122,6 @@
 		
 		NSArray *tasksArray = [[[json objectWithString:responseString error:&error]niledNull]valueForKey:@"task"];
 		
-		// todo remove
-		if (tasksArray.count == 0) {
-			error = nil;
-			tasksArray = [NSArray arrayWithObjects:
-						  [NSDictionary dictionaryWithObjectsAndKeys:
-						   [NSNull null], @"action",
-						   @"0412639224", @"contact_detail",
-						   @"Bodaniel Jeanes", @"contact_name",
-						   @"2010-12-20T09:16:49Z", @"created_at",
-						   @"2010-12-20T10:01:00Z", @"due_at",
-						   [NSNumber numberWithInteger:1], @"group_id",
-						   @"Travel to Sydney", @"group_name",
-						   [NSNumber numberWithInteger:2], @"id",
-						   [NSNumber numberWithDouble:-27.4563023], @"latitude",
-						   @"Fortitude Valley, QLD 4006, Australia", @"location",
-						   [NSNumber numberWithDouble:153.03345], @"longitude",
-						   @"Catch the train", @"name",
-						   @"2010-12-19T08:19:22Z", @"updated_at",
-						   nil],
-						  [NSDictionary dictionaryWithObjectsAndKeys:
-						   [NSNull null], @"action",
-						   @"0412639224", @"contact_detail",
-						   @"Bodaniel Jeanes", @"contact_name",
-						   @"2010-12-19T08:16:49Z", @"created_at",
-						   @"2010-12-25T00:01:00Z", @"due_at",
-						   [NSNumber numberWithInteger:1], @"group_id",
-						   @"Travel to Sydney", @"group_name",
-						   [NSNumber numberWithInteger:1], @"id",
-						   [NSNumber numberWithDouble:-27.451533000000001], @"latitude",
-						   @"38 Skyring Terrace, Newstead QLD 4006, Australia", @"location",
-						   [NSNumber numberWithDouble:153.04731799999999], @"longitude",
-						   @"Catch the bus", @"name",
-						   @"2010-12-19T08:19:22Z", @"updated_at",
-						   nil],
-						  nil];
-		}
-		
 		if (!error && tasksArray) {
 			for (NSDictionary *taskDic in tasksArray) {
 				NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];

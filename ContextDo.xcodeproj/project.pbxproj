@@ -66,6 +66,8 @@
 		2489CAC412BE185000C1A58A /* CTXDOCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CAC312BE185000C1A58A /* CTXDOCell.m */; };
 		2489CADB12BE1D5E00C1A58A /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CADA12BE1D5E00C1A58A /* TasksViewController.m */; };
 		2489CADD12BE1D6700C1A58A /* TasksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2489CADC12BE1D6700C1A58A /* TasksView.xib */; };
+		2489CDFF12BED64B00C1A58A /* GroupEditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CDFD12BED64B00C1A58A /* GroupEditionViewController.m */; };
+		2489CE0012BED64B00C1A58A /* GroupEditionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2489CDFE12BED64B00C1A58A /* GroupEditionView.xib */; };
 		24CA33D212AA5FFD00A69C85 /* UIImage+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CA33D112AA5FFD00A69C85 /* UIImage+Extensions.m */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		3A034842125BF49C00F49FA6 /* NSDate+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03483F125BF49C00F49FA6 /* NSDate+Extensions.m */; };
@@ -198,6 +200,9 @@
 		2489CAD912BE1D5E00C1A58A /* TasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksViewController.h; sourceTree = "<group>"; };
 		2489CADA12BE1D5E00C1A58A /* TasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksViewController.m; sourceTree = "<group>"; };
 		2489CADC12BE1D6700C1A58A /* TasksView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TasksView.xib; sourceTree = "<group>"; };
+		2489CDFC12BED64B00C1A58A /* GroupEditionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupEditionViewController.h; sourceTree = "<group>"; };
+		2489CDFD12BED64B00C1A58A /* GroupEditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupEditionViewController.m; sourceTree = "<group>"; };
+		2489CDFE12BED64B00C1A58A /* GroupEditionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupEditionView.xib; sourceTree = "<group>"; };
 		24CA33D012AA5FFD00A69C85 /* UIImage+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extensions.h"; sourceTree = "<group>"; };
 		24CA33D112AA5FFD00A69C85 /* UIImage+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extensions.m"; sourceTree = "<group>"; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -493,6 +498,16 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
+		2489CDF912BED62D00C1A58A /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				2489CDFC12BED64B00C1A58A /* GroupEditionViewController.h */,
+				2489CDFD12BED64B00C1A58A /* GroupEditionViewController.m */,
+				2489CDFE12BED64B00C1A58A /* GroupEditionView.xib */,
+			);
+			name = Group;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -681,6 +696,7 @@
 				2434D66512B59EAC007B8A13 /* Reset */,
 				3A034D43125D629A00F49FA6 /* Settings */,
 				2489CA0312BDF04000C1A58A /* Groups */,
+				2489CDF912BED62D00C1A58A /* Group */,
 				2489CAA112BE102F00C1A58A /* Tasks */,
 			);
 			path = Views;
@@ -762,6 +778,7 @@
 				2489C5CB12BDDA5200C1A58A /* README in Resources */,
 				2489CA0B12BDF09D00C1A58A /* GroupsView.xib in Resources */,
 				2489CADD12BE1D6700C1A58A /* TasksView.xib in Resources */,
+				2489CE0012BED64B00C1A58A /* GroupEditionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -823,6 +840,7 @@
 				2489CAA412BE10E300C1A58A /* TasksDataSource.m in Sources */,
 				2489CAC412BE185000C1A58A /* CTXDOCell.m in Sources */,
 				2489CADB12BE1D5E00C1A58A /* TasksViewController.m in Sources */,
+				2489CDFF12BED64B00C1A58A /* GroupEditionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -889,7 +907,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: LYKBL PTY LTD";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Anthony Mittaz";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -898,7 +916,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2405D3C9-280E-4B7F-BAE4-9E6353F84AF7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "15649FF0-4770-4201-BC50-423DFFE3AF59";
 				SDKROOT = iphoneos;
 			};
 			name = Appstore;
@@ -935,7 +953,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Resources/Entitlements.plist";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: LYKBL PTY LTD";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Anthony Mittaz";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -944,7 +962,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C3835C15-5B9C-4E26-8309-627D32311363";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "15649FF0-4770-4201-BC50-423DFFE3AF59";
 				SDKROOT = iphoneos;
 			};
 			name = AdHoc;
@@ -980,7 +998,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tyrone Castillo (RSBGGMZ44N)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Anthony Mittaz (T9R4YL8G2Q)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -989,7 +1007,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				OTHER_CFLAGS = "";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B22B3DDC-3E6C-49D4-987A-A7E8BACDE7CB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A07AA8A-5CB8-4757-BBD6-0A48F5EF0671";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -998,7 +1016,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tyrone Castillo (RSBGGMZ44N)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Anthony Mittaz (T9R4YL8G2Q)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1007,7 +1025,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B22B3DDC-3E6C-49D4-987A-A7E8BACDE7CB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A07AA8A-5CB8-4757-BBD6-0A48F5EF0671";
 				SDKROOT = iphoneos;
 			};
 			name = Release;

@@ -5,6 +5,8 @@
 
 - (void)refreshGroups;
 - (void)reloadGroups:(NSArray *)newGroups removeCache:(BOOL)removeCache showMore:(BOOL)showMore;
+- (void)shouldLogout;
+- (void)shdouldAddGroup;
 
 @end
 
@@ -31,6 +33,22 @@
 
 #pragma mark -
 #pragma mark Setup
+
+- (void)setupNavigationBar
+{
+	[super setupNavigationBar];
+	
+	UIBarButtonItem *logoutItem = [[[UIBarButtonItem alloc]initWithTitle:@"Logout"
+																   style:UIBarButtonItemStyleBordered
+																  target:self
+																  action:@selector(shouldLogout)]autorelease];
+	self.navigationItem.leftBarButtonItem = logoutItem;
+	
+	UIBarButtonItem *addItem = [[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+																			 target:self
+																			 action:@selector(shdouldAddGroup)]autorelease];
+	self.navigationItem.rightBarButtonItem = addItem;
+}
 
 - (void)setupDataSource
 {
@@ -144,6 +162,24 @@
 	self.page = 1;
 	
 	[[APIServices sharedAPIServices]refreshGroupsWithPage:page];
+}
+
+- (void)shouldLogout
+{
+	// clear apiKey
+	[APIServices sharedAPIServices].apiToken = nil;
+	// clear username / password
+	[APIServices sharedAPIServices].username = nil;
+	[APIServices sharedAPIServices].password = nil;
+	// clear all sessions + cookies
+	[ASIHTTPRequest clearSession];
+	// go back to user login
+	[[AppDelegate sharedAppDelegate]showLoginView:FALSE];
+}
+
+- (void)shdouldAddGroup
+{
+	
 }
 
 #pragma mark -

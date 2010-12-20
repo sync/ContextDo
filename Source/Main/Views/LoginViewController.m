@@ -45,7 +45,7 @@
 																	action:@selector(shouldRegister)]autorelease];
 	self.navigationItem.rightBarButtonItem = registerItem;
 	
-	UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"cancel" style:UIBarButtonItemStylePlain target:nil action:nil];
+	UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:nil action:nil];
 	self.navigationItem.backBarButtonItem = backBarButtonItem;
 	[backBarButtonItem release];
 }
