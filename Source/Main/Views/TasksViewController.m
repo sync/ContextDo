@@ -83,8 +83,6 @@
 	
 	NSArray *newTasks = [dict valueForKey:@"tasks"];
 	[self reloadTasks:newTasks removeCache:(self.page == 1) showMore:newTasks.count == 10];
-	
-	[self hideRefreshHeaderView];
 }
 
 - (NSMutableArray *)tasks

@@ -72,8 +72,6 @@
 	
 	NSArray *newGroups = [dict valueForKey:@"groups"];
 	[self reloadGroups:newGroups removeCache:(self.page == 1) showMore:newGroups.count == 10];
-	
-	[self hideRefreshHeaderView];
 }
 
 - (NSMutableArray *)groups

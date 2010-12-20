@@ -1,14 +1,13 @@
 // Timeout Request
 #define RequestTimeOutSeconds 30.0
 
-// test@test.com
-// testtest
-
 // User Defaults
 #define UsernameUserDefaults @"UsernameUserDefaults"
 #define PasswordUserDefaults @"PasswordUserDefaults"
 #define APITokenUserDefaults @"APITokenUserDefaults"
 #define ShouldResetCredentialsAtStartup @"ShouldResetCredentialsAtStartup"
+#define ShouldUseDevServer @"ShouldUseDevServer"
+#define DevServerIp @"DevServerIp"
 
 // Developer
 #define APITokenEabled TRUE
@@ -20,7 +19,7 @@
 
 // URL
 // contextdo.heroku.com
-#define BASE_URL @"http://contextdo.heroku.com"
+#define BASE_URL ([[NSUserDefaults standardUserDefaults]boolForKey:ShouldUseDevServer]) ? [[NSUserDefaults standardUserDefaults]stringForKey:DevServerIp] : @"http://contextdo.heroku.com"
 #define CTXDOURL(base, path) [NSString stringWithFormat:@"%@%@", base, path]
 // Login
 #define LOGIN_PATH @"/api_token.json"

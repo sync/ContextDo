@@ -93,7 +93,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 			[self showLoginView:FALSE];
 		}
 	} else {
-		[self enableGPS];
+		[self refreshAllControllers];
 	}
 }
 

@@ -26,13 +26,6 @@
 #pragma mark -
 #pragma mark Content reloading
 
-- (void)shouldReloadContent:(NSNotification *)notification
-{
-	[super shouldReloadContent:notification]; 
-	 
-	[self hideRefreshHeaderView];
-}
-
 - (void)showRefreshHeaderView
 {
 	[self.tableView reloadData];
@@ -52,6 +45,16 @@
 	
 	[self.refreshHeaderView setState:EGOOPullRefreshNormal];
 	[self.refreshHeaderView setCurrentDate];  //  should check if data reload was successful 
+}
+
+#pragma mark -
+#pragma mark BaseLoadingViewCenter Delegate
+
+- (void)baseLoadingViewCenterDidStopForKey:(NSString *)key
+{
+	[super baseLoadingViewCenterDidStopForKey:key];
+	
+	[self hideRefreshHeaderView];
 }
 
 #pragma mark -
