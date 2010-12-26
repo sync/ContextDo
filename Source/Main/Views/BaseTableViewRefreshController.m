@@ -78,6 +78,19 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Memory managedment
+
+- (void)viewDidUnload {
+	[super viewDidUnload];
+	
+	[refreshHeaderView release];
+	refreshHeaderView = nil;
+}
+
+#pragma mark -
+#pragma mark Dealloc
+
 - (void)dealloc
 {
 	[refreshHeaderView release];
