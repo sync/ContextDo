@@ -6,7 +6,7 @@
 
 - (void)refreshGroups;
 - (void)reloadGroups:(NSArray *)newGroups removeCache:(BOOL)removeCache showMore:(BOOL)showMore;
-- (void)shdouldAddGroup;
+- (void)addGroup;
 
 @end
 
@@ -42,7 +42,7 @@
 	
 	UIBarButtonItem *addItem = [[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 																			 target:self
-																			 action:@selector(shdouldAddGroup)]autorelease];
+																			 action:@selector(addGroup)]autorelease];
 	self.navigationItem.rightBarButtonItem = addItem;
 }
 
@@ -162,7 +162,8 @@
 		} else {
 			GroupEditionViewController *controller = [[[GroupEditionViewController alloc]initWithNibName:@"GroupEditionView" bundle:nil]autorelease];
 			controller.group = group;
-			[self.navigationController pushViewController:controller animated:TRUE];
+			UINavigationController *navController = [[[UINavigationController alloc]initWithRootViewController:controller]autorelease];
+			[self.navigationController presentModalViewController:navController animated:TRUE];
 		}
 	} else {
 		if ([group.name isEqualToString:ShowMorePlaceholder]) {
@@ -191,9 +192,11 @@
 	[[APIServices sharedAPIServices]refreshGroupsWithPage:page];
 }
 
-- (void)shdouldAddGroup
+- (void)addGroup
 {
-	
+	GroupEditionViewController *controller = [[[GroupEditionViewController alloc]initWithNibName:@"GroupEditionView" bundle:nil]autorelease];
+	UINavigationController *navController = [[[UINavigationController alloc]initWithRootViewController:controller]autorelease];
+	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
 
 #pragma mark -

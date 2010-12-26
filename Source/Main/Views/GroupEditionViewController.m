@@ -3,6 +3,7 @@
 @interface GroupEditionViewController (private)
 
 - (void)doneEditing;
+- (void)cancelEditing;
 
 @end
 
@@ -33,6 +34,10 @@
 {
 	[super setupNavigationBar];
 	
+	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+																						   target:self
+																						   action:@selector(cancelEditing)]autorelease];
+	
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 																						   target:self
 																						   action:@selector(doneEditing)]autorelease];
@@ -52,9 +57,14 @@
 #pragma mark -
 #pragma mark Actions
 
+- (void)cancelEditing
+{
+	[self.navigationController dismissModalViewControllerAnimated:TRUE];
+}
+
 - (void)doneEditing
 {
-	[self.navigationController popViewControllerAnimated:TRUE];
+	[self.navigationController dismissModalViewControllerAnimated:TRUE];
 	// todo save
 }
 
