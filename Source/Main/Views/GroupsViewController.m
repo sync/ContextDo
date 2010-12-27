@@ -98,8 +98,7 @@
 	}
 	
 	Group *todayGroup = [Group groupWithId:[NSNumber numberWithInt:-1]
-									  name:TodaysTasksPlacholder
-								modifiedAt:nil];
+									  name:TodaysTasksPlacholder];
 	
 	[self.groupsDataSource.content addObject:[NSArray arrayWithObject:todayGroup]];
 	
@@ -109,8 +108,7 @@
 	
 	if (showMore) {
 		Group *showMoreGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
-											 name:ShowMorePlaceholder
-									   modifiedAt:nil];
+											 name:ShowMorePlaceholder];
 		[section2 addObject:showMoreGroup];
 	}
 	

@@ -1,6 +1,8 @@
 #import "APIServices+Parsing.h"
 #import "APIServices+Utils.h"
 #import "JSON.h"
+#import "NSObject+JSONSerializableSupport.h"
+#import "ObjectiveResourceDateFormatter.h"
 
 @implementation APIServices (parsing)
 
@@ -53,11 +55,7 @@
 
 - (void)parseGroups:(ASIHTTPRequest *)request
 {
-	NSString *responseString = [request responseString];
-	if ([responseString length] != 0)  {
-		NSError *error = nil;
-		
-		SBJsonParser *json = [[[SBJsonParser alloc]init] autorelease];
+	if ([request.responseData length] != 0)  {
 		
 		//	"group": {
 		//		"created_at": "2010-12-19T05:21:31Z",
@@ -66,27 +64,13 @@
 		//		"updated_at": "2010-12-19T05:21:31Z"
 		//	}
 		
-		NSMutableArray *content = [NSMutableArray array];
-		
-		NSArray *groupsArray = [[[json objectWithString:responseString error:&error]niledNull]valueForKey:@"group"];
-		
-		if (!error && groupsArray) {
-			for (NSDictionary *groupDict in groupsArray) {
-				NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-				// 2010-07-24T05:26:28Z
-				[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-				Group *group = [Group groupWithId:[[groupDict valueForKey:@"id"]niledNull]
-											 name:[[groupDict valueForKey:@"name"]niledNull]
-									   modifiedAt:[dateFormatter dateFromString:[[groupDict valueForKey:@"updated_at"]niledNull]]];
-				if (group) {
-					[content addObject:group];
-				}
-			}
-		}
+		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
+		NSArray *content = [NSArray fromJSONData:request.responseData];
+
 		
 		NSDictionary *info = request.userInfo;
 		[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
-										 [NSArray arrayWithArray:content], @"groups",
+										 content, @"groups",
 										 [info valueForKey:@"object"], @"object",
 										 nil
 										 ]];
@@ -95,12 +79,8 @@
 
 - (void)parseTasks:(ASIHTTPRequest *)request
 {
-	NSString *responseString = [request responseString];
-	if ([responseString length] != 0)  {
-		NSError *error = nil;
-		
-		SBJsonParser *json = [[[SBJsonParser alloc]init] autorelease];
-		
+	if (request.responseData != 0)  {
+	
 		//	"task": {
 		//		"action": null, 
 		//		"contact_detail": "0412639224", 
@@ -115,40 +95,15 @@
 		//		"longitude": 153.04731799999999, 
 		//		"name": "My Task", 
 		//		"updated_at": "2010-12-19T08:19:22Z"
+		//		"completed_at": "2010-12-19T08:19:22Z"
 		//	}
 		
-		
-		NSMutableArray *content = [NSMutableArray array];
-		
-		NSArray *tasksArray = [[[json objectWithString:responseString error:&error]niledNull]valueForKey:@"task"];
-		
-		if (!error && tasksArray) {
-			for (NSDictionary *taskDic in tasksArray) {
-				NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-				// 2010-07-24T05:26:28Z
-				[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-				Task *task = [Task taskWithId:[[taskDic valueForKey:@"id"]niledNull]
-										 name:[[taskDic valueForKey:@"name"]niledNull] 
-									 location:[[taskDic valueForKey:@"location"]niledNull]
-								   modifiedAt:[dateFormatter dateFromString:[[taskDic valueForKey:@"updated_at"]niledNull]]];
-				task.action = [[taskDic valueForKey:@"action"]niledNull];
-				task.contactDetail = [[taskDic valueForKey:@"contact_detail"]niledNull];
-				task.contactName = [[taskDic valueForKey:@"contact_name"]niledNull];
-				task.dueAt = [dateFormatter dateFromString:[[taskDic valueForKey:@"due_at"]niledNull]];
-				task.completedAt = [dateFormatter dateFromString:[[taskDic valueForKey:@"completed_at"]niledNull]];
-				task.groupId = [[taskDic valueForKey:@"group_id"]niledNull];
-				task.groupName = [[taskDic valueForKey:@"group_name"]niledNull];
-				task.latitude = [[taskDic valueForKey:@"latitude"]niledNull];
-				task.longitude = [[taskDic valueForKey:@"longitude"]niledNull];
-				if (task) {
-					[content addObject:task];
-				}
-			}
-		}
+		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
+		NSArray *content = [NSArray fromJSONData:request.responseData];
 		
 		NSDictionary *info = request.userInfo;
 		[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
-										 [NSArray arrayWithArray:content], @"tasks",
+										 content, @"tasks",
 										 [info valueForKey:@"object"], @"object",
 										 nil
 										 ]];

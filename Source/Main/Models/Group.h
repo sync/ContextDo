@@ -5,12 +5,12 @@
 	
 }
 
-+ (Group *)groupWithId:(NSNumber *)aGroupId
-				  name:(NSString *)aName
-			modifiedAt:(NSDate *)aModifiedAt;
-
 @property (nonatomic, copy) NSNumber *groupId;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSDate *modifiedAt;
+@property (nonatomic, copy) NSDate *updatedAt;
+@property (nonatomic, copy) NSDate *createdAt;
+
++ (Group *)groupWithId:(NSNumber *)aGroupId
+				  name:(NSString *)aName;
 
 @end

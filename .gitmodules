@@ -13,3 +13,6 @@
 [submodule "Source/External/EGOTableViewPullRefresh"]
 	path = Source/External/EGOTableViewPullRefresh
 	url = git://github.com/enormego/EGOTableViewPullRefresh.git
+[submodule "Source/External/objectivesupport"]
+	path = Source/External/objectivesupport
+	url = git://github.com/yfactorial/objectivesupport.git

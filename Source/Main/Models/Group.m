@@ -3,11 +3,10 @@
 
 @implementation Group
 
-@synthesize name, modifiedAt, groupId;
+@synthesize groupId, name, createdAt, updatedAt;
 
 + (Group *)groupWithId:(NSNumber *)aGroupId
 				  name:(NSString *)aName
-			modifiedAt:(NSDate *)aModifiedAt
 {
 	if (!aGroupId || !aName) {
 		return nil;
@@ -16,16 +15,24 @@
 	Group *group = [[[Group alloc]init]autorelease];
 	group.groupId = aGroupId;
 	group.name = aName;
-	group.modifiedAt = aModifiedAt;
 	
 	return group;
+}
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:
+			@"groupId:%@, name:%@, createdAt:%@, updatedAt:%@",
+			self.groupId, self.name, self.createdAt, self.updatedAt 
+			];
 }
 
 - (void)dealloc
 {
 	[groupId release];
 	[name release];
-	[modifiedAt release];
+	[updatedAt release];
+	[createdAt release];
 	
 	[super dealloc];
 }

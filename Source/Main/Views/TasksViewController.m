@@ -114,8 +114,7 @@
 	if (showMore) {
 		Task *showMore = [Task taskWithId:[NSNumber numberWithInt:NSNotFound] 
 									 name: ShowMorePlaceholder
-								 location:nil 
-							   modifiedAt:nil];
+								 location:nil];
 		[self.tasksDataSource.content addObject:showMore];
 	}
 	
