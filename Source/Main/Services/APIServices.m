@@ -173,14 +173,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
 }
 
-- (void)createGroupWithName:(NSString *)name
+- (void)addGroupWithName:(NSString *)name
 {
 	if (!name) {
 		return;
 	}
 	
 	NSString *notificationName = GroupAddNotification;
-	NSString *path = @"createGroupWithName";
+	NSString *path = @"addGroupWithName";
 	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
@@ -328,7 +328,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		} else if ([path isEqualToString:@"refreshTasksWithGroupId"]|| 
 				   [path isEqualToString:@"refreshTasksWithDue"]) {
 			[self parseTasks:request];
-		} else if ([path isEqualToString:@"createGroupWithName"]|| 
+		} else if ([path isEqualToString:@"addGroupWithName"]|| 
 				   [path isEqualToString:@"editGroupWithId"] ||
 				   [path isEqualToString:@"deleteGroupWitId"]) {
 			[self parseGroup:request];

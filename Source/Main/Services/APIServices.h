@@ -15,7 +15,7 @@
 - (void)resetPasswordWithUsername:(NSString *)username;
 
 - (void)refreshGroupsWithPage:(NSInteger)page;
-- (void)createGroupWithName:(NSString *)name;
+- (void)addGroupWithName:(NSString *)name;
 - (void)editGroupWithId:(NSNumber *)groupId name:(NSString *)name;
 - (void)deleteGroupWitId:(NSNumber *)groupId;
 

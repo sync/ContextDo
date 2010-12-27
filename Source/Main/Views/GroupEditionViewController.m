@@ -74,7 +74,7 @@
 		self.group.name = self.groupTextField.text;
 		[[APIServices sharedAPIServices]editGroupWithId:self.group.groupId name:self.groupTextField.text];
 	} else {
-		[[APIServices sharedAPIServices]createGroupWithName:self.groupTextField.text];
+		[[APIServices sharedAPIServices]addGroupWithName:self.groupTextField.text];
 	}
 }
 
