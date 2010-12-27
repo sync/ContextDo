@@ -43,3 +43,4 @@
 #define GroupsDidLoadNotification @"GroupsDidLoadNotification"
 #define TasksDidLoadNotification @"TasksDidLoadNotification"
 #define TasksDueDidLoadNotification @"TasksDueDidLoadNotification"
+#define GroupNotification @"GroupNotification"
