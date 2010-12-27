@@ -77,6 +77,29 @@
 	}
 }
 
+- (void)parseGroup:(ASIHTTPRequest *)request
+{
+	if ([request.responseData length] != 0)  {
+		
+		//	"group": {
+		//		"created_at": "2010-12-19T05:21:31Z",
+		//		"id": 2,
+		//		"name": "Foo",
+		//		"updated_at": "2010-12-19T05:21:31Z"
+		//	}
+		
+		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
+		Group *group = [Group fromJSONData:request.responseData];
+		
+		
+		NSDictionary *info = request.userInfo;
+		[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
+										 (group) ? group : [info valueForKey:@"object"], @"object",
+										 nil
+										 ]];
+	}
+}
+
 - (void)parseTasks:(ASIHTTPRequest *)request
 {
 	if (request.responseData != 0)  {

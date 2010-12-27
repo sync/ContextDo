@@ -30,6 +30,9 @@
 // Groups
 #define GROUPS_PATH @"/groups.json"
 #define GROUPSURL(base, path, page) [NSString stringWithFormat:@"%@?page=%d", CTXDOURL(base, path), page]
+// Group
+#define GROUP_PATH @"/groups"
+#define GROUPURL(base, path, groupId) [NSString stringWithFormat:@"%@/%@.json", CTXDOURL(base, path), groupId]
 // Task
 #define TASKS_PATH @"/tasks.json"
 #define TASKSURL(base, path, groupId, page) [NSString stringWithFormat:@"%@/groups/%@%@?page=%d", base, groupId, path, page]
@@ -43,4 +46,6 @@
 #define GroupsDidLoadNotification @"GroupsDidLoadNotification"
 #define TasksDidLoadNotification @"TasksDidLoadNotification"
 #define TasksDueDidLoadNotification @"TasksDueDidLoadNotification"
-#define GroupNotification @"GroupNotification"
+#define GroupAddNotification @"GroupAddNotification"
+#define GroupEditNotification @"GroupEditNotification"
+#define GroupDeleteNotification @"GroupDeleteNotification"

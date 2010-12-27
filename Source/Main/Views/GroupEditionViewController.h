@@ -6,6 +6,6 @@
 }
 
 @property (nonatomic, retain) Group *group;
-@property (nonatomic, retain) IBOutlet UITextField *groupLabel;
+@property (nonatomic, retain) IBOutlet UITextField *groupTextField;
 
 @end

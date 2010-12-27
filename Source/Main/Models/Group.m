@@ -19,6 +19,16 @@
 	return group;
 }
 
+- (BOOL)isEqual:(id)anObject
+{
+	return [self.groupId isEqual:[anObject groupId]];
+}
+
+- (NSUInteger)hash
+{
+	return [self.groupId hash];
+}
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:

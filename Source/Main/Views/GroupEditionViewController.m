@@ -9,7 +9,7 @@
 
 @implementation GroupEditionViewController
 
-@synthesize groupLabel, group;
+@synthesize groupTextField, group;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -19,15 +19,20 @@
 	
 	self.title = (self.group) ? @"Edit Group" : @"Add Group";
 	
-	self.groupLabel.text = self.group.name;
-	[self.groupLabel becomeFirstResponder];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupEditNotification object:nil];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupEditNotification];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupAddNotification object:nil];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupAddNotification];
+	
+	self.groupTextField.text = self.group.name;
+	[self.groupTextField becomeFirstResponder];
 }
 
 - (void)viewDidUnload
 {
 	[super viewDidUnload];
 	
-	self.groupLabel = nil;
+	self.groupTextField = nil;
 }
 
 - (void)setupNavigationBar
@@ -64,8 +69,21 @@
 
 - (void)doneEditing
 {
+	[self.groupTextField resignFirstResponder];
+	if (self.group) {
+		self.group.name = self.groupTextField.text;
+		[[APIServices sharedAPIServices]editGroupWithId:self.group.groupId name:self.groupTextField.text];
+	} else {
+		[[APIServices sharedAPIServices]createGroupWithName:self.groupTextField.text];
+	}
+}
+
+#pragma mark -
+#pragma mark Content reloading
+
+- (void)shouldReloadContent:(NSNotification *)notification
+{
 	[self.navigationController dismissModalViewControllerAnimated:TRUE];
-	// todo save
 }
 
 #pragma mark -
@@ -73,8 +91,12 @@
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupEditNotification];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupAddNotification];
+	
 	[group release];
-	[groupLabel release];
+	[groupTextField release];
 	
 	[super dealloc];
 }

@@ -27,6 +27,16 @@
 	return [(id)[AppDelegate sharedAppDelegate].currentLocation getDistanceFrom:taskLocation];
 }
 
+- (BOOL)isEqual:(id)anObject
+{
+	return [self.taskId isEqual:[anObject taskId]];
+}
+
+- (NSUInteger)hash
+{
+	return [self.taskId hash];
+}
+
 - (NSString *)description
 {
 	return [NSString stringWithFormat:

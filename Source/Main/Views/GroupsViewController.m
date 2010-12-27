@@ -7,6 +7,8 @@
 - (void)refreshGroups;
 - (void)reloadGroups:(NSArray *)newGroups removeCache:(BOOL)removeCache showMore:(BOOL)showMore;
 - (void)addGroup;
+- (void)groupEditNotification:(NSNotification *)notification;
+- (void)groupAddNotification:(NSNotification *)notification;
 
 @end
 
@@ -51,6 +53,8 @@
 	[super setupDataSource];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupEditNotification:) name:GroupEditNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupAddNotification:) name:GroupAddNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
 	
 	self.groupsDataSource = [[[GroupsDataSource alloc]init]autorelease];
@@ -72,6 +76,26 @@
 	
 	NSArray *newGroups = [dict valueForKey:@"groups"];
 	[self reloadGroups:newGroups removeCache:(self.page == 1) showMore:newGroups.count == 10];
+}
+
+- (void)groupEditNotification:(NSNotification *)notification
+{
+	NSDictionary *dict = [notification object];
+	
+	Group *group = [dict valueForKey:@"object"];
+	if (group) {
+		NSInteger index = [self.groups indexOfObject:group];
+		if (index != NSNotFound) {
+			[self.groups replaceObjectAtIndex:index withObject:group];
+			[self.tableView reloadData];
+		}
+		
+	}
+}
+
+- (void)groupAddNotification:(NSNotification *)notification
+{
+	[self refreshGroups];
 }
 
 - (NSMutableArray *)groups
@@ -136,12 +160,11 @@
 	   forRowAtIndexPath:(NSIndexPath *)indexPath;
 {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
+		[[APIServices sharedAPIServices]deleteGroupWitId:group.groupId];
+		
 		[self.groups removeObjectAtIndex:indexPath.row];
 		[self reloadGroups:nil removeCache:FALSE showMore:FALSE];
-		
-		if (!self.editing) {
-			// TODO update
-		}
 	}
 }
 

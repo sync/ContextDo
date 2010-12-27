@@ -173,14 +173,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
 }
 
-- (void)editGroupWithName:(NSString *)name groupId:(NSNumber *)groupId
+- (void)createGroupWithName:(NSString *)name
 {
 	if (!name) {
 		return;
 	}
 	
-	NSString *notificationName = GroupNotification;
-	NSString *path = @"editGroupWithName";
+	NSString *notificationName = GroupAddNotification;
+	NSString *path = @"createGroupWithName";
 	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
@@ -192,10 +192,35 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
-	if (groupId) {
-		[request setRequestMethod:@"PUT"];
-		[request setPostValue:groupId forKey:@"group[id]"];
+	[request setPostValue:name forKey:@"group[name]"];
+	
+	[self.networkQueue addOperation:request];
+	[self.networkQueue go];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
+}
+
+
+- (void)editGroupWithId:(NSNumber *)groupId name:(NSString *)name
+{
+	if (!name) {
+		return;
 	}
+	
+	NSString *notificationName = GroupEditNotification;
+	NSString *path = @"editGroupWithId";
+	
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  path, @"path",
+							  notificationName, @"notificationName",
+							  nil];
+	
+	NSString *url = GROUPURL(BASE_URL, GROUP_PATH, groupId);
+	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
+	request.userInfo = userInfo;
+	request.delegate = self;
+	
+	[request setRequestMethod:@"PUT"];
+
 	[request setPostValue:name forKey:@"group[name]"];
 	
 	[self.networkQueue addOperation:request];
@@ -209,21 +234,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		return;
 	}
 	
-	NSString *notificationName = GroupNotification;
+	NSString *notificationName = GroupDeleteNotification;
 	NSString *path = @"deleteGroupWitId";
 	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
 							  notificationName, @"notificationName",
+							  groupId, @"object",
 							  nil];
 	
-	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
+	NSString *url = GROUPURL(BASE_URL, GROUP_PATH, groupId);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
 	[request setRequestMethod:@"DELETE"];
-	[request setPostValue:groupId forKey:@"group[id]"];
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
@@ -303,6 +328,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		} else if ([path isEqualToString:@"refreshTasksWithGroupId"]|| 
 				   [path isEqualToString:@"refreshTasksWithDue"]) {
 			[self parseTasks:request];
+		} else if ([path isEqualToString:@"createGroupWithName"]|| 
+				   [path isEqualToString:@"editGroupWithId"] ||
+				   [path isEqualToString:@"deleteGroupWitId"]) {
+			[self parseGroup:request];
 		}
 	}
 	
