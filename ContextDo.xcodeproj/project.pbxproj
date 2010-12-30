@@ -635,6 +635,13 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
+		24ADA8C412C84C97000BE62C /* Task */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Task;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -827,6 +834,7 @@
 				2489CA0312BDF04000C1A58A /* Groups */,
 				2489CDF912BED62D00C1A58A /* Group */,
 				2489CAA112BE102F00C1A58A /* Tasks */,
+				24ADA8C412C84C97000BE62C /* Task */,
 			);
 			path = Views;
 			sourceTree = "<group>";
