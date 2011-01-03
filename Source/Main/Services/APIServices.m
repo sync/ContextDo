@@ -1,4 +1,5 @@
 #import "APIServices.h"
+#import "BaseASIServices+Utils.h"
 #import "APIServices+Parsing.h"
 
 @implementation APIServices
@@ -301,11 +302,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 #pragma mark -
 #pragma mark ASIHTTPRequest delegate
 
-- (void)fetchStarted:(ASIHTTPRequest *)request
-{
-	DLog(@"fetch completed for url: %@", request.url);
-}
-
 - (void)fetchCompleted:(ASIHTTPRequest *)request
 {
 	NSError *error = request.error;
@@ -351,12 +347,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:[request.error localizedDescription] forKey:[self notificationNameForRequest:request]];
 	}
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStopLoadingForKey:[self notificationNameForRequest:request]];
-}
-
-- (void)queueFinished:(ASINetworkQueue *)queue
-{
-	DLog(@"queue finished for service: %@", NSStringFromClass([self class]));
-	
 }
 
 @end

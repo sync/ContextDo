@@ -158,10 +158,11 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }
 
-- (void)showRefreshHeaderView
-{
-	[super showRefreshHeaderView];
-	
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate 
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{	
 	[self refreshTasks];
 }
 

@@ -81,8 +81,6 @@
 		24F886A512D16A7300370A5F /* MyLocationGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F880F512D16A7200370A5F /* MyLocationGetter.m */; };
 		24F886A612D16A7300370A5F /* BaseASIServices+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F880F812D16A7200370A5F /* BaseASIServices+Utils.m */; };
 		24F886A712D16A7300370A5F /* BaseASIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F880FA12D16A7200370A5F /* BaseASIServices.m */; };
-		24F886A812D16A7300370A5F /* FacebookServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F880FC12D16A7200370A5F /* FacebookServices.m */; };
-		24F886A912D16A7300370A5F /* TwitterServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F880FE12D16A7200370A5F /* TwitterServices.m */; };
 		24F886AA12D16A7300370A5F /* NSObject+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F8810112D16A7200370A5F /* NSObject+Extensions.m */; };
 		24F886AB12D16A7300370A5F /* AccessoryViewWithImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F8810412D16A7200370A5F /* AccessoryViewWithImage.m */; };
 		24F886AC12D16A7300370A5F /* BaseLoadingViewCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F8810612D16A7200370A5F /* BaseLoadingViewCenter.m */; };
@@ -252,10 +250,6 @@
 		24F880F812D16A7200370A5F /* BaseASIServices+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BaseASIServices+Utils.m"; sourceTree = "<group>"; };
 		24F880F912D16A7200370A5F /* BaseASIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseASIServices.h; sourceTree = "<group>"; };
 		24F880FA12D16A7200370A5F /* BaseASIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseASIServices.m; sourceTree = "<group>"; };
-		24F880FB12D16A7200370A5F /* FacebookServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookServices.h; sourceTree = "<group>"; };
-		24F880FC12D16A7200370A5F /* FacebookServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookServices.m; sourceTree = "<group>"; };
-		24F880FD12D16A7200370A5F /* TwitterServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterServices.h; sourceTree = "<group>"; };
-		24F880FE12D16A7200370A5F /* TwitterServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterServices.m; sourceTree = "<group>"; };
 		24F8810012D16A7200370A5F /* NSObject+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extensions.h"; sourceTree = "<group>"; };
 		24F8810112D16A7200370A5F /* NSObject+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extensions.m"; sourceTree = "<group>"; };
 		24F8810312D16A7200370A5F /* AccessoryViewWithImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessoryViewWithImage.h; sourceTree = "<group>"; };
@@ -754,10 +748,6 @@
 				24F880F812D16A7200370A5F /* BaseASIServices+Utils.m */,
 				24F880F912D16A7200370A5F /* BaseASIServices.h */,
 				24F880FA12D16A7200370A5F /* BaseASIServices.m */,
-				24F880FB12D16A7200370A5F /* FacebookServices.h */,
-				24F880FC12D16A7200370A5F /* FacebookServices.m */,
-				24F880FD12D16A7200370A5F /* TwitterServices.h */,
-				24F880FE12D16A7200370A5F /* TwitterServices.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1090,8 +1080,6 @@
 				24F886A512D16A7300370A5F /* MyLocationGetter.m in Sources */,
 				24F886A612D16A7300370A5F /* BaseASIServices+Utils.m in Sources */,
 				24F886A712D16A7300370A5F /* BaseASIServices.m in Sources */,
-				24F886A812D16A7300370A5F /* FacebookServices.m in Sources */,
-				24F886A912D16A7300370A5F /* TwitterServices.m in Sources */,
 				24F886AA12D16A7300370A5F /* NSObject+Extensions.m in Sources */,
 				24F886AB12D16A7300370A5F /* AccessoryViewWithImage.m in Sources */,
 				24F886AC12D16A7300370A5F /* BaseLoadingViewCenter.m in Sources */,

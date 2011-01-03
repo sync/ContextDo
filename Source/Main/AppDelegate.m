@@ -155,7 +155,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	if (!locationGetter) {
 		locationGetter = [[MyLocationGetter alloc]init];
-		locationGetter.alwaysOn = FALSE;
 	}
 	return locationGetter;
 }
