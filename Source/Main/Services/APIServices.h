@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
-#import "BaseServices.h"
+#import "BaseASIServices.h"
 
-@interface APIServices : BaseServices <BaseServicesContentManagement> {
+@interface APIServices : BaseASIServices {
 
 }
 
