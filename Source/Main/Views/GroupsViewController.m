@@ -26,6 +26,10 @@
 	self.title = @"Groups";
 	
 	self.page = 1;
+	
+	// Test
+	[self.customNavigationBar setBackgroundImage:[UIImage imageNamed:@"titlebar.png"]
+									 forBarStyle:UIBarStyleDefault];
 }
 
 - (void)viewDidUnload

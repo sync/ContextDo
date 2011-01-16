@@ -22,6 +22,17 @@
 	self.title = self.group.name;
 	
 	self.page = 1;
+	
+	self.navigationItem.leftBarButtonItem = [self.customNavigationBar backButtonForBackground:[UIImage imageNamed:@"btn_backarrow_off.png"]
+																			 highlightedImage:[UIImage imageNamed:@"btn_backarrow_touch.png"] 
+																				 leftCapWidth:16.0
+																					   target:self
+																					   action:@selector(backButtonTouched)];
+}
+
+- (void)backButtonTouched
+{
+	[self.navigationController popViewControllerAnimated:TRUE];
 }
 
 - (void)viewDidUnload

@@ -31,6 +31,13 @@
 		2489CDFF12BED64B00C1A58A /* GroupEditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CDFD12BED64B00C1A58A /* GroupEditionViewController.m */; };
 		2489CE0012BED64B00C1A58A /* GroupEditionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2489CDFE12BED64B00C1A58A /* GroupEditionView.xib */; };
 		2489CE5E12BF1EB300C1A58A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2489CE5D12BF1EB300C1A58A /* Settings.bundle */; };
+		2490FC1612E2FC6100F56B39 /* CustomNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2490FC1512E2FC6100F56B39 /* CustomNavigationBar.m */; };
+		2490FD9312E34D2300F56B39 /* titlebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FD9112E34D2300F56B39 /* titlebar.png */; };
+		2490FD9412E34D2300F56B39 /* titlebar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FD9212E34D2300F56B39 /* titlebar@2x.png */; };
+		2490FE5A12E3572D00F56B39 /* btn_backarrow_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FE5612E3572D00F56B39 /* btn_backarrow_off.png */; };
+		2490FE5B12E3572D00F56B39 /* btn_backarrow_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FE5712E3572D00F56B39 /* btn_backarrow_off@2x.png */; };
+		2490FE5C12E3572D00F56B39 /* btn_backarrow_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FE5812E3572D00F56B39 /* btn_backarrow_touch.png */; };
+		2490FE5D12E3572D00F56B39 /* btn_backarrow_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FE5912E3572D00F56B39 /* btn_backarrow_touch@2x.png */; };
 		24F8814812D16A7200370A5F /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878BB12D16A6F00370A5F /* ASIAuthenticationDialog.m */; };
 		24F8814912D16A7200370A5F /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878BE12D16A6F00370A5F /* ASIDataCompressor.m */; };
 		24F8814A12D16A7200370A5F /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878C012D16A6F00370A5F /* ASIDataDecompressor.m */; };
@@ -147,6 +154,14 @@
 		2489CDFD12BED64B00C1A58A /* GroupEditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupEditionViewController.m; sourceTree = "<group>"; };
 		2489CDFE12BED64B00C1A58A /* GroupEditionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupEditionView.xib; sourceTree = "<group>"; };
 		2489CE5D12BF1EB300C1A58A /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		2490FC1412E2FC6100F56B39 /* CustomNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationBar.h; sourceTree = "<group>"; };
+		2490FC1512E2FC6100F56B39 /* CustomNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationBar.m; sourceTree = "<group>"; };
+		2490FD9112E34D2300F56B39 /* titlebar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = titlebar.png; sourceTree = "<group>"; };
+		2490FD9212E34D2300F56B39 /* titlebar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "titlebar@2x.png"; sourceTree = "<group>"; };
+		2490FE5612E3572D00F56B39 /* btn_backarrow_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_backarrow_off.png; sourceTree = "<group>"; };
+		2490FE5712E3572D00F56B39 /* btn_backarrow_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_backarrow_off@2x.png"; sourceTree = "<group>"; };
+		2490FE5812E3572D00F56B39 /* btn_backarrow_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_backarrow_touch.png; sourceTree = "<group>"; };
+		2490FE5912E3572D00F56B39 /* btn_backarrow_touch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_backarrow_touch@2x.png"; sourceTree = "<group>"; };
 		24F878BA12D16A6F00370A5F /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		24F878BB12D16A6F00370A5F /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		24F878BC12D16A6F00370A5F /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -781,6 +796,8 @@
 				24F8811112D16A7200370A5F /* BaseWebViewController.m */,
 				24F8811212D16A7200370A5F /* ChoicesListDataSource.h */,
 				24F8811312D16A7200370A5F /* ChoicesListDataSource.m */,
+				2490FC1412E2FC6100F56B39 /* CustomNavigationBar.h */,
+				2490FC1512E2FC6100F56B39 /* CustomNavigationBar.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -872,6 +889,12 @@
 		3A57FED811FFB24F00248D1D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2490FD9112E34D2300F56B39 /* titlebar.png */,
+				2490FD9212E34D2300F56B39 /* titlebar@2x.png */,
+				2490FE5612E3572D00F56B39 /* btn_backarrow_off.png */,
+				2490FE5712E3572D00F56B39 /* btn_backarrow_off@2x.png */,
+				2490FE5812E3572D00F56B39 /* btn_backarrow_touch.png */,
+				2490FE5912E3572D00F56B39 /* btn_backarrow_touch@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -1012,6 +1035,12 @@
 				24F883C812D16A7200370A5F /* whiteArrow.png in Resources */,
 				24F883C912D16A7200370A5F /* whiteArrow@2x.png in Resources */,
 				24F886B112D16A7300370A5F /* BaseWebView.xib in Resources */,
+				2490FD9312E34D2300F56B39 /* titlebar.png in Resources */,
+				2490FD9412E34D2300F56B39 /* titlebar@2x.png in Resources */,
+				2490FE5A12E3572D00F56B39 /* btn_backarrow_off.png in Resources */,
+				2490FE5B12E3572D00F56B39 /* btn_backarrow_off@2x.png in Resources */,
+				2490FE5C12E3572D00F56B39 /* btn_backarrow_touch.png in Resources */,
+				2490FE5D12E3572D00F56B39 /* btn_backarrow_touch@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1089,6 +1118,7 @@
 				24F886B012D16A7300370A5F /* BaseViewController.m in Sources */,
 				24F886B212D16A7300370A5F /* BaseWebViewController.m in Sources */,
 				24F886B312D16A7300370A5F /* ChoicesListDataSource.m in Sources */,
+				2490FC1612E2FC6100F56B39 /* CustomNavigationBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
