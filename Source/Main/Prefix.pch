@@ -15,6 +15,7 @@
 	#import "NSObject+Extensions.h"
 	#import "UIColor+i7HexColor.h"
 	#import "DefaultStyleSheet.h"
+	#import "CustomNavigationController.h"
 	#import "Group.h"
 	#import "Task.h"
 	#import "APIServices.h"

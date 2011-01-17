@@ -148,8 +148,22 @@
 {
 	[super setEditing:editing animated:animated];
 	
+	[self.navigationItem setLeftBarButtonItem:self.editButtonItem animated:FALSE];
+	
 	[self.tableView setEditing:editing animated:animated];
 	[self reloadGroups:nil removeCache:FALSE showMore:!editing];
+}
+
+- (void)editButtonPressed:(id)sender
+{
+	[self setEditing:!self.editing animated:TRUE];
+}
+
+- (UIBarButtonItem *)editButtonItem
+{
+	return [[DefaultStyleSheet sharedDefaultStyleSheet] editBarButtonItemEditing:self.editing
+																		  target:self
+																		selector:@selector(editButtonPressed:)];
 }
 
 #pragma mark -
@@ -183,7 +197,9 @@
 		} else {
 			GroupEditionViewController *controller = [[[GroupEditionViewController alloc]initWithNibName:@"GroupEditionView" bundle:nil]autorelease];
 			controller.group = group;
-			UINavigationController *navController = [[[UINavigationController alloc]initWithRootViewController:controller]autorelease];
+			CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
+			[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+													  forBarStyle:UIBarStyleDefault];
 			[self.navigationController presentModalViewController:navController animated:TRUE];
 		}
 	} else {
@@ -217,7 +233,9 @@
 - (void)addGroup
 {
 	GroupEditionViewController *controller = [[[GroupEditionViewController alloc]initWithNibName:@"GroupEditionView" bundle:nil]autorelease];
-	UINavigationController *navController = [[[UINavigationController alloc]initWithRootViewController:controller]autorelease];
+	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
+	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+											  forBarStyle:UIBarStyleDefault];
 	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
 

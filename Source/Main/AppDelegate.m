@@ -1,6 +1,5 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
-#import "CustomNavigationController.h"
 
 @interface AppDelegate (private)
 
@@ -26,7 +25,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	LoginViewController *controller = [[[LoginViewController alloc]initWithNibName:@"LoginView" bundle:nil]autorelease];
 	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
-	
 	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 											  forBarStyle:UIBarStyleDefault];
 	

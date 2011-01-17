@@ -9,8 +9,13 @@
 
 @property (nonatomic, readonly) UIImage *navBarBackgroundImage;
 
-- (UIBarButtonItem *)backItemWithTitle:(NSString *)title target:(id)target selector:(SEL)action;
+- (UIBarButtonItem *)backItemWithText:(NSString *)text target:(id)target selector:(SEL)action;
 
 - (UILabel *)titleViewWithText:(NSString *)text;
+
+- (UIBarButtonItem *)navBarButtonItemWithText:(NSString *)text target:(id)target selector:(SEL)action;
+- (UIBarButtonItem *)doneNavBarButtonItemWithText:(NSString *)text target:(id)target selector:(SEL)action;
+
+- (UIBarButtonItem *)editBarButtonItemEditing:(BOOL)editing target:(id)target selector:(SEL)action;
 
 @end
