@@ -256,6 +256,15 @@
 	return 40.0;
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	if (!scrollView.dragging || scrollView.decelerating) {
+		return;
+	}
+	
+	[self.addGroupTextField resignFirstResponder];
+}
+
 #pragma mark -
 #pragma mark Actions
 
