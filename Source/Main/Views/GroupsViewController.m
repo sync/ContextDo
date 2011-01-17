@@ -9,6 +9,8 @@
 - (void)addGroup;
 - (void)groupEditNotification:(NSNotification *)notification;
 - (void)groupAddNotification:(NSNotification *)notification;
+- (void)addTask;
+- (void)showSettings;
 
 @end
 
@@ -41,11 +43,33 @@
 	[super setupNavigationBar];
 	
 	self.navigationItem.leftBarButtonItem = self.editButtonItem;
+}
+
+- (void)setupToolbar
+{	
+	[self.navigationController setToolbarHidden:FALSE animated:FALSE];
 	
-	UIBarButtonItem *addItem = [[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-																			 target:self
-																			 action:@selector(addGroup)]autorelease];
-	self.navigationItem.rightBarButtonItem = addItem;
+	UIBarButtonItem *settingsItem = [[DefaultStyleSheet sharedDefaultStyleSheet] buttonItemWithImageNamed:@"icon_settings_off.png" 
+																					highlightedImageNamed:@"icon_settings_touch.png"
+																								   target:self 
+																								 selector:@selector(showSettings)];
+	
+	UIBarButtonItem *flexItem = [[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+																			  target:nil
+																			  action:nil]autorelease];
+	
+	UIBarButtonItem *addItem = [[DefaultStyleSheet sharedDefaultStyleSheet] buttonItemWithImageNamed:@"icon_add_off.png" 
+																			   highlightedImageNamed:@"icon_add_touch.png"
+																							  target:self 
+																							selector:@selector(addTask)];
+	
+	
+	NSArray *items = [NSArray arrayWithObjects:
+					  settingsItem,
+					  flexItem,
+					  addItem,
+					  nil];
+	[self setToolbarItems:items animated:FALSE];
 }
 
 - (void)setupDataSource
@@ -237,6 +261,16 @@
 	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 											  forBarStyle:UIBarStyleDefault];
 	[self.navigationController presentModalViewController:navController animated:TRUE];
+}
+
+- (void)addTask
+{
+	// todo
+}
+
+- (void)showSettings
+{
+	// todo
 }
 
 #pragma mark -

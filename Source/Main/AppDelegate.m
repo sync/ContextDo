@@ -48,6 +48,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	
 	[self.navigationController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 														  forBarStyle:UIBarStyleDefault];
+	[self.navigationController.customToolBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolBarBackgroundImage
+													forBarStyle:UIBarStyleDefault];
 
     return YES;
 }

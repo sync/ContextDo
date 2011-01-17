@@ -135,5 +135,27 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	return item;
 }
 
+- (UIImage *)toolBarBackgroundImage
+{
+	return [UIImage imageNamed:@"taskbar.png"];
+}
+
+- (UIBarButtonItem *)buttonItemWithImageNamed:(NSString *)imageNamed highlightedImageNamed:(NSString *)highlightedImageNamed target:(id)target selector:(SEL)action
+{
+	UIButton *button = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];
+	
+	[button setImage:[UIImage imageNamed:imageNamed] forState:UIControlStateNormal];
+	[button setImage:[UIImage imageNamed:highlightedImageNamed] forState:UIControlStateHighlighted];
+	
+	button.frame = CGRectMake(button.frame.origin.x, 
+							  button.frame.origin.y, 
+							  [UIImage imageNamed:imageNamed].size.width, 
+							  [UIImage imageNamed:imageNamed].size.height);
+	
+	[button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+	
+	UIBarButtonItem *item = [[[UIBarButtonItem alloc]initWithCustomView:button]autorelease];
+	return item;
+}
 
 @end
