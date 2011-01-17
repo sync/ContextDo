@@ -1,5 +1,5 @@
 #import "GroupsDataSource.h"
-
+#import "GroupsCell.h"
 
 @implementation GroupsDataSource
 
@@ -15,10 +15,10 @@
 	}
 	
 	if (section == 0) {
-		return@"Smart Groups";
+		return@"All Tasks";
 	}
 	
-	return @"My Groups";
+	return @"Groups";
 }
 
 // Customize the appearance of table view cells.
@@ -26,9 +26,9 @@
 {
 #define GroupsCellIdentifier @"GroupsCellIdentifier"
 	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GroupsCellIdentifier];
+	GroupsCell *cell = (GroupsCell *)[tableView dequeueReusableCellWithIdentifier:GroupsCellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GroupsCellIdentifier] autorelease];
+        cell = [[[GroupsCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GroupsCellIdentifier] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }

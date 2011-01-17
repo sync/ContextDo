@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface CTXDOCell : UITableViewCell {
+@interface TasksCell : UITableViewCell {
 
 }
 

@@ -47,9 +47,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
     [window makeKeyAndVisible];
 	
 	[self.navigationController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-														  forBarStyle:UIBarStyleDefault];
+														  forBarStyle:UIBarStyleBlackOpaque];
 	[self.navigationController.customToolBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolBarBackgroundImage
-													forBarStyle:UIBarStyleDefault];
+													forBarStyle:UIBarStyleBlackOpaque];
 
     return YES;
 }

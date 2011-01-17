@@ -1,7 +1,7 @@
-#import "CTXDOCell.h"
+#import "TasksCell.h"
 
 
-@implementation CTXDOCell
+@implementation TasksCell
 
 @synthesize distanceLabel;
 

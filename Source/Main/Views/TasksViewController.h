@@ -2,7 +2,7 @@
 #import "BaseTableViewRefreshController.h"
 #import "TasksDataSource.h"
 
-#define TodaysTasksPlacholder @"Tasks Due Today"
+#define TodaysTasksPlacholder @"Todays tasks"
 
 
 @interface TasksViewController : BaseTableViewRefreshController <UISearchDisplayDelegate> {

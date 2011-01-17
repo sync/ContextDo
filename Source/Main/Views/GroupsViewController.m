@@ -1,6 +1,8 @@
 #import "GroupsViewController.h"
 #import "TasksViewController.h"
 #import "GroupEditionViewController.h"
+#import "CTXDOTableHeaderView.h"
+#import "GroupsCell.h"
 
 @interface GroupsViewController (private)
 
@@ -13,6 +15,8 @@
 - (void)showSettings;
 - (void)showGroupsEditAnimated:(BOOL)animated;
 - (void)hideGroupsEditAnimated:(BOOL)animated;
+- (BOOL)isIndexPathLastRow:(NSIndexPath *)indexPath;
+- (BOOL)isIndexPathSingleRow:(NSIndexPath *)indexPath;
 @end
 
 
@@ -190,6 +194,29 @@
 #pragma mark -
 #pragma mark TableView Delegate
 
+- (BOOL)isIndexPathLastRow:(NSIndexPath *)indexPath
+{
+	return ([self.tableView numberOfRowsInSection:indexPath.section] - 1 == indexPath.row);
+}
+
+- (BOOL)isIndexPathSingleRow:(NSIndexPath *)indexPath
+{
+	return ([self.tableView numberOfRowsInSection:indexPath.section] == 1);
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ([self isIndexPathSingleRow:indexPath]) {
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionSingle];
+	} else if (indexPath.row == 0) {
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionTop];
+	} else if ([self isIndexPathLastRow:indexPath]) {
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionBottom];
+	} else {
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionMiddle];
+	}
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 	Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
@@ -206,6 +233,19 @@
 	}
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+	CTXDOTableHeaderView *view = [[[CTXDOTableHeaderView alloc]initWithFrame:CGRectZero]autorelease];
+	view.textLabel.text = [self.groupsDataSource tableView:self.tableView
+								   titleForHeaderInSection:section];
+	return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+	return 50.0;
 }
 
 #pragma mark -
@@ -327,7 +367,6 @@
 	
 	CGSize boundsSize = self.view.bounds.size;
 	self.groupsEditViewController.view.frame = CGRectMake(0.0, boundsSize.height, boundsSize.width, boundsSize.height);
-	// TODO sync groups with WS
 	
 	if (animated) {
 		[UIView commitAnimations];

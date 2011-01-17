@@ -1,6 +1,6 @@
 #import "TasksDataSource.h"
 #import "TimeFormatters.h"
-#import "CTXDOCell.h"
+#import "TasksCell.h"
 
 
 @implementation TasksDataSource
@@ -15,9 +15,9 @@
 {
 #define TasksCellIdentifier @"TasksCellIdentifier"
 	
-	CTXDOCell *cell = (CTXDOCell *)[tableView dequeueReusableCellWithIdentifier:TasksCellIdentifier];
+	TasksCell *cell = (TasksCell *)[tableView dequeueReusableCellWithIdentifier:TasksCellIdentifier];
     if (cell == nil) {
-        cell = [[[CTXDOCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:TasksCellIdentifier] autorelease];
+        cell = [[[TasksCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:TasksCellIdentifier] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 	

@@ -1,5 +1,6 @@
 #import "GroupsEditViewController.h"
 #import "TasksViewController.h"
+#import "CTXDOTableHeaderView.h"
 
 @interface GroupsEditViewController (private)
 
@@ -85,6 +86,21 @@
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return FALSE;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+	CTXDOTableHeaderView *view = [[[CTXDOTableHeaderView alloc]initWithFrame:CGRectZero]autorelease];
+	view.textLabel.shadowOffset = CGSizeMake(0,1);
+	view.textLabel.shadowColor = [UIColor whiteColor];
+	view.textLabel.text = [self.groupsEditDataSource tableView:self.tableView
+									   titleForHeaderInSection:section];
+	return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+	return 30.0;
 }
 
 #pragma mark -
