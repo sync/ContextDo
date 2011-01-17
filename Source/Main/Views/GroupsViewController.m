@@ -245,7 +245,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-	return 50.0;
+	return 40.0;
 }
 
 #pragma mark -

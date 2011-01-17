@@ -12,7 +12,7 @@ typedef enum {
 	CTXDOCellContextExpiring,
 	CTXDOCellContextLocationAware,
 	CTXDOCellContextDue,
-	CTXDOCellContextDueToday
+	CTXDOCellContextDueLight
 }CTXDOCellContext;
 
 

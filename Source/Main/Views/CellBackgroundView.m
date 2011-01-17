@@ -60,7 +60,7 @@
 		topImageNamed = @"table_due_top.png";
 		middleImageNamed = @"table_due_mid.png";
 		bottomImageNamed = @"table_due_bot.png";
-	} else if (self.cellContext == CTXDOCellContextDueToday) {
+	} else if (self.cellContext == CTXDOCellContextDueLight) {
 		topImageNamed = @"table_info_top.png";
 		middleImageNamed = @"table_info_mid.png";
 		bottomImageNamed = @"table_info_bot.png";
@@ -107,7 +107,11 @@
 	if (drawSeparator) {
 		CGContextRef context = UIGraphicsGetCurrentContext();
 		
-		[[UIColor colorWithHexString:@"343031"]set];
+		if (self.cellContext != CTXDOCellContextDueLight) {
+			[[UIColor colorWithHexString:@"343031"]set];
+		} else {
+			[[UIColor whiteColor]set];
+		}
 		
 		CGContextSetLineWidth(context, 1.0);
 		
