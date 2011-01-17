@@ -47,6 +47,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 }
 
 #define LeftRightDiffNavBarButton 5.0
+#define NavBarButtonMinWidth 65.0
 
 - (UIBarButtonItem *)navBarButtonItemWithText:(NSString *)text target:(id)target selector:(SEL)action
 {
@@ -69,9 +70,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	[button setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateHighlighted];
 	
 	CGSize textSize = [text sizeWithFont:button.titleLabel.font];
+	CGFloat buttonWidth = 
+	textSize.width + 2 * LeftRightDiffNavBarButton;
 	button.frame = CGRectMake(button.frame.origin.x, 
 							  button.frame.origin.y, 
-							  textSize.width + 2 * LeftRightDiffNavBarButton, 
+							  (buttonWidth > NavBarButtonMinWidth) ? buttonWidth : NavBarButtonMinWidth, 
 							  image.size.height);
 	[button setTitle:text forState:UIControlStateNormal];
 	
@@ -102,9 +105,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	[button setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateHighlighted];
 	
 	CGSize textSize = [text sizeWithFont:button.titleLabel.font];
+	CGFloat buttonWidth = 
+	textSize.width + 2 * LeftRightDiffNavBarButton;
 	button.frame = CGRectMake(button.frame.origin.x, 
 							  button.frame.origin.y, 
-							  textSize.width + 2 * LeftRightDiffNavBarButton,
+							  (buttonWidth > NavBarButtonMinWidth) ? buttonWidth : NavBarButtonMinWidth, 
 							  image.size.height);
 	[button setTitle:text forState:UIControlStateNormal];
 	
@@ -126,11 +131,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 																			  target:target
 																			selector:action];
 	}
-	
-	item.customView.frame = CGRectMake(item.customView.frame.origin.x,
-									   item.customView.frame.origin.y,
-									   65.0,
-									   item.customView.frame.size.height);
 	
 	return item;
 }

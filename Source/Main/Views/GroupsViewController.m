@@ -13,7 +13,6 @@
 - (void)showSettings;
 - (void)showGroupsEditAnimated:(BOOL)animated;
 - (void)hideGroupsEditAnimated:(BOOL)animated;
-
 @end
 
 
@@ -174,20 +173,18 @@
 #pragma mark -
 #pragma mark Editing
 
-- (void)editButtonPressed:(id)sender
-{
-	if (!self.isShowingGroupsEdit) {
-		[self showGroupsEditAnimated:TRUE];
-	} else {
-		[self hideGroupsEditAnimated:TRUE];
-	}
-}
-
 - (UIBarButtonItem *)editButtonItem
 {
 	return [[DefaultStyleSheet sharedDefaultStyleSheet] editBarButtonItemEditing:self.isShowingGroupsEdit
 																		  target:self
-																		selector:@selector(editButtonPressed:)];
+																		selector:@selector(editButtonPressed)];
+}
+
+- (UIBarButtonItem *)saveButtonItem
+{
+	return [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Save" 
+																			  target:self 
+																			selector:@selector(saveButtonPressed)];
 }
 
 #pragma mark -
@@ -248,6 +245,21 @@
 	// todo
 }
 
+- (void)editButtonPressed
+{
+	if (!self.isShowingGroupsEdit) {
+		[self showGroupsEditAnimated:TRUE];
+	} else {
+		[self hideGroupsEditAnimated:TRUE];
+	}
+}
+
+- (void)saveButtonPressed
+{
+	[self hideGroupsEditAnimated:TRUE];
+	// TODO sync with server
+}
+
 #pragma mark -
 #pragma mark GroupsEditViewController
 
@@ -275,14 +287,18 @@
 		return;
 	}
 	
+	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] editBarButtonItemEditing:TRUE
+																										   target:self
+																										 selector:@selector(editButtonPressed)];
+	[self.navigationItem setRightBarButtonItem:self.saveButtonItem animated:TRUE];
+	
 	[self.groupsEditViewController.groups removeAllObjects];
 	[self.groupsEditViewController.groups addObjectsFromArray:self.groups];
-	[self.groupsEditViewController.tableView reloadData];
+	[self.groupsEditViewController refreshDataSource];
 	
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDelegate:self];
-		[UIView setAnimationDidStopSelector:@selector(showHideGroupsAnimDone)];
+		[UIView setAnimationDuration:0.4];
 	}
 	
 	CGSize boundsSize = self.view.bounds.size;
@@ -299,23 +315,23 @@
 		return;
 	}
 	
+	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] editBarButtonItemEditing:FALSE
+																										   target:self
+																										 selector:@selector(editButtonPressed)];
+	self.navigationItem.rightBarButtonItem = nil;
+	
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDelegate:self];
-		[UIView setAnimationDidStopSelector:@selector(showHideGroupsAnimDone)];
+		[UIView setAnimationDuration:0.4];
 	}
 	
 	CGSize boundsSize = self.view.bounds.size;
 	self.groupsEditViewController.view.frame = CGRectMake(0.0, boundsSize.height, boundsSize.width, boundsSize.height);
+	// TODO sync groups with WS
 	
 	if (animated) {
 		[UIView commitAnimations];
 	}
-}
-
-- (void)showHideGroupsAnimDone
-{
-	self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 #pragma mark -

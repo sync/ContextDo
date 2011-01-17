@@ -10,4 +10,6 @@
 
 @property (nonatomic, readonly) NSMutableArray *groups;
 
+- (void)refreshDataSource;
+
 @end

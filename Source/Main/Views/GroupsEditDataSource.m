@@ -34,16 +34,22 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if (indexPath.section == 0) {
-		return FALSE;
-	}
-	
+	return TRUE;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
 	return TRUE;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[self.delegate groupsEditDataSource:self commitEditingStyle:editingStyle forRowAtIndexPath:indexPath];
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+	[self.delegate groupsEditDataSource:self  moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
 }
 
 @end

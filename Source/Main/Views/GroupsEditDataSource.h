@@ -16,5 +16,6 @@
 @protocol GroupsEditDataSourceDelegate <NSObject>
 
 - (void)groupsEditDataSource:(GroupsEditDataSource *)dataSource commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)groupsEditDataSource:(GroupsEditDataSource *)dataSource moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath;
 
 @end

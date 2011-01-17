@@ -15,5 +15,6 @@
 
 @property (nonatomic, readonly) GroupsEditViewController *groupsEditViewController;
 @property (nonatomic, readonly) BOOL isShowingGroupsEdit;
+@property (nonatomic, readonly) UIBarButtonItem *saveButtonItem;
 
 @end

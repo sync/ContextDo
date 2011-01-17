@@ -3,8 +3,6 @@
 
 @interface GroupsEditViewController (private)
 
-- (void)groupEditNotification:(NSNotification *)notification;
-- (void)groupAddNotification:(NSNotification *)notification;
 
 @end
 
@@ -39,7 +37,7 @@
 	self.tableView.editing = TRUE;
 	self.tableView.allowsSelection = FALSE;
 	self.tableView.backgroundColor = [UIColor clearColor];
-	[self.groupsEditDataSource.content addObject:self.groups];
+	[self refreshDataSource];
 }
 
 - (NSMutableArray *)groups
@@ -59,16 +57,35 @@
 		   forRowAtIndexPath:(NSIndexPath *)indexPath;
 {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		Group *group  = [self.groupsEditDataSource groupForIndexPath:indexPath];
-		[[APIServices sharedAPIServices]deleteGroupWitId:group.groupId];
-		
 		[self.groups removeObjectAtIndex:indexPath.row];
-		[self.tableView reloadData];
+		[self refreshDataSource];
 	}
+}
+
+- (void)groupsEditDataSource:(GroupsEditDataSource *)dataSource 
+		  moveRowAtIndexPath:(NSIndexPath *)fromIndexPath 
+				 toIndexPath:(NSIndexPath *)toIndexPath
+{
+	Group *group  = [self.groupsEditDataSource groupForIndexPath:fromIndexPath];
+	[self.groups removeObjectAtIndex:fromIndexPath.row];
+	[self.groups insertObject:group atIndex:toIndexPath.row];
+	[self refreshDataSource];
+}
+
+- (void)refreshDataSource
+{
+	[self.groupsEditDataSource.content removeAllObjects];
+	[self.groupsEditDataSource.content addObjectsFromArray:self.groups];
+	[self.tableView reloadData];
 }
 
 #pragma mark -
 #pragma mark TableView Delegate
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return FALSE;
+}
 
 #pragma mark -
 #pragma mark Actions
