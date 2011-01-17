@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "CustomNavigationController.h"
 
 @interface AppDelegate (private)
 
@@ -24,7 +25,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (UINavigationController *)loginNavigationController
 {
 	LoginViewController *controller = [[[LoginViewController alloc]initWithNibName:@"LoginView" bundle:nil]autorelease];
-	UINavigationController *navController = [[[UINavigationController alloc]initWithRootViewController:controller]autorelease];
+	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
+	
+	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+											  forBarStyle:UIBarStyleDefault];
+	
 	return navController;
 }
 
@@ -42,6 +47,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	// Add the navigation controller's view to the window and display.
     [window addSubview:self.navigationController.view];
     [window makeKeyAndVisible];
+	
+	[self.navigationController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+														  forBarStyle:UIBarStyleDefault];
 
     return YES;
 }

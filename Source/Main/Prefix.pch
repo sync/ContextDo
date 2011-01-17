@@ -9,11 +9,12 @@
 	#import <Foundation/Foundation.h>
 	#import <UIKit/UIKit.h>
 	#import "SynthesizeSingleton.h"
-	#import <CoreData/CoreData.h>
 	#import <QuartzCore/QuartzCore.h>
 	#import <MapKit/MapKit.h>
 	#import "Define.h"
 	#import "NSObject+Extensions.h"
+	#import "UIColor+i7HexColor.h"
+	#import "DefaultStyleSheet.h"
 	#import "Group.h"
 	#import "Task.h"
 	#import "APIServices.h"
