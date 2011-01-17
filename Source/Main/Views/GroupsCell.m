@@ -1,5 +1,6 @@
 #import "GroupsCell.h"
 #import "CellBackgroundView.h"
+#import "AccessoryViewWithImage.h"
 
 @interface GroupsCell (private)
 
@@ -23,6 +24,10 @@
 		self.textLabel.shadowOffset = CGSizeMake(0,-1);
 		self.textLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		self.textLabel.backgroundColor = [UIColor clearColor];
+		self.accessoryView = [AccessoryViewWithImage accessoryViewWithImageNamed:@"table_arrow_off.png"
+														   highlightedImageNamed:@"table_arrow_touch.png" 
+																	  cellHeight:self.bounds.size.height 
+																   leftRightDiff:10.0];
     }
     return self;
 }
@@ -37,7 +42,7 @@
 
 - (void)adjustBackgroundForPosition:(CTXDOCellPosition)aCellPosition
 {
-	CellBackgroundView *backgroundView = [[[CellBackgroundView alloc]initWithFrame:self.bounds]autorelease];
+	CellBackgroundView *backgroundView = [[[CellBackgroundView alloc]initWithFrame:self.contentView.bounds]autorelease];
 	backgroundView.cellPosition = aCellPosition;
 	self.backgroundView = backgroundView;
 }

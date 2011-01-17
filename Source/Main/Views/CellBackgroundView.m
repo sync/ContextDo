@@ -83,7 +83,7 @@
 	if (drawSeparator) {
 		CGContextRef context = UIGraphicsGetCurrentContext();
 		
-		[[UIColor colorWithHexString:@"444143"]set];
+		[[UIColor colorWithHexString:@"343031"]set];
 		
 		CGContextSetLineWidth(context, 1.0);
 		
