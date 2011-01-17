@@ -22,7 +22,7 @@
 
 @implementation GroupsViewController
 
-@synthesize groupsDataSource, groups, page, groupsEditViewController;
+@synthesize groupsDataSource, groups, page, groupsEditViewController, addGroupTextField;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -89,12 +89,18 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupEditNotification:) name:GroupEditNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupAddNotification:) name:GroupAddNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupAddNotification];
 	
 	self.groupsDataSource = [[[GroupsDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.groupsDataSource;
 	self.tableView.allowsSelectionDuringEditing = TRUE;
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTextureView;
 	[self refreshGroups];
+	self.addGroupTextField.rightView = [[DefaultStyleSheet sharedDefaultStyleSheet]inputTextFieldButtonWithText:@"Add" 
+																										 target:self 
+																									   selector:@selector(addGroup)];
+
+	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
 }
 
 #pragma mark -
@@ -154,22 +160,24 @@
 		[self.groups addObjectsFromArray:newGroups];
 	}
 	
+	NSMutableArray *groupsSection = [NSMutableArray array];
+	
+	[groupsSection addObjectsFromArray:self.groups];
+	
+	if (showMore) {
+		Group *showMoreGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
+											 name:ShowMorePlaceholder];
+		[groupsSection addObject:showMoreGroup];
+	}
+	
+	[self.groupsDataSource.content addObject:groupsSection];
+	
 	Group *todayGroup = [Group groupWithId:[NSNumber numberWithInt:-1]
 									  name:TodaysTasksPlacholder];
 	
 	[self.groupsDataSource.content addObject:[NSArray arrayWithObject:todayGroup]];
 	
-	NSMutableArray *section2 = [NSMutableArray array];
-	
-	[section2 addObjectsFromArray:self.groups];
-	
-	if (showMore) {
-		Group *showMoreGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
-											 name:ShowMorePlaceholder];
-		[section2 addObject:showMoreGroup];
-	}
-	
-	[self.groupsDataSource.content addObject:section2];
+	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
 	
 	[self.tableView reloadData];
 }
@@ -249,14 +257,6 @@
 }
 
 #pragma mark -
-#pragma mark EGORefreshTableHeaderDelegate 
-
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
-{	
-	[self refreshGroups];
-}
-
-#pragma mark -
 #pragma mark Actions
 
 - (void)refreshGroups
@@ -268,11 +268,9 @@
 
 - (void)addGroup
 {
-	GroupEditionViewController *controller = [[[GroupEditionViewController alloc]initWithNibName:@"GroupEditionView" bundle:nil]autorelease];
-	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
-	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-											  forBarStyle:UIBarStyleDefault];
-	[self.navigationController presentModalViewController:navController animated:TRUE];
+	[self.addGroupTextField resignFirstResponder];
+	[[APIServices sharedAPIServices]addGroupWithName:self.addGroupTextField.text];
+	self.addGroupTextField.text = nil;
 }
 
 - (void)addTask
@@ -374,13 +372,26 @@
 }
 
 #pragma mark -
+#pragma mark UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	if (textField.text.length > 0) {
+		[self addGroup];
+	}
+	return YES;
+}
+
+#pragma mark -
 #pragma mark Dealloc
 
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupsDidLoadNotification];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupAddNotification];
 	
+	[addGroupTextField release];
 	[groupsEditViewController release];
 	[groups release];
 	[groupsDataSource release];

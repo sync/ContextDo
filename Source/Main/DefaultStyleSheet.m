@@ -70,8 +70,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	[button setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateHighlighted];
 	
 	CGSize textSize = [text sizeWithFont:button.titleLabel.font];
-	CGFloat buttonWidth = 
-	textSize.width + 2 * LeftRightDiffNavBarButton;
+	CGFloat buttonWidth = textSize.width + 2 * LeftRightDiffNavBarButton;
 	button.frame = CGRectMake(button.frame.origin.x, 
 							  button.frame.origin.y, 
 							  (buttonWidth > NavBarButtonMinWidth) ? buttonWidth : NavBarButtonMinWidth, 
@@ -166,6 +165,39 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 - (UIImageView *)backgroundTextureView
 {
 	return [[[UIImageView alloc]initWithImage:self.backgroundTexture]autorelease];
+}
+
+- (UIButton *)inputTextFieldButtonWithText:(NSString *)text target:(id)target selector:(SEL)action
+{		
+	UIButton *button = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];
+	button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+	
+	UIImage *image = [UIImage imageNamed:@"btn_inputfield_off.png"];
+	image = [image stretchableImageWithLeftCapWidth:(image.size.width / 2.0) - 1.0 topCapHeight:0.0];
+	[button setBackgroundImage:image forState:UIControlStateNormal];
+	
+	UIImage *highlightedImage = [UIImage imageNamed:@"btn_inputfield_touch.png"];
+	highlightedImage = [highlightedImage stretchableImageWithLeftCapWidth:(highlightedImage.size.width / 2.0) - 1.0 topCapHeight:0.0];
+	[button setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
+	
+	button.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
+	[button setTitleColor:[UIColor colorWithHexString:@"7e7e83"] forState:UIControlStateNormal];
+	[button setTitleColor:[UIColor colorWithHexString:@"7e7e83"] forState:UIControlStateHighlighted];
+	button.titleLabel.shadowOffset = CGSizeMake(0,-1);
+	[button setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateNormal];
+	[button setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateHighlighted];
+	
+	CGSize textSize = [text sizeWithFont:button.titleLabel.font];
+	CGFloat buttonWidth = textSize.width + 2 * LeftRightDiffNavBarButton;
+	button.frame = CGRectMake(button.frame.origin.x, 
+							  button.frame.origin.y, 
+							  buttonWidth, 
+							  image.size.height);
+	[button setTitle:text forState:UIControlStateNormal];
+	
+	[button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+	
+	return button;
 }
 
 @end

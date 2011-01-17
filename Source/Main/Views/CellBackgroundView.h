@@ -8,4 +8,6 @@
 @property (nonatomic) CTXDOCellPosition cellPosition;
 @property (nonatomic) CTXDOCellContext cellContext;
 
+- (void)setupCustomInitialisation;
+
 @end

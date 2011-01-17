@@ -5,15 +5,36 @@
 
 @synthesize cellPosition, cellContext;
 
+#pragma mark -
+#pragma mark Init
+
+// The designated initializer. Override to perform setup that is required before the view is loaded.
+// Only when xibless (interface buildder)
 - (id)initWithFrame:(CGRect)frame {
-    
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code.
-		self.cellPosition = CTXDOCellPositionSingle;
-		self.opaque = FALSE;
+    if (self = [super initWithFrame:frame]) {
+        // Custom initialization
+		[self setupCustomInitialisation];
     }
     return self;
+}
+
+// The designated initializer. Override to perform setup that is required before the view is loaded.
+// Only when using xib (interface buildder)
+- (id)initWithCoder:(NSCoder *)decoder {
+	if (self = [super initWithCoder:decoder]) {
+		// Custom initialization
+		[self setupCustomInitialisation];
+	}
+	return self;
+}
+
+#pragma mark -
+#pragma mark Setup
+
+- (void)setupCustomInitialisation
+{	
+	self.cellPosition = CTXDOCellPositionSingle;
+	self.opaque = FALSE;
 }
 
 - (void)setCellPosition:(CTXDOCellPosition)aCellPosition context:(CTXDOCellContext)aCellContext

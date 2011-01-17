@@ -15,10 +15,10 @@
 	}
 	
 	if (section == 0) {
-		return@"All Tasks";
+		return@"Groups";
 	}
 	
-	return @"Groups";
+	return @"All Tasks";
 }
 
 // Customize the appearance of table view cells.
@@ -36,7 +36,7 @@
 	Group *group = [self groupForIndexPath:indexPath];
 	
 	cell.textLabel.text = group.name;
-	if (indexPath.section != 0 && [tableView numberOfRowsInSection:indexPath.section] - 1 == indexPath.row) {
+	if (indexPath.section == 0 && [tableView numberOfRowsInSection:indexPath.section] - 1 == indexPath.row) {
 		cell.imageView.image = [UIImage imageNamed:@"icon_location.png"];
 	} else {
 		cell.imageView.image = nil;

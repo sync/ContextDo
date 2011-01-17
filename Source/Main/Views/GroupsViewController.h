@@ -1,9 +1,10 @@
 #import <UIKit/UIKit.h>
-#import "BaseTableViewRefreshController.h"
+#import "BaseTableViewController.h"
 #import "GroupsDataSource.h"
 #import "GroupsEditViewController.h"
+#import "CTXDODarkTextField.h"
 
-@interface GroupsViewController : BaseTableViewRefreshController {
+@interface GroupsViewController : BaseTableViewController <UITextFieldDelegate> {
 
 }
 
@@ -16,5 +17,7 @@
 @property (nonatomic, readonly) GroupsEditViewController *groupsEditViewController;
 @property (nonatomic, readonly) BOOL isShowingGroupsEdit;
 @property (nonatomic, readonly) UIBarButtonItem *saveButtonItem;
+
+@property (nonatomic, retain) IBOutlet CTXDODarkTextField *addGroupTextField;
 
 @end

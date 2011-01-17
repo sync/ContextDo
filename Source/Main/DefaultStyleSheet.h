@@ -25,4 +25,6 @@
 @property (nonatomic, readonly) UIImage *backgroundTexture;
 @property (nonatomic, readonly) UIImageView *backgroundTextureView;
 
+- (UIButton *)inputTextFieldButtonWithText:(NSString *)text target:(id)target selector:(SEL)action;
+
 @end
