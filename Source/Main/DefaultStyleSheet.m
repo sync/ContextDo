@@ -118,9 +118,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 {
 	UIBarButtonItem *item = nil;
 	if (editing) {
-		item = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Done"
-																				  target:target
-																				selector:action];
+		item = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Cancel"
+																			  target:target
+																			selector:action];
 	} else {
 		item = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Edit"
 																			  target:target
@@ -156,6 +156,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	
 	UIBarButtonItem *item = [[[UIBarButtonItem alloc]initWithCustomView:button]autorelease];
 	return item;
+}
+
+- (UIImage *)backgroundTexture
+{
+	return [UIImage imageNamed:@"bgtexture.png"];
+}
+
+- (UIImageView *)backgroundTextureView
+{
+	return [[[UIImageView alloc]initWithImage:self.backgroundTexture]autorelease];
 }
 
 @end

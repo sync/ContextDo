@@ -36,6 +36,11 @@
 		243A370812E3FDB600A6D402 /* CustomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A370712E3FDB600A6D402 /* CustomToolBar.m */; };
 		243A372912E400E700A6D402 /* taskbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A372712E400E700A6D402 /* taskbar.png */; };
 		243A372A12E400E700A6D402 /* taskbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A372812E400E700A6D402 /* taskbar@2x.png */; };
+		243A37C212E40E8600A6D402 /* GroupsEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A37C112E40E8600A6D402 /* GroupsEditViewController.m */; };
+		243A37C712E40EE300A6D402 /* tabpanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A37C512E40EE300A6D402 /* tabpanel.png */; };
+		243A37C812E40EE300A6D402 /* tabpanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A37C612E40EE300A6D402 /* tabpanel@2x.png */; };
+		243A37E212E4197A00A6D402 /* GroupsEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 243A37E112E4197A00A6D402 /* GroupsEditView.xib */; };
+		243A386412E4296D00A6D402 /* GroupsEditDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A386312E4296D00A6D402 /* GroupsEditDataSource.m */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -178,6 +183,13 @@
 		243A370712E3FDB600A6D402 /* CustomToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomToolBar.m; sourceTree = "<group>"; };
 		243A372712E400E700A6D402 /* taskbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taskbar.png; sourceTree = "<group>"; };
 		243A372812E400E700A6D402 /* taskbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "taskbar@2x.png"; sourceTree = "<group>"; };
+		243A37C012E40E8600A6D402 /* GroupsEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsEditViewController.h; sourceTree = "<group>"; };
+		243A37C112E40E8600A6D402 /* GroupsEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsEditViewController.m; sourceTree = "<group>"; };
+		243A37C512E40EE300A6D402 /* tabpanel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabpanel.png; sourceTree = "<group>"; };
+		243A37C612E40EE300A6D402 /* tabpanel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabpanel@2x.png"; sourceTree = "<group>"; };
+		243A37E112E4197A00A6D402 /* GroupsEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupsEditView.xib; sourceTree = "<group>"; };
+		243A386212E4296D00A6D402 /* GroupsEditDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsEditDataSource.h; sourceTree = "<group>"; };
+		243A386312E4296D00A6D402 /* GroupsEditDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsEditDataSource.m; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -427,6 +439,11 @@
 				2489CA0412BDF05800C1A58A /* GroupsViewController.h */,
 				2489CA0512BDF05800C1A58A /* GroupsViewController.m */,
 				2489CA0A12BDF09D00C1A58A /* GroupsView.xib */,
+				243A386212E4296D00A6D402 /* GroupsEditDataSource.h */,
+				243A386312E4296D00A6D402 /* GroupsEditDataSource.m */,
+				243A37C012E40E8600A6D402 /* GroupsEditViewController.h */,
+				243A37C112E40E8600A6D402 /* GroupsEditViewController.m */,
+				243A37E112E4197A00A6D402 /* GroupsEditView.xib */,
 			);
 			name = Groups;
 			sourceTree = "<group>";
@@ -973,8 +990,6 @@
 				243A36BF12E3F54E00A6D402 /* btn-blue_tbar_off@2x.png */,
 				243A36C012E3F54E00A6D402 /* btn-blue_tbar_touch.png */,
 				243A36C112E3F54E00A6D402 /* btn-blue_tbar_touch@2x.png */,
-				243A36EF12E3FB8000A6D402 /* bgtexture.png */,
-				243A36F012E3FB8000A6D402 /* bgtexture@2x.png */,
 				243A36F312E3FBAC00A6D402 /* icon_add_off.png */,
 				243A36F412E3FBAC00A6D402 /* icon_add_off@2x.png */,
 				243A36F512E3FBAC00A6D402 /* icon_add_touch.png */,
@@ -985,6 +1000,10 @@
 				243A36FE12E3FBC600A6D402 /* icon_settings_touch@2x.png */,
 				243A372712E400E700A6D402 /* taskbar.png */,
 				243A372812E400E700A6D402 /* taskbar@2x.png */,
+				243A36EF12E3FB8000A6D402 /* bgtexture.png */,
+				243A36F012E3FB8000A6D402 /* bgtexture@2x.png */,
+				243A37C512E40EE300A6D402 /* tabpanel.png */,
+				243A37C612E40EE300A6D402 /* tabpanel@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -1154,6 +1173,9 @@
 				243A370212E3FBC600A6D402 /* icon_settings_touch@2x.png in Resources */,
 				243A372912E400E700A6D402 /* taskbar.png in Resources */,
 				243A372A12E400E700A6D402 /* taskbar@2x.png in Resources */,
+				243A37C712E40EE300A6D402 /* tabpanel.png in Resources */,
+				243A37C812E40EE300A6D402 /* tabpanel@2x.png in Resources */,
+				243A37E212E4197A00A6D402 /* GroupsEditView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1237,6 +1259,8 @@
 				243A360612E3E06A00A6D402 /* UINavigationController+Custom.m in Sources */,
 				243A362D12E3E2E800A6D402 /* CustomNavigationController.m in Sources */,
 				243A370812E3FDB600A6D402 /* CustomToolBar.m in Sources */,
+				243A37C212E40E8600A6D402 /* GroupsEditViewController.m in Sources */,
+				243A386412E4296D00A6D402 /* GroupsEditDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

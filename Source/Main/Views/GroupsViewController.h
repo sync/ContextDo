@@ -1,8 +1,9 @@
 #import <UIKit/UIKit.h>
 #import "BaseTableViewRefreshController.h"
 #import "GroupsDataSource.h"
+#import "GroupsEditViewController.h"
 
-@interface GroupsViewController : BaseTableViewRefreshController <GroupsDataSourceDelegate> {
+@interface GroupsViewController : BaseTableViewRefreshController {
 
 }
 
@@ -11,5 +12,8 @@
 @property (nonatomic) NSInteger page;
 
 @property (nonatomic, readonly) NSMutableArray *groups;
+
+@property (nonatomic, readonly) GroupsEditViewController *groupsEditViewController;
+@property (nonatomic, readonly) BOOL isShowingGroupsEdit;
 
 @end

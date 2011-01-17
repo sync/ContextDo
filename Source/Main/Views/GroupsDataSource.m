@@ -3,8 +3,6 @@
 
 @implementation GroupsDataSource
 
-@synthesize delegate;
-
 - (Group *)groupForIndexPath:(NSIndexPath *)indexPath
 {
 	return [self objectForIndexPath:indexPath];
@@ -40,20 +38,6 @@
 	cell.textLabel.text = group.name;
 	
     return cell;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if (indexPath.section == 0) {
-		return FALSE;
-	}
-	
-	return TRUE;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[self.delegate groupsDataSource:self commitEditingStyle:editingStyle forRowAtIndexPath:indexPath];
 }
 
 @end

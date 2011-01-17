@@ -22,4 +22,7 @@
 
 - (UIBarButtonItem *)buttonItemWithImageNamed:(NSString *)imageNamed highlightedImageNamed:(NSString *)highlightedImageNamed target:(id)target selector:(SEL)action;
 
+@property (nonatomic, readonly) UIImage *backgroundTexture;
+@property (nonatomic, readonly) UIImageView *backgroundTextureView;
+
 @end

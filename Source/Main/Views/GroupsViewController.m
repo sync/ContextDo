@@ -11,13 +11,15 @@
 - (void)groupAddNotification:(NSNotification *)notification;
 - (void)addTask;
 - (void)showSettings;
+- (void)showGroupsEditAnimated:(BOOL)animated;
+- (void)hideGroupsEditAnimated:(BOOL)animated;
 
 @end
 
 
 @implementation GroupsViewController
 
-@synthesize groupsDataSource, groups, page;
+@synthesize groupsDataSource, groups, page, groupsEditViewController;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -33,6 +35,10 @@
 - (void)viewDidUnload
 {
 	[super viewDidUnload];
+	
+	[self hideGroupsEditAnimated:FALSE];
+	[groupsEditViewController release];
+	groupsEditViewController = nil;
 }
 
 #pragma mark -
@@ -82,9 +88,9 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
 	
 	self.groupsDataSource = [[[GroupsDataSource alloc]init]autorelease];
-	self.groupsDataSource.delegate = self;
 	self.tableView.dataSource = self.groupsDataSource;
 	self.tableView.allowsSelectionDuringEditing = TRUE;
+	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTextureView;
 	[self refreshGroups];
 }
 
@@ -168,42 +174,20 @@
 #pragma mark -
 #pragma mark Editing
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
-	[super setEditing:editing animated:animated];
-	
-	[self.navigationItem setLeftBarButtonItem:self.editButtonItem animated:FALSE];
-	
-	[self.tableView setEditing:editing animated:animated];
-	[self reloadGroups:nil removeCache:FALSE showMore:!editing];
-}
-
 - (void)editButtonPressed:(id)sender
 {
-	[self setEditing:!self.editing animated:TRUE];
+	if (!self.isShowingGroupsEdit) {
+		[self showGroupsEditAnimated:TRUE];
+	} else {
+		[self hideGroupsEditAnimated:TRUE];
+	}
 }
 
 - (UIBarButtonItem *)editButtonItem
 {
-	return [[DefaultStyleSheet sharedDefaultStyleSheet] editBarButtonItemEditing:self.editing
+	return [[DefaultStyleSheet sharedDefaultStyleSheet] editBarButtonItemEditing:self.isShowingGroupsEdit
 																		  target:self
 																		selector:@selector(editButtonPressed:)];
-}
-
-#pragma mark -
-#pragma mark GroupsDataSourceDelegate
-
-- (void)groupsDataSource:(GroupsDataSource *)dataSource 
-	  commitEditingStyle:(UITableViewCellEditingStyle)editingStyle 
-	   forRowAtIndexPath:(NSIndexPath *)indexPath;
-{
-	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
-		[[APIServices sharedAPIServices]deleteGroupWitId:group.groupId];
-		
-		[self.groups removeObjectAtIndex:indexPath.row];
-		[self reloadGroups:nil removeCache:FALSE showMore:FALSE];
-	}
 }
 
 #pragma mark -
@@ -214,18 +198,9 @@
 	Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
 	
 	if (group.groupId.integerValue != NSNotFound) {
-		if (group.groupId.integerValue == -1 || !self.editing) {
-			TasksViewController *controller = [[[TasksViewController alloc]initWithNibName:@"TasksView" bundle:nil]autorelease];
-			controller.group = group;
-			[self.navigationController pushViewController:controller animated:TRUE];
-		} else {
-			GroupEditionViewController *controller = [[[GroupEditionViewController alloc]initWithNibName:@"GroupEditionView" bundle:nil]autorelease];
-			controller.group = group;
-			CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
-			[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-													  forBarStyle:UIBarStyleDefault];
-			[self.navigationController presentModalViewController:navController animated:TRUE];
-		}
+		TasksViewController *controller = [[[TasksViewController alloc]initWithNibName:@"TasksView" bundle:nil]autorelease];
+		controller.group = group;
+		[self.navigationController pushViewController:controller animated:TRUE];
 	} else {
 		if ([group.name isEqualToString:ShowMorePlaceholder]) {
 			self.page += 1;
@@ -274,6 +249,76 @@
 }
 
 #pragma mark -
+#pragma mark GroupsEditViewController
+
+- (GroupsEditViewController *)groupsEditViewController
+{
+	if (!groupsEditViewController) {
+		groupsEditViewController = [[GroupsEditViewController alloc]initWithNibName:@"GroupsEditView" bundle:nil];
+		CGSize boundsSize = self.view.bounds.size;
+		groupsEditViewController.view.frame = CGRectMake(0.0, boundsSize.height, boundsSize.width, boundsSize.height);
+		[self.view addSubview:groupsEditViewController.view];
+		[self.view bringSubviewToFront:groupsEditViewController.view];
+	}
+	
+	return groupsEditViewController;
+}
+
+- (BOOL)isShowingGroupsEdit
+{
+	return (self.groupsEditViewController.view.frame.origin.y == 0);
+}
+
+- (void)showGroupsEditAnimated:(BOOL)animated
+{
+	if (self.isShowingGroupsEdit) {
+		return;
+	}
+	
+	[self.groupsEditViewController.groups removeAllObjects];
+	[self.groupsEditViewController.groups addObjectsFromArray:self.groups];
+	[self.groupsEditViewController.tableView reloadData];
+	
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDelegate:self];
+		[UIView setAnimationDidStopSelector:@selector(showHideGroupsAnimDone)];
+	}
+	
+	CGSize boundsSize = self.view.bounds.size;
+	self.groupsEditViewController.view.frame = CGRectMake(0.0, 0.0, boundsSize.width, boundsSize.height);
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
+}
+
+- (void)hideGroupsEditAnimated:(BOOL)animated;
+{
+	if (!self.isShowingGroupsEdit) {
+		return;
+	}
+	
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDelegate:self];
+		[UIView setAnimationDidStopSelector:@selector(showHideGroupsAnimDone)];
+	}
+	
+	CGSize boundsSize = self.view.bounds.size;
+	self.groupsEditViewController.view.frame = CGRectMake(0.0, boundsSize.height, boundsSize.width, boundsSize.height);
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
+}
+
+- (void)showHideGroupsAnimDone
+{
+	self.navigationItem.leftBarButtonItem = self.editButtonItem;
+}
+
+#pragma mark -
 #pragma mark Dealloc
 
 - (void)dealloc
@@ -281,6 +326,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupsDidLoadNotification];
 	
+	[groupsEditViewController release];
 	[groups release];
 	[groupsDataSource release];
 	
