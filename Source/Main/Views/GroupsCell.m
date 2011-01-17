@@ -2,49 +2,52 @@
 #import "CellBackgroundView.h"
 #import "AccessoryViewWithImage.h"
 
-@interface GroupsCell (private)
-
-- (void)adjustBackgroundForPosition:(CTXDOCellPosition)aCellPosition;
-
-@end
-
-
 @implementation GroupsCell
-
-@synthesize cellPosition;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code.
-		[self adjustBackgroundForPosition:CTXDOCellPositionSingle];
+		[self setCellPosition:CTXDOCellPositionSingle context:CTXDOCellContextStandard];
 		self.textLabel.font = [UIFont boldSystemFontOfSize:16.0];
 		self.textLabel.textColor = [UIColor colorWithHexString:@"929092"];
 		self.textLabel.shadowOffset = CGSizeMake(0,-1);
 		self.textLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		self.textLabel.backgroundColor = [UIColor clearColor];
-		self.accessoryView = [AccessoryViewWithImage accessoryViewWithImageNamed:@"table_arrow_off.png"
-														   highlightedImageNamed:@"table_arrow_touch.png" 
-																	  cellHeight:self.bounds.size.height 
-																   leftRightDiff:10.0];
     }
     return self;
 }
 
-- (void)setCellPosition:(CTXDOCellPosition)aCellPosition
-{
-	if (cellPosition != aCellPosition) {
-		cellPosition = aCellPosition;
-		[self adjustBackgroundForPosition:aCellPosition];
-	}
-}
-
-- (void)adjustBackgroundForPosition:(CTXDOCellPosition)aCellPosition
+- (void)setCellPosition:(CTXDOCellPosition)cellPosition context:(CTXDOCellContext)cellContext;
 {
 	CellBackgroundView *backgroundView = [[[CellBackgroundView alloc]initWithFrame:self.contentView.bounds]autorelease];
-	backgroundView.cellPosition = aCellPosition;
+	backgroundView.cellPosition = cellPosition;
+	backgroundView.cellContext = cellContext;
 	self.backgroundView = backgroundView;
+	
+	NSString *imageNamed = nil;
+	NSString *highlightedImageNamed = nil;
+	if (cellContext == CTXDOCellContextStandard) {
+		imageNamed = @"table_arrow_off.png";
+		highlightedImageNamed = @"table_arrow_touch.png";
+	} else if (cellContext == CTXDOCellContextExpiring) {
+		imageNamed = @"table_arrow_off.png";
+		highlightedImageNamed = @"table_arrow_touch.png";
+	} else if (cellContext == CTXDOCellContextLocationAware) {
+		imageNamed = @"table_arrow_loc.png";
+		highlightedImageNamed = @"table_arrow_loc_touch.png";
+	} else if (cellContext == CTXDOCellContextDue) {
+		imageNamed = @"table_arrow_due_off.png";
+		highlightedImageNamed = @"table_arrow_due_touch.png";
+	} else if (cellContext == CTXDOCellContextDueToday) {
+		imageNamed = @"table_arrow_due_off.png";
+		highlightedImageNamed = @"table_arrow_due_touch.png";
+	}
+	self.accessoryView = [AccessoryViewWithImage accessoryViewWithImageNamed:imageNamed
+													   highlightedImageNamed:highlightedImageNamed 
+																  cellHeight:self.bounds.size.height 
+															   leftRightDiff:10.0];
 }
 
 @end

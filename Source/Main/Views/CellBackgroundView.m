@@ -3,7 +3,7 @@
 
 @implementation CellBackgroundView
 
-@synthesize cellPosition;
+@synthesize cellPosition, cellContext;
 
 - (id)initWithFrame:(CGRect)frame {
     
@@ -16,12 +16,11 @@
     return self;
 }
 
-- (void)setCellPosition:(CTXDOCellPosition)aCellPosition
+- (void)setCellPosition:(CTXDOCellPosition)aCellPosition context:(CTXDOCellContext)aCellContext
 {
-	if (cellPosition != aCellPosition) {
-		cellPosition = aCellPosition;
-		[self setNeedsDisplay];
-	}
+	self.cellPosition = aCellPosition;
+	self.cellContext = aCellContext;
+	[self setNeedsDisplay];
 }
 
 // Only override drawRect: if you perform custom drawing.
@@ -42,12 +41,37 @@
 		drawBottom = TRUE;
 	}
 	
+	NSString *topImageNamed = nil;
+	NSString *middleImageNamed = nil;
+	NSString *bottomImageNamed = nil;
+	if (self.cellContext == CTXDOCellContextStandard) {
+		topImageNamed = @"table_std_top.png";
+		middleImageNamed = @"table_std_mid.png";
+		bottomImageNamed = @"table_std_bot.png";
+	} else if (self.cellContext == CTXDOCellContextExpiring) {
+		topImageNamed = @"table_exp_top.png";
+		middleImageNamed = @"table_exp_mid.png";
+		bottomImageNamed = @"table_exp_bot.png";
+	} else if (self.cellContext == CTXDOCellContextLocationAware) {
+		topImageNamed = @"table_loc_top.png";
+		middleImageNamed = @"table_loc_mid.png";
+		bottomImageNamed = @"table_loc_bot.png";
+	} else if (self.cellContext == CTXDOCellContextDue) {
+		topImageNamed = @"table_due_top.png";
+		middleImageNamed = @"table_due_mid.png";
+		bottomImageNamed = @"table_due_bot.png";
+	} else if (self.cellContext == CTXDOCellContextDueToday) {
+		topImageNamed = @"table_info_top.png";
+		middleImageNamed = @"table_info_mid.png";
+		bottomImageNamed = @"table_info_bot.png";
+	}
+	
 	CGSize boundsSize = self.bounds.size;
 	
 	CGFloat topHeight = 0.0;
 	
 	if (drawTop) {
-		UIImage *topImage = [UIImage imageNamed:@"table_std_top.png"];
+		UIImage *topImage = [UIImage imageNamed:topImageNamed];
 		topImage = [topImage stretchableImageWithLeftCapWidth:(topImage.size.width / 2.0) - 1.0 topCapHeight:0.0];
 		[topImage drawInRect:CGRectMake(0.0, 
 										0.0, 
@@ -59,7 +83,7 @@
 	CGFloat bottomHeight = 0.0;
 	
 	if (drawBottom) {
-		UIImage *bottomImage = [UIImage imageNamed:@"table_std_bot.png"];
+		UIImage *bottomImage = [UIImage imageNamed:bottomImageNamed];
 		bottomImage = [bottomImage stretchableImageWithLeftCapWidth:(bottomImage.size.width / 2.0) - 1.0 topCapHeight:0.0];
 		[bottomImage drawInRect:CGRectMake(0.0, 
 										boundsSize.height - bottomImage.size.height, 
@@ -69,7 +93,7 @@
 	}
 	
 	if (boundsSize.height - topHeight - bottomHeight >= 0) {
-		UIImage *middleImage = [UIImage imageNamed:@"table_std_mid.png"];
+		UIImage *middleImage = [UIImage imageNamed:middleImageNamed];
 		middleImage = [middleImage stretchableImageWithLeftCapWidth:(middleImage.size.width / 2.0) - 1.0 
 													   topCapHeight:0.0];
 		[middleImage drawInRect:CGRectMake(0.0, 
@@ -78,7 +102,7 @@
 										   boundsSize.height - topHeight - bottomHeight)];
 	}
 	
-#define LeftRightDiff 3.0
+#define LeftRightDiff 2.0
 	
 	if (drawSeparator) {
 		CGContextRef context = UIGraphicsGetCurrentContext();

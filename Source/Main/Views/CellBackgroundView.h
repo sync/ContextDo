@@ -6,5 +6,6 @@
 }
 
 @property (nonatomic) CTXDOCellPosition cellPosition;
+@property (nonatomic) CTXDOCellContext cellContext;
 
 @end

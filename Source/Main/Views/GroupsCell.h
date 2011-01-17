@@ -7,10 +7,19 @@ typedef enum {
 	CTXDOCellPositionBottom
 }CTXDOCellPosition;
 
+typedef enum {
+	CTXDOCellContextStandard,
+	CTXDOCellContextExpiring,
+	CTXDOCellContextLocationAware,
+	CTXDOCellContextDue,
+	CTXDOCellContextDueToday
+}CTXDOCellContext;
+
+
 @interface GroupsCell : UITableViewCell {
 
 }
 
-@property (nonatomic) CTXDOCellPosition cellPosition;
+- (void)setCellPosition:(CTXDOCellPosition)cellPosition context:(CTXDOCellContext)cellContext;
 
 @end

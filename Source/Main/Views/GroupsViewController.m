@@ -207,13 +207,13 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ([self isIndexPathSingleRow:indexPath]) {
-		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionSingle];
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionSingle context:CTXDOCellContextStandard];
 	} else if (indexPath.row == 0) {
-		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionTop];
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionTop context:CTXDOCellContextDue];
 	} else if ([self isIndexPathLastRow:indexPath]) {
-		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionBottom];
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionBottom context:CTXDOCellContextLocationAware];
 	} else {
-		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionMiddle];
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionMiddle context:CTXDOCellContextExpiring];
 	}
 }
 
