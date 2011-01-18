@@ -129,7 +129,7 @@
 		CGContextRef context = UIGraphicsGetCurrentContext();
 		
 		if (self.cellContext != CTXDOCellContextDueLight) {
-			[[UIColor colorWithHexString:@"343031"]set];
+			[[UIColor colorWithHexString:@"242022"]set];
 		} else {
 			[[UIColor whiteColor]set];
 		}
