@@ -3,7 +3,7 @@
 
 @implementation Group
 
-@synthesize groupId, name, createdAt, updatedAt;
+@synthesize groupId, name, createdAt, updatedAt, position;
 
 + (Group *)groupWithId:(NSNumber *)aGroupId
 				  name:(NSString *)aName

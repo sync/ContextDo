@@ -22,6 +22,10 @@
 	[super viewDidLoad];
 	
 	self.page = 1;
+	
+	[self.searchDisplayController.customSearchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+														 forBarStyle:UIBarStyleBlackOpaque];
+
 }
 
 - (void)viewDidUnload
