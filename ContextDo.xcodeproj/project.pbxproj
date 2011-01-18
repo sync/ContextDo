@@ -118,8 +118,6 @@
 		2489CAC412BE185000C1A58A /* TasksCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CAC312BE185000C1A58A /* TasksCell.m */; };
 		2489CADB12BE1D5E00C1A58A /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CADA12BE1D5E00C1A58A /* TasksViewController.m */; };
 		2489CADD12BE1D6700C1A58A /* TasksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2489CADC12BE1D6700C1A58A /* TasksView.xib */; };
-		2489CDFF12BED64B00C1A58A /* GroupEditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CDFD12BED64B00C1A58A /* GroupEditionViewController.m */; };
-		2489CE0012BED64B00C1A58A /* GroupEditionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2489CDFE12BED64B00C1A58A /* GroupEditionView.xib */; };
 		2489CE5E12BF1EB300C1A58A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2489CE5D12BF1EB300C1A58A /* Settings.bundle */; };
 		2490FC1612E2FC6100F56B39 /* CustomNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2490FC1512E2FC6100F56B39 /* CustomNavigationBar.m */; };
 		2490FD9312E34D2300F56B39 /* titlebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FD9112E34D2300F56B39 /* titlebar.png */; };
@@ -342,9 +340,6 @@
 		2489CAD912BE1D5E00C1A58A /* TasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksViewController.h; sourceTree = "<group>"; };
 		2489CADA12BE1D5E00C1A58A /* TasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksViewController.m; sourceTree = "<group>"; };
 		2489CADC12BE1D6700C1A58A /* TasksView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TasksView.xib; sourceTree = "<group>"; };
-		2489CDFC12BED64B00C1A58A /* GroupEditionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupEditionViewController.h; sourceTree = "<group>"; };
-		2489CDFD12BED64B00C1A58A /* GroupEditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupEditionViewController.m; sourceTree = "<group>"; };
-		2489CDFE12BED64B00C1A58A /* GroupEditionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupEditionView.xib; sourceTree = "<group>"; };
 		2489CE5D12BF1EB300C1A58A /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		2490FC1412E2FC6100F56B39 /* CustomNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationBar.h; sourceTree = "<group>"; };
 		2490FC1512E2FC6100F56B39 /* CustomNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationBar.m; sourceTree = "<group>"; };
@@ -625,16 +620,6 @@
 				243A3DA012E4748B00A6D402 /* CellBackgroundView.m */,
 			);
 			name = Cells;
-			sourceTree = "<group>";
-		};
-		2489CDF912BED62D00C1A58A /* Group */ = {
-			isa = PBXGroup;
-			children = (
-				2489CDFC12BED64B00C1A58A /* GroupEditionViewController.h */,
-				2489CDFD12BED64B00C1A58A /* GroupEditionViewController.m */,
-				2489CDFE12BED64B00C1A58A /* GroupEditionView.xib */,
-			);
-			name = Group;
 			sourceTree = "<group>";
 		};
 		2490FF8412E36D9900F56B39 /* UIColor-i7HexColor */ = {
@@ -1287,7 +1272,6 @@
 				2434D66512B59EAC007B8A13 /* Reset */,
 				3A034D43125D629A00F49FA6 /* Settings */,
 				2489CA0312BDF04000C1A58A /* Groups */,
-				2489CDF912BED62D00C1A58A /* Group */,
 				2489CAA112BE102F00C1A58A /* Tasks */,
 				24ADA8C412C84C97000BE62C /* Task */,
 			);
@@ -1352,7 +1336,6 @@
 				2434D67112B59F56007B8A13 /* ResetPasswordView.xib in Resources */,
 				2489CA0B12BDF09D00C1A58A /* GroupsView.xib in Resources */,
 				2489CADD12BE1D6700C1A58A /* TasksView.xib in Resources */,
-				2489CE0012BED64B00C1A58A /* GroupEditionView.xib in Resources */,
 				2489CE5E12BF1EB300C1A58A /* Settings.bundle in Resources */,
 				24F883C212D16A7200370A5F /* blackArrow.png in Resources */,
 				24F883C312D16A7200370A5F /* blackArrow@2x.png in Resources */,
@@ -1474,7 +1457,6 @@
 				2489CAA412BE10E300C1A58A /* TasksDataSource.m in Sources */,
 				2489CAC412BE185000C1A58A /* TasksCell.m in Sources */,
 				2489CADB12BE1D5E00C1A58A /* TasksViewController.m in Sources */,
-				2489CDFF12BED64B00C1A58A /* GroupEditionViewController.m in Sources */,
 				24F8814812D16A7200370A5F /* ASIAuthenticationDialog.m in Sources */,
 				24F8814912D16A7200370A5F /* ASIDataCompressor.m in Sources */,
 				24F8814A12D16A7200370A5F /* ASIDataDecompressor.m in Sources */,

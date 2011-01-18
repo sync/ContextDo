@@ -28,9 +28,9 @@
 #pragma mark Initialisation
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    self.title = @"Groups";
 	
-	self.title = @"Groups";
+	[super viewDidLoad];
 	
 	self.page = 1;
 }
@@ -52,6 +52,8 @@
 	[super setupNavigationBar];
 	
 	self.navigationItem.leftBarButtonItem = self.editButtonItem;
+	
+	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 }
 
 - (void)setupToolbar

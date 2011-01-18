@@ -40,6 +40,8 @@
 	
 	self.clearButtonMode = UITextFieldViewModeWhileEditing;
 	self.rightViewMode = UITextFieldViewModeAlways;
+	
+	self.keyboardAppearance = UIKeyboardAppearanceAlert;
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds

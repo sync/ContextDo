@@ -17,9 +17,9 @@
 #pragma mark Initialisation
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-	
 	self.title = self.group.name;
+    
+	[super viewDidLoad];
 	
 	self.page = 1;
 }
@@ -40,7 +40,7 @@
 																								   target:self.navigationController
 																								 selector:@selector(customBackButtonTouched)];
 	
-	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.group.name];
+	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 }
 
 - (BOOL)isTodayTasks

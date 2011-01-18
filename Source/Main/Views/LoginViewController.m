@@ -17,9 +17,9 @@
 #pragma mark Setup
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    self.title = @"Sign In";
 	
-	self.title = @"Sign In";
+	[super viewDidLoad];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:UserDidLoginNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:UserDidLoginNotification];
@@ -39,15 +39,15 @@
 {
 	[super setupNavigationBar];
 	
-	UIBarButtonItem *registerItem = [[[UIBarButtonItem alloc]initWithTitle:@"Register"
-																	 style:UIBarButtonItemStyleBordered
-																	target:self
-																	action:@selector(shouldRegister)]autorelease];
-	self.navigationItem.rightBarButtonItem = registerItem;
+	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet]navBarButtonItemWithText:@"Forgot?"
+																										  target:self
+																										selector:@selector(shouldResetPassword)];
 	
-	UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:nil action:nil];
-	self.navigationItem.backBarButtonItem = backBarButtonItem;
-	[backBarButtonItem release];
+	self.navigationItem.rightBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet]navBarButtonItemWithText:@"Register"
+																										  target:self
+																										selector:@selector(shouldRegister)];
+
+	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 }
 
 #pragma mark -

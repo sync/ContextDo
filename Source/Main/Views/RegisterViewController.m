@@ -8,14 +8,29 @@
 #pragma mark Setup
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    self.title = @"Register";
 	
-	self.title = @"Register";
+	[super viewDidLoad];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:UserDidRegisterNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:UserDidRegisterNotification];
 	
 	[self startEditing];
+}
+
+- (void)setupNavigationBar
+{
+	[super setupNavigationBar];
+	
+	self.navigationItem.rightBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Done"
+																												target:self
+																											  selector:@selector(shouldRegister)];
+	
+	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:@"Cancel"
+																								   target:self.navigationController
+																								 selector:@selector(customBackButtonTouched)];
+
+	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 }
 
 #pragma mark -

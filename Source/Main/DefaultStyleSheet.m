@@ -46,7 +46,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	return label;
 }
 
-#define LeftRightDiffNavBarButton 5.0
+#define LeftRightDiffNavBarButton 8.0
 #define NavBarButtonMinWidth 65.0
 
 - (UIBarButtonItem *)navBarButtonItemWithText:(NSString *)text target:(id)target selector:(SEL)action
