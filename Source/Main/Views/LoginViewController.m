@@ -4,8 +4,8 @@
 
 @interface LoginViewController (private)
 
-- (void)shouldLogin;
 - (void)shouldRegister;
+- (void)shouldResetPassword;
 
 @end
 
@@ -61,7 +61,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (void)shouldLogin;
+- (IBAction)shouldLogin;
 {
 	[self endEditing];
 	

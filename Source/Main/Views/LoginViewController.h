@@ -15,6 +15,6 @@
 - (void)goNext;
 - (void)shouldReloadContent:(NSNotification *)notification;
 
-- (IBAction)shouldResetPassword;
+- (IBAction)shouldLogin;
 
 @end

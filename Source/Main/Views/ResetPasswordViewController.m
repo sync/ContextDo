@@ -2,8 +2,6 @@
 
 @interface ResetPasswordViewController (private)
 
-- (void)shouldResetPassword;
-
 @end
 
 @implementation ResetPasswordViewController
