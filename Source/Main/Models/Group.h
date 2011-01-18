@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 
-
 @interface Group : NSObject {
 	
 }
@@ -10,6 +9,9 @@
 @property (nonatomic, copy) NSDate *updatedAt;
 @property (nonatomic, copy) NSDate *createdAt;
 @property (nonatomic, copy) NSNumber *position;
+@property (nonatomic, copy) NSNumber *expiredCount;
+@property (nonatomic, copy) NSNumber *dueCount;
+@property (nonatomic, copy) NSNumber *userId;
 
 + (Group *)groupWithId:(NSNumber *)aGroupId
 				  name:(NSString *)aName;

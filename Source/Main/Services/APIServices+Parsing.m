@@ -55,10 +55,14 @@
 	if ([request.responseData length] != 0)  {
 		
 		//	"group": {
-		//		"created_at": "2010-12-19T05:21:31Z",
-		//		"id": 2,
-		//		"name": "Foo",
-		//		"updated_at": "2010-12-19T05:21:31Z"
+		//		"created_at": "2011-01-18T15:36:43Z",
+		//		"id": 17,
+		//		"name": "Test",
+		//		"position": 1,
+		//		"updated_at": "2011-01-18T15:36:43Z",
+		//		"user_id": 2,
+		//		"expired_count": 0,
+		//		"due_count": 0
 		//	}
 		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
@@ -74,17 +78,33 @@
 	if ([request.responseData length] != 0)  {
 		
 		//	"group": {
-		//		"created_at": "2010-12-19T05:21:31Z",
-		//		"id": 2,
-		//		"name": "Foo",
-		//		"updated_at": "2010-12-19T05:21:31Z"
+		//		"created_at": "2011-01-18T15:36:43Z",
+		//		"id": 17,
+		//		"name": "Test",
+		//		"position": 1,
+		//		"updated_at": "2011-01-18T15:36:43Z",
+		//		"user_id": 2,
+		//		"expired_count": 0,
+		//		"due_count": 0
 		//	}
+		
+		NSDictionary *info = request.userInfo;
 		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		Group *group = [Group fromJSONData:request.responseData];
+		if (group) {
+			[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
+											 group, @"group",
+											 [info valueForKey:@"name"], @"name",
+											 [info valueForKey:@"position"], @"position",
+											 nil
+											 ]];
+		} else {
+			[self notifyFailed:request withError:@"Unable to Create Group"];
+		}
 		
 		
-		NSDictionary *info = request.userInfo;
+		
 		[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
 										 (group) ? group : [info valueForKey:@"object"], @"object",
 										 nil

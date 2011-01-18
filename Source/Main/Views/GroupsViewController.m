@@ -128,6 +128,12 @@
 
 - (void)groupAddNotification:(NSNotification *)notification
 {
+	NSDictionary *dictionary = [notification object];
+	NSString *groupName = [dictionary valueForKey:@"name"];
+	if ([groupName isEqualToString:self.addGroupTextField.text]) {
+		self.addGroupTextField.text = nil;
+	}
+	
 	[self refreshGroups];
 }
 
@@ -148,7 +154,7 @@
 	
 	if (newGroups.count > 0) {
 		[self.groups addObjectsFromArray:newGroups];
-		[self.groupsDataSource.content addObject:[NSArray arrayWithObject:self.groups]];
+		[self.groupsDataSource.content addObject:self.groups];
 	}
 	Group *todayGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
 									  name:TodaysTasksPlacholder];
@@ -192,14 +198,23 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
+	
+	CTXDOCellContext context = CTXDOCellContextStandard;
+	if (group.expiredCount.integerValue > 0) {
+		context = CTXDOCellContextDue;
+	} else if (group.dueCount.integerValue > 0) {
+		context = CTXDOCellContextExpiring;
+	}
+	
 	if ([self isIndexPathSingleRow:indexPath]) {
-		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionSingle context:CTXDOCellContextStandard];
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionSingle context:context];
 	} else if (indexPath.row == 0) {
-		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionTop context:CTXDOCellContextDue];
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionTop context:context];
 	} else if ([self isIndexPathLastRow:indexPath]) {
-		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionBottom context:CTXDOCellContextLocationAware];
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionBottom context:context];
 	} else {
-		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionMiddle context:CTXDOCellContextExpiring];
+		[(GroupsCell *)cell setCellPosition:CTXDOCellPositionMiddle context:context];
 	}
 }
 
@@ -248,7 +263,6 @@
 {
 	[self.addGroupTextField resignFirstResponder];
 	[[APIServices sharedAPIServices]addGroupWithName:self.addGroupTextField.text position:[NSNumber numberWithInteger:1]];
-	self.addGroupTextField.text = nil;
 }
 
 - (void)addTask

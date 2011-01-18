@@ -3,7 +3,7 @@
 
 @implementation Group
 
-@synthesize groupId, name, createdAt, updatedAt, position;
+@synthesize groupId, name, createdAt, updatedAt, position, expiredCount, dueCount, userId;
 
 + (Group *)groupWithId:(NSNumber *)aGroupId
 				  name:(NSString *)aName
@@ -39,6 +39,10 @@
 
 - (void)dealloc
 {
+	[userId release];
+	[position release];
+	[expiredCount release];
+	[dueCount release];
 	[groupId release];
 	[name release];
 	[updatedAt release];

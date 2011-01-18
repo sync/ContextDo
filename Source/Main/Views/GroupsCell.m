@@ -105,7 +105,8 @@
 - (void)setGroup:(Group *)group
 {
 	self.textLabel.text = group.name;
-	self.detailTextLabel.text = @"10";
+	
+	self.detailTextLabel.text = (group.expiredCount.integerValue > 0) ?  [group.expiredCount stringValue] : nil;
 	[self setNeedsLayout];
 }
 

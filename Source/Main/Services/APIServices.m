@@ -120,7 +120,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
-	request.shouldRedirect = FALSE;
+	[request setShouldAttemptPersistentConnection:NO];
+	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
 	
 	[request setPostValue:aUsername forKey:@"user[email]"];
 	[request setPostValue:aPassword forKey:@"user[password]"];
@@ -154,6 +155,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
+	[request setShouldAttemptPersistentConnection:NO];
+	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
+	
 	[request setPostValue:aUsername forKey:@"user[email]"];
 	
 	[self.networkQueue addOperation:request];
@@ -185,12 +189,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
 							  notificationName, @"notificationName",
+							  name, @"name",
+							  position, @"position",
 							  nil];
 	
 	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
+	
+	[request setShouldAttemptPersistentConnection:NO];
+	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
 	
 	[request setPostValue:name forKey:@"group[name]"];
 	if (position) {
@@ -222,6 +231,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
+	[request setShouldAttemptPersistentConnection:NO];
+	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
+	
 	[request setRequestMethod:@"PUT"];
 
 	[request setPostValue:name forKey:@"group[name]"];
@@ -250,6 +262,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
+	
+	[request setShouldAttemptPersistentConnection:NO];
+	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
 	
 	[request setRequestMethod:@"DELETE"];
 	
