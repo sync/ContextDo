@@ -22,4 +22,6 @@ typedef enum {
 
 - (void)setCellPosition:(CTXDOCellPosition)cellPosition context:(CTXDOCellContext)cellContext;
 
+- (void)setGroup:(Group *)group;
+
 @end

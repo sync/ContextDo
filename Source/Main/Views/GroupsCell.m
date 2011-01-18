@@ -70,4 +70,9 @@
 	self.textLabel.highlightedTextColor = highlightedTextColor;
 }
 
+- (void)setGroup:(Group *)group
+{
+	
+}
+
 @end
