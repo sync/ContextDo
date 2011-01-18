@@ -14,7 +14,8 @@
 		return nil;
 	}
 	
-	if (section == 0) {
+	Group *group = [self objectForIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]];
+	if (group.groupId.integerValue != NSNotFound) {
 		return@"Groups";
 	}
 	

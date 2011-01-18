@@ -115,7 +115,7 @@
 		[self.tasks removeAllObjects];
 	}
 	
-	if (newTasks) {
+	if (newTasks.count) {
 		[self.tasks addObjectsFromArray:newTasks];
 	}
 	

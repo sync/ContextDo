@@ -164,13 +164,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 #pragma mark -
 #pragma mark Groups
 
-- (void)refreshGroupsWithPage:(NSInteger)page
+- (void)refreshGroups
 {
 	NSString *notificationName = GroupsDidLoadNotification;
 	NSString *path = @"groupsWithPage";
 	
-	NSString *url = GROUPSURL(BASE_URL, GROUPS_PATH, page);
-	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
+	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
+	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
 - (void)addGroupWithName:(NSString *)name

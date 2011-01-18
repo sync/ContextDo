@@ -6,7 +6,7 @@
 @interface GroupsViewController (private)
 
 - (void)refreshGroups;
-- (void)reloadGroups:(NSArray *)newGroups removeCache:(BOOL)removeCache showMore:(BOOL)showMore;
+- (void)reloadGroups:(NSArray *)newGroups;
 - (void)addGroup;
 - (void)groupEditNotification:(NSNotification *)notification;
 - (void)groupAddNotification:(NSNotification *)notification;
@@ -21,7 +21,7 @@
 
 @implementation GroupsViewController
 
-@synthesize groupsDataSource, groups, page, groupsEditViewController, addGroupTextField;
+@synthesize groupsDataSource, groups, groupsEditViewController, addGroupTextField;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -30,8 +30,6 @@
     self.title = @"Groups";
 	
 	[super viewDidLoad];
-	
-	self.page = 1;
 }
 
 - (void)viewDidUnload
@@ -109,13 +107,8 @@
 
 - (void)shouldReloadContent:(NSNotification *)notification
 {
-	NSDictionary *dict = [notification object];
-	
-	NSNumber *currentPage = [dict valueForKey:@"object"];
-	self.page = currentPage.integerValue;
-	
-	NSArray *newGroups = [dict valueForKey:@"groups"];
-	[self reloadGroups:newGroups removeCache:(self.page == 1) showMore:newGroups.count == 10];
+	NSArray *newGroups = [notification object];
+	[self reloadGroups:newGroups];
 }
 
 - (void)groupEditNotification:(NSNotification *)notification
@@ -147,33 +140,17 @@
 	return groups;
 }
 
-#define ShowMorePlaceholder @"Load More Groups..."
-
-- (void)reloadGroups:(NSArray *)newGroups removeCache:(BOOL)removeCache showMore:(BOOL)showMore
+- (void)reloadGroups:(NSArray *)newGroups
 {
 	[self.groupsDataSource resetContent];
 	
-	if (removeCache) {
-		[self.groups removeAllObjects];
-	}
+	[self.groups removeAllObjects];
 	
-	if (newGroups) {
+	if (newGroups.count > 0) {
 		[self.groups addObjectsFromArray:newGroups];
+		[self.groupsDataSource.content addObject:[NSArray arrayWithObject:self.groups]];
 	}
-	
-	NSMutableArray *groupsSection = [NSMutableArray array];
-	
-	[groupsSection addObjectsFromArray:self.groups];
-	
-	if (showMore) {
-		Group *showMoreGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
-											 name:ShowMorePlaceholder];
-		[groupsSection addObject:showMoreGroup];
-	}
-	
-	[self.groupsDataSource.content addObject:groupsSection];
-	
-	Group *todayGroup = [Group groupWithId:[NSNumber numberWithInt:-1]
+	Group *todayGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
 									  name:TodaysTasksPlacholder];
 	
 	[self.groupsDataSource.content addObject:[NSArray arrayWithObject:todayGroup]];
@@ -230,16 +207,9 @@
     
 	Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
 	
-	if (group.groupId.integerValue != NSNotFound) {
-		TasksViewController *controller = [[[TasksViewController alloc]initWithNibName:@"TasksView" bundle:nil]autorelease];
-		controller.group = group;
-		[self.navigationController pushViewController:controller animated:TRUE];
-	} else {
-		if ([group.name isEqualToString:ShowMorePlaceholder]) {
-			self.page += 1;
-			[[APIServices sharedAPIServices]refreshGroupsWithPage:self.page];
-		}
-	}
+	TasksViewController *controller = [[[TasksViewController alloc]initWithNibName:@"TasksView" bundle:nil]autorelease];
+	controller.group = group;
+	[self.navigationController pushViewController:controller animated:TRUE];
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }
@@ -271,9 +241,7 @@
 
 - (void)refreshGroups
 {
-	self.page = 1;
-	
-	[[APIServices sharedAPIServices]refreshGroupsWithPage:page];
+	[[APIServices sharedAPIServices]refreshGroups];
 }
 
 - (void)addGroup

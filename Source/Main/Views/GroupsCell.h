@@ -20,6 +20,9 @@ typedef enum {
 
 }
 
+@property (nonatomic, readonly) CTXDOCellPosition cellPosition;
+@property (nonatomic, readonly) CTXDOCellContext cellContext;
+
 - (void)setCellPosition:(CTXDOCellPosition)cellPosition context:(CTXDOCellContext)cellContext;
 
 - (void)setGroup:(Group *)group;

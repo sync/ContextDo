@@ -65,12 +65,7 @@
 		NSArray *content = [NSArray fromJSONData:request.responseData];
 
 		
-		NSDictionary *info = request.userInfo;
-		[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
-										 content, @"groups",
-										 [info valueForKey:@"object"], @"object",
-										 nil
-										 ]];
+		[self notifyDone:request object:content];
 	}
 }
 

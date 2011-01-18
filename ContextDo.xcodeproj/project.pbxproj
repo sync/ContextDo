@@ -137,6 +137,7 @@
 		243A489C12E5B39500A6D402 /* table_infoTouch_mid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A489612E5B39500A6D402 /* table_infoTouch_mid@2x.png */; };
 		243A489D12E5B39500A6D402 /* table_infoTouch_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A489712E5B39500A6D402 /* table_infoTouch_top.png */; };
 		243A489E12E5B39500A6D402 /* table_infoTouch_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A489812E5B39500A6D402 /* table_infoTouch_top@2x.png */; };
+		243A495512E5D3B700A6D402 /* UISearchDisplayController+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A495412E5D3B700A6D402 /* UISearchDisplayController+Custom.m */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -386,6 +387,8 @@
 		243A489612E5B39500A6D402 /* table_infoTouch_mid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table_infoTouch_mid@2x.png"; sourceTree = "<group>"; };
 		243A489712E5B39500A6D402 /* table_infoTouch_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = table_infoTouch_top.png; sourceTree = "<group>"; };
 		243A489812E5B39500A6D402 /* table_infoTouch_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table_infoTouch_top@2x.png"; sourceTree = "<group>"; };
+		243A495312E5D3B700A6D402 /* UISearchDisplayController+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchDisplayController+Custom.h"; sourceTree = "<group>"; };
+		243A495412E5D3B700A6D402 /* UISearchDisplayController+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchDisplayController+Custom.m"; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -1102,6 +1105,8 @@
 				243A362C12E3E2E800A6D402 /* CustomNavigationController.m */,
 				243A360512E3E06A00A6D402 /* UINavigationController+Custom.h */,
 				243A360412E3E06A00A6D402 /* UINavigationController+Custom.m */,
+				243A495312E5D3B700A6D402 /* UISearchDisplayController+Custom.h */,
+				243A495412E5D3B700A6D402 /* UISearchDisplayController+Custom.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1663,6 +1668,7 @@
 				243A401E12E4A89C00A6D402 /* CTXDODarkTextField.m in Sources */,
 				243A46AF12E573C100A6D402 /* CTXDOLoginButton.m in Sources */,
 				243A481312E5A3CA00A6D402 /* CustomSearchBar.m in Sources */,
+				243A495512E5D3B700A6D402 /* UISearchDisplayController+Custom.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

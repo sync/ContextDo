@@ -29,7 +29,6 @@
 #define RESET_PASSWORD_PATH @"/users/password.json"
 // Groups
 #define GROUPS_PATH @"/groups.json"
-#define GROUPSURL(base, path, page) [NSString stringWithFormat:@"%@?page=%d", CTXDOURL(base, path), page]
 // Group
 #define GROUP_PATH @"/groups"
 #define GROUPURL(base, path, groupId) [NSString stringWithFormat:@"%@/%@.json", CTXDOURL(base, path), groupId]
