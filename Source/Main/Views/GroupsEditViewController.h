@@ -2,7 +2,7 @@
 #import "BaseTableViewController.h"
 #import "GroupsEditDataSource.h"
 
-@interface GroupsEditViewController : BaseTableViewController <GroupsEditDataSourceDelegate> {
+@interface GroupsEditViewController : BaseTableViewController <GroupsEditDataSourceDelegate, UITextFieldDelegate> {
 
 }
 
@@ -11,5 +11,8 @@
 @property (nonatomic, readonly) NSMutableArray *groups;
 
 - (void)refreshDataSource;
+
+@property (nonatomic, retain) UITextField *editingTextField;
+@property (nonatomic) BOOL editChangesMade;
 
 @end

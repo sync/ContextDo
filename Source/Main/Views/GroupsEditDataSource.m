@@ -1,5 +1,5 @@
 #import "GroupsEditDataSource.h"
-
+#import "GroupsEditCell.h"
 
 @implementation GroupsEditDataSource
 
@@ -15,19 +15,30 @@
 	return @"Groups";
 }
 
+#define TagDiff 108097
+
+- (NSInteger)tagForRow:(NSInteger)row
+{
+	return row + TagDiff;
+}
+
+- (NSInteger)rowForTag:(NSInteger)tag
+{
+	return tag - TagDiff;
+}
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-#define GroupsEditCellIdentifier @"GroupsEditCellIdentifier"
-	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GroupsEditCellIdentifier];
+	GroupsEditCell *cell = (GroupsEditCell *)[tableView dequeueReusableCellWithIdentifier:nil];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GroupsEditCellIdentifier] autorelease];
+        cell = [[[GroupsEditCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil] autorelease];
     }
 	
 	Group *group = [self groupForIndexPath:indexPath];
 	
-	cell.textLabel.text = group.name;
+	cell.textField.text = group.name;
+	cell.textField.tag = [self tagForRow:indexPath.row];
 	
     return cell;
 }

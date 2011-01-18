@@ -87,6 +87,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupEditNotification:) name:GroupEditNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupAddNotification:) name:GroupAddNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupDeletedNotification:) name:GroupDeleteNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupAddNotification];
 	
@@ -117,24 +118,37 @@
 	
 	Group *group = [dict valueForKey:@"object"];
 	if (group) {
-		NSInteger index = [self.groups indexOfObject:group];
-		if (index != NSNotFound) {
-			[self.groups replaceObjectAtIndex:index withObject:group];
-			[self.tableView reloadData];
+//		NSInteger index = [self.groups indexOfObject:group];
+//		if (index != NSNotFound) {
+//			[self.groups replaceObjectAtIndex:index withObject:group];
+//			[self.tableView reloadData];
+//		}
+		if (!self.isShowingGroupsEdit) {
+			[self refreshGroups];
 		}
-		
 	}
 }
 
 - (void)groupAddNotification:(NSNotification *)notification
 {
-	NSDictionary *dictionary = [notification object];
-	NSString *groupName = [dictionary valueForKey:@"name"];
-	if ([groupName isEqualToString:self.addGroupTextField.text]) {
-		self.addGroupTextField.text = nil;
+	NSDictionary *dict = [notification object];
+	Group *group = [dict valueForKey:@"object"];
+	if (group) {
+		NSString *groupName = [dict valueForKey:@"name"];
+		if ([groupName isEqualToString:self.addGroupTextField.text]) {
+			self.addGroupTextField.text = nil;
+		}
+		if (!self.isShowingGroupsEdit) {
+			[self refreshGroups];
+		}
 	}
-	
-	[self refreshGroups];
+}
+
+- (void)groupDeletedNotification:(NSNotification *)notification
+{
+	if (!self.isShowingGroupsEdit) {
+		[self refreshGroups];
+	}
 }
 
 - (NSMutableArray *)groups
@@ -176,11 +190,9 @@
 																		selector:@selector(editButtonPressed)];
 }
 
-- (UIBarButtonItem *)saveButtonItem
+- (BOOL)editChangesMade
 {
-	return [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Save" 
-																			  target:self 
-																			selector:@selector(saveButtonPressed)];
+	return ![self.groupsEditViewController.groups isEqualToArray:self.groups];
 }
 
 #pragma mark -
@@ -252,6 +264,27 @@
 }
 
 #pragma mark -
+#pragma mark BaseLoadingViewCenter Delegate
+
+- (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
+{
+	if (self.isShowingGroupsEdit) {
+		return;
+	}
+	
+	[self.noResultsView hide:FALSE];
+	
+	if (!self.loadingView) {
+		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
+		self.loadingView.delegate = self;
+		[self.view addSubview:self.loadingView];
+		[self.view bringSubviewToFront:self.loadingView];
+		[self.loadingView show:TRUE];
+	}
+	self.loadingView.labelText = @"Loading";
+}
+
+#pragma mark -
 #pragma mark Actions
 
 - (void)refreshGroups
@@ -280,14 +313,9 @@
 	if (!self.isShowingGroupsEdit) {
 		[self showGroupsEditAnimated:TRUE];
 	} else {
+		[self.groupsEditViewController.editingTextField resignFirstResponder];
 		[self hideGroupsEditAnimated:TRUE];
 	}
-}
-
-- (void)saveButtonPressed
-{
-	[self hideGroupsEditAnimated:TRUE];
-	// TODO sync with server
 }
 
 #pragma mark -
@@ -317,10 +345,10 @@
 		return;
 	}
 	
+
 	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] editBarButtonItemEditing:TRUE
 																										   target:self
 																										 selector:@selector(editButtonPressed)];
-	[self.navigationItem setRightBarButtonItem:self.saveButtonItem animated:TRUE];
 	
 	[self.groupsEditViewController.groups removeAllObjects];
 	[self.groupsEditViewController.groups addObjectsFromArray:self.groups];
@@ -345,10 +373,16 @@
 		return;
 	}
 	
+	if (self.groupsEditViewController.editChangesMade) {
+		[self refreshGroups];
+	}
+	
+	self.navigationItem.leftBarButtonItem = nil;
+	
 	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] editBarButtonItemEditing:FALSE
 																										   target:self
 																										 selector:@selector(editButtonPressed)];
-	self.navigationItem.rightBarButtonItem = nil;
+	//self.navigationItem.rightBarButtonItem = nil;
 	
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
@@ -368,11 +402,18 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+	[self.navigationItem setLeftBarButtonItem:nil animated:TRUE];
+	
 	[(CTXDODarkTextField *)textField updateBackgroundImage];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+	[self.navigationItem setLeftBarButtonItem:[[DefaultStyleSheet sharedDefaultStyleSheet] editBarButtonItemEditing:FALSE
+																											 target:self
+																										  selector:@selector(editButtonPressed)] animated:TRUE];
+	
+	
 	[(CTXDODarkTextField *)textField updateBackgroundImage];
 }
 

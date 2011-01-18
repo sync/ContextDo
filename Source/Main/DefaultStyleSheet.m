@@ -121,14 +121,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 - (UIBarButtonItem *)editBarButtonItemEditing:(BOOL)editing target:(id)target selector:(SEL)action
 {
 	UIBarButtonItem *item = nil;
-	if (editing) {
-		item = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Cancel"
-																			  target:target
-																			selector:action];
-	} else {
+	if (!editing) {
 		item = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Edit"
 																			  target:target
 																			selector:action];
+	} else {
+		item = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Done"
+																				  target:target
+																				selector:action];
 	}
 	
 	return item;

@@ -90,25 +90,28 @@
 		
 		NSDictionary *info = request.userInfo;
 		
+		if ([[self notificationNameForRequest:request]isEqualToString:GroupDeleteNotification]) {
+			[self notifyDone:request object:nil];
+			return;
+		}
+		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		Group *group = [Group fromJSONData:request.responseData];
 		if (group) {
 			[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
-											 group, @"group",
+											 group, @"object",
 											 [info valueForKey:@"name"], @"name",
 											 [info valueForKey:@"position"], @"position",
 											 nil
 											 ]];
 		} else {
-			[self notifyFailed:request withError:@"Unable to Create Group"];
+			if ([[self notificationNameForRequest:request]isEqualToString:GroupAddNotification]) {
+				[self notifyFailed:request withError:@"Unable to Create Group"];
+			} else {
+				[self notifyFailed:request withError:@"Unable to Modify Group"];
+			}
+			
 		}
-		
-		
-		
-		[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
-										 (group) ? group : [info valueForKey:@"object"], @"object",
-										 nil
-										 ]];
 	}
 }
 

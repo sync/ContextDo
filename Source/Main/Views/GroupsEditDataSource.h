@@ -11,6 +11,9 @@
 
 @property (nonatomic, assign) id<GroupsEditDataSourceDelegate> delegate;
 
+- (NSInteger)tagForRow:(NSInteger)row;
+- (NSInteger)rowForTag:(NSInteger)tag;
+
 @end
 
 @protocol GroupsEditDataSourceDelegate <NSObject>
