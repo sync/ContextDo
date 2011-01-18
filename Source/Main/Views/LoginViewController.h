@@ -1,12 +1,13 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "CTXDODarkTextField.h"
 
 @interface LoginViewController : BaseViewController <UITextFieldDelegate> {
 
 }
 
-@property (nonatomic, retain) IBOutlet UITextField *usernameTextField;
-@property (nonatomic, retain) IBOutlet UITextField *passwordTextField;
+@property (nonatomic, retain) IBOutlet CTXDODarkTextField *usernameTextField;
+@property (nonatomic, retain) IBOutlet CTXDODarkTextField *passwordTextField;
 
 - (void)startEditing;
 - (void)endEditing;

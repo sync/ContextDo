@@ -55,6 +55,16 @@
 #pragma mark -
 #pragma mark UITextFieldDelegate
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+	[(CTXDODarkTextField *)textField updateBackgroundImage];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+	[(CTXDODarkTextField *)textField updateBackgroundImage];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
 	if ([self shouldReturn]) {

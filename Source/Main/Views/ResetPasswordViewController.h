@@ -1,11 +1,12 @@
 #import <Foundation/Foundation.h>
 #import "BaseViewController.h"
+#import "CTXDODarkTextField.h"
 
 @interface ResetPasswordViewController :  BaseViewController <UITextFieldDelegate> {
 
 }
 
-@property (nonatomic, retain) IBOutlet UITextField *usernameTextField;
+@property (nonatomic, retain) IBOutlet CTXDODarkTextField *usernameTextField;
 
 - (void)startEditing;
 - (void)endEditing;

@@ -1,6 +1,5 @@
 #import "GroupsViewController.h"
 #import "TasksViewController.h"
-#import "GroupEditionViewController.h"
 #import "CTXDOTableHeaderView.h"
 #import "GroupsCell.h"
 
@@ -387,12 +386,12 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-	[self.addGroupTextField updateBackgroundImage];
+	[(CTXDODarkTextField *)textField updateBackgroundImage];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-	[self.addGroupTextField updateBackgroundImage];
+	[(CTXDODarkTextField *)textField updateBackgroundImage];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
