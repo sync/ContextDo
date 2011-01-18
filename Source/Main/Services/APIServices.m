@@ -212,7 +212,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 }
 
 
-- (void)editGroupWithId:(NSNumber *)groupId name:(NSString *)name
+- (void)editGroupWithId:(NSNumber *)groupId name:(NSString *)name position:(NSNumber *)position
 {
 	if (!name) {
 		return;
@@ -237,6 +237,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[request setRequestMethod:@"PUT"];
 
 	[request setPostValue:name forKey:@"group[name]"];
+	if (position) {
+		[request setPostValue:position forKey:@"group[position]"];
+	}
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
