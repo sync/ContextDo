@@ -7,4 +7,6 @@
 
 - (void)setupCustomInitialisation;
 
+- (void)updateBackgroundImage;;
+
 @end

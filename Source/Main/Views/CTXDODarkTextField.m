@@ -1,8 +1,6 @@
 #import "CTXDODarkTextField.h"
 
-
 @implementation CTXDODarkTextField
-
 
 #pragma mark -
 #pragma mark Init
@@ -34,14 +32,13 @@
 
 - (void)setupCustomInitialisation
 {	
-	UIImage *image = [UIImage imageNamed:@"inputfield_off.png"];
-	image = [image stretchableImageWithLeftCapWidth:22 topCapHeight:0.0];
+	[self updateBackgroundImage];
 	
 	self.font = [UIFont systemFontOfSize:TextSize];
 	self.textColor = [UIColor colorWithHexString:@"7e7e82"];
 	self.borderStyle = UITextBorderStyleNone;
-	self.background = image;
-	self.clearButtonMode = UITextFieldViewModeNever;
+	
+	self.clearButtonMode = UITextFieldViewModeWhileEditing;
 	self.rightViewMode = UITextFieldViewModeAlways;
 }
 
@@ -64,6 +61,31 @@
 - (CGRect)rightViewRectForBounds:(CGRect)bounds
 {
 	return CGRectMake(bounds.size.width - 54.0 - 10, (bounds.size.height - 28.0) / 2.0, 54.0, 28.0);
+}
+
+- (CGRect)clearButtonRectForBounds:(CGRect)bounds
+{
+	CGRect rect = [super clearButtonRectForBounds:bounds];
+	rect.origin.x = bounds.size.width - rect.size.width - 10.0;
+	return rect;
+}
+
+#pragma mark -
+#pragma mark Background
+
+- (void)updateBackgroundImage 
+{
+	UIImage *image = nil;
+	if (!self.editing) {
+		image = [UIImage imageNamed:@"inputfield_off.png"];
+	} else {
+		image = [UIImage imageNamed:@"inputfield_touch.png"];
+	}
+	image = [image stretchableImageWithLeftCapWidth:(image.size.width / 2.0) - 1.0 topCapHeight:0.0];
+	
+	if (![image isEqual:self.background]) {
+		self.background = image;
+	}
 }
 
 @end

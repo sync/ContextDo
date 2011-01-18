@@ -383,6 +383,16 @@
 #pragma mark -
 #pragma mark UITextFieldDelegate
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+	[self.addGroupTextField updateBackgroundImage];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+	[self.addGroupTextField updateBackgroundImage];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
 	if (textField.text.length > 0) {

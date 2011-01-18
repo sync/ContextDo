@@ -97,6 +97,11 @@
 		243A3FA412E49CD100A6D402 /* icon_location.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A3FA012E49CD100A6D402 /* icon_location.png */; };
 		243A3FA512E49CD100A6D402 /* icon_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A3FA112E49CD100A6D402 /* icon_location@2x.png */; };
 		243A401E12E4A89C00A6D402 /* CTXDODarkTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A401D12E4A89C00A6D402 /* CTXDODarkTextField.m */; };
+		243A46A712E5725300A6D402 /* btn_std_login_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A46A312E5725300A6D402 /* btn_std_login_off.png */; };
+		243A46A812E5725300A6D402 /* btn_std_login_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A46A412E5725300A6D402 /* btn_std_login_off@2x.png */; };
+		243A46A912E5725300A6D402 /* btn_std_login_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A46A512E5725300A6D402 /* btn_std_login_touch.png */; };
+		243A46AA12E5725300A6D402 /* btn_std_login_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A46A612E5725300A6D402 /* btn_std_login_touch@2x.png */; };
+		243A46AF12E573C100A6D402 /* CTXDOLoginButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A46AE12E573C100A6D402 /* CTXDOLoginButton.m */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -306,6 +311,12 @@
 		243A3FA112E49CD100A6D402 /* icon_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_location@2x.png"; sourceTree = "<group>"; };
 		243A401C12E4A89C00A6D402 /* CTXDODarkTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDODarkTextField.h; sourceTree = "<group>"; };
 		243A401D12E4A89C00A6D402 /* CTXDODarkTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDODarkTextField.m; sourceTree = "<group>"; };
+		243A46A312E5725300A6D402 /* btn_std_login_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_std_login_off.png; sourceTree = "<group>"; };
+		243A46A412E5725300A6D402 /* btn_std_login_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_std_login_off@2x.png"; sourceTree = "<group>"; };
+		243A46A512E5725300A6D402 /* btn_std_login_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_std_login_touch.png; sourceTree = "<group>"; };
+		243A46A612E5725300A6D402 /* btn_std_login_touch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_std_login_touch@2x.png"; sourceTree = "<group>"; };
+		243A46AD12E573C100A6D402 /* CTXDOLoginButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOLoginButton.h; sourceTree = "<group>"; };
+		243A46AE12E573C100A6D402 /* CTXDOLoginButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOLoginButton.m; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -552,6 +563,15 @@
 				243A401D12E4A89C00A6D402 /* CTXDODarkTextField.m */,
 			);
 			name = TextFields;
+			sourceTree = "<group>";
+		};
+		243A46B012E573D000A6D402 /* UIButtons */ = {
+			isa = PBXGroup;
+			children = (
+				243A46AD12E573C100A6D402 /* CTXDOLoginButton.h */,
+				243A46AE12E573C100A6D402 /* CTXDOLoginButton.m */,
+			);
+			name = UIButtons;
 			sourceTree = "<group>";
 		};
 		248921C3128ED27000DC9712 /* API */ = {
@@ -1194,6 +1214,10 @@
 				243A3CF512E45F4800A6D402 /* btn_inputfield_off@2x.png */,
 				243A3CF612E45F4800A6D402 /* btn_inputfield_touch.png */,
 				243A3CF712E45F4800A6D402 /* btn_inputfield_touch@2x.png */,
+				243A46A312E5725300A6D402 /* btn_std_login_off.png */,
+				243A46A412E5725300A6D402 /* btn_std_login_off@2x.png */,
+				243A46A512E5725300A6D402 /* btn_std_login_touch.png */,
+				243A46A612E5725300A6D402 /* btn_std_login_touch@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -1254,6 +1278,7 @@
 		3A57FFA811FFB24F00248D1D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				243A46B012E573D000A6D402 /* UIButtons */,
 				243A40F712E4B7D100A6D402 /* TextFields */,
 				243A3C1E12E450DC00A6D402 /* Table header */,
 				2489CAC512BE185400C1A58A /* Cells */,
@@ -1420,6 +1445,10 @@
 				243A3F6412E4968600A6D402 /* table_arrow_loc@2x.png in Resources */,
 				243A3FA412E49CD100A6D402 /* icon_location.png in Resources */,
 				243A3FA512E49CD100A6D402 /* icon_location@2x.png in Resources */,
+				243A46A712E5725300A6D402 /* btn_std_login_off.png in Resources */,
+				243A46A812E5725300A6D402 /* btn_std_login_off@2x.png in Resources */,
+				243A46A912E5725300A6D402 /* btn_std_login_touch.png in Resources */,
+				243A46AA12E5725300A6D402 /* btn_std_login_touch@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1509,6 +1538,7 @@
 				243A3D5B12E46A4F00A6D402 /* GroupsCell.m in Sources */,
 				243A3DA112E4748B00A6D402 /* CellBackgroundView.m in Sources */,
 				243A401E12E4A89C00A6D402 /* CTXDODarkTextField.m in Sources */,
+				243A46AF12E573C100A6D402 /* CTXDOLoginButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
