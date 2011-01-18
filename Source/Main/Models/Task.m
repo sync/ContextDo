@@ -1,4 +1,5 @@
 #import "Task.h"
+#import "NSDate-Utilities.h"
 
 @implementation Task
 
@@ -25,6 +26,16 @@
 {
 	CLLocation *taskLocation = [[[CLLocation alloc]initWithLatitude:self.latitude.doubleValue longitude:self.longitude.doubleValue]autorelease];
 	return [(id)[AppDelegate sharedAppDelegate].currentLocation getDistanceFrom:taskLocation];
+}
+
+- (BOOL)expired
+{
+	return (!self.completed && [self.dueAt isEarlierThanDate:[NSDate date]]);
+}
+
+- (BOOL)completed
+{
+	return (self.completedAt != nil);
 }
 
 - (BOOL)isEqual:(id)anObject

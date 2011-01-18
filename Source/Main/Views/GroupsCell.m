@@ -20,6 +20,7 @@
 		self.detailTextLabel.backgroundColor = [UIColor clearColor];
 		self.detailTextLabel.textColor = [UIColor colorWithHexString:@"430a0b"];
 		self.detailTextLabel.highlightedTextColor = [UIColor colorWithHexString:@"430a0b"];
+		self.detailTextLabel.textAlignment = UITextAlignmentCenter;
     }
     return self;
 }
@@ -55,14 +56,7 @@
 	UIColor *highlightedTextColor = nil;
 	UIFont *font = nil;
 	NSString *leftImageNamed = nil;
-	if (cellContext == CTXDOCellContextStandard) {
-		imageNamed = @"table_arrow_off.png";
-		highlightedImageNamed = @"table_arrow_touch.png";
-		textColor = [UIColor colorWithHexString:@"929092"];
-		highlightedTextColor = [UIColor whiteColor];
-		font = [UIFont boldSystemFontOfSize:16.0];
-		leftImageNamed = nil;
-	} else if (cellContext == CTXDOCellContextExpiring) {
+	if (cellContext == CTXDOCellContextExpiring) {
 		imageNamed = @"table_arrow_off.png";
 		highlightedImageNamed = @"table_arrow_touch.png";
 		textColor = [UIColor colorWithHexString:@"929092"];
@@ -90,6 +84,13 @@
 		highlightedTextColor = [UIColor whiteColor];
 		font = [UIFont boldSystemFontOfSize:10.0];
 		leftImageNamed = nil;
+	} else {
+		imageNamed = @"table_arrow_off.png";
+		highlightedImageNamed = @"table_arrow_touch.png";
+		textColor = [UIColor colorWithHexString:@"929092"];
+		highlightedTextColor = [UIColor whiteColor];
+		font = [UIFont boldSystemFontOfSize:16.0];
+		leftImageNamed = nil;
 	}
 	self.accessoryView = [AccessoryViewWithImage accessoryViewWithImageNamed:imageNamed
 													   highlightedImageNamed:highlightedImageNamed 
@@ -116,7 +117,7 @@
 	
 	CGSize boundsSize = self.contentView.bounds.size;
 	
-#define LeftDiff 7.0
+#define LeftDiff 5.0
 #define ImageLeftDiff 10.0
 #define ImageSeparatorLeftDiff 27.0
 #define TitleLefDiff 33.0

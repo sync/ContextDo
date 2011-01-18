@@ -1,5 +1,4 @@
 #import <UIKit/UIKit.h>
-#import "GroupsCell.h"
 
 @interface CellBackgroundView : UIView {
 

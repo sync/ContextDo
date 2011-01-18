@@ -10,6 +10,18 @@
 	return [self objectForIndexPath:indexPath];
 }
 
+#define TagDiff 908096
+
+- (NSInteger)tagForRow:(NSInteger)row
+{
+	return row + TagDiff;
+}
+
+- (NSInteger)rowForTag:(NSInteger)tag
+{
+	return tag - TagDiff;
+}
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
 {
@@ -19,24 +31,13 @@
     if (cell == nil) {
         cell = [[[TasksCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:TasksCellIdentifier] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
 	
 	Task *task = [self taskForIndexPath:indexPath];
+	[cell setTask:task];
 	
-	cell.textLabel.text = task.name;
-	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation && task.latitude && task.longitude) {
-		cell.distanceLabel.text = (task.distance / 1000.0 < 1000.0) ? [NSString stringWithFormat:@"%.1fkm", task.distance / 1000.0] : @"far away";
-	} else {
-		cell.distanceLabel.text = nil;
-	}
-	
-	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc]init]autorelease];
-	[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-	[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-	
-	[dateFormatter setDoesRelativeDateFormatting:YES];
-	
-	cell.detailTextLabel.text = [dateFormatter stringFromDate:task.dueAt];
+	cell.completedButton.tag = [self tagForRow:indexPath.row];
 	
     return cell;
 }

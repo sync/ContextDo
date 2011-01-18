@@ -1,4 +1,5 @@
 #import "TasksViewController.h"
+#import "TasksCell.h"
 
 @interface TasksViewController (private)
 
@@ -74,6 +75,8 @@
 	
 	self.tasksDataSource = [[[TasksDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksDataSource;
+	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTextureView;
+	self.tableView.rowHeight = 88.0;
 	[self refreshTasks];
 }
 
@@ -83,6 +86,9 @@
 	
 	self.searchTasksDataSource = [[[TasksDataSource alloc]init]autorelease];
 	self.searchDisplayController.searchResultsTableView.dataSource = self.searchTasksDataSource;
+	self.searchDisplayController.searchResultsTableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTextureView;
+	self.searchDisplayController.searchResultsTableView.rowHeight = 88.0;
+	self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	[self refreshTasks];
 }
 
@@ -147,6 +153,39 @@
 
 #pragma mark -
 #pragma mark TableView Delegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	__unused Task *task  = [self.tasksDataSource taskForIndexPath:indexPath];
+	
+	CTXDOCellContext context = CTXDOCellContextStandard;
+	if (indexPath.row % 2 > 0) {
+		context = CTXDOCellContextStandardAlternate;
+	}
+	
+	// TODO location aware
+	
+	[(TasksCell *)cell setCellContext:context];
+	
+	[[(TasksCell *)cell completedButton]addTarget:self action:@selector(completedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)completedButtonTouched:(id)sender
+{
+	UIButton *button = (UIButton *)sender;
+	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.tasksDataSource rowForTag:button.tag]inSection:0];
+	
+	Task *task = [self.tasksDataSource taskForIndexPath:indexPath];
+	
+	if (task.completed) {
+		task.completedAt = nil;
+	} else {
+		task.completedAt = [NSDate date];
+	}
+	
+	// TODO update task api
+	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     

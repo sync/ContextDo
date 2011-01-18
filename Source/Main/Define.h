@@ -48,3 +48,20 @@
 #define GroupAddNotification @"GroupAddNotification"
 #define GroupEditNotification @"GroupEditNotification"
 #define GroupDeleteNotification @"GroupDeleteNotification"
+
+// Cells
+typedef enum {
+	CTXDOCellPositionSingle,
+	CTXDOCellPositionTop,
+	CTXDOCellPositionMiddle,
+	CTXDOCellPositionBottom
+}CTXDOCellPosition;
+
+typedef enum {
+	CTXDOCellContextStandard,
+	CTXDOCellContextStandardAlternate,
+	CTXDOCellContextExpiring,
+	CTXDOCellContextLocationAware,
+	CTXDOCellContextDue,
+	CTXDOCellContextDueLight
+}CTXDOCellContext;

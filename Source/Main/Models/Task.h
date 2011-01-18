@@ -20,6 +20,8 @@
 @property (nonatomic, copy) NSDate *completedAt;
 
 @property (nonatomic, readonly) CLLocationDistance distance;
+@property (nonatomic, readonly) BOOL expired;
+@property (nonatomic, readonly) BOOL completed;
 
 + (Task *)taskWithId:(NSNumber *)aTaskId
 				name:(NSString *)aName
