@@ -3,7 +3,10 @@
 
 @implementation TasksCell
 
-@synthesize distanceLabel, cellContext, completedButton;
+@synthesize distanceLabel, cellContext, completedButton, addressLabel, nameLabel;
+
+#define NameLabelFontSize 16.0
+#define AddressLabelFontSize 11.0
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -11,19 +14,6 @@
     if (self) {
         // Initialization code.
 		[self setCellContext:CTXDOCellContextStandard];
-		self.textLabel.backgroundColor = [UIColor clearColor];
-		self.textLabel.font = [UIFont boldSystemFontOfSize:16.0];
-		self.textLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
-		self.textLabel.shadowOffset = CGSizeMake(0,-1);
-		self.textLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
-		self.textLabel.numberOfLines = 2.0;
-		self.detailTextLabel.backgroundColor = [UIColor clearColor];
-		self.detailTextLabel.font = [UIFont boldSystemFontOfSize:11.0];
-		self.detailTextLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
-		self.detailTextLabel.shadowOffset = CGSizeMake(0,-1);
-		self.detailTextLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
-		self.detailTextLabel.backgroundColor = [UIColor clearColor];
-		self.textLabel.numberOfLines = 2.0;
     }
     return self;
 }
@@ -52,6 +42,42 @@
 	
 	return distanceLabel;
 }
+
+- (UILabel *)nameLabel
+{
+	if (!nameLabel) {
+		nameLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
+		nameLabel.backgroundColor = [UIColor clearColor];
+		nameLabel.font = [UIFont boldSystemFontOfSize:NameLabelFontSize];
+		nameLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
+		nameLabel.shadowOffset = CGSizeMake(0,-1);
+		nameLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
+		nameLabel.backgroundColor = [UIColor clearColor];
+		nameLabel.numberOfLines = 0;
+		[self addSubview:nameLabel];
+	}
+	
+	return nameLabel;
+}
+
+- (UILabel *)addressLabel
+{
+	if (!addressLabel) {
+		addressLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
+		addressLabel.backgroundColor = [UIColor clearColor];
+		addressLabel.font = [UIFont boldSystemFontOfSize:AddressLabelFontSize];
+		addressLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
+		addressLabel.shadowOffset = CGSizeMake(0,-1);
+		addressLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
+		addressLabel.backgroundColor = [UIColor clearColor];
+		addressLabel.numberOfLines = 0;
+		[self addSubview:addressLabel];
+	}
+	
+	return addressLabel;
+}
+
+
 
 - (void)setCellContext:(CTXDOCellContext)aCellContext
 {
@@ -89,33 +115,6 @@
 															   leftRightDiff:10.0];
 }
 
-- (void)setTask:(Task *)task
-{
-	NSString *imageNamed = nil;
-	if (task.expired) {
-		imageNamed = @"btn_todo_due.png";
-	} else if (task.completed) {
-		imageNamed = @"btn_todo_done.png";
-	} else {
-		imageNamed = @"btn_todo_std.png";
-	}
-	// location TODO
-	UIImage *image = [UIImage imageNamed:imageNamed];
-	[self.completedButton setBackgroundImage:image forState:UIControlStateNormal];
-	[self.completedButton setBackgroundImage:image forState:UIControlStateNormal];
-	
-	self.textLabel.text = task.name;
-	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation && task.latitude && task.longitude) {
-		self.distanceLabel.text = (task.distance / 1000.0 < 1000.0) ? [NSString stringWithFormat:@"%.1fkm", task.distance / 1000.0] : @"far away";
-	} else {
-		self.distanceLabel.text = nil;
-	}
-	
-	self.detailTextLabel.text = task.location; // todo task details???
-	
-	[self setNeedsLayout];
-}
-
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
@@ -138,19 +137,56 @@
 	distanceLabelFrame.origin.y = DistanceTopDiff;
 	self.distanceLabel.frame = CGRectIntegral(distanceLabelFrame);
 	
-#define LabelsRightDiff 5.0
-	[self.textLabel sizeToFit];
-	CGRect textLabelFrame = self.textLabel.frame;
-	textLabelFrame.origin.x = LeftDiff;
-	textLabelFrame.size.width = boundsSize.width - LeftDiff - self.distanceLabel.frame.size.width - LabelsRightDiff;
-	self.textLabel.frame = CGRectIntegral(textLabelFrame);
+#define TopDiff 11.0
+#define LabelsRightDiff 10.0
+	[self.nameLabel sizeToFit];
+	CGRect nameLabelFrame = self.nameLabel.frame;
+	nameLabelFrame.origin.x = LeftDiff;
+	nameLabelFrame.origin.y = TopDiff;
+	nameLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
+	CGFloat nameLabelTwoLinesHeight = 2 * NameLabelFontSize + 8.0;
+	BOOL nameLabelIsTwoLine = (nameLabelFrame.size.height > nameLabelTwoLinesHeight);
+	nameLabelFrame.size.height = (nameLabelIsTwoLine) ? nameLabelTwoLinesHeight : nameLabelFrame.size.height;  // 2 lines
+	self.nameLabel.frame = CGRectIntegral(nameLabelFrame);
 	
-#define LabelsRightDiff 5.0
-	[self.detailTextLabel sizeToFit];
-	CGRect detailTextLabelFrame = self.detailTextLabel.frame;
-	detailTextLabelFrame.origin.x = LeftDiff;
-	detailTextLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
-	self.detailTextLabel.frame = CGRectIntegral(detailTextLabelFrame);
+#define LabelsDiff 2.0
+	[self.addressLabel sizeToFit];
+	CGRect addressLabelFrame = self.addressLabel.frame;
+	addressLabelFrame.origin.x = LeftDiff;
+	addressLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff;
+	addressLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
+	CGFloat addressLabelTwoLinesHeight = 2 * AddressLabelFontSize + 8.0;
+	BOOL addressLabelIsTwoLine = (addressLabelFrame.size.height > nameLabelTwoLinesHeight);
+	addressLabelFrame.size.height = (addressLabelIsTwoLine) ? addressLabelTwoLinesHeight : addressLabelFrame.size.height;  // 2 lines
+	addressLabelFrame.size.height = (nameLabelIsTwoLine) ? AddressLabelFontSize + 4.0 : addressLabelFrame.size.height;  // 2 lines
+	self.addressLabel.frame = CGRectIntegral(addressLabelFrame);
+}
+
+- (void)setTask:(Task *)task
+{
+	NSString *imageNamed = nil;
+	if (task.expired) {
+		imageNamed = @"btn_todo_due.png";
+	} else if (task.completed) {
+		imageNamed = @"btn_todo_done.png";
+	} else {
+		imageNamed = @"btn_todo_std.png";
+	}
+	// location TODO
+	UIImage *image = [UIImage imageNamed:imageNamed];
+	[self.completedButton setBackgroundImage:image forState:UIControlStateNormal];
+	[self.completedButton setBackgroundImage:image forState:UIControlStateHighlighted];
+	
+	self.nameLabel.text = task.name;
+	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation && task.latitude && task.longitude) {
+		self.distanceLabel.text = (task.distance / 1000.0 < 1000.0) ? [NSString stringWithFormat:@"%.1fkm", task.distance / 1000.0] : @"far away";
+	} else {
+		self.distanceLabel.text = nil;
+	}
+	
+	self.addressLabel.text = task.location; // todo task details???
+	
+	[self setNeedsLayout];
 }
 
 @end

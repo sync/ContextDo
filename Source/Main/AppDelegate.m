@@ -117,7 +117,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (void)refreshAllControllers
 {
 	[self enableGPS];
-	[[APIServices sharedAPIServices]refreshGroups];
+	[[APIServices sharedAPIServices]refreshGroups]; // todo better way
 }
 
 - (void)logout:(BOOL)showingLogin animated:(BOOL)animated

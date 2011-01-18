@@ -213,14 +213,6 @@
 }
 
 #pragma mark -
-#pragma mark EGORefreshTableHeaderDelegate 
-
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
-{	
-	[self refreshTasks];
-}
-
-#pragma mark -
 #pragma mark Actions
 
 - (void)refreshTasks

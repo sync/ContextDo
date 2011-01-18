@@ -5,6 +5,8 @@
 }
 
 @property (nonatomic, readonly) UILabel *distanceLabel;
+@property (nonatomic, readonly) UILabel *nameLabel;
+@property (nonatomic, readonly) UILabel *addressLabel;
 @property (nonatomic, readonly) UIButton *completedButton;
 
 @property (nonatomic) CTXDOCellContext cellContext;

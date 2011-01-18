@@ -103,14 +103,6 @@
 	self.imageView.image = (leftImageNamed) ? [UIImage imageNamed:leftImageNamed] : nil;
 }
 
-- (void)setGroup:(Group *)group
-{
-	self.textLabel.text = group.name;
-	
-	self.detailTextLabel.text = (group.expiredCount.integerValue > 0) ?  [group.expiredCount stringValue] : nil;
-	[self setNeedsLayout];
-}
-
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
@@ -147,6 +139,14 @@
 													 0.0, 
 													 boundsSize.width - TitleLefDiff - RightDiff, 
 													 boundsSize.height));
+}
+
+- (void)setGroup:(Group *)group
+{
+	self.textLabel.text = group.name;
+	
+	self.detailTextLabel.text = (group.expiredCount.integerValue > 0) ?  [group.expiredCount stringValue] : nil;
+	[self setNeedsLayout];
 }
 
 @end
