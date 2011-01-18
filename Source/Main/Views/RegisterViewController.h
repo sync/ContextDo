@@ -5,4 +5,6 @@
 
 }
 
+@property (nonatomic, retain) IBOutlet CTXDODarkTextField *passwordConfirmationTextField;
+
 @end

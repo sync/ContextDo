@@ -2,7 +2,7 @@
 
 @implementation RegisterViewController
 
-@synthesize usernameTextField, passwordTextField;
+@synthesize usernameTextField, passwordTextField, passwordConfirmationTextField;
 
 #pragma mark -
 #pragma mark Setup
@@ -75,6 +75,30 @@
 	return YES;
 }
 
+- (void)goNext
+{
+	if ([self.usernameTextField isFirstResponder]) {
+		[self.passwordTextField becomeFirstResponder];
+	} else if ([self.passwordTextField isFirstResponder]) {
+		[self.passwordConfirmationTextField becomeFirstResponder];
+	} else {
+		[self.usernameTextField becomeFirstResponder];
+	}
+}
+
+- (BOOL)shouldReturn
+{
+	return ([self.passwordConfirmationTextField isFirstResponder] && self.usernameTextField.text.length > 0 && self.passwordTextField.text.length > 0 &&
+			self.passwordConfirmationTextField.text.length > 0);
+}
+
+- (void)endEditing
+{
+	[self.usernameTextField resignFirstResponder];
+	[self.passwordTextField resignFirstResponder];
+	[self.passwordConfirmationTextField resignFirstResponder];
+}
+
 #pragma mark -
 #pragma mark BaseLoadingViewCenter Delegate
 
@@ -98,6 +122,8 @@
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:UserDidRegisterNotification];
+	
+	[passwordConfirmationTextField release];
 	
 	[super dealloc];
 }
