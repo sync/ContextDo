@@ -20,10 +20,17 @@
 
 - (void)setCellPosition:(CTXDOCellPosition)cellPosition context:(CTXDOCellContext)cellContext;
 {
-	CellBackgroundView *backgroundView = [[[CellBackgroundView alloc]initWithFrame:self.contentView.bounds]autorelease];
-	backgroundView.cellPosition = cellPosition;
-	backgroundView.cellContext = cellContext;
+	CellBackgroundView *backgroundView = [CellBackgroundView cellBackgroundViewWithFrame:self.contentView.bounds 
+																			cellPosition:cellPosition
+																			 cellContext:cellContext
+																				selected:FALSE];
 	self.backgroundView = backgroundView;
+	
+	CellBackgroundView *selectedBackgroundView = [CellBackgroundView cellBackgroundViewWithFrame:self.contentView.bounds 
+																					cellPosition:cellPosition
+																					 cellContext:cellContext
+																						selected:TRUE];
+	self.selectedBackgroundView = selectedBackgroundView;
 	
 	NSString *imageNamed = nil;
 	NSString *highlightedImageNamed = nil;
@@ -80,12 +87,15 @@
 
 - (void)setGroup:(Group *)group
 {
+	self.textLabel.text = group.name;
 	// todo
 }
 
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
+	
+	
 }
 
 @end

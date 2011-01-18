@@ -3,7 +3,7 @@
 
 @implementation CellBackgroundView
 
-@synthesize cellPosition, cellContext;
+@synthesize cellPosition, cellContext, selected;
 
 #pragma mark -
 #pragma mark Init
@@ -35,6 +35,19 @@
 {	
 	self.cellPosition = CTXDOCellPositionSingle;
 	self.opaque = FALSE;
+	self.selected = FALSE;
+}
+
++ (CellBackgroundView *)cellBackgroundViewWithFrame:(CGRect)frame 
+									   cellPosition:(CTXDOCellPosition)aCellPosition 
+										cellContext:(CTXDOCellContext)aCellContext 
+										   selected:(BOOL)selected
+{
+	CellBackgroundView *view = [[[CellBackgroundView alloc]initWithFrame:frame]autorelease];
+	[view setCellPosition:aCellPosition context:aCellContext];
+	view.selected = selected;
+	
+	return view;
 }
 
 - (void)setCellPosition:(CTXDOCellPosition)aCellPosition context:(CTXDOCellContext)aCellContext
@@ -65,27 +78,52 @@
 	NSString *topImageNamed = nil;
 	NSString *middleImageNamed = nil;
 	NSString *bottomImageNamed = nil;
-	if (self.cellContext == CTXDOCellContextStandard) {
-		topImageNamed = @"table_std_top.png";
-		middleImageNamed = @"table_std_mid.png";
-		bottomImageNamed = @"table_std_bot.png";
-	} else if (self.cellContext == CTXDOCellContextExpiring) {
-		topImageNamed = @"table_exp_top.png";
-		middleImageNamed = @"table_exp_mid.png";
-		bottomImageNamed = @"table_exp_bot.png";
-	} else if (self.cellContext == CTXDOCellContextLocationAware) {
-		topImageNamed = @"table_loc_top.png";
-		middleImageNamed = @"table_loc_mid.png";
-		bottomImageNamed = @"table_loc_bot.png";
-	} else if (self.cellContext == CTXDOCellContextDue) {
-		topImageNamed = @"table_due_top.png";
-		middleImageNamed = @"table_due_mid.png";
-		bottomImageNamed = @"table_due_bot.png";
-	} else if (self.cellContext == CTXDOCellContextDueLight) {
-		topImageNamed = @"table_info_top.png";
-		middleImageNamed = @"table_info_mid.png";
-		bottomImageNamed = @"table_info_bot.png";
+	if (!self.selected) {
+		if (self.cellContext == CTXDOCellContextStandard) {
+			topImageNamed = @"table_std_top.png";
+			middleImageNamed = @"table_std_mid.png";
+			bottomImageNamed = @"table_std_bot.png";
+		} else if (self.cellContext == CTXDOCellContextExpiring) {
+			topImageNamed = @"table_exp_top.png";
+			middleImageNamed = @"table_exp_mid.png";
+			bottomImageNamed = @"table_exp_bot.png";
+		} else if (self.cellContext == CTXDOCellContextLocationAware) {
+			topImageNamed = @"table_loc_top.png";
+			middleImageNamed = @"table_loc_mid.png";
+			bottomImageNamed = @"table_loc_bot.png";
+		} else if (self.cellContext == CTXDOCellContextDue) {
+			topImageNamed = @"table_due_top.png";
+			middleImageNamed = @"table_due_mid.png";
+			bottomImageNamed = @"table_due_bot.png";
+		} else if (self.cellContext == CTXDOCellContextDueLight) {
+			topImageNamed = @"table_info_top.png";
+			middleImageNamed = @"table_info_mid.png";
+			bottomImageNamed = @"table_info_bot.png";
+		}
+	} else {
+		if (self.cellContext == CTXDOCellContextStandard) {
+			topImageNamed = @"table_stdTouch_top.png";
+			middleImageNamed = @"table_stdTouch_mid.png";
+			bottomImageNamed = @"table_stdTouch_bot.png";
+		} else if (self.cellContext == CTXDOCellContextExpiring) {
+			topImageNamed = @"table_expTouch_top.png";
+			middleImageNamed = @"table_expTouch_mid.png";
+			bottomImageNamed = @"table_expTouch_bot.png";
+		} else if (self.cellContext == CTXDOCellContextLocationAware) {
+			topImageNamed = @"table_locTouch_top.png";
+			middleImageNamed = @"table_locTouch_mid.png";
+			bottomImageNamed = @"table_locTouch_bot.png";
+		} else if (self.cellContext == CTXDOCellContextDue) {
+			topImageNamed = @"table_dueTouch_top.png";
+			middleImageNamed = @"table_dueTouch_mid.png";
+			bottomImageNamed = @"table_dueTouch_bot.png";
+		} else if (self.cellContext == CTXDOCellContextDueLight) {
+			topImageNamed = @"table_infoTouch_top.png";
+			middleImageNamed = @"table_infoTouch_mid.png";
+			bottomImageNamed = @"table_infoTouch_bot.png";
+		}
 	}
+	
 	
 	CGSize boundsSize = self.bounds.size;
 	
@@ -144,8 +182,10 @@
 	
 }
 
-- (void)dealloc {
-    [super dealloc];
+- (void)setSelected:(BOOL)aSelected
+{
+	selected = aSelected;
+	[self setNeedsDisplay];
 }
 
 
