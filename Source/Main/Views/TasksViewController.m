@@ -17,9 +17,8 @@
 #pragma mark -
 #pragma mark Initialisation
 
-- (void)viewDidLoad {
-	self.title = self.group.name;
-    
+- (void)viewDidLoad 
+{
 	[super viewDidLoad];
 	
 	self.page = 1;
@@ -36,17 +35,6 @@
 
 #pragma mark -
 #pragma mark Setup
-
-- (void)setupNavigationBar
-{
-	[super setupNavigationBar];
-	
-	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:self.navigationController.navigationBar.topItem.title
-																								   target:self.navigationController
-																								 selector:@selector(customBackButtonTouched)];
-	
-	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
-}
 
 - (BOOL)isTodayTasks
 {

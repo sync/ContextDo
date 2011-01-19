@@ -297,6 +297,58 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
 }
 
+- (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude within:(CGFloat)withinInKm
+{
+	NSString *notificationName = TasksWithinDidLoadNotification;
+	NSString *path = @"refreshTasksWithDue";
+	
+	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, withinInKm);
+	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+}
+
+
+//- (void)addTaskWithName:(NSString *)name position:(NSNumber *)position
+//{
+//	// comment
+//
+//	
+//	if (!name) {
+//		return;
+//	}
+//	
+//	NSString *notificationName = GroupAddNotification;
+//	NSString *path = @"addGroupWithName";
+//	
+//	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+//							  path, @"path",
+//							  notificationName, @"notificationName",
+//							  name, @"name",
+//							  position, @"position",
+//							  nil];
+//	
+//	{group: {name: "foo", position: 1}} => "?group[name]=foo&group[position]=1"
+//	
+//	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
+//	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
+//	request.userInfo = userInfo;
+//	request.delegate = self;
+//	
+//	[request setShouldAttemptPersistentConnection:NO];
+//	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
+//	
+//	[request setPostValue:name forKey:@"group[name]"];
+//	if (position) {
+//		[request setPostValue:position forKey:@"group[position]"];
+//	}
+//	
+//	NSString *string= [task toJSON];
+//	request.body = string;
+//	
+//	[self.networkQueue addOperation:request];
+//	[self.networkQueue go];
+//	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
+//}
+
 #pragma mark -
 #pragma mark Content Management
 

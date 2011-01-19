@@ -36,6 +36,7 @@
 #define TASKS_PATH @"/tasks.json"
 #define TASKSURL(base, path, groupId, page) [NSString stringWithFormat:@"%@/groups/%@%@?page=%d", base, groupId, path, page]
 #define TASKSDUEURL(base, path, due, page) [NSString stringWithFormat:@"%@?due=%@&page=%d", CTXDOURL(base, path), due, page]
+#define TASKSWITHINURL(base, path, latitude, longitude, within) [NSString stringWithFormat:@"%@?latitude=%f&longitude=%f&within=%f", CTXDOURL(base, path), latitude, longitude, within]
 
 // Notifications
 #define PlacemarkDidChangeNotification @"PlacemarkDidChangeNotification"
@@ -45,6 +46,7 @@
 #define GroupsDidLoadNotification @"GroupsDidLoadNotification"
 #define TasksDidLoadNotification @"TasksDidLoadNotification"
 #define TasksDueDidLoadNotification @"TasksDueDidLoadNotification"
+#define TasksWithinDidLoadNotification @"TasksWithinDidLoadNotification"
 #define GroupAddNotification @"GroupAddNotification"
 #define GroupEditNotification @"GroupEditNotification"
 #define GroupDeleteNotification @"GroupDeleteNotification"

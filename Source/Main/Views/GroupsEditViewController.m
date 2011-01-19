@@ -15,10 +15,11 @@
 #pragma mark -
 #pragma mark Initialisation
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	
+- (void)viewDidLoad 
+{
 	self.title = @"Edit";
+	
+    [super viewDidLoad];
 }
 
 - (void)viewDidUnload

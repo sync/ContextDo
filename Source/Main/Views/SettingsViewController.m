@@ -13,10 +13,11 @@
 #pragma mark -
 #pragma mark Initialisation
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	
+- (void)viewDidLoad 
+{
 	self.title = @"Settings";
+	
+    [super viewDidLoad];
 }
 
 #pragma mark -

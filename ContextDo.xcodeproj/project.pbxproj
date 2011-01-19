@@ -155,6 +155,8 @@
 		243A4CB312E6156E00A6D402 /* btn_todo_loc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A4CAB12E6156E00A6D402 /* btn_todo_loc@2x.png */; };
 		243A4CB412E6156E00A6D402 /* btn_todo_std.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A4CAC12E6156E00A6D402 /* btn_todo_std.png */; };
 		243A4CB512E6156E00A6D402 /* btn_todo_std@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A4CAD12E6156E00A6D402 /* btn_todo_std@2x.png */; };
+		243A536E12E676B700A6D402 /* TasksContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A536D12E676B700A6D402 /* TasksContainerViewController.m */; };
+		243A537412E677F200A6D402 /* TasksContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 243A537312E677F200A6D402 /* TasksContainerView.xib */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -424,6 +426,9 @@
 		243A4CAB12E6156E00A6D402 /* btn_todo_loc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_todo_loc@2x.png"; sourceTree = "<group>"; };
 		243A4CAC12E6156E00A6D402 /* btn_todo_std.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_todo_std.png; sourceTree = "<group>"; };
 		243A4CAD12E6156E00A6D402 /* btn_todo_std@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_todo_std@2x.png"; sourceTree = "<group>"; };
+		243A536C12E676B700A6D402 /* TasksContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksContainerViewController.h; sourceTree = "<group>"; };
+		243A536D12E676B700A6D402 /* TasksContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksContainerViewController.m; sourceTree = "<group>"; };
+		243A537312E677F200A6D402 /* TasksContainerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TasksContainerView.xib; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -709,6 +714,9 @@
 		2489CAA112BE102F00C1A58A /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
+				243A536C12E676B700A6D402 /* TasksContainerViewController.h */,
+				243A536D12E676B700A6D402 /* TasksContainerViewController.m */,
+				243A537312E677F200A6D402 /* TasksContainerView.xib */,
 				2489CAA212BE10E300C1A58A /* TasksDataSource.h */,
 				2489CAA312BE10E300C1A58A /* TasksDataSource.m */,
 				2489CAD912BE1D5E00C1A58A /* TasksViewController.h */,
@@ -1647,6 +1655,7 @@
 				243A4CB312E6156E00A6D402 /* btn_todo_loc@2x.png in Resources */,
 				243A4CB412E6156E00A6D402 /* btn_todo_std.png in Resources */,
 				243A4CB512E6156E00A6D402 /* btn_todo_std@2x.png in Resources */,
+				243A537412E677F200A6D402 /* TasksContainerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1739,6 +1748,7 @@
 				243A481312E5A3CA00A6D402 /* CustomSearchBar.m in Sources */,
 				243A495512E5D3B700A6D402 /* UISearchDisplayController+Custom.m in Sources */,
 				243A4AB012E5F03100A6D402 /* GroupsEditCell.m in Sources */,
+				243A536E12E676B700A6D402 /* TasksContainerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

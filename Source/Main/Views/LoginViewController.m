@@ -16,7 +16,8 @@
 #pragma mark -
 #pragma mark Setup
 
-- (void)viewDidLoad {
+- (void)viewDidLoad 
+{
     self.title = @"Sign In";
 	
 	[super viewDidLoad];

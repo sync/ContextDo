@@ -35,6 +35,7 @@
 		distanceLabel.backgroundColor = [UIColor clearColor];
 		distanceLabel.font = [UIFont boldSystemFontOfSize:11.0];
 		distanceLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
+		distanceLabel.highlightedTextColor = [UIColor whiteColor];
 		distanceLabel.shadowOffset = CGSizeMake(0,-1);
 		distanceLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		[self addSubview:distanceLabel];
@@ -50,6 +51,7 @@
 		nameLabel.backgroundColor = [UIColor clearColor];
 		nameLabel.font = [UIFont boldSystemFontOfSize:NameLabelFontSize];
 		nameLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
+		nameLabel.highlightedTextColor = [UIColor whiteColor];
 		nameLabel.shadowOffset = CGSizeMake(0,-1);
 		nameLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		nameLabel.backgroundColor = [UIColor clearColor];
@@ -67,6 +69,7 @@
 		addressLabel.backgroundColor = [UIColor clearColor];
 		addressLabel.font = [UIFont boldSystemFontOfSize:AddressLabelFontSize];
 		addressLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
+		addressLabel.highlightedTextColor = [UIColor whiteColor];
 		addressLabel.shadowOffset = CGSizeMake(0,-1);
 		addressLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		addressLabel.backgroundColor = [UIColor clearColor];

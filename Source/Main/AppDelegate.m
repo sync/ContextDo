@@ -179,6 +179,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	if (self.hasValidCurrentLocation) {
 		CLLocationCoordinate2D coordinate = self.currentLocation.coordinate;
 		
+		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0]; // TODO within user's pref
+		
 		if (reverseGeocoder) {
 			[reverseGeocoder cancel];
 			reverseGeocoder.delegate = nil;

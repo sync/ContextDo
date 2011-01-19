@@ -2,6 +2,7 @@
 #import "TasksViewController.h"
 #import "CTXDOTableHeaderView.h"
 #import "GroupsCell.h"
+#import "TasksContainerViewController.h"
 
 @interface GroupsViewController (private)
 
@@ -26,7 +27,8 @@
 #pragma mark -
 #pragma mark Initialisation
 
-- (void)viewDidLoad {
+- (void)viewDidLoad 
+{
     self.title = @"Groups";
 	
 	[super viewDidLoad];
@@ -234,7 +236,7 @@
     
 	Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
 	
-	TasksViewController *controller = [[[TasksViewController alloc]initWithNibName:@"TasksView" bundle:nil]autorelease];
+	TasksContainerViewController *controller = [[[TasksContainerViewController alloc]initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
 	controller.group = group;
 	[self.navigationController pushViewController:controller animated:TRUE];
 	

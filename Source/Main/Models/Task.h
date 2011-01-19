@@ -18,6 +18,8 @@
 @property (nonatomic, copy) NSNumber *latitude;
 @property (nonatomic, copy) NSNumber *longitude;
 @property (nonatomic, copy) NSDate *completedAt;
+//@property (nonatomic, copy) NSDictionary *action;
+
 
 @property (nonatomic, readonly) CLLocationDistance distance;
 @property (nonatomic, readonly) BOOL expired;
