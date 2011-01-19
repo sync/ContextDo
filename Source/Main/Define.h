@@ -34,9 +34,9 @@
 #define GROUPURL(base, path, groupId) [NSString stringWithFormat:@"%@/%@.json", CTXDOURL(base, path), groupId]
 // Task
 #define TASKS_PATH @"/tasks.json"
-#define TASKSURL(base, path, groupId, page) [NSString stringWithFormat:@"%@/groups/%@%@?page=%d", base, groupId, path, page]
-#define TASKSDUEURL(base, path, due, page) [NSString stringWithFormat:@"%@?due=%@&page=%d", CTXDOURL(base, path), due, page]
-#define TASKSWITHINURL(base, path, latitude, longitude, within) [NSString stringWithFormat:@"%@?latitude=%f&longitude=%f&within=%f", CTXDOURL(base, path), latitude, longitude, within]
+#define TASKSURL(base, path, groupId, page, perPage) [NSString stringWithFormat:@"%@/groups/%@%@?page=%d&per_page=%d", base, groupId, path, page, perPage]
+#define TASKSDUEURL(base, path, due, page, perPage) [NSString stringWithFormat:@"%@?due=%@&page=%d&per_page=%d", CTXDOURL(base, path), due, page, perPage]
+#define TASKSWITHINURL(base, path, latitude, longitude, within, perPage) [NSString stringWithFormat:@"%@?latitude=%f&longitude=%f&within=%f&per_page=%d", CTXDOURL(base, path), latitude, longitude, within, perPage]
 
 // Notifications
 #define PlacemarkDidChangeNotification @"PlacemarkDidChangeNotification"

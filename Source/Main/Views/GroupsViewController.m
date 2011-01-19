@@ -192,11 +192,6 @@
 																		selector:@selector(editButtonPressed)];
 }
 
-- (BOOL)editChangesMade
-{
-	return ![self.groupsEditViewController.groups isEqualToArray:self.groups];
-}
-
 #pragma mark -
 #pragma mark TableView Delegate
 
@@ -352,9 +347,7 @@
 																										   target:self
 																										 selector:@selector(editButtonPressed)];
 	
-	[self.groupsEditViewController.groups removeAllObjects];
-	[self.groupsEditViewController.groups addObjectsFromArray:self.groups];
-	[self.groupsEditViewController refreshDataSource];
+	[self.groupsEditViewController startEditingGroups:self.groups];
 	
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
@@ -375,7 +368,9 @@
 		return;
 	}
 	
-	if (self.groupsEditViewController.editChangesMade) {
+	
+	
+	if ([self.groupsEditViewController endEditing]) {
 		[self refreshGroups];
 	}
 	

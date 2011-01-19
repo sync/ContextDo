@@ -8,11 +8,14 @@
 
 @property (nonatomic, retain) GroupsEditDataSource *groupsEditDataSource;
 
-@property (nonatomic, readonly) NSMutableArray *groups;
-
-- (void)refreshDataSource;
+- (void)refreshDataSourceForGroups:(NSArray *)groups;
 
 @property (nonatomic, retain) UITextField *editingTextField;
 @property (nonatomic) BOOL editChangesMade;
+
+- (void)startEditingGroups:(NSArray *)groups;
+- (BOOL)endEditing;
+
+@property (nonatomic) BOOL keyboardShown;
 
 @end

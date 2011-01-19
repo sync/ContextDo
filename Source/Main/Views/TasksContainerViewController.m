@@ -5,6 +5,7 @@
 - (void)showList;
 - (void)showMap;
 - (void)showCalendar;
+- (void)addTask;
 
 @end
 
@@ -71,6 +72,7 @@
 																					  @"Calendar",
 																					  nil]]autorelease];
 	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+	segmentedControl.selectedSegmentIndex = 0;
 	[segmentedControl addTarget:self action:@selector(segementControlChanged:) forControlEvents:UIControlEventValueChanged];
 	UIBarButtonItem *segmentItem = [[[UIBarButtonItem alloc]initWithCustomView:segmentedControl]autorelease];
 	
@@ -119,6 +121,11 @@
 - (void)showCalendar
 {
 	// TODO
+}
+
+- (void)addTask
+{
+	// todo
 }
 
 #pragma mark -

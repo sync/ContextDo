@@ -284,7 +284,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *notificationName = TasksDidLoadNotification;
 	NSString *path = @"refreshTasksWithGroupId";
 	
-	NSString *url = TASKSURL(BASE_URL, TASKS_PATH, groupId, page);
+	NSString *url = TASKSURL(BASE_URL, TASKS_PATH, groupId, page, 10);
 	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
 }
 
@@ -293,7 +293,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *notificationName = TasksDueDidLoadNotification;
 	NSString *path = @"refreshTasksWithDue";
 	
-	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due, page);
+	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due, page, 10);
 	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
 }
 
@@ -302,7 +302,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *notificationName = TasksWithinDidLoadNotification;
 	NSString *path = @"refreshTasksWithDue";
 	
-	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, withinInKm);
+	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, withinInKm, 1000000000);
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
