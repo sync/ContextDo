@@ -18,6 +18,7 @@
 {
 	if (!textField) {
 		textField = [[[UITextField alloc]initWithFrame:CGRectZero]autorelease];
+		self.keyboardAppearance = UIKeyboardAppearanceAlert;
 		[self.contentView addSubview:textField];
 	}
 	

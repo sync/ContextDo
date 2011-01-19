@@ -157,6 +157,7 @@
 		return;
 	}
 	
+	[textField resignFirstResponder];
 	
 	Group *group =[self.groupsEditDataSource groupForIndexPath:[NSIndexPath indexPathForRow:[self.groupsEditDataSource rowForTag:textField.tag] inSection:0]];
 	group.name = textField.text;

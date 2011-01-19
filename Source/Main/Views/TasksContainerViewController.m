@@ -75,7 +75,6 @@
 	UIBarButtonItem *segmentItem = [[[UIBarButtonItem alloc]initWithCustomView:segmentedControl]autorelease];
 	
 	
-	
 	UIBarButtonItem *addItem = [[DefaultStyleSheet sharedDefaultStyleSheet] buttonItemWithImageNamed:@"icon_add_off.png" 
 																			   highlightedImageNamed:@"icon_add_touch.png"
 																							  target:self 
