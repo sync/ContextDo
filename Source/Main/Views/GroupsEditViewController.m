@@ -75,6 +75,9 @@
 {
 	Group *group  = [self.groupsEditDataSource groupForIndexPath:fromIndexPath];
 	[self.groupsEditDataSource.content exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
+	GroupsEditCell *cell = (GroupsEditCell *)[self.tableView cellForRowAtIndexPath:fromIndexPath];
+	cell.textField.tag = [self.groupsEditDataSource tagForRow:toIndexPath.row];
+	
 	
 	[[APIServices sharedAPIServices]editGroupWithId:group.groupId name:group.name position:[NSNumber numberWithInteger:toIndexPath.row]];
 	self.editChangesMade = TRUE;
@@ -142,9 +145,10 @@
 	self.editingTextField = textField;
 	
 	if (self.keyboardShown) {
-		[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.groupsEditDataSource rowForTag:self.editingTextField.tag]
-																  inSection:0]
-							  atScrollPosition:UITableViewScrollPositionMiddle
+		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.groupsEditDataSource rowForTag:self.editingTextField.tag]
+													inSection:0];
+		[self.tableView scrollToRowAtIndexPath:indexPath
+							  atScrollPosition:UITableViewScrollPositionNone
 									  animated:TRUE];
 	}
 }
@@ -161,7 +165,6 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
 	self.editingTextField = nil;
-	[[NSNotificationCenter defaultCenter]removeObserver:self];
 	
 	self.editChangesMade = TRUE;
 	
@@ -218,7 +221,7 @@
 	if (self.editingTextField) {
 		[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.groupsEditDataSource rowForTag:self.editingTextField.tag]
 																  inSection:0]
-							  atScrollPosition:UITableViewScrollPositionNone
+							  atScrollPosition:UITableViewScrollPositionBottom
 									  animated:FALSE];
 	}
 	
