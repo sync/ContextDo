@@ -17,6 +17,7 @@
 - (void)hideGroupsEditAnimated:(BOOL)animated;
 - (BOOL)isIndexPathLastRow:(NSIndexPath *)indexPath;
 - (BOOL)isIndexPathSingleRow:(NSIndexPath *)indexPath;
+- (Group *)groupForId:(NSNumber *)groupId;
 @end
 
 
@@ -86,6 +87,7 @@
 {
 	[super setupDataSource];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupEditNotification:) name:GroupEditNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupAddNotification:) name:GroupAddNotification object:nil];
@@ -180,6 +182,40 @@
 	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
 	
 	[self.tableView reloadData];
+	
+	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
+		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0];
+	}
+	
+}
+
+- (Group *)groupForId:(NSNumber *)groupId
+{
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"groupId == %@", groupId];
+	NSArray *foundGroups = [self.groups filteredArrayUsingPredicate:predicate];
+	
+	return (foundGroups.count > 0) ? [foundGroups objectAtIndex:0] : nil;
+}
+
+- (void)shouldCheckWithinTasks:(NSNotification *)notification
+{
+	for (Group *group in self.groups) {
+		group.taskWithin = FALSE;
+	}
+	
+	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
+	for (Task *task in newTasks) {
+		if (task.isClose) {
+			Group *group = [self groupForId:task.groupId];
+			group.taskWithin = TRUE;
+			NSInteger row = (group) ? [self.groups indexOfObject:group] : NSNotFound;
+			if (group && row != NSNotFound) {
+				NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+				[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+			}
+		}
+	}
 }
 
 #pragma mark -
@@ -212,6 +248,8 @@
 	CTXDOCellContext context = CTXDOCellContextStandard;
 	if (group.expiredCount.integerValue > 0) {
 		context = CTXDOCellContextDue;
+	} else if (group.taskWithin) {
+		context = CTXDOCellContextLocationAware;
 	} else if (group.dueCount.integerValue > 0) {
 		context = CTXDOCellContextExpiring;
 	}

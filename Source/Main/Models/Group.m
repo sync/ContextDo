@@ -4,6 +4,7 @@
 @implementation Group
 
 @synthesize groupId, name, createdAt, updatedAt, position, expiredCount, dueCount, userId;
+@synthesize taskWithin;
 
 + (Group *)groupWithId:(NSNumber *)aGroupId
 				  name:(NSString *)aName
