@@ -4,9 +4,6 @@
 
 @interface TaskEditViewController (private)
 
-- (BOOL)isIndexPathLastRow:(NSIndexPath *)indexPath;
-- (BOOL)isIndexPathSingleRow:(NSIndexPath *)indexPath;
-
 @end
 
 
@@ -118,16 +115,6 @@
 
 #pragma mark -
 #pragma mark TableView Delegate
-
-- (BOOL)isIndexPathLastRow:(NSIndexPath *)indexPath
-{
-	return ([self.tableView numberOfRowsInSection:indexPath.section] - 1 == indexPath.row);
-}
-
-- (BOOL)isIndexPathSingleRow:(NSIndexPath *)indexPath
-{
-	return ([self.tableView numberOfRowsInSection:indexPath.section] == 1);
-}
 
 - (void)tableView:(UITableView *)aTableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {

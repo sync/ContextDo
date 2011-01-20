@@ -1,4 +1,5 @@
 #import "ChooseGroupViewController.h"
+#import "TaskEditCell.h"
 
 @interface ChooseGroupViewController (private)
 
@@ -89,6 +90,21 @@
 
 #pragma mark -
 #pragma mark TableView Delegate
+
+- (void)tableView:(UITableView *)aTableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	CTXDOCellContext context = CTXDOCellContextTaskEditInput;
+	
+	if ([self isIndexPathSingleRow:indexPath]) {
+		[(TaskEditCell *)cell setCellPosition:CTXDOCellPositionSingle context:context];
+	} else if (indexPath.row == 0) {
+		[(TaskEditCell *)cell setCellPosition:CTXDOCellPositionTop context:context];
+	} else if ([self isIndexPathLastRow:indexPath]) {
+		[(TaskEditCell *)cell setCellPosition:CTXDOCellPositionBottom context:context];
+	} else {
+		[(TaskEditCell *)cell setCellPosition:CTXDOCellPositionMiddle context:context];
+	}
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     

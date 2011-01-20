@@ -1,5 +1,5 @@
 #import "ChooseGroupDataSource.h"
-
+#import "TaskEditCell.h"
 
 @implementation ChooseGroupDataSource
 
@@ -13,13 +13,12 @@
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-#define ChooseGroupCellIdentifier @"ChooseGroupCellIdentifier"
+#define TaskEditCellIdentifer @"TaskEditCellIdentifer"
 	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ChooseGroupCellIdentifier];
+	TaskEditCell *cell = (TaskEditCell *)[tableView dequeueReusableCellWithIdentifier:TaskEditCellIdentifer];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ChooseGroupCellIdentifier] autorelease];
+        cell = [[[TaskEditCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:TaskEditCellIdentifer] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryNone;
-		cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
 	
 	Group *group = [self groupForIndexPath:indexPath];

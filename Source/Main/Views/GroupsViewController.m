@@ -16,8 +16,6 @@
 - (void)showSettings;
 - (void)showGroupsEditAnimated:(BOOL)animated;
 - (void)hideGroupsEditAnimated:(BOOL)animated;
-- (BOOL)isIndexPathLastRow:(NSIndexPath *)indexPath;
-- (BOOL)isIndexPathSingleRow:(NSIndexPath *)indexPath;
 - (Group *)groupForId:(NSNumber *)groupId;
 @end
 
@@ -231,16 +229,6 @@
 
 #pragma mark -
 #pragma mark TableView Delegate
-
-- (BOOL)isIndexPathLastRow:(NSIndexPath *)indexPath
-{
-	return ([self.tableView numberOfRowsInSection:indexPath.section] - 1 == indexPath.row);
-}
-
-- (BOOL)isIndexPathSingleRow:(NSIndexPath *)indexPath
-{
-	return ([self.tableView numberOfRowsInSection:indexPath.section] == 1);
-}
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {

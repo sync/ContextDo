@@ -11,6 +11,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code.
+		[self setCellPosition:CTXDOCellPositionSingle context:CTXDOCellContextStandard];
 		self.textLabel.shadowOffset = CGSizeMake(0,-1);
 		self.textLabel.backgroundColor = [UIColor clearColor];
     }
