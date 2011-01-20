@@ -157,14 +157,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	return item;
 }
 
-- (UIImage *)backgroundTexture
+- (UIImageView *)darkBackgroundTextureView
 {
-	return [UIImage imageNamed:@"bgtexture.png"];
+	return [[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bgtexture.png"]]autorelease];
 }
 
-- (UIImageView *)backgroundTextureView
+- (UIColor *)backgroundTexture
 {
-	return [[[UIImageView alloc]initWithImage:self.backgroundTexture]autorelease];
+	return [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_addtask.png"]];
 }
 
 - (UIButton *)inputTextFieldButtonWithText:(NSString *)text target:(id)target selector:(SEL)action

@@ -22,8 +22,8 @@
 
 - (UIBarButtonItem *)buttonItemWithImageNamed:(NSString *)imageNamed highlightedImageNamed:(NSString *)highlightedImageNamed target:(id)target selector:(SEL)action;
 
-@property (nonatomic, readonly) UIImage *backgroundTexture;
-@property (nonatomic, readonly) UIImageView *backgroundTextureView;
+@property (nonatomic, readonly) UIImageView *darkBackgroundTextureView;
+@property (nonatomic, readonly) UIColor *backgroundTexture;
 
 - (UIButton *)inputTextFieldButtonWithText:(NSString *)text target:(id)target selector:(SEL)action;
 

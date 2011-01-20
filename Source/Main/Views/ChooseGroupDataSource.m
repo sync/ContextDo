@@ -3,6 +3,8 @@
 
 @implementation ChooseGroupDataSource
 
+@synthesize task;
+
 - (Group *)groupForIndexPath:(NSIndexPath *)indexPath
 {
 	return [self objectForIndexPath:indexPath];
@@ -17,13 +19,26 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ChooseGroupCellIdentifier] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryNone;
+		cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
 	
 	Group *group = [self groupForIndexPath:indexPath];
 	cell.textLabel.text = group.name;
 	
+	if ([self.task.groupId isEqual:group.groupId]) {
+		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	} else {
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+	
     return cell;
 }
 
+- (void)dealloc
+{
+	[task release];
+	
+	[super dealloc];
+}
 
 @end

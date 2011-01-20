@@ -1,6 +1,123 @@
 #import "ChooseGroupViewController.h"
 
+@interface ChooseGroupViewController (private)
+
+- (void)reloadGroups:(NSArray *)newGroups;
+
+@end
+
 
 @implementation ChooseGroupViewController
+
+@synthesize chooseGroupDataSource, groups, task;
+
+#pragma mark -
+#pragma mark Initialisation
+
+- (void)viewDidLoad 
+{
+    self.title = @"Choose Group";
+	
+	[super viewDidLoad];
+}
+
+- (void)viewDidUnload
+{
+	[super viewDidUnload];
+}
+
+#pragma mark -
+#pragma mark Setup
+
+- (void)setupNavigationBar
+{
+	[super setupNavigationBar];
+	
+	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
+	
+	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:@"Back"
+																								   target:self.navigationController
+																								 selector:@selector(customBackButtonTouched)];
+	
+}
+
+- (void)setupDataSource
+{
+	[super setupDataSource];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
+	
+	self.chooseGroupDataSource = [[[ChooseGroupDataSource alloc]init]autorelease];
+	self.chooseGroupDataSource.task = task;
+	self.tableView.dataSource = self.chooseGroupDataSource;
+	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
+	[self.tableView reloadData];
+	[[APIServices sharedAPIServices]refreshGroups];
+}
+
+#pragma mark -
+#pragma mark Content reloading
+
+- (void)shouldReloadContent:(NSNotification *)notification
+{
+	NSArray *newGroups = [notification object];
+	[self reloadGroups:newGroups];
+}
+
+- (NSMutableArray *)groups
+{
+	if (!groups) {
+		groups = [[NSMutableArray alloc]init];
+	}
+	
+	return groups;
+}
+
+- (void)reloadGroups:(NSArray *)newGroups
+{
+	[self.chooseGroupDataSource resetContent];
+	
+	[self.groups removeAllObjects];
+	
+	if (newGroups.count > 0) {
+		[self.groups addObjectsFromArray:newGroups];
+		[self.chooseGroupDataSource.content addObject:self.groups];
+	}
+	[self.tableView reloadData];
+}
+
+#pragma mark -
+#pragma mark TableView Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+	Group *group  = [self.chooseGroupDataSource groupForIndexPath:indexPath];
+	
+	self.task.groupId = group.groupId;
+	self.task.groupName = group.name;
+	
+	[self.tableView reloadData];
+	
+	[self.navigationController popViewControllerAnimated:TRUE];
+	
+	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+}
+
+#pragma mark -
+#pragma mark Dealloc
+
+- (void)dealloc
+{
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupsDidLoadNotification];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
+	[task release];
+	[groups release];
+	[chooseGroupDataSource release];
+	
+	[super dealloc];
+}
+
 
 @end

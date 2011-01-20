@@ -22,7 +22,7 @@
 	} else if ([placeholder isEqualToString:AlertsPlaceHolder]) {
 		
 	} else if ([placeholder isEqualToString:GroupPlaceHolder]) {
-		
+		value = self.tempTask.groupName;
 	}
 	
 	return value;

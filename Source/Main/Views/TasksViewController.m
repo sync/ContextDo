@@ -69,7 +69,7 @@
 	
 	self.tasksDataSource = [[[TasksDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksDataSource;
-	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTextureView;
+	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
 	self.tableView.rowHeight = 88.0;
 	[self refreshTasks];
 }
@@ -287,6 +287,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDueDidLoadNotification];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	[tasksSave release];
 	[searchBar release];

@@ -191,6 +191,7 @@
 		2448D3F012E89DB0005EEEDA /* ChooseGroupDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D3EF12E89DB0005EEEDA /* ChooseGroupDataSource.m */; };
 		2448D3F912E89F2C005EEEDA /* ChooseGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D3F812E89F2C005EEEDA /* ChooseGroupViewController.m */; };
 		2448D3FB12E89F3B005EEEDA /* ChooseGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2448D3FA12E89F3B005EEEDA /* ChooseGroupView.xib */; };
+		2448D45C12E8A254005EEEDA /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D44312E8A254005EEEDA /* NSDate+Helper.m */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -503,6 +504,8 @@
 		2448D3F712E89F2C005EEEDA /* ChooseGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseGroupViewController.h; sourceTree = "<group>"; };
 		2448D3F812E89F2C005EEEDA /* ChooseGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseGroupViewController.m; sourceTree = "<group>"; };
 		2448D3FA12E89F3B005EEEDA /* ChooseGroupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseGroupView.xib; sourceTree = "<group>"; };
+		2448D44212E8A254005EEEDA /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
+		2448D44312E8A254005EEEDA /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -766,6 +769,15 @@
 			path = modelobject;
 			sourceTree = "<group>";
 		};
+		2448D41B12E8A254005EEEDA /* nsdate-helper */ = {
+			isa = PBXGroup;
+			children = (
+				2448D44212E8A254005EEEDA /* NSDate+Helper.h */,
+				2448D44312E8A254005EEEDA /* NSDate+Helper.m */,
+			);
+			path = "nsdate-helper";
+			sourceTree = "<group>";
+		};
 		248921C3128ED27000DC9712 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -872,6 +884,7 @@
 		24F8788D12D16A6F00370A5F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				2448D41B12E8A254005EEEDA /* nsdate-helper */,
 				2448CB4A12E7EA5E005EEEDA /* modelobject */,
 				2490FF8412E36D9900F56B39 /* UIColor-i7HexColor */,
 				24F8788E12D16A6F00370A5F /* asihttprequest */,
@@ -1905,6 +1918,7 @@
 				2448D19012E83B14005EEEDA /* TaskEditCell.m in Sources */,
 				2448D3F012E89DB0005EEEDA /* ChooseGroupDataSource.m in Sources */,
 				2448D3F912E89F2C005EEEDA /* ChooseGroupViewController.m in Sources */,
+				2448D45C12E8A254005EEEDA /* NSDate+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

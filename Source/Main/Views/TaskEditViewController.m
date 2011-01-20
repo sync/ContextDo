@@ -1,5 +1,6 @@
 #import "TaskEditViewController.h"
 #import "TaskEditCell.h"
+#import "ChooseGroupViewController.h"
 
 @interface TaskEditViewController (private)
 
@@ -15,6 +16,13 @@
 
 #pragma mark -
 #pragma mark Initialisation
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+	[self.tableView reloadData];
+}
 
 - (void)viewDidLoad 
 {
@@ -65,7 +73,7 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TaskAddNotification];
 	self.taskEditDataSource = [[[TaskEditDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.taskEditDataSource;
-	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_addtask.png"]];
+	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.taskEditDataSource.tempTask = (self.task) ? self.task : [[[Task alloc]init]autorelease];
 	self.tableView.sectionFooterHeight = 0.0;
 	self.tableView.sectionHeaderHeight = 12.0;
@@ -147,6 +155,13 @@
 	if ([self.taskEditDataSource isIndexPathInput:indexPath]) {
 		TaskEditCell *cell = (TaskEditCell *)[aTableView cellForRowAtIndexPath:indexPath];
 		[cell.textField becomeFirstResponder];
+	} else {
+		NSString *placeholder = [self.taskEditDataSource objectForIndexPath:indexPath];
+		if ([placeholder isEqualToString:GroupPlaceHolder]) {
+			ChooseGroupViewController *controller = [[[ChooseGroupViewController alloc]initWithNibName:@"ChooseGroupView" bundle:nil]autorelease];
+			controller.task = self.taskEditDataSource.tempTask;
+			[self.navigationController pushViewController:controller animated:TRUE];
+		}
 	}
 	
 	[self.tableView deselectRowAtIndexPath:indexPath animated:TRUE];

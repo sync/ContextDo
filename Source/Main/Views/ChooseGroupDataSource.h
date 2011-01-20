@@ -7,4 +7,6 @@
 
 - (Group *)groupForIndexPath:(NSIndexPath *)indexPath;
 
+@property (nonatomic, retain) Task *task;
+
 @end

@@ -99,7 +99,7 @@
 	self.groupsDataSource = [[[GroupsDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.groupsDataSource;
 	self.tableView.allowsSelectionDuringEditing = TRUE;
-	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTextureView;
+	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
 	[self refreshGroups];
 	self.addGroupTextField.rightView = [[DefaultStyleSheet sharedDefaultStyleSheet]inputTextFieldButtonWithText:@"Add" 
 																										 target:self 

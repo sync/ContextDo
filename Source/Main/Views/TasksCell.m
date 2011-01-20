@@ -1,5 +1,6 @@
 #import "TasksCell.h"
 #import "AccessoryViewWithImage.h"
+#import "NSDate+Helper.h"
 
 @implementation TasksCell
 
@@ -302,8 +303,8 @@
 		self.distanceLabel.text = nil;
 	}
 	
-	NSString *relativeTime = nil;
-	self.nameLabel.text = (relativeTime) ? [NSString stringWithFormat:@"%@ - %@", relativeTime, nameLabel] : task.name;
+	NSString *relativeTime = [NSDate stringForDisplayFromDate:task.dueAt];
+	self.nameLabel.text = (relativeTime) ? [NSString stringWithFormat:@"%@ - %@", relativeTime, task.name] : task.name;
 	
 	if (task.isClose) {
 		self.locationImageView.image = [UIImage imageNamed:@"icon_location_white.png"];
