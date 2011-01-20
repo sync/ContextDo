@@ -302,7 +302,8 @@
 		self.distanceLabel.text = nil;
 	}
 	
-	self.nameLabel.text = task.name;
+	NSString *relativeTime = nil;
+	self.nameLabel.text = (relativeTime) ? [NSString stringWithFormat:@"%@ - %@", relativeTime, nameLabel] : task.name;
 	
 	if (task.isClose) {
 		self.locationImageView.image = [UIImage imageNamed:@"icon_location_white.png"];

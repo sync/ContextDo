@@ -213,7 +213,7 @@
 			NSInteger row = (group) ? [self.groups indexOfObject:group] : NSNotFound;
 			if (group && row != NSNotFound) {
 				NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-				[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+				[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 			}
 		}
 	}
