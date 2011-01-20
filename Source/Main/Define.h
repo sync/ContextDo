@@ -22,21 +22,22 @@
 #define BASE_URL ([[NSUserDefaults standardUserDefaults]boolForKey:ShouldUseDevServer]) ? [[NSUserDefaults standardUserDefaults]stringForKey:DevServerIp] : @"http://contextdo.heroku.com"
 #define CTXDOURL(base, path) [NSString stringWithFormat:@"%@%@", base, path]
 // Login
-#define LOGIN_PATH @"/api_token.json"
+#define LOGIN_PATH @"/api_token"
 // Register
-#define REGISTER_PATH @"/users.json"
+#define REGISTER_PATH @"/users"
 // Reset
-#define RESET_PASSWORD_PATH @"/users/password.json"
+#define RESET_PASSWORD_PATH @"/users/password"
 // Groups
-#define GROUPS_PATH @"/groups.json"
+#define GROUPS_PATH @"/groups"
 // Group
-#define GROUP_PATH @"/groups"
-#define GROUPURL(base, path, groupId) [NSString stringWithFormat:@"%@/%@.json", CTXDOURL(base, path), groupId]
-// Task
-#define TASKS_PATH @"/tasks.json"
+#define GROUPURL(base, path, groupId) [NSString stringWithFormat:@"%@/%@", CTXDOURL(base, path), groupId]
+// Tasks
+#define TASKS_PATH @"/tasks"
 #define TASKSURL(base, path, groupId, page, perPage) [NSString stringWithFormat:@"%@/groups/%@%@?page=%d&per_page=%d", base, groupId, path, page, perPage]
 #define TASKSDUEURL(base, path, due, page, perPage) [NSString stringWithFormat:@"%@?due=%@&page=%d&per_page=%d", CTXDOURL(base, path), due, page, perPage]
 #define TASKSWITHINURL(base, path, latitude, longitude, within, perPage) [NSString stringWithFormat:@"%@?latitude=%f&longitude=%f&within=%f&per_page=%d", CTXDOURL(base, path), latitude, longitude, within, perPage]
+// Task
+#define TASKURL(base, path, taskId) [NSString stringWithFormat:@"%@/%@", CTXDOURL(base, path), taskId]
 
 // Notifications
 #define PlacemarkDidChangeNotification @"PlacemarkDidChangeNotification"
@@ -47,6 +48,9 @@
 #define TasksDidLoadNotification @"TasksDidLoadNotification"
 #define TasksDueDidLoadNotification @"TasksDueDidLoadNotification"
 #define TasksWithinDidLoadNotification @"TasksWithinDidLoadNotification"
+#define TaskAddNotification @"TaskAddNotification"
+#define TaskEditNotification @"TaskEditNotification"
+#define TaskDeleteNotification @"TaskDeleteNotification"
 #define GroupAddNotification @"GroupAddNotification"
 #define GroupEditNotification @"GroupEditNotification"
 #define GroupDeleteNotification @"GroupDeleteNotification"

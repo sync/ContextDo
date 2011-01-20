@@ -77,7 +77,6 @@
 	self.searchDisplayController.searchResultsTableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTextureView;
 	self.searchDisplayController.searchResultsTableView.rowHeight = 88.0;
 	self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-	[self refreshTasks];
 }
 
 #pragma mark -

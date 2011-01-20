@@ -88,6 +88,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
+	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
 	[request setUsername:aUsername];
 	[request setPassword:aPassword];
 	
@@ -119,6 +121,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];
 	request.userInfo = userInfo;
 	request.delegate = self;
+	
+	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
 	[request setShouldAttemptPersistentConnection:NO];
 	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
@@ -154,6 +158,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
+	
+	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
 	[request setShouldAttemptPersistentConnection:NO];
 	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
@@ -198,6 +204,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
+	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
 	[request setShouldAttemptPersistentConnection:NO];
 	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
 	
@@ -226,10 +234,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 							  notificationName, @"notificationName",
 							  nil];
 	
-	NSString *url = GROUPURL(BASE_URL, GROUP_PATH, groupId);
+	NSString *url = GROUPURL(BASE_URL, GROUPS_PATH, groupId);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
+	
+	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
 	[request setShouldAttemptPersistentConnection:NO];
 	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
@@ -261,10 +271,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 							  groupId, @"object",
 							  nil];
 	
-	NSString *url = GROUPURL(BASE_URL, GROUP_PATH, groupId);
+	NSString *url = GROUPURL(BASE_URL, GROUPS_PATH, groupId);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
+	
+	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
 	[request setShouldAttemptPersistentConnection:NO];
 	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
@@ -307,47 +319,105 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 }
 
 
-//- (void)addTaskWithName:(NSString *)name position:(NSNumber *)position
-//{
-//	// comment
-//
-//	
-//	if (!name) {
-//		return;
-//	}
-//	
-//	NSString *notificationName = GroupAddNotification;
-//	NSString *path = @"addGroupWithName";
-//	
-//	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-//							  path, @"path",
-//							  notificationName, @"notificationName",
-//							  name, @"name",
-//							  position, @"position",
-//							  nil];
-//	
-//	{group: {name: "foo", position: 1}} => "?group[name]=foo&group[position]=1"
-//	
-//	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
-//	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
-//	request.userInfo = userInfo;
-//	request.delegate = self;
-//	
-//	[request setShouldAttemptPersistentConnection:NO];
-//	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
-//	
-//	[request setPostValue:name forKey:@"group[name]"];
-//	if (position) {
-//		[request setPostValue:position forKey:@"group[position]"];
-//	}
-//	
-//	NSString *string= [task toJSON];
-//	request.body = string;
-//	
-//	[self.networkQueue addOperation:request];
-//	[self.networkQueue go];
-//	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
-//}
+- (void)addTask:(Task *)task
+{
+	if (!task) {
+		return;
+	}
+	
+	NSString *notificationName = TaskAddNotification;
+	NSString *path = @"addTask";
+	
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  path, @"path",
+							  notificationName, @"notificationName",
+							  task, @"object",
+							  nil];
+	
+	NSString *url = CTXDOURL(BASE_URL, TASKS_PATH);
+	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
+	request.userInfo = userInfo;
+	request.delegate = self;
+	
+	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
+	[request setShouldAttemptPersistentConnection:NO];
+	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
+	
+	NSString *string = [task toJSON];
+	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	[self.networkQueue addOperation:request];
+	[self.networkQueue go];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
+}
+
+- (void)editTask:(Task *)task
+{
+	if (!task) {
+		return;
+	}
+	
+	NSString *notificationName = TaskEditNotification;
+	NSString *path = @"editTask";
+	
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  path, @"path",
+							  notificationName, @"notificationName",
+							  task, @"object",
+							  nil];
+	
+	NSString *url = TASKURL(BASE_URL, TASKS_PATH, task.taskId);
+	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
+	request.userInfo = userInfo;
+	request.delegate = self;
+	
+	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
+	[request setShouldAttemptPersistentConnection:NO];
+	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
+	
+	[request setRequestMethod:@"PUT"];
+	
+	NSString *string = [task toJSON];
+	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	[self.networkQueue addOperation:request];
+	[self.networkQueue go];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
+}
+
+- (void)deleteTaskWitId:(NSNumber *)taskId
+{
+	if (!taskId) {
+		return;
+	}
+	
+	NSString *notificationName = TaskDeleteNotification;
+	NSString *path = @"deleteTaskWitId";
+	
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  path, @"path",
+							  notificationName, @"notificationName",
+							  taskId, @"object",
+							  nil];
+	
+	NSString *url = TASKURL(BASE_URL, TASKS_PATH, taskId);
+	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
+	request.userInfo = userInfo;
+	request.delegate = self;
+	
+	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
+	[request setShouldAttemptPersistentConnection:NO];
+	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
+	
+	[request setRequestMethod:@"DELETE"];
+	
+	[self.networkQueue addOperation:request];
+	[self.networkQueue go];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
+}
 
 #pragma mark -
 #pragma mark Content Management
@@ -363,6 +433,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	ASIHTTPRequest *request = [self requestWithUrl:url];
 	request.userInfo = userInfo;
 	request.delegate = self;
+	
+	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
 	request.username = self.username;
 	request.password = self.password;
@@ -400,6 +472,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 				   [path isEqualToString:@"editGroupWithId"] ||
 				   [path isEqualToString:@"deleteGroupWitId"]) {
 			[self parseGroup:request];
+		} else if ([path isEqualToString:@"addTask"]|| 
+				   [path isEqualToString:@"editTask"] ||
+				   [path isEqualToString:@"deleteTaskWitId"]) {
+			[self parseTask:request];
 		}
 	}
 	

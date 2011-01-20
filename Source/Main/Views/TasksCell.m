@@ -18,6 +18,16 @@
     return self;
 }
 
+- (UILabel *)textLabel
+{
+	return nil;
+}
+
+- (UILabel *)detailTextLabel
+{
+	return nil;
+}
+
 - (UIButton *)completedButton
 {
 	if (!completedButton) {
@@ -45,6 +55,24 @@
 }
 
 - (UILabel *)nameLabel
+{
+	if (!nameLabel) {
+		nameLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
+		nameLabel.backgroundColor = [UIColor clearColor];
+		nameLabel.font = [UIFont boldSystemFontOfSize:NameLabelFontSize];
+		nameLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
+		nameLabel.highlightedTextColor = [UIColor whiteColor];
+		nameLabel.shadowOffset = CGSizeMake(0,-1);
+		nameLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
+		nameLabel.backgroundColor = [UIColor clearColor];
+		nameLabel.numberOfLines = 0;
+		[self addSubview:nameLabel];
+	}
+	
+	return nameLabel;
+}
+
+- (UILabel *)detailLabel
 {
 	if (!nameLabel) {
 		nameLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];

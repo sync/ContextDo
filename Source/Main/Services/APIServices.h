@@ -22,5 +22,8 @@
 - (void)refreshTasksWithGroupId:(NSNumber *)groupId page:(NSInteger)page;
 - (void)refreshTasksWithDue:(NSString *)due page:(NSInteger)page;
 - (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude within:(CGFloat)withinInKm;
+- (void)addTask:(Task *)task;
+- (void)editTask:(Task *)task;
+- (void)deleteTaskWitId:(NSNumber *)taskId;
 
 @end

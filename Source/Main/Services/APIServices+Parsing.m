@@ -3,6 +3,9 @@
 
 @implementation APIServices (parsing)
 
+#pragma mark -
+#pragma mark Credentials
+
 - (void)parseLogin:(ASIHTTPRequest *)request
 {
 	NSString *responseString = [request responseString];
@@ -49,6 +52,9 @@
 		[self notifyFailed:request withError:@"Unable to Reset Password!"];
 	}
 }
+
+#pragma mark -
+#pragma mark Groups
 
 - (void)parseGroups:(ASIHTTPRequest *)request
 {
@@ -115,6 +121,9 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Tasks
+
 - (void)parseTasks:(ASIHTTPRequest *)request
 {
 	if (request.responseData != 0)  {
@@ -145,6 +154,41 @@
 										 [info valueForKey:@"object"], @"object",
 										 nil
 										 ]];
+	}
+}
+
+- (void)parseTask:(ASIHTTPRequest *)request
+{
+	if ([request.responseData length] != 0)  {
+		
+		//	"group": {
+		//		"created_at": "2011-01-18T15:36:43Z",
+		//		"id": 17,
+		//		"name": "Test",
+		//		"position": 1,
+		//		"updated_at": "2011-01-18T15:36:43Z",
+		//		"user_id": 2,
+		//		"expired_count": 0,
+		//		"due_count": 0
+		//	}
+		
+		if ([[self notificationNameForRequest:request]isEqualToString:TaskDeleteNotification]) {
+			[self notifyDone:request object:nil];
+			return;
+		}
+		
+		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
+		Task *task = [Task fromJSONData:request.responseData];
+		if (task) {
+			[self notifyDone:request object:task];
+		} else {
+			if ([[self notificationNameForRequest:request]isEqualToString:TaskAddNotification]) {
+				[self notifyFailed:request withError:@"Unable to Create Task"];
+			} else {
+				[self notifyFailed:request withError:@"Unable to Modify Task"];
+			}
+			
+		}
 	}
 }
 
