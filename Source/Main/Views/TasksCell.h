@@ -5,6 +5,7 @@
 }
 
 @property (nonatomic, readonly) UILabel *distanceLabel;
+@property (nonatomic, readonly) UIImageView *locationImageView;
 @property (nonatomic, readonly) UILabel *nameLabel;
 @property (nonatomic, readonly) UILabel *detailLabel;
 @property (nonatomic, readonly) UILabel *addressLabel;

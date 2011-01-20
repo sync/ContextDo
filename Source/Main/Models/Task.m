@@ -28,6 +28,11 @@
 	return [(id)[AppDelegate sharedAppDelegate].currentLocation getDistanceFrom:taskLocation];
 }
 
+- (BOOL)isClose
+{
+	return (self.distance < 1000); // todo get this value from the user's default
+}
+
 - (BOOL)expired
 {
 	return (!self.completed && [self.dueAt isEarlierThanDate:[NSDate date]]);

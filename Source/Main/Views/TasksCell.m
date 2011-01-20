@@ -3,7 +3,7 @@
 
 @implementation TasksCell
 
-@synthesize distanceLabel, cellContext, completedButton, addressLabel, nameLabel, detailLabel;
+@synthesize distanceLabel, cellContext, completedButton, addressLabel, nameLabel, detailLabel, locationImageView;
 
 #define NameLabelFontSize 16.0
 #define AddressLabelFontSize 11.0
@@ -39,16 +39,23 @@
 	return completedButton;
 }
 
+- (UIImageView *)locationImageView
+{
+	if (!locationImageView) {
+		locationImageView = [[[UIImageView alloc]initWithFrame:CGRectZero]autorelease];
+		[self addSubview:locationImageView];
+	}
+	
+	return locationImageView;
+}
+
 - (UILabel *)distanceLabel
 {
 	if (!distanceLabel) {
 		distanceLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
 		distanceLabel.backgroundColor = [UIColor clearColor];
-		distanceLabel.font = [UIFont boldSystemFontOfSize:11.0];
-		distanceLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
 		distanceLabel.highlightedTextColor = [UIColor whiteColor];
 		distanceLabel.shadowOffset = CGSizeMake(0,-1);
-		distanceLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		[self addSubview:distanceLabel];
 	}
 	
@@ -61,10 +68,9 @@
 		nameLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
 		nameLabel.backgroundColor = [UIColor clearColor];
 		nameLabel.font = [UIFont boldSystemFontOfSize:NameLabelFontSize];
-		nameLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
 		nameLabel.highlightedTextColor = [UIColor whiteColor];
-		nameLabel.shadowOffset = CGSizeMake(0,-1);
 		nameLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
+		nameLabel.shadowOffset = CGSizeMake(0,-1);
 		nameLabel.backgroundColor = [UIColor clearColor];
 		nameLabel.numberOfLines = 0;
 		[self addSubview:nameLabel];
@@ -97,7 +103,6 @@
 		addressLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
 		addressLabel.backgroundColor = [UIColor clearColor];
 		addressLabel.font = [UIFont systemFontOfSize:AddressLabelFontSize];
-		addressLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
 		addressLabel.highlightedTextColor = [UIColor whiteColor];
 		addressLabel.shadowOffset = CGSizeMake(0,-1);
 		addressLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
@@ -124,16 +129,31 @@
 		selectedBackgroundImageNamed = @"groupPanels_light.png";
 		imageNamed = @"table_arrow_off.png";
 		highlightedImageNamed = @"table_arrow_touch.png";
+		self.distanceLabel.font = [UIFont boldSystemFontOfSize:11.0];
+		self.distanceLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
+		self.distanceLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
+		self.nameLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
+		self.addressLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
 	} else if (cellContext == CTXDOCellContextLocationAware) {
-		backgroundImageNamed = @"groupPanels_greeen.png";
-		selectedBackgroundImageNamed = @"groupPanels_greeen.png";
+		backgroundImageNamed = @"groupPanels_green.png";
+		selectedBackgroundImageNamed = @"groupPanels_green.png";
 		imageNamed = @"table_arrow_loc.png";
 		highlightedImageNamed = @"table_arrow_loc_touch.png";
+		self.distanceLabel.font = [UIFont boldSystemFontOfSize:12.0];
+		self.distanceLabel.textColor = [UIColor colorWithHexString:@"004624"];
+		self.distanceLabel.shadowColor = [UIColor clearColor];
+		self.nameLabel.textColor = [UIColor colorWithHexString:@"f7f3ea"];
+		self.addressLabel.textColor = [UIColor colorWithHexString:@"FFF"];
 	} else {
 		backgroundImageNamed = @"groupPanels_dark.png";
 		selectedBackgroundImageNamed = @"groupPanels_dark.png";
 		imageNamed = @"table_arrow_off.png";
 		highlightedImageNamed = @"table_arrow_touch.png";
+		self.distanceLabel.font = [UIFont boldSystemFontOfSize:11.0];
+		self.distanceLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
+		self.distanceLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
+		self.nameLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
+		self.addressLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
 	}
 	
 	self.backgroundView =  [[[UIImageView alloc]initWithImage:[UIImage imageNamed:backgroundImageNamed]]autorelease];;
@@ -159,52 +179,99 @@
 														   (boundsSize.height - imageSize.height) / 2.0, 
 														   imageSize.width, 
 														   imageSize.height));
-#define LeftDiff 80
-	
-#define DistanceRightDiff -20.0
-#define DistanceTopDiff 10.0
-	[self.distanceLabel sizeToFit];
-	CGRect distanceLabelFrame = self.distanceLabel.frame;
-	distanceLabelFrame.origin.x = boundsSize.width - distanceLabelFrame.size.width - DistanceRightDiff;
-	distanceLabelFrame.origin.y = DistanceTopDiff;
-	self.distanceLabel.frame = CGRectIntegral(distanceLabelFrame);
-	
+#define LocationImageLeftDiff 56.0
+#define LocationImageTopDiff 4.0
+	if (self.cellContext == CTXDOCellContextLocationAware) {
+		CGSize locImageSize = self.locationImageView.image.size;
+		self.locationImageView.frame = CGRectIntegral(CGRectMake(LocationImageLeftDiff, LocationImageTopDiff, locImageSize.width, locImageSize.height));
+	}
+
 #define TopDiff 11.0
+#define LeftDiff 80
 #define LabelsRightDiff 10.0
-	[self.nameLabel sizeToFit];
-	CGRect nameLabelFrame = self.nameLabel.frame;
-	nameLabelFrame.origin.x = LeftDiff;
-	nameLabelFrame.origin.y = TopDiff;
-	nameLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
-	CGFloat nameLabelTwoLinesHeight = 2 * NameLabelFontSize + 8.0;
-	BOOL nameLabelIsTwoLine = (nameLabelFrame.size.height > nameLabelTwoLinesHeight);
-	nameLabelFrame.size.height = (nameLabelIsTwoLine) ? nameLabelTwoLinesHeight : nameLabelFrame.size.height;  // 2 lines
-	self.nameLabel.frame = CGRectIntegral(nameLabelFrame);
-	
 #define LabelsDiff 2.0
 	
-	if (self.detailLabel.text.length > 0) {
-		[self.detailLabel sizeToFit];
-		CGRect detailLabelFrame = self.detailLabel.frame;
-		detailLabelFrame.origin.x = LeftDiff;
-		detailLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff;
-		detailLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
-		detailLabelFrame.size.height = DetailLabelFontSize + 4.0;  // 1 line
-		self.detailLabel.frame = CGRectIntegral(detailLabelFrame);
-	}
-	
-	if (self.addressLabel.text.length > 0) {
-		CGFloat addressLabelTwoLinesHeight = 2 * AddressLabelFontSize + 8.0;
-		CGSize adressSize = [self.addressLabel.text sizeWithFont:[UIFont systemFontOfSize:AddressLabelFontSize] 
-											  constrainedToSize:CGSizeMake(boundsSize.width - LeftDiff - LabelsRightDiff, addressLabelTwoLinesHeight)
-												  lineBreakMode:UILineBreakModeTailTruncation];
-		[self.addressLabel sizeToFit];
-		CGRect addressLabelFrame = self.addressLabel.frame;
-		addressLabelFrame.origin.x = LeftDiff;
-		addressLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff + self.detailLabel.frame.size.height + LabelsDiff;
-		addressLabelFrame.size = adressSize;
-		addressLabelFrame.size.height = (nameLabelIsTwoLine || self.detailLabel.text.length > 0) ? AddressLabelFontSize + 4.0 : addressLabelFrame.size.height; 
-		self.addressLabel.frame = CGRectIntegral(addressLabelFrame);
+	if (self.cellContext != CTXDOCellContextLocationAware) {
+#define DistanceRightDiff -20.0
+#define DistanceTopDiff 10.0
+		[self.distanceLabel sizeToFit];
+		CGRect distanceLabelFrame = self.distanceLabel.frame;
+		distanceLabelFrame.origin.x = boundsSize.width - distanceLabelFrame.size.width - DistanceRightDiff;
+		distanceLabelFrame.origin.y = DistanceTopDiff;
+		self.distanceLabel.frame = CGRectIntegral(distanceLabelFrame);
+		
+		[self.nameLabel sizeToFit];
+		CGRect nameLabelFrame = self.nameLabel.frame;
+		nameLabelFrame.origin.x = LeftDiff;
+		nameLabelFrame.origin.y =TopDiff;
+		nameLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
+		CGFloat nameLabelTwoLinesHeight = 2 * NameLabelFontSize + 8.0;
+		BOOL nameLabelIsTwoLine = (nameLabelFrame.size.height > nameLabelTwoLinesHeight);
+		nameLabelFrame.size.height = (nameLabelIsTwoLine) ? nameLabelTwoLinesHeight : nameLabelFrame.size.height;  // 2 lines
+		self.nameLabel.frame = CGRectIntegral(nameLabelFrame);
+		
+		if (self.detailLabel.text.length > 0) {
+			[self.detailLabel sizeToFit];
+			CGRect detailLabelFrame = self.detailLabel.frame;
+			detailLabelFrame.origin.x = LeftDiff;
+			detailLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff;
+			detailLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
+			detailLabelFrame.size.height = DetailLabelFontSize + 4.0;  // 1 line
+			self.detailLabel.frame = CGRectIntegral(detailLabelFrame);
+		} else {
+			self.detailLabel.frame = CGRectZero;
+		}
+		
+		if (self.addressLabel.text.length > 0) {
+			CGFloat addressLabelTwoLinesHeight = 2 * AddressLabelFontSize + 8.0;
+			CGSize adressSize = [self.addressLabel.text sizeWithFont:[UIFont systemFontOfSize:AddressLabelFontSize] 
+												   constrainedToSize:CGSizeMake(boundsSize.width - LeftDiff - LabelsRightDiff, addressLabelTwoLinesHeight)
+													   lineBreakMode:UILineBreakModeTailTruncation];
+			[self.addressLabel sizeToFit];
+			CGRect addressLabelFrame = self.addressLabel.frame;
+			addressLabelFrame.origin.x = LeftDiff;
+			addressLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff + self.detailLabel.frame.size.height + LabelsDiff;
+			addressLabelFrame.size = adressSize;
+			addressLabelFrame.size.height = (nameLabelIsTwoLine || self.detailLabel.text.length > 0) ? AddressLabelFontSize + 4.0 : addressLabelFrame.size.height; 
+			self.addressLabel.frame = CGRectIntegral(addressLabelFrame);
+		} else {
+			self.addressLabel.frame = CGRectZero;
+		}
+	} else {
+#define DistanceTopDiff 10.0
+		[self.distanceLabel sizeToFit];
+		CGRect distanceLabelFrame = self.distanceLabel.frame;
+		distanceLabelFrame.origin.x = LeftDiff;
+		distanceLabelFrame.origin.y = TopDiff;
+		self.distanceLabel.frame = CGRectIntegral(distanceLabelFrame);
+		
+		[self.nameLabel sizeToFit];
+		CGRect nameLabelFrame = self.nameLabel.frame;
+		nameLabelFrame.origin.x = LeftDiff;
+		nameLabelFrame.origin.y = self.distanceLabel.frame.origin.y + self.distanceLabel.frame.size.height + LabelsDiff;
+		nameLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
+		CGFloat nameLabelTwoLinesHeight = 2 * NameLabelFontSize + 8.0;
+		BOOL nameLabelIsTwoLine = (nameLabelFrame.size.height > nameLabelTwoLinesHeight);
+		nameLabelFrame.size.height = (nameLabelIsTwoLine) ? nameLabelTwoLinesHeight : nameLabelFrame.size.height;  // 2 lines
+		self.nameLabel.frame = CGRectIntegral(nameLabelFrame);
+		
+		self.detailLabel.frame = CGRectZero;
+		
+		if (self.addressLabel.text.length > 0) {
+			CGFloat addressLabelTwoLinesHeight = 2 * AddressLabelFontSize + 8.0;
+			CGSize adressSize = [self.addressLabel.text sizeWithFont:[UIFont systemFontOfSize:AddressLabelFontSize] 
+												   constrainedToSize:CGSizeMake(boundsSize.width - LeftDiff - LabelsRightDiff, addressLabelTwoLinesHeight)
+													   lineBreakMode:UILineBreakModeTailTruncation];
+			[self.addressLabel sizeToFit];
+			CGRect addressLabelFrame = self.addressLabel.frame;
+			addressLabelFrame.origin.x = LeftDiff;
+			addressLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff + self.detailLabel.frame.size.height + LabelsDiff;
+			addressLabelFrame.size = adressSize;
+			addressLabelFrame.size.height = (nameLabelIsTwoLine || self.detailLabel.text.length > 0) ? AddressLabelFontSize + 4.0 : addressLabelFrame.size.height; 
+			self.addressLabel.frame = CGRectIntegral(addressLabelFrame);
+		} else {
+			self.addressLabel.frame = CGRectZero;
+		}
 	}
 }
 
@@ -215,22 +282,31 @@
 		imageNamed = @"btn_todo_due.png";
 	} else if (task.completed) {
 		imageNamed = @"btn_todo_done.png";
+	} else if (task.isClose) {
+		imageNamed = @"btn_todo_loc.png";
 	} else {
 		imageNamed = @"btn_todo_std.png";
 	}
-	// location TODO
 	UIImage *image = [UIImage imageNamed:imageNamed];
 	[self.completedButton setBackgroundImage:image forState:UIControlStateNormal];
 	[self.completedButton setBackgroundImage:image forState:UIControlStateHighlighted];
 	
-	self.nameLabel.text = task.name;
 	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation && task.latitude && task.longitude) {
 		self.distanceLabel.text = (task.distance / 1000.0 < 1000.0) ? [NSString stringWithFormat:@"%.1fkm", task.distance / 1000.0] : @"far away";
 	} else {
 		self.distanceLabel.text = nil;
 	}
 	
-	self.detailLabel.text = @"carrots, veggies, soap, here checking when bigger than one line to see what will happen";
+	self.nameLabel.text = task.name;
+	
+	if (task.isClose) {
+		self.locationImageView.image = [UIImage imageNamed:@"icon_location_white.png"];
+		self.detailLabel.text = nil;
+	} else {
+		self.locationImageView.image = nil;
+		self.detailLabel.text = @"carrots, veggies, soap, here checking when bigger than one line to see what will happen";
+	}
+	
 	self.addressLabel.text = task.location;
 	
 	[self setNeedsLayout];

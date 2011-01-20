@@ -143,14 +143,14 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	__unused Task *task  = [self.tasksDataSource taskForIndexPath:indexPath];
+	Task *task  = [self.tasksDataSource taskForIndexPath:indexPath];
 	
 	CTXDOCellContext context = CTXDOCellContextStandard;
-	if (indexPath.row % 2 > 0) {
+	if (task.isClose) {
+		context = CTXDOCellContextLocationAware;
+	} else if (indexPath.row % 2 > 0) {
 		context = CTXDOCellContextStandardAlternate;
 	}
-	
-	// TODO location aware
 	
 	[(TasksCell *)cell setCellContext:context];
 	

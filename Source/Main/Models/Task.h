@@ -23,6 +23,7 @@
 
 
 @property (nonatomic, readonly) CLLocationDistance distance;
+@property (nonatomic, readonly) BOOL isClose;
 @property (nonatomic, readonly) BOOL expired;
 @property (nonatomic, readonly) BOOL completed;
 
