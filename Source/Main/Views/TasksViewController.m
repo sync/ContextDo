@@ -6,13 +6,14 @@
 - (void)reloadTasks:(NSArray *)newTasks removeCache:(BOOL)removeCache showMore:(BOOL)showMore;
 - (void)refreshTasks;
 - (void)reloadSearchTasks:(NSArray *)newTasks;
+- (void)cancelSearch;
 
 @end
 
 
 @implementation TasksViewController
 
-@synthesize tasksDataSource, tasks, page, group, searchTasksDataSource;
+@synthesize tasksDataSource, tasks, page, group, searchTasksDataSource, searchBar, pageSave, tasksSave;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -23,8 +24,10 @@
 	
 	self.page = 1;
 	
-	[self.searchDisplayController.customSearchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-														 forBarStyle:UIBarStyleBlackOpaque];
+	[self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+						   forBarStyle:UIBarStyleBlackOpaque];
+	
+	[self.tableView setContentOffset:CGPointMake(0.0, self.searchBar.frame.size.height)];
 
 }
 
@@ -72,11 +75,7 @@
 {
 	[super setupSearchDataSource];
 	
-	self.searchTasksDataSource = [[[TasksDataSource alloc]init]autorelease];
-	self.searchDisplayController.searchResultsTableView.dataSource = self.searchTasksDataSource;
-	self.searchDisplayController.searchResultsTableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTextureView;
-	self.searchDisplayController.searchResultsTableView.rowHeight = 88.0;
-	self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+	// TODO
 }
 
 #pragma mark -
@@ -199,6 +198,18 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	if (!scrollView.dragging || scrollView.decelerating) {
+		return;
+	}
+	
+	[self.searchBar resignFirstResponder];
+	if ([self.searchBar respondsToSelector:@selector(cancelButton)]) {
+		[[self.searchBar valueForKey:@"cancelButton"] setEnabled:TRUE];
+	}
+}
+
 #pragma mark -
 #pragma mark Actions
 
@@ -214,14 +225,62 @@
 }
 
 #pragma mark -
-#pragma mark Search
+#pragma mark UISearchBarDelegate
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)aSearchBar
+{
+	[aSearchBar setShowsCancelButton:TRUE animated:TRUE];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)aSearchBar
+{
+	if (aSearchBar.text.length == 0) {
+		[self cancelSearch];
+	}
+}
+
+- (void)searchBar:(UISearchBar *)aSearchBar textDidChange:(NSString *)searchText
+{
+	if (aSearchBar.text.length == 1) {
+		self.tasksSave = self.tasks;
+	} else if (aSearchBar.text.length == 0) {
+		self.page = self.pageSave;
+		[self reloadTasks:self.tasksSave removeCache:TRUE showMore:FALSE]; // TODO
+	}
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)aSearchBar
+{
+	if ([aSearchBar.text isEqualToString:self.searchString]) {
+		return;
+	}
+	[self filterContentForSearchText:aSearchBar.text scope:nil];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
+{
+	[self cancelSearch];
+}
+
+- (void)cancelSearch
+{
+	[self.searchBar setShowsCancelButton:FALSE animated:TRUE];
+	[self.searchBar resignFirstResponder];
+	self.searchBar.text = nil;
+	self.searchString = nil;
+	self.page = self.pageSave;
+}
+
+#pragma mark -
+#pragma mark Content Filtering
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
+	[self.searchBar resignFirstResponder];
 	self.searchString = searchText;
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", self.searchString];
-	NSArray *filteredTasks = [self.tasks filteredArrayUsingPredicate:predicate];
-	[self reloadSearchTasks:filteredTasks];
+	
+	self.page = 1;
+	[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId page:1];
 }
 
 #pragma mark -
@@ -233,6 +292,8 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDueDidLoadNotification];
 	
+	[tasksSave release];
+	[searchBar release];
 	[group release];
 	[tasks release];
 	[tasksDataSource release];

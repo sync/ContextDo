@@ -5,7 +5,7 @@
 #define TodaysTasksPlacholder @"Todays tasks"
 
 
-@interface TasksViewController : BaseTableViewController <UISearchDisplayDelegate> {
+@interface TasksViewController : BaseTableViewController <UISearchBarDelegate> {
 
 }
 
@@ -20,5 +20,10 @@
 
 @property (nonatomic, readonly) BOOL isTodayTasks;
 @property (nonatomic, readonly) NSString *nowDue;
+
+@property (nonatomic, retain) IBOutlet CustomSearchBar *searchBar;
+
+@property (nonatomic) NSInteger pageSave;
+@property (nonatomic, copy) NSArray *tasksSave;
 
 @end
