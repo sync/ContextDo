@@ -191,6 +191,8 @@
 #define LabelsRightDiff 10.0
 #define LabelsDiff 2.0
 	
+#define LabelsWidth (boundsSize.width - LeftDiff - LabelsRightDiff)
+	
 	if (self.cellContext != CTXDOCellContextLocationAware) {
 #define DistanceRightDiff -20.0
 #define DistanceTopDiff 10.0
@@ -200,14 +202,18 @@
 		distanceLabelFrame.origin.y = DistanceTopDiff;
 		self.distanceLabel.frame = CGRectIntegral(distanceLabelFrame);
 		
+		CGFloat nameLabelTwoLinesHeight = 2 * NameLabelFontSize + 8.0;
+		CGSize nameSize = [self.nameLabel.text sizeWithFont:[UIFont systemFontOfSize:NameLabelFontSize] 
+											   constrainedToSize:CGSizeMake(LabelsWidth, nameLabelTwoLinesHeight)
+												   lineBreakMode:UILineBreakModeTailTruncation];
+		nameSize.width = LabelsWidth;
 		[self.nameLabel sizeToFit];
 		CGRect nameLabelFrame = self.nameLabel.frame;
 		nameLabelFrame.origin.x = LeftDiff;
 		nameLabelFrame.origin.y =TopDiff;
-		nameLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
-		CGFloat nameLabelTwoLinesHeight = 2 * NameLabelFontSize + 8.0;
-		BOOL nameLabelIsTwoLine = (nameLabelFrame.size.height > nameLabelTwoLinesHeight);
-		nameLabelFrame.size.height = (nameLabelIsTwoLine) ? nameLabelTwoLinesHeight : nameLabelFrame.size.height;  // 2 lines
+		nameLabelFrame.size = nameSize;
+		BOOL nameLabelIsTwoLine = (nameLabelFrame.size.height > nameLabelTwoLinesHeight / 2.0);
+		
 		self.nameLabel.frame = CGRectIntegral(nameLabelFrame);
 		
 		if (self.detailLabel.text.length > 0) {
@@ -215,7 +221,7 @@
 			CGRect detailLabelFrame = self.detailLabel.frame;
 			detailLabelFrame.origin.x = LeftDiff;
 			detailLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff;
-			detailLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
+			detailLabelFrame.size.width = LabelsWidth;
 			detailLabelFrame.size.height = DetailLabelFontSize + 4.0;  // 1 line
 			self.detailLabel.frame = CGRectIntegral(detailLabelFrame);
 		} else {
@@ -224,14 +230,15 @@
 		
 		if (self.addressLabel.text.length > 0) {
 			CGFloat addressLabelTwoLinesHeight = 2 * AddressLabelFontSize + 8.0;
-			CGSize adressSize = [self.addressLabel.text sizeWithFont:[UIFont systemFontOfSize:AddressLabelFontSize] 
-												   constrainedToSize:CGSizeMake(boundsSize.width - LeftDiff - LabelsRightDiff, addressLabelTwoLinesHeight)
+			CGSize addressSize = [self.addressLabel.text sizeWithFont:[UIFont systemFontOfSize:AddressLabelFontSize] 
+												   constrainedToSize:CGSizeMake(LabelsWidth, addressLabelTwoLinesHeight)
 													   lineBreakMode:UILineBreakModeTailTruncation];
+			addressSize.width = LabelsWidth;
 			[self.addressLabel sizeToFit];
 			CGRect addressLabelFrame = self.addressLabel.frame;
 			addressLabelFrame.origin.x = LeftDiff;
 			addressLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff + self.detailLabel.frame.size.height + LabelsDiff;
-			addressLabelFrame.size = adressSize;
+			addressLabelFrame.size = addressSize;
 			addressLabelFrame.size.height = (nameLabelIsTwoLine || self.detailLabel.text.length > 0) ? AddressLabelFontSize + 4.0 : addressLabelFrame.size.height; 
 			self.addressLabel.frame = CGRectIntegral(addressLabelFrame);
 		} else {
@@ -249,25 +256,23 @@
 		CGRect nameLabelFrame = self.nameLabel.frame;
 		nameLabelFrame.origin.x = LeftDiff;
 		nameLabelFrame.origin.y = self.distanceLabel.frame.origin.y + self.distanceLabel.frame.size.height + LabelsDiff;
-		nameLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
-		CGFloat nameLabelTwoLinesHeight = 2 * NameLabelFontSize + 8.0;
-		BOOL nameLabelIsTwoLine = (nameLabelFrame.size.height > nameLabelTwoLinesHeight);
-		nameLabelFrame.size.height = (nameLabelIsTwoLine) ? nameLabelTwoLinesHeight : nameLabelFrame.size.height;  // 2 lines
+		nameLabelFrame.size.width = LabelsWidth;
+		nameLabelFrame.size.height = NameLabelFontSize + 4.0;
 		self.nameLabel.frame = CGRectIntegral(nameLabelFrame);
 		
 		self.detailLabel.frame = CGRectZero;
 		
 		if (self.addressLabel.text.length > 0) {
 			CGFloat addressLabelTwoLinesHeight = 2 * AddressLabelFontSize + 8.0;
-			CGSize adressSize = [self.addressLabel.text sizeWithFont:[UIFont systemFontOfSize:AddressLabelFontSize] 
-												   constrainedToSize:CGSizeMake(boundsSize.width - LeftDiff - LabelsRightDiff, addressLabelTwoLinesHeight)
+			CGSize addressSize = [self.addressLabel.text sizeWithFont:[UIFont systemFontOfSize:AddressLabelFontSize] 
+												   constrainedToSize:CGSizeMake(LabelsWidth, addressLabelTwoLinesHeight)
 													   lineBreakMode:UILineBreakModeTailTruncation];
+			addressSize.width = LabelsWidth;
 			[self.addressLabel sizeToFit];
 			CGRect addressLabelFrame = self.addressLabel.frame;
 			addressLabelFrame.origin.x = LeftDiff;
 			addressLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff + self.detailLabel.frame.size.height + LabelsDiff;
-			addressLabelFrame.size = adressSize;
-			addressLabelFrame.size.height = (nameLabelIsTwoLine || self.detailLabel.text.length > 0) ? AddressLabelFontSize + 4.0 : addressLabelFrame.size.height; 
+			addressLabelFrame.size = addressSize;
 			self.addressLabel.frame = CGRectIntegral(addressLabelFrame);
 		} else {
 			self.addressLabel.frame = CGRectZero;
@@ -304,7 +309,7 @@
 		self.detailLabel.text = nil;
 	} else {
 		self.locationImageView.image = nil;
-		self.detailLabel.text = @"carrots, veggies, soap, here checking when bigger than one line to see what will happen";
+		self.detailLabel.text = @"carrots, veggies, soap";
 	}
 	
 	self.addressLabel.text = task.location;
