@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
+#import "SMModelObject.h"
 
-@interface Task : NSObject {
+@interface Task : SMModelObject {
 
 }
 

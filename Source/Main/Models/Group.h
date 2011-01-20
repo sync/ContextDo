@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
+#import "SMModelObject.h"
 
-@interface Group : NSObject {
+@interface Group : SMModelObject {
 	
 }
 

@@ -157,6 +157,7 @@
 		243A4CB512E6156E00A6D402 /* btn_todo_std@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A4CAD12E6156E00A6D402 /* btn_todo_std@2x.png */; };
 		243A536E12E676B700A6D402 /* TasksContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A536D12E676B700A6D402 /* TasksContainerViewController.m */; };
 		243A537412E677F200A6D402 /* TasksContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 243A537312E677F200A6D402 /* TasksContainerView.xib */; };
+		2448CB9A12E7EA5E005EEEDA /* SMModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448CB7D12E7EA5E005EEEDA /* SMModelObject.m */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -429,6 +430,8 @@
 		243A536C12E676B700A6D402 /* TasksContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksContainerViewController.h; sourceTree = "<group>"; };
 		243A536D12E676B700A6D402 /* TasksContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksContainerViewController.m; sourceTree = "<group>"; };
 		243A537312E677F200A6D402 /* TasksContainerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TasksContainerView.xib; sourceTree = "<group>"; };
+		2448CB7C12E7EA5E005EEEDA /* SMModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMModelObject.h; sourceTree = "<group>"; };
+		2448CB7D12E7EA5E005EEEDA /* SMModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMModelObject.m; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -683,6 +686,15 @@
 			name = UIButtons;
 			sourceTree = "<group>";
 		};
+		2448CB4A12E7EA5E005EEEDA /* modelobject */ = {
+			isa = PBXGroup;
+			children = (
+				2448CB7C12E7EA5E005EEEDA /* SMModelObject.h */,
+				2448CB7D12E7EA5E005EEEDA /* SMModelObject.m */,
+			);
+			path = modelobject;
+			sourceTree = "<group>";
+		};
 		248921C3128ED27000DC9712 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -777,6 +789,7 @@
 		24F8788D12D16A6F00370A5F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				2448CB4A12E7EA5E005EEEDA /* modelobject */,
 				2490FF8412E36D9900F56B39 /* UIColor-i7HexColor */,
 				24F8788E12D16A6F00370A5F /* asihttprequest */,
 				24F87B7F12D16A7000370A5F /* EGOImageLoading */,
@@ -1749,6 +1762,7 @@
 				243A495512E5D3B700A6D402 /* UISearchDisplayController+Custom.m in Sources */,
 				243A4AB012E5F03100A6D402 /* GroupsEditCell.m in Sources */,
 				243A536E12E676B700A6D402 /* TasksContainerViewController.m in Sources */,
+				2448CB9A12E7EA5E005EEEDA /* SMModelObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

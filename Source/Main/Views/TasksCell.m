@@ -3,10 +3,11 @@
 
 @implementation TasksCell
 
-@synthesize distanceLabel, cellContext, completedButton, addressLabel, nameLabel;
+@synthesize distanceLabel, cellContext, completedButton, addressLabel, nameLabel, detailLabel;
 
 #define NameLabelFontSize 16.0
 #define AddressLabelFontSize 11.0
+#define DetailLabelFontSize 11.0
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -74,16 +75,16 @@
 
 - (UILabel *)detailLabel
 {
-	if (!nameLabel) {
-		nameLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
-		nameLabel.backgroundColor = [UIColor clearColor];
-		nameLabel.font = [UIFont boldSystemFontOfSize:NameLabelFontSize];
-		nameLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
-		nameLabel.highlightedTextColor = [UIColor whiteColor];
-		nameLabel.shadowOffset = CGSizeMake(0,-1);
-		nameLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
-		nameLabel.backgroundColor = [UIColor clearColor];
-		nameLabel.numberOfLines = 0;
+	if (!detailLabel) {
+		detailLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
+		detailLabel.backgroundColor = [UIColor clearColor];
+		detailLabel.font = [UIFont boldSystemFontOfSize:DetailLabelFontSize];
+		detailLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
+		detailLabel.highlightedTextColor = [UIColor whiteColor];
+		detailLabel.shadowOffset = CGSizeMake(0,-1);
+		detailLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
+		detailLabel.backgroundColor = [UIColor clearColor];
+		detailLabel.numberOfLines = 1;
 		[self addSubview:nameLabel];
 	}
 	
