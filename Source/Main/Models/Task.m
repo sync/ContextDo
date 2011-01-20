@@ -4,7 +4,7 @@
 @implementation Task
 
 @synthesize taskId, action, contactDetail, contactName, dueAt, location, name;
-@synthesize updatedAt, createdAt, groupId, latitude, longitude, groupName, completedAt;
+@synthesize updatedAt, createdAt, groupId, latitude, longitude, groupName, completedAt, info;
 
 + (Task *)taskWithId:(NSNumber *)aTaskId
 				name:(NSString *)aName

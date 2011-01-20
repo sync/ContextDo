@@ -19,7 +19,7 @@
 @property (nonatomic, copy) NSNumber *latitude;
 @property (nonatomic, copy) NSNumber *longitude;
 @property (nonatomic, copy) NSDate *completedAt;
-//@property (nonatomic, copy) NSDictionary *action;
+@property (nonatomic, copy) NSString *info; // todo check json when added
 
 
 @property (nonatomic, readonly) CLLocationDistance distance;

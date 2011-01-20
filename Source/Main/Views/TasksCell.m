@@ -79,16 +79,16 @@
 		detailLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
 		detailLabel.backgroundColor = [UIColor clearColor];
 		detailLabel.font = [UIFont boldSystemFontOfSize:DetailLabelFontSize];
-		detailLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
+		detailLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
 		detailLabel.highlightedTextColor = [UIColor whiteColor];
 		detailLabel.shadowOffset = CGSizeMake(0,-1);
 		detailLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		detailLabel.backgroundColor = [UIColor clearColor];
 		detailLabel.numberOfLines = 1;
-		[self addSubview:nameLabel];
+		[self addSubview:detailLabel];
 	}
 	
-	return nameLabel;
+	return detailLabel;
 }
 
 - (UILabel *)addressLabel
@@ -96,7 +96,7 @@
 	if (!addressLabel) {
 		addressLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
 		addressLabel.backgroundColor = [UIColor clearColor];
-		addressLabel.font = [UIFont boldSystemFontOfSize:AddressLabelFontSize];
+		addressLabel.font = [UIFont systemFontOfSize:AddressLabelFontSize];
 		addressLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
 		addressLabel.highlightedTextColor = [UIColor whiteColor];
 		addressLabel.shadowOffset = CGSizeMake(0,-1);
@@ -182,16 +182,30 @@
 	self.nameLabel.frame = CGRectIntegral(nameLabelFrame);
 	
 #define LabelsDiff 2.0
-	[self.addressLabel sizeToFit];
-	CGRect addressLabelFrame = self.addressLabel.frame;
-	addressLabelFrame.origin.x = LeftDiff;
-	addressLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff;
-	addressLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
-	CGFloat addressLabelTwoLinesHeight = 2 * AddressLabelFontSize + 8.0;
-	BOOL addressLabelIsTwoLine = (addressLabelFrame.size.height > nameLabelTwoLinesHeight);
-	addressLabelFrame.size.height = (addressLabelIsTwoLine) ? addressLabelTwoLinesHeight : addressLabelFrame.size.height;  // 2 lines
-	addressLabelFrame.size.height = (nameLabelIsTwoLine) ? AddressLabelFontSize + 4.0 : addressLabelFrame.size.height;  // 2 lines
-	self.addressLabel.frame = CGRectIntegral(addressLabelFrame);
+	
+	if (self.detailLabel.text.length > 0) {
+		[self.detailLabel sizeToFit];
+		CGRect detailLabelFrame = self.detailLabel.frame;
+		detailLabelFrame.origin.x = LeftDiff;
+		detailLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff;
+		detailLabelFrame.size.width = boundsSize.width - LeftDiff - LabelsRightDiff;
+		detailLabelFrame.size.height = DetailLabelFontSize + 4.0;  // 1 line
+		self.detailLabel.frame = CGRectIntegral(detailLabelFrame);
+	}
+	
+	if (self.addressLabel.text.length > 0) {
+		CGFloat addressLabelTwoLinesHeight = 2 * AddressLabelFontSize + 8.0;
+		CGSize adressSize = [self.addressLabel.text sizeWithFont:[UIFont systemFontOfSize:AddressLabelFontSize] 
+											  constrainedToSize:CGSizeMake(boundsSize.width - LeftDiff - LabelsRightDiff, addressLabelTwoLinesHeight)
+												  lineBreakMode:UILineBreakModeTailTruncation];
+		[self.addressLabel sizeToFit];
+		CGRect addressLabelFrame = self.addressLabel.frame;
+		addressLabelFrame.origin.x = LeftDiff;
+		addressLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff + self.detailLabel.frame.size.height + LabelsDiff;
+		addressLabelFrame.size = adressSize;
+		addressLabelFrame.size.height = (nameLabelIsTwoLine || self.detailLabel.text.length > 0) ? AddressLabelFontSize + 4.0 : addressLabelFrame.size.height; 
+		self.addressLabel.frame = CGRectIntegral(addressLabelFrame);
+	}
 }
 
 - (void)setTask:(Task *)task
@@ -216,7 +230,8 @@
 		self.distanceLabel.text = nil;
 	}
 	
-	self.addressLabel.text = task.location; // todo task details???
+	self.detailLabel.text = @"carrots, veggies, soap, here checking when bigger than one line to see what will happen";
+	self.addressLabel.text = task.location;
 	
 	[self setNeedsLayout];
 }
