@@ -1,4 +1,5 @@
 #import "TasksContainerViewController.h"
+#import "TaskEditViewController.h"
 
 @interface TasksContainerViewController (private)
 
@@ -125,7 +126,11 @@
 
 - (void)addTask
 {
-	// todo
+	TaskEditViewController *controller = [[[TaskEditViewController alloc]initWithNibName:@"TaskEditView" bundle:nil]autorelease];
+	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
+	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+											  forBarStyle:UIBarStyleDefault];
+	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
 
 #pragma mark -

@@ -99,6 +99,14 @@
 			topImageNamed = @"table_info_top.png";
 			middleImageNamed = @"table_info_mid.png";
 			bottomImageNamed = @"table_info_bot.png";
+		} else if (self.cellContext == CTXDOCellContextTaskEdit) {
+			topImageNamed = @"btn_std_off_top.png";
+			middleImageNamed = @"btn_std_off_mid.png";
+			bottomImageNamed = @"btn_std_off_bot.png";
+		} else if (self.cellContext == CTXDOCellContextTaskEditInput) {
+			topImageNamed = @"table_input_top.png";
+			middleImageNamed = @"table_input_mid.png";
+			bottomImageNamed = @"table_input_bot.png";
 		}
 	} else {
 		if (self.cellContext == CTXDOCellContextStandard) {
@@ -121,6 +129,14 @@
 			topImageNamed = @"table_infoTouch_top.png";
 			middleImageNamed = @"table_infoTouch_mid.png";
 			bottomImageNamed = @"table_infoTouch_bot.png";
+		} else if (self.cellContext == CTXDOCellContextTaskEdit) {
+			topImageNamed = @"btn_std_touch_top.png";
+			middleImageNamed = @"btn_std_touch_mid.png";
+			bottomImageNamed = @"btn_std_touch_bot.png";
+		} else if (self.cellContext == CTXDOCellContextTaskEditInput) {
+			topImageNamed = @"table_input_top.png";
+			middleImageNamed = @"table_input_mid.png";
+			bottomImageNamed = @"table_input_bot.png";
 		}
 	}
 	
@@ -166,7 +182,9 @@
 	if (drawSeparator) {
 		CGContextRef context = UIGraphicsGetCurrentContext();
 		
-		if (self.cellContext != CTXDOCellContextDueLight) {
+		if (self.cellContext == CTXDOCellContextTaskEdit) {
+			[[UIColor colorWithHexString:@"242022"]set];
+		} else if (self.cellContext != CTXDOCellContextDueLight) {
 			[[UIColor colorWithHexString:@"242022"]set];
 		} else {
 			[[UIColor whiteColor]set];

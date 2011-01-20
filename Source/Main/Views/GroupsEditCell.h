@@ -5,6 +5,6 @@
 
 }
 
-@property (nonatomic, assign) UITextField *textField;
+@property (nonatomic, readonly) UITextField *textField;
 
 @end

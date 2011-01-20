@@ -36,6 +36,8 @@
 #define TASKSURL(base, path, groupId, page, perPage) [NSString stringWithFormat:@"%@/groups/%@%@?page=%d&per_page=%d", base, groupId, path, page, perPage]
 #define TASKSDUEURL(base, path, due, page, perPage) [NSString stringWithFormat:@"%@?due=%@&page=%d&per_page=%d", CTXDOURL(base, path), due, page, perPage]
 #define TASKSWITHINURL(base, path, latitude, longitude, within, perPage) [NSString stringWithFormat:@"%@?latitude=%f&longitude=%f&within=%f&per_page=%d", CTXDOURL(base, path), latitude, longitude, within, perPage]
+#define TASKSSEARCHURL(base, path, query, page, perPage) [NSString stringWithFormat:@"%@?q=%@&page=%d&per_page=%d", CTXDOURL(base, path), query, page, perPage]
+
 // Task
 #define TASKURL(base, path, taskId) [NSString stringWithFormat:@"%@/%@", CTXDOURL(base, path), taskId]
 
@@ -48,6 +50,7 @@
 #define TasksDidLoadNotification @"TasksDidLoadNotification"
 #define TasksDueDidLoadNotification @"TasksDueDidLoadNotification"
 #define TasksWithinDidLoadNotification @"TasksWithinDidLoadNotification"
+#define TasksSearchDidLoadNotification @"TasksSearchDidLoadNotification"
 #define TaskAddNotification @"TaskAddNotification"
 #define TaskEditNotification @"TaskEditNotification"
 #define TaskDeleteNotification @"TaskDeleteNotification"
@@ -69,5 +72,7 @@ typedef enum {
 	CTXDOCellContextExpiring,
 	CTXDOCellContextLocationAware,
 	CTXDOCellContextDue,
-	CTXDOCellContextDueLight
+	CTXDOCellContextDueLight,
+	CTXDOCellContextTaskEditInput,
+	CTXDOCellContextTaskEdit,
 }CTXDOCellContext;

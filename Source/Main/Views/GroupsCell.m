@@ -35,7 +35,6 @@
 	return [(CellBackgroundView *)self.backgroundView cellContext];
 }
 
-
 - (void)setCellPosition:(CTXDOCellPosition)cellPosition context:(CTXDOCellContext)cellContext;
 {
 	CellBackgroundView *backgroundView = [CellBackgroundView cellBackgroundViewWithFrame:self.contentView.bounds 

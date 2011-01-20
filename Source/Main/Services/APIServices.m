@@ -124,9 +124,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
-	[request setShouldAttemptPersistentConnection:NO];
-	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
-	
 	[request setPostValue:aUsername forKey:@"user[email]"];
 	[request setPostValue:aPassword forKey:@"user[password]"];
 	[request setPostValue:aPassword forKey:@"user[password_confirmation]"];
@@ -160,9 +157,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.delegate = self;
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	[request setShouldAttemptPersistentConnection:NO];
-	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
 	
 	[request setPostValue:aUsername forKey:@"user[email]"];
 	
@@ -206,9 +200,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
-	[request setShouldAttemptPersistentConnection:NO];
-	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
-	
 	[request setPostValue:name forKey:@"group[name]"];
 	if (position) {
 		[request setPostValue:position forKey:@"group[position]"];
@@ -240,9 +231,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.delegate = self;
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	[request setShouldAttemptPersistentConnection:NO];
-	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
 	
 	[request setRequestMethod:@"PUT"];
 
@@ -278,9 +266,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
-	[request setShouldAttemptPersistentConnection:NO];
-	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
-	
 	[request setRequestMethod:@"DELETE"];
 	
 	[self.networkQueue addOperation:request];
@@ -294,7 +279,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 - (void)refreshTasksWithGroupId:(NSNumber *)groupId page:(NSInteger)page
 {
 	NSString *notificationName = TasksDidLoadNotification;
-	NSString *path = @"refreshTasksWithGroupId";
+	NSString *path = @"tasksWithGroupId";
 	
 	NSString *url = TASKSURL(BASE_URL, TASKS_PATH, groupId, page, 10);
 	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
@@ -303,7 +288,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 - (void)refreshTasksWithDue:(NSString *)due page:(NSInteger)page
 {
 	NSString *notificationName = TasksDueDidLoadNotification;
-	NSString *path = @"refreshTasksWithDue";
+	NSString *path = @"tasksWithDue";
 	
 	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due, page, 10);
 	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
@@ -312,9 +297,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 - (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude within:(CGFloat)withinInKm
 {
 	NSString *notificationName = TasksWithinDidLoadNotification;
-	NSString *path = @"refreshTasksWithDue";
+	NSString *path = @"tasksWithLatitude";
 	
 	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, withinInKm, 1000000000);
+	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+}
+
+- (void)refreshTasksWithQuery:(NSString *)query page:(NSInteger)page;
+{
+	NSString *notificationName = TasksSearchDidLoadNotification;
+	NSString *path = @"tasksWithQuery";
+	
+	NSString *url = TASKSSEARCHURL(BASE_URL, TASKS_PATH, query, page, 10);
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
@@ -340,9 +334,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.delegate = self;
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	[request setShouldAttemptPersistentConnection:NO];
-	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
 	
 	NSString *string = [task toJSON];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
@@ -373,9 +364,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.delegate = self;
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	[request setShouldAttemptPersistentConnection:NO];
-	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
 	
 	[request setRequestMethod:@"PUT"];
 	
@@ -408,9 +396,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.delegate = self;
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	[request setShouldAttemptPersistentConnection:NO];
-	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
 	
 	[request setRequestMethod:@"DELETE"];
 	
@@ -465,8 +450,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 			[self parseResetPassword:request];
 		} else if ([path isEqualToString:@"groupsWithPage"]) {
 			[self parseGroups:request];
-		} else if ([path isEqualToString:@"refreshTasksWithGroupId"]|| 
-				   [path isEqualToString:@"refreshTasksWithDue"]) {
+		} else if ([path isEqualToString:@"tasksWithGroupId"]|| 
+				   [path isEqualToString:@"tasksWithDue"] ||
+				   [path isEqualToString:@"tasksWithLatitude"] ||
+				   [path isEqualToString:@"tasksWithQuery"]) {
 			[self parseTasks:request];
 		} else if ([path isEqualToString:@"addGroupWithName"]|| 
 				   [path isEqualToString:@"editGroupWithId"] ||

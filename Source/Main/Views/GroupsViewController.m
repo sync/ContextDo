@@ -3,6 +3,7 @@
 #import "CTXDOTableHeaderView.h"
 #import "GroupsCell.h"
 #import "TasksContainerViewController.h"
+#import "TaskEditViewController.h"
 
 @interface GroupsViewController (private)
 
@@ -335,7 +336,11 @@
 
 - (void)addTask
 {
-	// todo
+	TaskEditViewController *controller = [[[TaskEditViewController alloc]initWithNibName:@"TaskEditView" bundle:nil]autorelease];
+	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
+	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+											  forBarStyle:UIBarStyleDefault];
+	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
 
 - (void)showSettings

@@ -130,6 +130,8 @@
 {
 	GroupsEditCell *cell = (GroupsEditCell *)[aTableView cellForRowAtIndexPath:indexPath];
 	[cell.textField becomeFirstResponder];
+	
+	[self.tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }
 
 #pragma mark -

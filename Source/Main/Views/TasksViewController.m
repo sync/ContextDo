@@ -56,6 +56,9 @@
 {
 	[super setupDataSource];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksSearchDidLoadNotification object:nil];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
+	
 	if (!self.isTodayTasks) {
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
@@ -69,13 +72,6 @@
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTextureView;
 	self.tableView.rowHeight = 88.0;
 	[self refreshTasks];
-}
-
-- (void)setupSearchDataSource
-{
-	[super setupSearchDataSource];
-	
-	// TODO
 }
 
 #pragma mark -
@@ -229,6 +225,11 @@
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)aSearchBar
 {
+	if (!aSearchBar.showsCancelButton) {
+		self.tasksSave = self.tasks;
+		[self.tasks removeAllObjects];
+	}
+	
 	[aSearchBar setShowsCancelButton:TRUE animated:TRUE];
 }
 
@@ -239,22 +240,16 @@
 	}
 }
 
-- (void)searchBar:(UISearchBar *)aSearchBar textDidChange:(NSString *)searchText
-{
-	if (aSearchBar.text.length == 1) {
-		self.tasksSave = self.tasks;
-	} else if (aSearchBar.text.length == 0) {
-		self.page = self.pageSave;
-		[self reloadTasks:self.tasksSave removeCache:TRUE showMore:FALSE]; // TODO
-	}
-}
-
 - (void)searchBarSearchButtonClicked:(UISearchBar *)aSearchBar
 {
 	if ([aSearchBar.text isEqualToString:self.searchString]) {
 		return;
 	}
 	[self filterContentForSearchText:aSearchBar.text scope:nil];
+	
+	if ([self.searchBar respondsToSelector:@selector(cancelButton)]) {
+		[[self.searchBar valueForKey:@"cancelButton"] setEnabled:TRUE];
+	}
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
@@ -269,6 +264,7 @@
 	self.searchBar.text = nil;
 	self.searchString = nil;
 	self.page = self.pageSave;
+	[self reloadTasks:self.tasksSave removeCache:TRUE showMore:FALSE]; // TODO
 }
 
 #pragma mark -
@@ -280,7 +276,7 @@
 	self.searchString = searchText;
 	
 	self.page = 1;
-	[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId page:1];
+	[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString page:self.page];
 }
 
 #pragma mark -

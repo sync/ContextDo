@@ -128,21 +128,22 @@
 {
 	if (request.responseData != 0)  {
 	
-		//	"task": {
-		//		"action": null, 
-		//		"contact_detail": "0412639224", 
-		//		"contact_name": "Bodaniel Jeanes", 
-		//		"created_at": "2010-12-19T08:16:49Z", 
-		//		"due_at": "2010-12-25T00:01:00Z", 
-		//		"group_id": 1, 
-		//		"group_name": "Foo", 
-		//		"id": 1, 
-		//		"latitude": -27.451533000000001, 
-		//		"location": "38 Skyring Terrace, Newstead QLD 4006, Australia", 
-		//		"longitude": 153.04731799999999, 
-		//		"name": "My Task", 
-		//		"updated_at": "2010-12-19T08:19:22Z"
-		//		"completed_at": "2010-12-19T08:19:22Z"
+		//	task: {
+		//		action: null
+		//		completed_at: null
+		//		contact_detail: null
+		//		contact_name: null
+		//		created_at: 2010-12-20T00:26:18Z
+		//		due_at: 2010-12-21T10:26:00Z
+		//		group_id: 12
+		//			id: 3
+		//		info: null
+		//		latitude: -27.4655769
+		//		location: Brisbane QLD 4005, Australia
+		//		longitude: 153.0471371
+		//		name: Pack bags
+		//		updated_at: 2011-01-20T05:07:45Z
+		//		group_name: Shopping
 		//	}
 		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
@@ -161,15 +162,22 @@
 {
 	if ([request.responseData length] != 0)  {
 		
-		//	"group": {
-		//		"created_at": "2011-01-18T15:36:43Z",
-		//		"id": 17,
-		//		"name": "Test",
-		//		"position": 1,
-		//		"updated_at": "2011-01-18T15:36:43Z",
-		//		"user_id": 2,
-		//		"expired_count": 0,
-		//		"due_count": 0
+		//	task: {
+		//		action: null
+		//		completed_at: null
+		//		contact_detail: null
+		//		contact_name: null
+		//		created_at: 2010-12-20T00:26:18Z
+		//		due_at: 2010-12-21T10:26:00Z
+		//		group_id: 12
+		//			id: 3
+		//		info: null
+		//		latitude: -27.4655769
+		//		location: Brisbane QLD 4005, Australia
+		//		longitude: 153.0471371
+		//		name: Pack bags
+		//		updated_at: 2011-01-20T05:07:45Z
+		//		group_name: Shopping
 		//	}
 		
 		if ([[self notificationNameForRequest:request]isEqualToString:TaskDeleteNotification]) {
