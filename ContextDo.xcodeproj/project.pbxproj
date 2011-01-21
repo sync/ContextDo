@@ -195,6 +195,8 @@
 		2448D55B12E8B32B005EEEDA /* TaskDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2448D55A12E8B32B005EEEDA /* TaskDatePickerView.xib */; };
 		2448D55F12E8B756005EEEDA /* TaskDatePickerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D55E12E8B756005EEEDA /* TaskDatePickerDataSource.m */; };
 		2448D73D12E91C43005EEEDA /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2448D73C12E91C43005EEEDA /* CoreText.framework */; };
+		2448D7B512E9241D005EEEDA /* OHAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D79812E9241D005EEEDA /* OHAttributedLabel.m */; };
+		2448D7BC12E924BD005EEEDA /* NSDate+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D7BB12E924BD005EEEDA /* NSDate+Extensions.m */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -513,6 +515,10 @@
 		2448D55D12E8B756005EEEDA /* TaskDatePickerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDatePickerDataSource.h; sourceTree = "<group>"; };
 		2448D55E12E8B756005EEEDA /* TaskDatePickerDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDatePickerDataSource.m; sourceTree = "<group>"; };
 		2448D73C12E91C43005EEEDA /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		2448D79712E9241D005EEEDA /* OHAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHAttributedLabel.h; sourceTree = "<group>"; };
+		2448D79812E9241D005EEEDA /* OHAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHAttributedLabel.m; sourceTree = "<group>"; };
+		2448D7BA12E924BD005EEEDA /* NSDate+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extensions.h"; sourceTree = "<group>"; };
+		2448D7BB12E924BD005EEEDA /* NSDate+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extensions.m"; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -801,6 +807,15 @@
 			name = Date;
 			sourceTree = "<group>";
 		};
+		2448D76D12E9241D005EEEDA /* OHAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				2448D79712E9241D005EEEDA /* OHAttributedLabel.h */,
+				2448D79812E9241D005EEEDA /* OHAttributedLabel.m */,
+			);
+			path = OHAttributedLabel;
+			sourceTree = "<group>";
+		};
 		248921C3128ED27000DC9712 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -904,6 +919,7 @@
 		24F8788D12D16A6F00370A5F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				2448D76D12E9241D005EEEDA /* OHAttributedLabel */,
 				2448CB4A12E7EA5E005EEEDA /* modelobject */,
 				2490FF8412E36D9900F56B39 /* UIColor-i7HexColor */,
 				24F8788E12D16A6F00370A5F /* asihttprequest */,
@@ -1243,6 +1259,8 @@
 			children = (
 				24F8810012D16A7200370A5F /* NSObject+Extensions.h */,
 				24F8810112D16A7200370A5F /* NSObject+Extensions.m */,
+				2448D7BA12E924BD005EEEDA /* NSDate+Extensions.h */,
+				2448D7BB12E924BD005EEEDA /* NSDate+Extensions.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1941,6 +1959,8 @@
 				2448D3F912E89F2C005EEEDA /* ChooseGroupViewController.m in Sources */,
 				2448D55912E8B30D005EEEDA /* TaskDatePickerViewController.m in Sources */,
 				2448D55F12E8B756005EEEDA /* TaskDatePickerDataSource.m in Sources */,
+				2448D7B512E9241D005EEEDA /* OHAttributedLabel.m in Sources */,
+				2448D7BC12E924BD005EEEDA /* NSDate+Extensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

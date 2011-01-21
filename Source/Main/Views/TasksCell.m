@@ -1,10 +1,10 @@
 #import "TasksCell.h"
 #import "AccessoryViewWithImage.h"
-#import "NSDate+Helper.h"
+#import "NSDate+Extensions.h"
 
 @implementation TasksCell
 
-@synthesize distanceLabel, cellContext, completedButton, addressLabel, nameLabel, detailLabel, locationImageView, nameAttributedLabel;
+@synthesize distanceLabel, cellContext, completedButton, addressLabel, nameLabel, detailLabel, locationImageView;
 
 #define NameLabelFontSize 16.0
 #define AddressLabelFontSize 11.0
@@ -63,10 +63,10 @@
 	return distanceLabel;
 }
 
-- (UILabel *)nameLabel
+- (OHAttributedLabel *)nameLabel
 {
 	if (!nameLabel) {
-		nameLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
+		nameLabel = [[[OHAttributedLabel alloc]initWithFrame:CGRectZero]autorelease];
 		nameLabel.backgroundColor = [UIColor clearColor];
 		nameLabel.font = [UIFont boldSystemFontOfSize:NameLabelFontSize];
 		nameLabel.highlightedTextColor = [UIColor whiteColor];
@@ -74,22 +74,12 @@
 		nameLabel.shadowOffset = CGSizeMake(0,-1);
 		nameLabel.backgroundColor = [UIColor clearColor];
 		nameLabel.numberOfLines = 0;
+		nameLabel.lineBreakMode = UILineBreakModeTailTruncation;
+		
 		[self addSubview:nameLabel];
 	}
 	
 	return nameLabel;
-}
-
-- (DTAttributedTextContentView *)nameAttributedLabel
-{
-	if (!nameAttributedLabel) {
-		nameAttributedLabel = [[[DTAttributedTextContentView alloc] initWithFrame:CGRectZero] autorelease];
-		nameAttributedLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		nameAttributedLabel.backgroundColor = [UIColor clearColor];
-		[self addSubview:nameAttributedLabel];
-	}
-	
-	return nameAttributedLabel;
 }
 
 - (UILabel *)detailLabel
@@ -126,8 +116,6 @@
 	
 	return addressLabel;
 }
-
-
 
 - (void)setCellContext:(CTXDOCellContext)aCellContext
 {
@@ -201,7 +189,7 @@
 
 #define TopDiff 11.0
 #define LeftDiff 80
-#define LabelsRightDiff 10.0
+#define LabelsRightDiff 15.0
 #define LabelsDiff 2.0
 	
 #define LabelsWidth (boundsSize.width - LeftDiff - LabelsRightDiff)
@@ -216,10 +204,14 @@
 		self.distanceLabel.frame = CGRectIntegral(distanceLabelFrame);
 		
 		CGFloat nameLabelTwoLinesHeight = 2 * NameLabelFontSize + 8.0;
-		CGSize nameSize = [self.nameLabel.text sizeWithFont:[UIFont systemFontOfSize:NameLabelFontSize] 
-											   constrainedToSize:CGSizeMake(LabelsWidth, nameLabelTwoLinesHeight)
-												   lineBreakMode:UILineBreakModeTailTruncation];
+		CGSize nameSize = [self.nameLabel sizeThatFits:CGSizeMake(LabelsWidth, nameLabelTwoLinesHeight)];
+//		CGSize nameSize = [self.nameLabel.text sizeWithFont:[UIFont systemFontOfSize:NameLabelFontSize] 
+//											   constrainedToSize:CGSizeMake(LabelsWidth, nameLabelTwoLinesHeight)
+//												   lineBreakMode:UILineBreakModeTailTruncation];
 		nameSize.width = LabelsWidth;
+		if (nameSize.height > nameLabelTwoLinesHeight) {
+			nameSize.height = nameLabelTwoLinesHeight;
+		}
 		[self.nameLabel sizeToFit];
 		CGRect nameLabelFrame = self.nameLabel.frame;
 		nameLabelFrame.origin.x = LeftDiff;
@@ -316,7 +308,15 @@
 	}
 	
 	NSString *relativeTime = [NSDate stringForDisplayFromDate:task.dueAt];
-	self.nameLabel.text = (relativeTime) ? [NSString stringWithFormat:@"%@ - %@", relativeTime, task.name] : task.name;
+	
+	self.nameLabel.text = (relativeTime) ? [NSString stringWithFormat:@"%@ - %@", relativeTime, @"super long text here to see how it goes blah blah blah blah"] : task.name;
+	
+	[self.nameLabel resetAttributedText];
+	if (relativeTime) { 
+		NSMutableAttributedString *attributedString = [NSMutableAttributedString attributedStringWithAttributedString:self.nameLabel.attributedText];
+		[attributedString setFont:[UIFont systemFontOfSize:DetailLabelFontSize] range:NSMakeRange(0, relativeTime.length)];
+		self.nameLabel.attributedText = attributedString;
+	}
 	
 	if (task.isClose) {
 		self.locationImageView.image = [UIImage imageNamed:@"icon_location_white.png"];
