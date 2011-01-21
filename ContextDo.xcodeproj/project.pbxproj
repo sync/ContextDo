@@ -191,21 +191,9 @@
 		2448D3F012E89DB0005EEEDA /* ChooseGroupDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D3EF12E89DB0005EEEDA /* ChooseGroupDataSource.m */; };
 		2448D3F912E89F2C005EEEDA /* ChooseGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D3F812E89F2C005EEEDA /* ChooseGroupViewController.m */; };
 		2448D3FB12E89F3B005EEEDA /* ChooseGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2448D3FA12E89F3B005EEEDA /* ChooseGroupView.xib */; };
-		2448D45C12E8A254005EEEDA /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D44312E8A254005EEEDA /* NSDate+Helper.m */; };
 		2448D55912E8B30D005EEEDA /* TaskDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D55812E8B30D005EEEDA /* TaskDatePickerViewController.m */; };
 		2448D55B12E8B32B005EEEDA /* TaskDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2448D55A12E8B32B005EEEDA /* TaskDatePickerView.xib */; };
 		2448D55F12E8B756005EEEDA /* TaskDatePickerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D55E12E8B756005EEEDA /* TaskDatePickerDataSource.m */; };
-		2448D6F312E91A89005EEEDA /* CGUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D6A612E91A89005EEEDA /* CGUtils.m */; };
-		2448D6F712E91A89005EEEDA /* DTAttributedTextContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D6AE12E91A89005EEEDA /* DTAttributedTextContentView.m */; };
-		2448D6F812E91A89005EEEDA /* DTAttributedTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D6B012E91A89005EEEDA /* DTAttributedTextView.m */; };
-		2448D6F912E91A89005EEEDA /* DTLinkButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D6B212E91A89005EEEDA /* DTLinkButton.m */; };
-		2448D6FA12E91A89005EEEDA /* DTTextAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D6B412E91A89005EEEDA /* DTTextAttachment.m */; };
-		2448D6FB12E91A89005EEEDA /* NSAttributedString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D6B612E91A89005EEEDA /* NSAttributedString+HTML.m */; };
-		2448D6FD12E91A89005EEEDA /* NSAttributedStringRunDelegates.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D6BA12E91A89005EEEDA /* NSAttributedStringRunDelegates.m */; };
-		2448D6FE12E91A89005EEEDA /* NSCharacterSet+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D6BC12E91A89005EEEDA /* NSCharacterSet+HTML.m */; };
-		2448D6FF12E91A89005EEEDA /* NSScanner+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D6BE12E91A89005EEEDA /* NSScanner+HTML.m */; };
-		2448D70012E91A89005EEEDA /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D6C012E91A89005EEEDA /* NSString+HTML.m */; };
-		2448D70212E91A89005EEEDA /* UIColor+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D6C412E91A89005EEEDA /* UIColor+HTML.m */; };
 		2448D73D12E91C43005EEEDA /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2448D73C12E91C43005EEEDA /* CoreText.framework */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
@@ -519,35 +507,11 @@
 		2448D3F712E89F2C005EEEDA /* ChooseGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseGroupViewController.h; sourceTree = "<group>"; };
 		2448D3F812E89F2C005EEEDA /* ChooseGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseGroupViewController.m; sourceTree = "<group>"; };
 		2448D3FA12E89F3B005EEEDA /* ChooseGroupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseGroupView.xib; sourceTree = "<group>"; };
-		2448D44212E8A254005EEEDA /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
-		2448D44312E8A254005EEEDA /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		2448D55712E8B30D005EEEDA /* TaskDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDatePickerViewController.h; sourceTree = "<group>"; };
 		2448D55812E8B30D005EEEDA /* TaskDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDatePickerViewController.m; sourceTree = "<group>"; };
 		2448D55A12E8B32B005EEEDA /* TaskDatePickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskDatePickerView.xib; sourceTree = "<group>"; };
 		2448D55D12E8B756005EEEDA /* TaskDatePickerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDatePickerDataSource.h; sourceTree = "<group>"; };
 		2448D55E12E8B756005EEEDA /* TaskDatePickerDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDatePickerDataSource.m; sourceTree = "<group>"; };
-		2448D6A512E91A89005EEEDA /* CGUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGUtils.h; sourceTree = "<group>"; };
-		2448D6A612E91A89005EEEDA /* CGUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGUtils.m; sourceTree = "<group>"; };
-		2448D6AD12E91A89005EEEDA /* DTAttributedTextContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTAttributedTextContentView.h; sourceTree = "<group>"; };
-		2448D6AE12E91A89005EEEDA /* DTAttributedTextContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTAttributedTextContentView.m; sourceTree = "<group>"; };
-		2448D6AF12E91A89005EEEDA /* DTAttributedTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTAttributedTextView.h; sourceTree = "<group>"; };
-		2448D6B012E91A89005EEEDA /* DTAttributedTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTAttributedTextView.m; sourceTree = "<group>"; };
-		2448D6B112E91A89005EEEDA /* DTLinkButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTLinkButton.h; sourceTree = "<group>"; };
-		2448D6B212E91A89005EEEDA /* DTLinkButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTLinkButton.m; sourceTree = "<group>"; };
-		2448D6B312E91A89005EEEDA /* DTTextAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTTextAttachment.h; sourceTree = "<group>"; };
-		2448D6B412E91A89005EEEDA /* DTTextAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTextAttachment.m; sourceTree = "<group>"; };
-		2448D6B512E91A89005EEEDA /* NSAttributedString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+HTML.h"; sourceTree = "<group>"; };
-		2448D6B612E91A89005EEEDA /* NSAttributedString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+HTML.m"; sourceTree = "<group>"; };
-		2448D6B912E91A89005EEEDA /* NSAttributedStringRunDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSAttributedStringRunDelegates.h; sourceTree = "<group>"; };
-		2448D6BA12E91A89005EEEDA /* NSAttributedStringRunDelegates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSAttributedStringRunDelegates.m; sourceTree = "<group>"; };
-		2448D6BB12E91A89005EEEDA /* NSCharacterSet+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCharacterSet+HTML.h"; sourceTree = "<group>"; };
-		2448D6BC12E91A89005EEEDA /* NSCharacterSet+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCharacterSet+HTML.m"; sourceTree = "<group>"; };
-		2448D6BD12E91A89005EEEDA /* NSScanner+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScanner+HTML.h"; sourceTree = "<group>"; };
-		2448D6BE12E91A89005EEEDA /* NSScanner+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSScanner+HTML.m"; sourceTree = "<group>"; };
-		2448D6BF12E91A89005EEEDA /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
-		2448D6C012E91A89005EEEDA /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
-		2448D6C312E91A89005EEEDA /* UIColor+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HTML.h"; sourceTree = "<group>"; };
-		2448D6C412E91A89005EEEDA /* UIColor+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HTML.m"; sourceTree = "<group>"; };
 		2448D73C12E91C43005EEEDA /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
@@ -813,15 +777,6 @@
 			path = modelobject;
 			sourceTree = "<group>";
 		};
-		2448D41B12E8A254005EEEDA /* nsdate-helper */ = {
-			isa = PBXGroup;
-			children = (
-				2448D44212E8A254005EEEDA /* NSDate+Helper.h */,
-				2448D44312E8A254005EEEDA /* NSDate+Helper.m */,
-			);
-			path = "nsdate-helper";
-			sourceTree = "<group>";
-		};
 		2448D55212E8B2C9005EEEDA /* Group */ = {
 			isa = PBXGroup;
 			children = (
@@ -844,43 +799,6 @@
 				2448D55A12E8B32B005EEEDA /* TaskDatePickerView.xib */,
 			);
 			name = Date;
-			sourceTree = "<group>";
-		};
-		2448D67C12E91A89005EEEDA /* NSAttributedString-Additions-for-HTML */ = {
-			isa = PBXGroup;
-			children = (
-				2448D6A412E91A89005EEEDA /* Classes */,
-			);
-			path = "NSAttributedString-Additions-for-HTML";
-			sourceTree = "<group>";
-		};
-		2448D6A412E91A89005EEEDA /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				2448D6A512E91A89005EEEDA /* CGUtils.h */,
-				2448D6A612E91A89005EEEDA /* CGUtils.m */,
-				2448D6AD12E91A89005EEEDA /* DTAttributedTextContentView.h */,
-				2448D6AE12E91A89005EEEDA /* DTAttributedTextContentView.m */,
-				2448D6AF12E91A89005EEEDA /* DTAttributedTextView.h */,
-				2448D6B012E91A89005EEEDA /* DTAttributedTextView.m */,
-				2448D6B112E91A89005EEEDA /* DTLinkButton.h */,
-				2448D6B212E91A89005EEEDA /* DTLinkButton.m */,
-				2448D6B312E91A89005EEEDA /* DTTextAttachment.h */,
-				2448D6B412E91A89005EEEDA /* DTTextAttachment.m */,
-				2448D6B512E91A89005EEEDA /* NSAttributedString+HTML.h */,
-				2448D6B612E91A89005EEEDA /* NSAttributedString+HTML.m */,
-				2448D6B912E91A89005EEEDA /* NSAttributedStringRunDelegates.h */,
-				2448D6BA12E91A89005EEEDA /* NSAttributedStringRunDelegates.m */,
-				2448D6BB12E91A89005EEEDA /* NSCharacterSet+HTML.h */,
-				2448D6BC12E91A89005EEEDA /* NSCharacterSet+HTML.m */,
-				2448D6BD12E91A89005EEEDA /* NSScanner+HTML.h */,
-				2448D6BE12E91A89005EEEDA /* NSScanner+HTML.m */,
-				2448D6BF12E91A89005EEEDA /* NSString+HTML.h */,
-				2448D6C012E91A89005EEEDA /* NSString+HTML.m */,
-				2448D6C312E91A89005EEEDA /* UIColor+HTML.h */,
-				2448D6C412E91A89005EEEDA /* UIColor+HTML.m */,
-			);
-			path = Classes;
 			sourceTree = "<group>";
 		};
 		248921C3128ED27000DC9712 /* API */ = {
@@ -986,8 +904,6 @@
 		24F8788D12D16A6F00370A5F /* External */ = {
 			isa = PBXGroup;
 			children = (
-				2448D67C12E91A89005EEEDA /* NSAttributedString-Additions-for-HTML */,
-				2448D41B12E8A254005EEEDA /* nsdate-helper */,
 				2448CB4A12E7EA5E005EEEDA /* modelobject */,
 				2490FF8412E36D9900F56B39 /* UIColor-i7HexColor */,
 				24F8788E12D16A6F00370A5F /* asihttprequest */,
@@ -2023,20 +1939,8 @@
 				2448D19012E83B14005EEEDA /* TaskEditCell.m in Sources */,
 				2448D3F012E89DB0005EEEDA /* ChooseGroupDataSource.m in Sources */,
 				2448D3F912E89F2C005EEEDA /* ChooseGroupViewController.m in Sources */,
-				2448D45C12E8A254005EEEDA /* NSDate+Helper.m in Sources */,
 				2448D55912E8B30D005EEEDA /* TaskDatePickerViewController.m in Sources */,
 				2448D55F12E8B756005EEEDA /* TaskDatePickerDataSource.m in Sources */,
-				2448D6F312E91A89005EEEDA /* CGUtils.m in Sources */,
-				2448D6F712E91A89005EEEDA /* DTAttributedTextContentView.m in Sources */,
-				2448D6F812E91A89005EEEDA /* DTAttributedTextView.m in Sources */,
-				2448D6F912E91A89005EEEDA /* DTLinkButton.m in Sources */,
-				2448D6FA12E91A89005EEEDA /* DTTextAttachment.m in Sources */,
-				2448D6FB12E91A89005EEEDA /* NSAttributedString+HTML.m in Sources */,
-				2448D6FD12E91A89005EEEDA /* NSAttributedStringRunDelegates.m in Sources */,
-				2448D6FE12E91A89005EEEDA /* NSCharacterSet+HTML.m in Sources */,
-				2448D6FF12E91A89005EEEDA /* NSScanner+HTML.m in Sources */,
-				2448D70012E91A89005EEEDA /* NSString+HTML.m in Sources */,
-				2448D70212E91A89005EEEDA /* UIColor+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
