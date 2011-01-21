@@ -11,7 +11,7 @@
 
 @implementation TaskEditViewController
 
-@synthesize taskEditDataSource, editingTextField, keyboardShown, task;
+@synthesize taskEditDataSource, editingTextField, keyboardShown, task, editingTextView;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -128,6 +128,7 @@
 	CTXDOCellContext context = CTXDOCellContextTaskEdit;
 	if ([self.taskEditDataSource hasNoteEdit:indexPath]) {
 		context = CTXDOCellContextTaskEditInput;
+		[(TaskEditCell *)cell textField].delegate = self;
 		[[(TaskEditCell	*)cell noteButton] addTarget:self action:@selector(showInfoCell:) forControlEvents:UIControlEventTouchUpInside];
 	} else if ([self.taskEditDataSource isIndexPathInputMulti:indexPath]) {
 		context = CTXDOCellContextTaskEditInputMutliLine;
@@ -157,6 +158,8 @@
 
 - (void)showInfoCell:(id)sender
 {
+	[self endEditing];
+	
 	UIButton *button = (UIButton *)sender;
 	NSIndexPath *index = [self.taskEditDataSource indexPathForTag:button.tag];
 	NSIndexPath *newIndex = [NSIndexPath indexPathForRow:index.row+1 inSection:index.section];
@@ -168,6 +171,8 @@
 																						nil]];
 		[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndex] withRowAnimation:UITableViewRowAnimationFade];
 		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:index] withRowAnimation:UITableViewRowAnimationNone];
+		TaskEditCell *cell = (TaskEditCell *)[self.tableView cellForRowAtIndexPath:newIndex];
+		[cell.textView becomeFirstResponder];
 	} else {
 		[self.taskEditDataSource.content replaceObjectAtIndex:index.section withObject:[NSArray arrayWithObjects:
 																						TitlePlaceholder,
@@ -227,17 +232,13 @@
 	if (!scrollView.dragging || scrollView.decelerating) {
 		return;
 	}
-	
-	[self endEditing];
+	if (self.editingTextView) {
+		[self endEditing];
+	}
 }
 
 #pragma mark -
 #pragma mark UITextFieldDelegate
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{	
-	return YES;
-}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -263,20 +264,12 @@
 {
 	self.editingTextField = nil;
 	
-	if (textField.text.length == 0) {
-		return;
-	}
-	
 	NSIndexPath *indexPath = [self.taskEditDataSource indexPathForTag:textField.tag];
 	[self.taskEditDataSource setValue:textField.text forIndexPath:indexPath];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-	if (textField.text.length == 0) {
-		return FALSE;
-	}
-	
 	[self endEditing];
 	
 	return TRUE;
@@ -284,6 +277,35 @@
 
 #pragma mark -
 #pragma mark UITextViewDelegate
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+	self.editingTextView = textView;
+	
+	if (self.keyboardShown) {
+		NSIndexPath *indexPath = [self.taskEditDataSource indexPathForTag:textView.tag];
+		[self.tableView scrollToRowAtIndexPath:indexPath
+							  atScrollPosition:UITableViewScrollPositionNone
+									  animated:TRUE];
+	}
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+	NSIndexPath *indexPath = [self.taskEditDataSource indexPathForTag:textView.tag];
+	[self.taskEditDataSource setValue:textView.text forIndexPath:indexPath];
+	
+	return TRUE;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+	self.editingTextView = nil;
+	
+	NSIndexPath *indexPath = [self.taskEditDataSource indexPathForTag:textView.tag];
+	[self.taskEditDataSource setValue:textView.text forIndexPath:indexPath];
+}
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
 	if (text.length == 0) {
@@ -395,6 +417,7 @@
 - (void)endEditing
 {
 	[self.editingTextField resignFirstResponder];
+	[self.editingTextView resignFirstResponder];
 }
 
 #pragma mark -
@@ -405,6 +428,7 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TaskAddNotification];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
+	[editingTextView release];
 	[task release];
 	[editingTextField release];
 	[taskEditDataSource release];

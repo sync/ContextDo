@@ -11,6 +11,7 @@
 @property (nonatomic, retain) TaskEditDataSource *taskEditDataSource;
 
 @property (nonatomic, retain) UITextField *editingTextField;
+@property (nonatomic, retain) UITextView *editingTextView;
 @property (nonatomic) BOOL keyboardShown;
 
 - (void)startEditing;

@@ -13,6 +13,8 @@
 	NSString *value = nil;
 	if ([placeholder isEqualToString:TitlePlaceholder]) {
 		value = self.tempTask.name;
+	} else if ([placeholder isEqualToString:InfoPlaceholder]) {
+		value = self.tempTask.info;
 	} else if ([placeholder isEqualToString:LocationPlaceholder]) {
 		
 	} else if ([placeholder isEqualToString:AddContactPlaceholder]) {
@@ -33,6 +35,8 @@
 	NSString *placeholder = [self objectForIndexPath:indexPath];
 	if ([placeholder isEqualToString:TitlePlaceholder]) {
 		self.tempTask.name = value;
+	} else if ([placeholder isEqualToString:InfoPlaceholder]) {
+		self.tempTask.info = value;
 	} else if ([placeholder isEqualToString:LocationPlaceholder]) {
 		self.tempTask.location = value;
 	} else if ([placeholder isEqualToString:AddContactPlaceholder]) {
@@ -65,8 +69,10 @@
 - (BOOL)isIndexPathInput:(NSIndexPath *)indexPath
 {
 	NSString *placeholder = [self objectForIndexPath:indexPath];
-	return !([placeholder isEqualToString:TimePlaceholder] ||
-			[placeholder isEqualToString:GroupPlaceholder]);
+	return ([placeholder isEqualToString:TitlePlaceholder] ||
+			[placeholder isEqualToString:LocationPlaceholder] ||
+			[placeholder isEqualToString:AddContactPlaceholder] ||
+			[placeholder isEqualToString:AlertsPlaceholder]);
 }
 
 - (BOOL)isIndexPathInputMulti:(NSIndexPath *)indexPath;
