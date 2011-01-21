@@ -197,6 +197,9 @@
 		2448D73D12E91C43005EEEDA /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2448D73C12E91C43005EEEDA /* CoreText.framework */; };
 		2448D7B512E9241D005EEEDA /* OHAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D79812E9241D005EEEDA /* OHAttributedLabel.m */; };
 		2448D7BC12E924BD005EEEDA /* NSDate+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D7BB12E924BD005EEEDA /* NSDate+Extensions.m */; };
+		2448D92A12E954E5005EEEDA /* TaskContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D92912E954E5005EEEDA /* TaskContactViewController.m */; };
+		2448D92D12E955E9005EEEDA /* TaskContactDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2448D92C12E955E9005EEEDA /* TaskContactDataSource.m */; };
+		2448D93B12E95999005EEEDA /* TaskContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2448D93A12E95999005EEEDA /* TaskContactView.xib */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -519,6 +522,11 @@
 		2448D79812E9241D005EEEDA /* OHAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHAttributedLabel.m; sourceTree = "<group>"; };
 		2448D7BA12E924BD005EEEDA /* NSDate+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extensions.h"; sourceTree = "<group>"; };
 		2448D7BB12E924BD005EEEDA /* NSDate+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extensions.m"; sourceTree = "<group>"; };
+		2448D92812E954E5005EEEDA /* TaskContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskContactViewController.h; sourceTree = "<group>"; };
+		2448D92912E954E5005EEEDA /* TaskContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskContactViewController.m; sourceTree = "<group>"; };
+		2448D92B12E955E9005EEEDA /* TaskContactDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskContactDataSource.h; sourceTree = "<group>"; };
+		2448D92C12E955E9005EEEDA /* TaskContactDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskContactDataSource.m; sourceTree = "<group>"; };
+		2448D93A12E95999005EEEDA /* TaskContactView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskContactView.xib; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -816,6 +824,25 @@
 			path = OHAttributedLabel;
 			sourceTree = "<group>";
 		};
+		2448D92612E95485005EEEDA /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				2448D92B12E955E9005EEEDA /* TaskContactDataSource.h */,
+				2448D92C12E955E9005EEEDA /* TaskContactDataSource.m */,
+				2448D92812E954E5005EEEDA /* TaskContactViewController.h */,
+				2448D92912E954E5005EEEDA /* TaskContactViewController.m */,
+				2448D93A12E95999005EEEDA /* TaskContactView.xib */,
+			);
+			name = Contact;
+			sourceTree = "<group>";
+		};
+		2448D92712E9548E005EEEDA /* Location */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Location;
+			sourceTree = "<group>";
+		};
 		248921C3128ED27000DC9712 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -893,6 +920,8 @@
 				2448D18412E82D93005EEEDA /* TaskEditViewController.h */,
 				2448D18512E82D93005EEEDA /* TaskEditViewController.m */,
 				2448D1D712E856CA005EEEDA /* TaskEditView.xib */,
+				2448D92712E9548E005EEEDA /* Location */,
+				2448D92612E95485005EEEDA /* Contact */,
 				2448D55312E8B2DF005EEEDA /* Date */,
 				2448D55212E8B2C9005EEEDA /* Group */,
 			);
@@ -1858,6 +1887,7 @@
 				2448D29D12E8821A005EEEDA /* btn_std_off_bot.png in Resources */,
 				2448D3FB12E89F3B005EEEDA /* ChooseGroupView.xib in Resources */,
 				2448D55B12E8B32B005EEEDA /* TaskDatePickerView.xib in Resources */,
+				2448D93B12E95999005EEEDA /* TaskContactView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1961,6 +1991,8 @@
 				2448D55F12E8B756005EEEDA /* TaskDatePickerDataSource.m in Sources */,
 				2448D7B512E9241D005EEEDA /* OHAttributedLabel.m in Sources */,
 				2448D7BC12E924BD005EEEDA /* NSDate+Extensions.m in Sources */,
+				2448D92A12E954E5005EEEDA /* TaskContactViewController.m in Sources */,
+				2448D92D12E955E9005EEEDA /* TaskContactDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

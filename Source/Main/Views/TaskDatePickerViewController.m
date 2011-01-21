@@ -58,7 +58,7 @@
 	[super setupDataSource];
 	
 	self.taskDatePickerDataSource = [[[TaskDatePickerDataSource alloc]init]autorelease];
-	self.taskDatePickerDataSource.task = task;
+	self.taskDatePickerDataSource.tempTask = task;
 	self.tableView.dataSource = self.taskDatePickerDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.tableView.allowsSelection = FALSE;

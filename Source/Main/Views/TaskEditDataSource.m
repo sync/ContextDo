@@ -6,7 +6,6 @@
 
 @synthesize tempTask;
 
-
 - (NSString *)valueForIndexPath:(NSIndexPath *)indexPath;
 {
 	NSString *placeholder = [self objectForIndexPath:indexPath];

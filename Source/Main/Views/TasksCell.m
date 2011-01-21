@@ -309,7 +309,7 @@
 	
 	NSString *relativeTime = [NSDate stringForDisplayFromDate:task.dueAt];
 	
-	self.nameLabel.text = (relativeTime) ? [NSString stringWithFormat:@"%@ - %@", relativeTime, @"super long text here to see how it goes blah blah blah blah"] : task.name;
+	self.nameLabel.text = (relativeTime) ? [NSString stringWithFormat:@"%@ - %@", relativeTime, task.name] : task.name;
 	
 	[self.nameLabel resetAttributedText];
 	if (relativeTime) { 
@@ -323,7 +323,7 @@
 		self.detailLabel.text = nil;
 	} else {
 		self.locationImageView.image = nil;
-		self.detailLabel.text = @"carrots, veggies, soap";
+		self.detailLabel.text = task.info;
 	}
 	
 	self.addressLabel.text = task.location;

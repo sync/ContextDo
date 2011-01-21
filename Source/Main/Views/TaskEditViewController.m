@@ -2,6 +2,7 @@
 #import "TaskEditCell.h"
 #import "ChooseGroupViewController.h"
 #import "TaskDatePickerViewController.h"
+#import "TaskContactViewController.h"
 
 @interface TaskEditViewController (private)
 
@@ -161,7 +162,12 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-	// todo
+	NSString *placeholder = [self.taskEditDataSource objectForIndexPath:indexPath];
+	if ([placeholder isEqualToString:AddContactPlaceHolder]) {
+		TaskContactViewController *controller = [[[TaskContactViewController alloc]initWithNibName:@"TaskContactView" bundle:nil]autorelease];
+		controller.task = self.taskEditDataSource.tempTask;
+		[self.navigationController pushViewController:controller animated:TRUE];
+	}
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -309,6 +315,16 @@
 		[[APIServices sharedAPIServices]addTask:self.taskEditDataSource.tempTask];
 	}
 	[self dismissModalViewControllerAnimated:TRUE];
+}
+
+- (void)startEditing
+{
+	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+	if ([self.taskEditDataSource isIndexPathInput:indexPath]) {
+		TaskEditCell *cell = (TaskEditCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+		[cell.textField becomeFirstResponder];
+	}
+	
 }
 
 #pragma mark -

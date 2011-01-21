@@ -5,7 +5,7 @@
 
 }
 
-@property (nonatomic, retain) Task *task;
+@property (nonatomic, retain) Task *tempTask;
 
 - (NSString *)stringForIndexPath:(NSIndexPath *)indexPath;
 

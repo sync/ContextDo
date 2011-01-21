@@ -3,7 +3,7 @@
 
 @implementation ChooseGroupDataSource
 
-@synthesize task;
+@synthesize tempTask;
 
 - (Group *)groupForIndexPath:(NSIndexPath *)indexPath
 {
@@ -25,7 +25,7 @@
 	Group *group = [self groupForIndexPath:indexPath];
 	cell.textLabel.text = group.name;
 	
-	if ([self.task.groupId isEqual:group.groupId]) {
+	if ([self.tempTask.groupId isEqual:group.groupId]) {
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
 	} else {
 		cell.accessoryType = UITableViewCellAccessoryNone;
@@ -36,7 +36,7 @@
 
 - (void)dealloc
 {
-	[task release];
+	[tempTask release];
 	
 	[super dealloc];
 }

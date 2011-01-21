@@ -3,7 +3,7 @@
 
 @implementation TaskDatePickerDataSource
 
-@synthesize task;
+@synthesize tempTask;
 
 - (NSString *)stringForIndexPath:(NSIndexPath *)indexPath
 {
@@ -30,7 +30,7 @@
 
 - (void)dealloc
 {
-	[task release];
+	[tempTask release];
 	
 	[super dealloc];
 }

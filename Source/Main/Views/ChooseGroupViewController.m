@@ -50,7 +50,7 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
 	
 	self.chooseGroupDataSource = [[[ChooseGroupDataSource alloc]init]autorelease];
-	self.chooseGroupDataSource.task = task;
+	self.chooseGroupDataSource.tempTask = task;
 	self.tableView.dataSource = self.chooseGroupDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	[self.tableView reloadData];

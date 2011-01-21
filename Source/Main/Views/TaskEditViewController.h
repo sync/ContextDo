@@ -13,4 +13,6 @@
 @property (nonatomic, retain) UITextField *editingTextField;
 @property (nonatomic) BOOL keyboardShown;
 
+- (void)startEditing;
+
 @end
