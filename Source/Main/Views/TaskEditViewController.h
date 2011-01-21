@@ -14,5 +14,6 @@
 @property (nonatomic) BOOL keyboardShown;
 
 - (void)startEditing;
+- (void)endEditing;
 
 @end

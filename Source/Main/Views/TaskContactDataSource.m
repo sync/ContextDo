@@ -22,7 +22,7 @@
 	if ([placeholder isEqualToString:ContactNamePlaceHolder]) {
 		self.tempTask.contactName = value;
 	} else if ([placeholder isEqualToString:ContactDetailPlaceHolder]) {
-		self.tempTask.contactName = value;
+		self.tempTask.contactDetail = value;
 	}
 }
 

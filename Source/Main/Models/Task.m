@@ -46,12 +46,14 @@
 - (NSString *)formattedContact
 {
 	NSString *string = @"";
-	NSString *separator = @"";
-	if (self.contactName) {
+	NSString *separator = @" - ";
+	if (self.contactName.length > 0) {
 		string = [string stringByAppendingFormat:@"%@", self.contactName];
-		separator = @" - ";
 	}
-	if (self.contactDetail) {
+	if (self.contactDetail.length > 0) {
+		if (string.length == 0) {
+			string = @"n/a";
+		}
 		string = [string stringByAppendingFormat:@"%@%@", separator, self.contactDetail];
 	}
 	

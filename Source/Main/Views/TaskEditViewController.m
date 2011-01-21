@@ -23,6 +23,11 @@
 	[self.tableView reloadData];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[self endEditing];
+}
+
 - (void)viewDidLoad 
 {
 	if (!self.task) {
@@ -73,7 +78,7 @@
 	self.taskEditDataSource = [[[TaskEditDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.taskEditDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
-	self.taskEditDataSource.tempTask = (self.task) ? self.task : [[[Task alloc]init]autorelease];
+	self.taskEditDataSource.tempTask = (self.task) ? [[self.task copy]autorelease] : [[[Task alloc]init]autorelease];
 	self.tableView.sectionFooterHeight = 0.0;
 	self.tableView.sectionHeaderHeight = 12.0;
 	
@@ -141,7 +146,7 @@
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[self.editingTextField resignFirstResponder];
+	[self endEditing];
 	if ([self.taskEditDataSource isIndexPathInput:indexPath]) {
 		TaskEditCell *cell = (TaskEditCell *)[aTableView cellForRowAtIndexPath:indexPath];
 		[cell.textField becomeFirstResponder];
@@ -163,7 +168,7 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-	[self.editingTextField resignFirstResponder];
+	[self endEditing];
 	NSString *placeholder = [self.taskEditDataSource objectForIndexPath:indexPath];
 	if ([placeholder isEqualToString:AddContactPlaceHolder]) {
 		TaskContactViewController *controller = [[[TaskContactViewController alloc]initWithNibName:@"TaskContactView" bundle:nil]autorelease];
@@ -178,7 +183,7 @@
 		return;
 	}
 	
-	[self.editingTextField resignFirstResponder];
+	[self endEditing];
 }
 
 #pragma mark -
@@ -227,7 +232,7 @@
 		return FALSE;
 	}
 	
-	[textField resignFirstResponder];
+	[self endEditing];
 	
 	return TRUE;
 }
@@ -325,8 +330,12 @@
 	if ([self.taskEditDataSource isIndexPathInput:indexPath]) {
 		TaskEditCell *cell = (TaskEditCell *)[self.tableView cellForRowAtIndexPath:indexPath];
 		[cell.textField becomeFirstResponder];
-	}
-	
+	}	
+}
+
+- (void)endEditing
+{
+	[self.editingTextField resignFirstResponder];
 }
 
 #pragma mark -

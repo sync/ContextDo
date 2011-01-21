@@ -19,7 +19,7 @@
 
 - (void)setValue:(NSString *)value forIndexPath:(NSIndexPath *)indexPath;
 
-@property (nonatomic, copy) Task *tempTask;
+@property (nonatomic, retain) Task *tempTask;
 
 - (BOOL)isIndexPathInput:(NSIndexPath *)indexPath;
 - (BOOL)hasDetailDisclosure:(NSIndexPath *)indexPath;
