@@ -63,6 +63,7 @@
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.tableView.allowsSelection = FALSE;
 	[self.taskDatePickerDataSource.content addObject:@"Show Due Time"];
+	self.tableView.sectionHeaderHeight = 130.0;
 	[self.tableView reloadData];
 }
 
