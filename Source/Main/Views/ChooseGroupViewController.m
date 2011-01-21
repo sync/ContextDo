@@ -104,6 +104,8 @@
 	} else {
 		[(TaskEditCell *)cell setCellPosition:CTXDOCellPositionMiddle context:context];
 	}
+	
+	cell.textLabel.font = [UIFont boldSystemFontOfSize:16.0];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -34,6 +34,8 @@
 - (void)viewDidUnload
 {
 	[super viewDidUnload];
+	
+	self.searchBar = nil;
 }
 
 #pragma mark -

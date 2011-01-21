@@ -1,11 +1,11 @@
-#import "ChooseGroupDataSource.h"
+#import "TaskDatePickerDataSource.h"
 #import "TaskEditCell.h"
 
-@implementation ChooseGroupDataSource
+@implementation TaskDatePickerDataSource
 
 @synthesize task;
 
-- (Group *)groupForIndexPath:(NSIndexPath *)indexPath
+- (NSString *)stringForIndexPath:(NSIndexPath *)indexPath
 {
 	return [self objectForIndexPath:indexPath];
 }
@@ -22,14 +22,8 @@
 		cell.textField.enabled = FALSE;
     }
 	
-	Group *group = [self groupForIndexPath:indexPath];
-	cell.textLabel.text = group.name;
-	
-	if ([self.task.groupId isEqual:group.groupId]) {
-		cell.accessoryType = UITableViewCellAccessoryCheckmark;
-	} else {
-		cell.accessoryType = UITableViewCellAccessoryNone;
-	}
+	NSString *string = [self stringForIndexPath:indexPath];
+	cell.textLabel.text = string;
 	
     return cell;
 }

@@ -41,6 +41,8 @@
 	[self hideGroupsEditAnimated:FALSE];
 	[groupsEditViewController release];
 	groupsEditViewController = nil;
+	
+	self.addGroupTextField = nil;
 }
 
 #pragma mark -
@@ -209,7 +211,7 @@
 			Group *group = [self groupForId:task.groupId];
 			group.taskWithin = TRUE;
 			NSInteger row = (group) ? [self.groups indexOfObject:group] : NSNotFound;
-			if (group && row != NSNotFound) {
+			if (group && row != NSNotFound && group.dueCount == 0) {
 				NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
 				[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 			}

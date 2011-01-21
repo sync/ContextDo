@@ -177,13 +177,13 @@
 										   boundsSize.height - topHeight - bottomHeight)];
 	}
 	
-#define LeftRightDiff 2.0
+#define LeftRightDiff ((self.cellContext == CTXDOCellContextTaskEditInput || self.cellContext == CTXDOCellContextTaskEdit) ? 1.0 : 2.0)
 	
 	if (drawSeparator) {
 		CGContextRef context = UIGraphicsGetCurrentContext();
 		
-		if (self.cellContext == CTXDOCellContextTaskEdit) {
-			[[UIColor colorWithHexString:@"242022"]set];
+		if (self.cellContext == CTXDOCellContextTaskEditInput) {
+			[[UIColor colorWithHexString:@"bbbbbb"]set];
 		} else if (self.cellContext != CTXDOCellContextDueLight) {
 			[[UIColor colorWithHexString:@"242022"]set];
 		} else {

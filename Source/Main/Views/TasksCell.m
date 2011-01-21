@@ -4,7 +4,7 @@
 
 @implementation TasksCell
 
-@synthesize distanceLabel, cellContext, completedButton, addressLabel, nameLabel, detailLabel, locationImageView;
+@synthesize distanceLabel, cellContext, completedButton, addressLabel, nameLabel, detailLabel, locationImageView, nameAttributedLabel;
 
 #define NameLabelFontSize 16.0
 #define AddressLabelFontSize 11.0
@@ -78,6 +78,18 @@
 	}
 	
 	return nameLabel;
+}
+
+- (DTAttributedTextContentView *)nameAttributedLabel
+{
+	if (!nameAttributedLabel) {
+		nameAttributedLabel = [[[DTAttributedTextContentView alloc] initWithFrame:CGRectZero] autorelease];
+		nameAttributedLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		nameAttributedLabel.backgroundColor = [UIColor clearColor];
+		[self addSubview:nameAttributedLabel];
+	}
+	
+	return nameAttributedLabel;
 }
 
 - (UILabel *)detailLabel

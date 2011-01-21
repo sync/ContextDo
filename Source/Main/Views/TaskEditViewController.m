@@ -1,6 +1,7 @@
 #import "TaskEditViewController.h"
 #import "TaskEditCell.h"
 #import "ChooseGroupViewController.h"
+#import "TaskDatePickerViewController.h"
 
 @interface TaskEditViewController (private)
 
@@ -146,6 +147,10 @@
 		NSString *placeholder = [self.taskEditDataSource objectForIndexPath:indexPath];
 		if ([placeholder isEqualToString:GroupPlaceHolder]) {
 			ChooseGroupViewController *controller = [[[ChooseGroupViewController alloc]initWithNibName:@"ChooseGroupView" bundle:nil]autorelease];
+			controller.task = self.taskEditDataSource.tempTask;
+			[self.navigationController pushViewController:controller animated:TRUE];
+		} else if ([placeholder isEqualToString:TimePlaceHolder]) {
+			TaskDatePickerViewController *controller = [[[TaskDatePickerViewController alloc]initWithNibName:@"TaskDatePickerView" bundle:nil]autorelease];
 			controller.task = self.taskEditDataSource.tempTask;
 			[self.navigationController pushViewController:controller animated:TRUE];
 		}

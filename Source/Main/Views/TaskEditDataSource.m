@@ -1,6 +1,6 @@
 #import "TaskEditDataSource.h"
 #import "TaskEditCell.h"
-
+#import "NSDate+Helper.h"
 
 @implementation TaskEditDataSource
 
@@ -18,7 +18,7 @@
 	} else if ([placeholder isEqualToString:AddContactPlaceHolder]) {
 		
 	} else if ([placeholder isEqualToString:TimePlaceHolder]) {
-		
+		value = [NSDate stringForDisplayFromDate:self.tempTask.dueAt];
 	} else if ([placeholder isEqualToString:AlertsPlaceHolder]) {
 		
 	} else if ([placeholder isEqualToString:GroupPlaceHolder]) {
