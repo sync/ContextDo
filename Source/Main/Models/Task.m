@@ -43,4 +43,19 @@
 	return (self.completedAt != nil);
 }
 
+- (NSString *)formattedContact
+{
+	NSString *string = @"";
+	NSString *separator = @"";
+	if (self.contactName) {
+		string = [string stringByAppendingFormat:@"%@", self.contactName];
+		separator = @" - ";
+	}
+	if (self.contactDetail) {
+		string = [string stringByAppendingFormat:@"%@%@", separator, self.contactDetail];
+	}
+	
+	return (string.length > 0) ? string : nil;
+}
+
 @end

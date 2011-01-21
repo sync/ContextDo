@@ -51,7 +51,7 @@
 												 name:UIKeyboardWillHideNotification object:nil];
 	
 	
-	self.taskEditDataSource = [[[TaskEditDataSource alloc]init]autorelease];
+	self.taskEditDataSource = [[[TaskContactDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.taskEditDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.taskEditDataSource.tempTask = (self.task) ? self.task : [[[Task alloc]init]autorelease];

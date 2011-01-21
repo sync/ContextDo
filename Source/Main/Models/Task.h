@@ -26,6 +26,7 @@
 @property (nonatomic, readonly) BOOL isClose;
 @property (nonatomic, readonly) BOOL expired;
 @property (nonatomic, readonly) BOOL completed;
+@property (nonatomic, readonly) NSString *formattedContact;
 
 + (Task *)taskWithId:(NSNumber *)aTaskId
 				name:(NSString *)aName

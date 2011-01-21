@@ -3,7 +3,7 @@
 
 #define TitlePlaceHolder @"Title"
 #define LocationPlaceHolder @"Location"
-#define AddContactPlaceHolder @"Add Contact / Person"
+#define AddContactPlaceHolder @"Contact Name - Detail"
 #define TimePlaceHolder @"Time"
 #define AlertsPlaceHolder @"Alerts Inform / update"
 #define GroupPlaceHolder @"Group"

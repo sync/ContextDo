@@ -141,6 +141,7 @@
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	[self.editingTextField resignFirstResponder];
 	if ([self.taskEditDataSource isIndexPathInput:indexPath]) {
 		TaskEditCell *cell = (TaskEditCell *)[aTableView cellForRowAtIndexPath:indexPath];
 		[cell.textField becomeFirstResponder];
@@ -162,6 +163,7 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
+	[self.editingTextField resignFirstResponder];
 	NSString *placeholder = [self.taskEditDataSource objectForIndexPath:indexPath];
 	if ([placeholder isEqualToString:AddContactPlaceHolder]) {
 		TaskContactViewController *controller = [[[TaskContactViewController alloc]initWithNibName:@"TaskContactView" bundle:nil]autorelease];

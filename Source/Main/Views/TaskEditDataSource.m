@@ -11,11 +11,11 @@
 	NSString *placeholder = [self objectForIndexPath:indexPath];
 	NSString *value = nil;
 	if ([placeholder isEqualToString:TitlePlaceHolder]) {
-		
+		value = self.tempTask.name;
 	} else if ([placeholder isEqualToString:LocationPlaceHolder]) {
 		
 	} else if ([placeholder isEqualToString:AddContactPlaceHolder]) {
-		
+		value = self.tempTask.formattedContact;
 	} else if ([placeholder isEqualToString:TimePlaceHolder]) {
 		value = [NSDate stringForDisplayFromDate:self.tempTask.dueAt prefixed:NO alwaysShowTime:TRUE];
 	} else if ([placeholder isEqualToString:AlertsPlaceHolder]) {
@@ -35,7 +35,13 @@
 	} else if ([placeholder isEqualToString:LocationPlaceHolder]) {
 		self.tempTask.location = value;
 	} else if ([placeholder isEqualToString:AddContactPlaceHolder]) {
-		// todo
+		NSArray *component = [value componentsSeparatedByString:@" - "];
+		if (component.count == 2) {
+			self.tempTask.contactName = [component objectAtIndex:0];
+			self.tempTask.contactDetail = [component objectAtIndex:1];
+		} else {
+			self.tempTask.contactName = value;
+		}
 	} else if ([placeholder isEqualToString:AlertsPlaceHolder]) {
 		// todo
 	}
