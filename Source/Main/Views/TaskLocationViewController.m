@@ -1,9 +1,15 @@
 #import "TaskLocationViewController.h"
 
+@interface TaskLocationViewController (private)
+
+- (void)showCurrentLocation;
+- (void)shouldReverseLocation:(CLLocation *)centerLocation;
+
+@end
 
 @implementation TaskLocationViewController
 
-@synthesize mapView;
+@synthesize mapView, userEdited, placemark, reverseGeocoder, lastCenterLocation;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -26,6 +32,9 @@
 	[layer setBorderColor:[[UIColor colorWithHexString:@"bbb"] CGColor]];
 	
 	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
+	
+	placemark = [[AppDelegate sharedAppDelegate].placemark retain];
+	[self showCurrentLocation];
 }
 
 - (void)viewDidUnload
@@ -110,11 +119,103 @@
 }
 
 #pragma mark -
+#pragma mark Map View Delegate + Utilities
+
+- (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
+{
+	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:TRUE];
+}
+
+- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+{
+	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
+}
+
+- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
+{
+	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
+}
+
+#define RegionShouldUpdateCloseThresholdInMeters 1
+
+- (void)shouldReverseLocation:(CLLocation *)centerLocation
+{
+	if (!centerLocation) {
+		return;
+	}
+	
+	CLLocation *currentCenterLocation = [[[CLLocation alloc]initWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude]autorelease];
+	CLLocationDistance distance = [centerLocation distanceFromLocation:currentCenterLocation];
+	CLLocationDistance distanceFromLast = (self.lastCenterLocation) ? [centerLocation distanceFromLocation:self.lastCenterLocation] : NSNotFound;
+	
+	if (distance == 0 && distanceFromLast > RegionShouldUpdateCloseThresholdInMeters) {
+		CLLocationCoordinate2D coordinate = self.mapView.centerCoordinate;
+		if (reverseGeocoder) {
+			[reverseGeocoder cancel];
+			reverseGeocoder.delegate = nil;
+			[reverseGeocoder release];
+			reverseGeocoder = nil;
+		}
+		reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:coordinate];
+		reverseGeocoder.delegate = self;
+		[reverseGeocoder start];
+	}
+}
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{	
+	CLLocation *currentCenterLocation = [[[CLLocation alloc]initWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude]autorelease];
+	[self performSelector:@selector(shouldReverseLocation:) withObject:currentCenterLocation afterDelay:1.5];
+}
+
+#pragma mark -
+#pragma mark MKReverseGeocoderDelegate methods
+
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)newPlacemark 
+{
+    self.lastCenterLocation = [[[CLLocation alloc]initWithLatitude:geocoder.coordinate.latitude longitude:geocoder.coordinate.longitude]autorelease];
+	
+	placemark = [newPlacemark retain];
+    reverseGeocoder.delegate = nil;
+	[reverseGeocoder release];
+	reverseGeocoder = nil;
+	
+	// todo refresh tableview
+}
+
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error 
+{
+    [placemark release];
+	placemark = nil;
+	reverseGeocoder.delegate = nil;
+	[reverseGeocoder release];
+	reverseGeocoder = nil;
+}
+
+#pragma mark -
 #pragma mark Actions
 
 - (void)clearTouched
 {
 	// TODO
+}
+
+#define MapViewPlacesCloseSpanInMeters 300.0
+
+- (void)showCurrentLocation
+{
+	CLLocation *location = self.mapView.userLocation.location;
+	if (!location && self.mapView.userLocation.updating) {
+		[self performSelector:@selector(showCurrentLocation) withObject:nil afterDelay:0.5];
+	} else {
+		if (!self.mapView.showsUserLocation) {
+			self.mapView.showsUserLocation = TRUE;
+			[self performSelector:@selector(showCurrentLocation) withObject:nil afterDelay:0.5];
+		} else {
+			// zoom to current location
+			[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewPlacesCloseSpanInMeters, MapViewPlacesCloseSpanInMeters) animated:TRUE];
+		}
+	}
 }
 
 #pragma mark -
@@ -123,6 +224,9 @@
 - (void)dealloc
 {
 	[mapView release];
+	[lastCenterLocation release];
+	[placemark release];
+	[reverseGeocoder release];
 	
 	[super dealloc];
 }
