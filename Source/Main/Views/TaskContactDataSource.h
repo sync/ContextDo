@@ -4,7 +4,6 @@
 #define ContactNamePlaceHolder @"Name"
 #define ContactDetailPlaceHolder @"Detail"
 
-
 @interface TaskContactDataSource : TaskEditDataSource {
 
 }

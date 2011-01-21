@@ -16,7 +16,7 @@
 	} else if ([placeholder isEqualToString:InfoPlaceholder]) {
 		value = self.tempTask.info;
 	} else if ([placeholder isEqualToString:LocationPlaceholder]) {
-		
+		value = self.tempTask.location;
 	} else if ([placeholder isEqualToString:AddContactPlaceholder]) {
 		value = self.tempTask.formattedContact;
 	} else if ([placeholder isEqualToString:TimePlaceholder]) {

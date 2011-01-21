@@ -3,7 +3,7 @@
 
 #define TitlePlaceholder @"Title"
 #define InfoPlaceholder @"Info"
-#define LocationPlaceholder @"Location"
+#define LocationPlaceholder @"Place, Street, Suburb"
 #define AddContactPlaceholder @"Contact Name - Detail"
 #define TimePlaceholder @"Time"
 #define AlertsPlaceholder @"Alerts Inform / update"

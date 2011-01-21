@@ -3,6 +3,7 @@
 #import "ChooseGroupViewController.h"
 #import "TaskDatePickerViewController.h"
 #import "TaskContactViewController.h"
+#import "TaskLocationViewController.h"
 
 @interface TaskEditViewController (private)
 
@@ -222,6 +223,10 @@
 	NSString *placeholder = [self.taskEditDataSource objectForIndexPath:indexPath];
 	if ([placeholder isEqualToString:AddContactPlaceholder]) {
 		TaskContactViewController *controller = [[[TaskContactViewController alloc]initWithNibName:@"TaskContactView" bundle:nil]autorelease];
+		controller.task = self.taskEditDataSource.tempTask;
+		[self.navigationController pushViewController:controller animated:TRUE];
+	}  else if ([placeholder isEqualToString:LocationPlaceholder]) {
+		TaskLocationViewController *controller = [[[TaskLocationViewController alloc]initWithNibName:@"TaskLocationView" bundle:nil]autorelease];
 		controller.task = self.taskEditDataSource.tempTask;
 		[self.navigationController pushViewController:controller animated:TRUE];
 	}
