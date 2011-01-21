@@ -205,9 +205,6 @@
 		
 		CGFloat nameLabelTwoLinesHeight = 2 * NameLabelFontSize + 8.0;
 		CGSize nameSize = [self.nameLabel sizeThatFits:CGSizeMake(LabelsWidth, nameLabelTwoLinesHeight)];
-//		CGSize nameSize = [self.nameLabel.text sizeWithFont:[UIFont systemFontOfSize:NameLabelFontSize] 
-//											   constrainedToSize:CGSizeMake(LabelsWidth, nameLabelTwoLinesHeight)
-//												   lineBreakMode:UILineBreakModeTailTruncation];
 		nameSize.width = LabelsWidth;
 		if (nameSize.height > nameLabelTwoLinesHeight) {
 			nameSize.height = nameLabelTwoLinesHeight;

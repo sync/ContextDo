@@ -82,12 +82,12 @@
 	self.tableView.sectionFooterHeight = 0.0;
 	self.tableView.sectionHeaderHeight = 12.0;
 	
-	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:TitlePlaceHolder]];
-	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:LocationPlaceHolder]];
-	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:AddContactPlaceHolder]];
-	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:TimePlaceHolder]];
-	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:AlertsPlaceHolder]];
-	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:GroupPlaceHolder]];
+	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:TitlePlaceholder]];
+	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:LocationPlaceholder]];
+	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:AddContactPlaceholder]];
+	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:TimePlaceholder]];
+	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:AlertsPlaceholder]];
+	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:GroupPlaceholder]];
 	[self.tableView reloadData];
 }
 
@@ -126,7 +126,13 @@
 - (void)tableView:(UITableView *)aTableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	CTXDOCellContext context = CTXDOCellContextTaskEdit;
-	if ([self.taskEditDataSource isIndexPathInput:indexPath]) {
+	if ([self.taskEditDataSource hasNoteEdit:indexPath]) {
+		context = CTXDOCellContextTaskEditInput;
+		[[(TaskEditCell	*)cell noteButton] addTarget:self action:@selector(showInfoCell:) forControlEvents:UIControlEventTouchUpInside];
+	} else if ([self.taskEditDataSource isIndexPathInputMulti:indexPath]) {
+		context = CTXDOCellContextTaskEditInputMutliLine;
+		[(TaskEditCell *)cell textView].delegate = self;
+	} else if ([self.taskEditDataSource isIndexPathInput:indexPath]) {
 		context = CTXDOCellContextTaskEditInput;
 		[(TaskEditCell *)cell textField].delegate = self;
 	} else { 
@@ -144,6 +150,45 @@
 	}
 }
 
+- (BOOL)isNoteCellShowing
+{
+	return ([self.tableView numberOfRowsInSection:0] > 1);
+}
+
+- (void)showInfoCell:(id)sender
+{
+	UIButton *button = (UIButton *)sender;
+	NSIndexPath *index = [self.taskEditDataSource indexPathForTag:button.tag];
+	NSIndexPath *newIndex = [NSIndexPath indexPathForRow:index.row+1 inSection:index.section];
+	if (!self.isNoteCellShowing) {
+		
+		[self.taskEditDataSource.content replaceObjectAtIndex:index.section withObject:[NSArray arrayWithObjects:
+																						TitlePlaceholder,
+																						InfoPlaceholder,
+																						nil]];
+		[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndex] withRowAnimation:UITableViewRowAnimationFade];
+		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:index] withRowAnimation:UITableViewRowAnimationNone];
+	} else {
+		[self.taskEditDataSource.content replaceObjectAtIndex:index.section withObject:[NSArray arrayWithObjects:
+																						TitlePlaceholder,
+																						nil]];
+		
+		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:newIndex] withRowAnimation:UITableViewRowAnimationFade];
+		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:index] withRowAnimation:UITableViewRowAnimationNone];
+	}
+	
+	
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if (indexPath.section == 0 && indexPath.row == 1) {
+		return 70.0;
+	}
+	
+	return self.tableView.rowHeight;
+}
+
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[self endEditing];
@@ -152,11 +197,11 @@
 		[cell.textField becomeFirstResponder];
 	} else {
 		NSString *placeholder = [self.taskEditDataSource objectForIndexPath:indexPath];
-		if ([placeholder isEqualToString:GroupPlaceHolder]) {
+		if ([placeholder isEqualToString:GroupPlaceholder]) {
 			ChooseGroupViewController *controller = [[[ChooseGroupViewController alloc]initWithNibName:@"ChooseGroupView" bundle:nil]autorelease];
 			controller.task = self.taskEditDataSource.tempTask;
 			[self.navigationController pushViewController:controller animated:TRUE];
-		} else if ([placeholder isEqualToString:TimePlaceHolder]) {
+		} else if ([placeholder isEqualToString:TimePlaceholder]) {
 			TaskDatePickerViewController *controller = [[[TaskDatePickerViewController alloc]initWithNibName:@"TaskDatePickerView" bundle:nil]autorelease];
 			controller.task = self.taskEditDataSource.tempTask;
 			[self.navigationController pushViewController:controller animated:TRUE];
@@ -170,7 +215,7 @@
 {
 	[self endEditing];
 	NSString *placeholder = [self.taskEditDataSource objectForIndexPath:indexPath];
-	if ([placeholder isEqualToString:AddContactPlaceHolder]) {
+	if ([placeholder isEqualToString:AddContactPlaceholder]) {
 		TaskContactViewController *controller = [[[TaskContactViewController alloc]initWithNibName:@"TaskContactView" bundle:nil]autorelease];
 		controller.task = self.taskEditDataSource.tempTask;
 		[self.navigationController pushViewController:controller animated:TRUE];
@@ -235,6 +280,20 @@
 	[self endEditing];
 	
 	return TRUE;
+}
+
+#pragma mark -
+#pragma mark UITextViewDelegate
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+	if (text.length == 0) {
+		return YES;
+	}
+	
+	CGSize textSize = [textView.text sizeWithFont:textView.font
+								constrainedToSize:CGSizeMake(textView.frame.size.width - 10, CGFLOAT_MAX)
+									lineBreakMode:UILineBreakModeWordWrap];
+	return  (textSize.height < textView.frame.size.height - 20);
 }
 
 #pragma mark -

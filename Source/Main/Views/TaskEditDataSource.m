@@ -1,6 +1,7 @@
 #import "TaskEditDataSource.h"
 #import "TaskEditCell.h"
 #import "NSDate+Extensions.h"
+#import "AccessoryViewWithImage.h"
 
 @implementation TaskEditDataSource
 
@@ -10,17 +11,17 @@
 {
 	NSString *placeholder = [self objectForIndexPath:indexPath];
 	NSString *value = nil;
-	if ([placeholder isEqualToString:TitlePlaceHolder]) {
+	if ([placeholder isEqualToString:TitlePlaceholder]) {
 		value = self.tempTask.name;
-	} else if ([placeholder isEqualToString:LocationPlaceHolder]) {
+	} else if ([placeholder isEqualToString:LocationPlaceholder]) {
 		
-	} else if ([placeholder isEqualToString:AddContactPlaceHolder]) {
+	} else if ([placeholder isEqualToString:AddContactPlaceholder]) {
 		value = self.tempTask.formattedContact;
-	} else if ([placeholder isEqualToString:TimePlaceHolder]) {
+	} else if ([placeholder isEqualToString:TimePlaceholder]) {
 		value = [NSDate stringForDisplayFromDate:self.tempTask.dueAt prefixed:NO alwaysShowTime:TRUE];
-	} else if ([placeholder isEqualToString:AlertsPlaceHolder]) {
+	} else if ([placeholder isEqualToString:AlertsPlaceholder]) {
 		
-	} else if ([placeholder isEqualToString:GroupPlaceHolder]) {
+	} else if ([placeholder isEqualToString:GroupPlaceholder]) {
 		value = self.tempTask.groupName;
 	}
 	
@@ -30,11 +31,11 @@
 - (void)setValue:(NSString *)value forIndexPath:(NSIndexPath *)indexPath
 {
 	NSString *placeholder = [self objectForIndexPath:indexPath];
-	if ([placeholder isEqualToString:TitlePlaceHolder]) {
+	if ([placeholder isEqualToString:TitlePlaceholder]) {
 		self.tempTask.name = value;
-	} else if ([placeholder isEqualToString:LocationPlaceHolder]) {
+	} else if ([placeholder isEqualToString:LocationPlaceholder]) {
 		self.tempTask.location = value;
-	} else if ([placeholder isEqualToString:AddContactPlaceHolder]) {
+	} else if ([placeholder isEqualToString:AddContactPlaceholder]) {
 		NSArray *component = [value componentsSeparatedByString:@" - "];
 		if (component.count == 2) {
 			self.tempTask.contactName = [component objectAtIndex:0];
@@ -42,7 +43,7 @@
 		} else {
 			self.tempTask.contactName = value;
 		}
-	} else if ([placeholder isEqualToString:AlertsPlaceHolder]) {
+	} else if ([placeholder isEqualToString:AlertsPlaceholder]) {
 		// todo
 	}
 }
@@ -64,15 +65,27 @@
 - (BOOL)isIndexPathInput:(NSIndexPath *)indexPath
 {
 	NSString *placeholder = [self objectForIndexPath:indexPath];
-	return !([placeholder isEqualToString:TimePlaceHolder] ||
-			[placeholder isEqualToString:GroupPlaceHolder]);
+	return !([placeholder isEqualToString:TimePlaceholder] ||
+			[placeholder isEqualToString:GroupPlaceholder]);
+}
+
+- (BOOL)isIndexPathInputMulti:(NSIndexPath *)indexPath;
+{
+	NSString *placeholder = [self objectForIndexPath:indexPath];
+	return [placeholder isEqualToString:InfoPlaceholder];
+}
+
+- (BOOL)hasNoteEdit:(NSIndexPath *)indexPath
+{
+	NSString *placeholder = [self objectForIndexPath:indexPath];
+	return [placeholder isEqualToString:TitlePlaceholder];
 }
 
 - (BOOL)hasDetailDisclosure:(NSIndexPath *)indexPath
 {
 	NSString *placeholder = [self objectForIndexPath:indexPath];
-	return ([placeholder isEqualToString:LocationPlaceHolder] ||
-			[placeholder isEqualToString:AddContactPlaceHolder]);
+	return ([placeholder isEqualToString:LocationPlaceholder] ||
+			[placeholder isEqualToString:AddContactPlaceholder]);
 }
 
 // Customize the appearance of table view cells.
@@ -93,12 +106,31 @@
 		cell.textField.tag = [self tagForIndexPath:indexPath];
 		if ([self hasDetailDisclosure:indexPath]) {
 			cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+		} else if ([self hasNoteEdit:indexPath]) {
+			UIButton *button = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];
+			
+			UIImage *image = [UIImage imageNamed:@"icon_notes.png"];
+			[button setBackgroundImage:image forState:UIControlStateNormal];
+			
+			button.frame = CGRectMake(button.frame.origin.x, 
+									  button.frame.origin.y, 
+									  image.size.width, 
+									  image.size.height);
+			button.tag = [self tagForIndexPath:indexPath];
+			cell.accessoryView = button;
 		} else {
-			cell.accessoryType = UITableViewCellAccessoryNone;	
+			cell.accessoryView = nil;
 		}
+	} else if ([self isIndexPathInputMulti:indexPath]) {
+		cell.textView.text = value;
+		cell.textView.tag = [self tagForIndexPath:indexPath];
+		cell.accessoryView = nil;
 	} else {
 		cell.textLabel.text = (value) ? value : placeholder;
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		cell.accessoryView = [AccessoryViewWithImage accessoryViewWithImageNamed:@"btn_std_arrow_off.png"
+														   highlightedImageNamed:@"btn_std_arrow_touch.png" 
+																	  cellHeight:cell.bounds.size.height 
+																   leftRightDiff:10.0];
 	}
 	
     return cell;

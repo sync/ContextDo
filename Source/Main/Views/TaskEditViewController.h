@@ -2,7 +2,7 @@
 #import "BaseTableViewController.h"
 #import "TaskEditDataSource.h"
 
-@interface TaskEditViewController : BaseTableViewController <UITextFieldDelegate> {
+@interface TaskEditViewController : BaseTableViewController <UITextFieldDelegate, UITextViewDelegate> {
 
 }
 
@@ -15,5 +15,7 @@
 
 - (void)startEditing;
 - (void)endEditing;
+
+@property (nonatomic, readonly) BOOL isNoteCellShowing;
 
 @end

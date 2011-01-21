@@ -1,10 +1,9 @@
 #import "TaskEditCell.h"
-#import "AccessoryViewWithImage.h"
 #import "CellBackgroundView.h"
 
 @implementation TaskEditCell
 
-@synthesize	textField;
+@synthesize	textField, textView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
@@ -28,6 +27,25 @@
 	}
 	
 	return textField;
+}
+
+- (UITextView *)textView
+{
+	if (!textView) {
+		textView = [[[UITextView alloc]initWithFrame:CGRectZero]autorelease];
+		textView.keyboardAppearance = UIKeyboardAppearanceAlert;
+		textView.backgroundColor = [UIColor clearColor];
+		textView.scrollEnabled = FALSE;
+		[self.contentView addSubview:textView];
+	}
+	
+	return textView;
+}
+
+- (UIButton *)noteButton
+{
+	UIButton *button = (UIButton *)self.accessoryView;
+	return ([button isMemberOfClass:[UIButton class]]) ? button : nil;
 }
 
 - (CTXDOCellPosition)cellPosition
@@ -54,32 +72,22 @@
 																						selected:TRUE];
 	self.selectedBackgroundView = selectedBackgroundView;
 	
-	NSString *imageNamed = nil;
-	NSString *highlightedImageNamed = nil;
 	UIColor *textColor = nil;
 	UIColor *highlightedTextColor = nil;
 	UIFont *font = nil;
 	UIColor *shadowColor = nil;
 	if (cellContext == CTXDOCellContextTaskEditInput) {
-		imageNamed = nil;
-		highlightedImageNamed = nil;
 		textColor = [UIColor colorWithHexString:@"4f4c50"];
 		font = [UIFont systemFontOfSize:16.0];
 		shadowColor = nil;
+	} else if (cellContext == CTXDOCellContextTaskEditInputMutliLine) {
+		textColor = [UIColor colorWithHexString:@"4f4c50"];
+		font = [UIFont systemFontOfSize:14.0];
+		shadowColor = nil;
 	} else {
-		imageNamed = @"btn_std_arrow_off.png";
-		highlightedImageNamed = @"btn_std_arrow_touch.png";
 		textColor = [UIColor colorWithHexString:@"929092"];
 		font = [UIFont boldSystemFontOfSize:16.0];
 		shadowColor = [UIColor colorWithHexString:@"00000040"];
-	}
-	if (highlightedImageNamed && imageNamed) {
-		self.accessoryView = [AccessoryViewWithImage accessoryViewWithImageNamed:imageNamed
-														   highlightedImageNamed:highlightedImageNamed 
-																	  cellHeight:self.bounds.size.height 
-																   leftRightDiff:10.0];
-	} else {
-		self.accessoryView = nil;
 	}
 	
 	self.textLabel.font = font;
@@ -88,6 +96,8 @@
 	self.textLabel.shadowColor = shadowColor;
 	self.textField.font = font;
 	self.textField.textColor = textColor;
+	self.textView.font = font;
+	self.textView.textColor = textColor;
 }
 
 - (void)layoutSubviews
@@ -104,6 +114,9 @@
 										  (boundsSize.height - self.textField.frame.size.height) / 2.0,
 										  boundsSize.width - 2 * LeftRightDiff,
 										  self.textField.frame.size.height);
+	} else if (self.cellContext == CTXDOCellContextTaskEditInputMutliLine) {
+		self.textField.frame = CGRectZero;
+		self.textView.frame = self.contentView.bounds;
 	} else {
 		self.textField.frame = CGRectZero;
 	}

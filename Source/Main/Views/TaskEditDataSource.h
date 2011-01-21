@@ -1,12 +1,13 @@
 #import <UIKit/UIKit.h>
 #import "BaseTableViewDataSource.h"
 
-#define TitlePlaceHolder @"Title"
-#define LocationPlaceHolder @"Location"
-#define AddContactPlaceHolder @"Contact Name - Detail"
-#define TimePlaceHolder @"Time"
-#define AlertsPlaceHolder @"Alerts Inform / update"
-#define GroupPlaceHolder @"Group"
+#define TitlePlaceholder @"Title"
+#define InfoPlaceholder @"Info"
+#define LocationPlaceholder @"Location"
+#define AddContactPlaceholder @"Contact Name - Detail"
+#define TimePlaceholder @"Time"
+#define AlertsPlaceholder @"Alerts Inform / update"
+#define GroupPlaceholder @"Group"
 
 @interface TaskEditDataSource : BaseTableViewDataSource {
 
@@ -22,6 +23,8 @@
 @property (nonatomic, retain) Task *tempTask;
 
 - (BOOL)isIndexPathInput:(NSIndexPath *)indexPath;
+- (BOOL)isIndexPathInputMulti:(NSIndexPath *)indexPath;
+- (BOOL)hasNoteEdit:(NSIndexPath *)indexPath;
 - (BOOL)hasDetailDisclosure:(NSIndexPath *)indexPath;
 
 @end

@@ -107,6 +107,10 @@
 			topImageNamed = @"table_input_top.png";
 			middleImageNamed = @"table_input_mid.png";
 			bottomImageNamed = @"table_input_bot.png";
+		} else if (self.cellContext == CTXDOCellContextTaskEditInputMutliLine) {
+			topImageNamed = @"table_input_top.png";
+			middleImageNamed = @"table_input_mid.png";
+			bottomImageNamed = @"table_input_bot.png";
 		}
 	} else {
 		if (self.cellContext == CTXDOCellContextStandard) {
@@ -134,6 +138,10 @@
 			middleImageNamed = @"btn_std_touch_mid.png";
 			bottomImageNamed = @"btn_std_touch_bot.png";
 		} else if (self.cellContext == CTXDOCellContextTaskEditInput) {
+			topImageNamed = @"table_input_top.png";
+			middleImageNamed = @"table_input_mid.png";
+			bottomImageNamed = @"table_input_bot.png";
+		} else if (self.cellContext == CTXDOCellContextTaskEditInputMutliLine) {
 			topImageNamed = @"table_input_top.png";
 			middleImageNamed = @"table_input_mid.png";
 			bottomImageNamed = @"table_input_bot.png";

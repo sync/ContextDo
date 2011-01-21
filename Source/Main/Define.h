@@ -75,4 +75,5 @@ typedef enum {
 	CTXDOCellContextDueLight,
 	CTXDOCellContextTaskEditInput,
 	CTXDOCellContextTaskEdit,
+	CTXDOCellContextTaskEditInputMutliLine,
 }CTXDOCellContext;
