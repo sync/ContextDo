@@ -26,19 +26,31 @@
 
 - (void)setValue:(NSString *)value forIndexPath:(NSIndexPath *)indexPath
 {
+	if (!value) {
+		self.tempTask.location = nil;
+		return;
+	}
+	
 	NSMutableArray *components = [NSMutableArray arrayWithObjects:
 								  @"",
 								  @"",
 								  @"",
 								  nil];
 	
+	for (NSInteger i = 0; i<3; i++) {
+		NSString *previousValue = [self valueForIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
+		if (previousValue) {
+			[components replaceObjectAtIndex:i withObject:previousValue];
+		}
+	}
+	
 	NSString *placeholder = [self objectForIndexPath:indexPath];
 	if ([placeholder isEqualToString:PlaceNamePlaceHolder]) {
-		[components insertObject:value atIndex:0];
+		[components  replaceObjectAtIndex:0 withObject:value];
 	} else if ([placeholder isEqualToString:StreetPlaceHolder]) {
-		[components insertObject:value atIndex:1];
+		[components  replaceObjectAtIndex:1 withObject:value];
 	} else if ([placeholder isEqualToString:SuburbPlaceHolder]) {
-		[components insertObject:value atIndex:1];
+		[components  replaceObjectAtIndex:2 withObject:value];
 	}
 	
 	self.tempTask.location = [components componentsJoinedByString:@", "];

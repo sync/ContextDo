@@ -4,6 +4,7 @@
 
 - (void)showCurrentLocation;
 - (void)shouldReverseLocation:(CLLocation *)centerLocation;
+- (void)setStreet:(NSString *)street suburb:(NSString *)suburb;
 
 @end
 
@@ -28,13 +29,17 @@
 	CALayer *layer = [self.mapView layer];
 	layer.masksToBounds = YES;
 	[layer setCornerRadius:5.0];
-	[layer setBorderWidth:0.5];
+	[layer setBorderWidth:1.0];
 	[layer setBorderColor:[[UIColor colorWithHexString:@"bbb"] CGColor]];
 	
 	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	
+	self.userEdited = (self.taskEditDataSource.tempTask.location  != nil);
+	
 	placemark = [[AppDelegate sharedAppDelegate].placemark retain];
 	[self showCurrentLocation];
+	
+	
 }
 
 - (void)viewDidUnload
@@ -121,20 +126,20 @@
 #pragma mark -
 #pragma mark Map View Delegate + Utilities
 
-- (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
-{
-	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:TRUE];
-}
-
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
-{
-	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
-}
-
-- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
-{
-	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
-}
+//- (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
+//{
+//	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:TRUE];
+//}
+//
+//- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+//{
+//	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
+//}
+//
+//- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
+//{
+//	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
+//}
 
 #define RegionShouldUpdateCloseThresholdInMeters 1
 
@@ -159,6 +164,7 @@
 		reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:coordinate];
 		reverseGeocoder.delegate = self;
 		[reverseGeocoder start];
+		[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:TRUE];
 	}
 }
 
@@ -180,7 +186,21 @@
 	[reverseGeocoder release];
 	reverseGeocoder = nil;
 	
-	// todo refresh tableview
+	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
+	
+	if (!self.userEdited) {
+		NSString *street = @"";
+		NSString *separator = @"";
+		if (self.placemark.subThoroughfare.length > 0) {
+			street = [street stringByAppendingString:self.placemark.subThoroughfare];
+			separator = @" ";
+		}
+		if (self.placemark.thoroughfare.length > 0) {
+			street = [street stringByAppendingFormat:@"%@%@", separator, self.placemark.thoroughfare];
+		}
+		NSString *suburb = (self.placemark.locality.length > 0) ? self.placemark.locality : self.placemark.subLocality;
+		[self setStreet:street suburb:suburb];
+	}
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error 
@@ -190,14 +210,26 @@
 	reverseGeocoder.delegate = nil;
 	[reverseGeocoder release];
 	reverseGeocoder = nil;
+	
+	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
 }
 
 #pragma mark -
 #pragma mark Actions
 
+- (void)setStreet:(NSString *)street suburb:(NSString *)suburb
+{
+	[self.taskEditDataSource setValue:street forIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+	[self.taskEditDataSource setValue:suburb forIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+	[self.tableView reloadData];
+}
+
 - (void)clearTouched
 {
-	// TODO
+	self.taskEditDataSource.tempTask.location = nil;
+	self.userEdited = FALSE;
+	[self.taskEditDataSource setValue:nil forIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+	[self setStreet:nil suburb:nil];
 }
 
 #define MapViewPlacesCloseSpanInMeters 300.0

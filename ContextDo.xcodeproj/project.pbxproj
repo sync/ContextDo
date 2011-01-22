@@ -205,6 +205,10 @@
 		2448DCAD12E9AB8C005EEEDA /* TaskLocationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2448DCAC12E9AB8C005EEEDA /* TaskLocationView.xib */; };
 		2448DD8512E9BEEF005EEEDA /* crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = 2448DD8312E9BEEF005EEEDA /* crosshair.png */; };
 		2448DD8612E9BEEF005EEEDA /* crosshair@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2448DD8412E9BEEF005EEEDA /* crosshair@2x.png */; };
+		2448DDD512E9D1B4005EEEDA /* groupPanels_greenTouch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2448DDD112E9D1B4005EEEDA /* groupPanels_greenTouch.png */; };
+		2448DDD612E9D1B4005EEEDA /* groupPanels_greenTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2448DDD212E9D1B4005EEEDA /* groupPanels_greenTouch@2x.png */; };
+		2448DDD712E9D1B4005EEEDA /* groupPanelsTouch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2448DDD312E9D1B4005EEEDA /* groupPanelsTouch.png */; };
+		2448DDD812E9D1B4005EEEDA /* groupPanelsTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2448DDD412E9D1B4005EEEDA /* groupPanelsTouch@2x.png */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -539,6 +543,10 @@
 		2448DCAC12E9AB8C005EEEDA /* TaskLocationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskLocationView.xib; sourceTree = "<group>"; };
 		2448DD8312E9BEEF005EEEDA /* crosshair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crosshair.png; sourceTree = "<group>"; };
 		2448DD8412E9BEEF005EEEDA /* crosshair@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crosshair@2x.png"; sourceTree = "<group>"; };
+		2448DDD112E9D1B4005EEEDA /* groupPanels_greenTouch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = groupPanels_greenTouch.png; sourceTree = "<group>"; };
+		2448DDD212E9D1B4005EEEDA /* groupPanels_greenTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupPanels_greenTouch@2x.png"; sourceTree = "<group>"; };
+		2448DDD312E9D1B4005EEEDA /* groupPanelsTouch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = groupPanelsTouch.png; sourceTree = "<group>"; };
+		2448DDD412E9D1B4005EEEDA /* groupPanelsTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupPanelsTouch@2x.png"; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -1597,6 +1605,10 @@
 				2448D1BC12E85055005EEEDA /* btn_std_arrow_touch@2x.png */,
 				2448DD8312E9BEEF005EEEDA /* crosshair.png */,
 				2448DD8412E9BEEF005EEEDA /* crosshair@2x.png */,
+				2448DDD112E9D1B4005EEEDA /* groupPanels_greenTouch.png */,
+				2448DDD212E9D1B4005EEEDA /* groupPanels_greenTouch@2x.png */,
+				2448DDD312E9D1B4005EEEDA /* groupPanelsTouch.png */,
+				2448DDD412E9D1B4005EEEDA /* groupPanelsTouch@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -1910,6 +1922,10 @@
 				2448DCAD12E9AB8C005EEEDA /* TaskLocationView.xib in Resources */,
 				2448DD8512E9BEEF005EEEDA /* crosshair.png in Resources */,
 				2448DD8612E9BEEF005EEEDA /* crosshair@2x.png in Resources */,
+				2448DDD512E9D1B4005EEEDA /* groupPanels_greenTouch.png in Resources */,
+				2448DDD612E9D1B4005EEEDA /* groupPanels_greenTouch@2x.png in Resources */,
+				2448DDD712E9D1B4005EEEDA /* groupPanelsTouch.png in Resources */,
+				2448DDD812E9D1B4005EEEDA /* groupPanelsTouch@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

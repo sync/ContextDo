@@ -127,7 +127,7 @@
 	NSString *highlightedImageNamed = nil;
 	if (cellContext == CTXDOCellContextStandardAlternate) {
 		backgroundImageNamed = @"groupPanels_light.png";
-		selectedBackgroundImageNamed = @"groupPanels_light.png";
+		selectedBackgroundImageNamed = @"groupPanelsTouch.png";
 		imageNamed = @"table_arrow_off.png";
 		highlightedImageNamed = @"table_arrow_touch.png";
 		self.distanceLabel.font = [UIFont boldSystemFontOfSize:11.0];
@@ -137,7 +137,7 @@
 		self.addressLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
 	} else if (cellContext == CTXDOCellContextLocationAware) {
 		backgroundImageNamed = @"groupPanels_green.png";
-		selectedBackgroundImageNamed = @"groupPanels_green.png";
+		selectedBackgroundImageNamed = @"groupPanels_greenTouch.png";
 		imageNamed = @"table_arrow_loc.png";
 		highlightedImageNamed = @"table_arrow_loc_touch.png";
 		self.distanceLabel.font = [UIFont boldSystemFontOfSize:12.0];
@@ -147,7 +147,7 @@
 		self.addressLabel.textColor = [UIColor colorWithHexString:@"FFF"];
 	} else {
 		backgroundImageNamed = @"groupPanels_dark.png";
-		selectedBackgroundImageNamed = @"groupPanels_dark.png";
+		selectedBackgroundImageNamed = @"groupPanelsTouch.png";
 		imageNamed = @"table_arrow_off.png";
 		highlightedImageNamed = @"table_arrow_touch.png";
 		self.distanceLabel.font = [UIFont boldSystemFontOfSize:11.0];
@@ -158,9 +158,7 @@
 	}
 	
 	self.backgroundView =  [[[UIImageView alloc]initWithImage:[UIImage imageNamed:backgroundImageNamed]]autorelease];;
-	
-										  // TODO ask
-//	self.selectedBackgroundView =  [[[UIImageView alloc]initWithImage:[UIImage imageNamed:selectedBackgroundImageNamed]]autorelease];
+	self.selectedBackgroundView =  [[[UIImageView alloc]initWithImage:[UIImage imageNamed:selectedBackgroundImageNamed]]autorelease];
 	
 	self.accessoryView = [AccessoryViewWithImage accessoryViewWithImageNamed:imageNamed
 													   highlightedImageNamed:highlightedImageNamed 
