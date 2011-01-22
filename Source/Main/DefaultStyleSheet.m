@@ -200,4 +200,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	return button;
 }
 
+- (UIColor *)blackedOutColor
+{
+	return [UIColor colorWithHexString:@"00000075"];
+}
+
 @end

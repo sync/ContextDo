@@ -336,6 +336,11 @@
 - (void)showSettings
 {
 	// todo
+	if (![AppDelegate sharedAppDelegate].isBlackingOutMainView) {
+		[[AppDelegate sharedAppDelegate]blackOutMainViewBottomIncluded:TRUE animated:TRUE];
+	} else {
+		[[AppDelegate sharedAppDelegate]hideBlackOutMainViewAnimated:TRUE];
+	}
 }
 
 - (void)editButtonPressed
@@ -400,8 +405,6 @@
 	if (!self.isShowingGroupsEdit) {
 		return;
 	}
-	
-	
 	
 	if ([self.groupsEditViewController endEditing]) {
 		[self refreshGroups];

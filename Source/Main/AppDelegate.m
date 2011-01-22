@@ -16,7 +16,7 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
-@synthesize window, navigationController, placemark, reverseGeocoder, locationGetter, firstGPSFix;
+@synthesize window, navigationController, placemark, reverseGeocoder, locationGetter, firstGPSFix, blackedOutView;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -159,14 +159,57 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 #pragma mark -
 #pragma mark Blackout Main View
 
+- (BOOL)isBlackingOutMainView
+{
+	return (self.blackedOutView != nil);
+}
+
 - (void)blackOutMainViewBottomIncluded:(BOOL)bottomIncluded animated:(BOOL)animated
 {
+	if (self.isBlackingOutMainView) {
+		return;
+	}
 	
+	CGSize boundsSize =[UIScreen mainScreen].applicationFrame.size;
+	self.blackedOutView = [[[UIView alloc]initWithFrame:CGRectMake(0.0, -boundsSize.height, boundsSize.width, boundsSize.height - 24.0)]autorelease];
+	self.blackedOutView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].blackedOutColor;
+	[self.window addSubview:self.blackedOutView];
+	
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+	}
+	
+	self.blackedOutView.frame = CGRectMake(0.0, 0.0, boundsSize.width, boundsSize.height - 24.0);
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
 }
 
 - (void)hideBlackOutMainViewAnimated:(BOOL)animated
 {
+	if (!self.isBlackingOutMainView) {
+		return;
+	}
 	
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDelegate:self];
+		[UIView setAnimationDidStopSelector:@selector(hideBlackoutAnimationDidStop)];
+	}
+	
+	CGSize boundsSize =[UIScreen mainScreen].applicationFrame.size;
+	self.blackedOutView.frame = CGRectMake(0.0, -boundsSize.height, boundsSize.width, boundsSize.height - 24.0);
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
+}
+
+- (void)hideBlackoutAnimationDidStop
+{
+	[self.blackedOutView removeFromSuperview];
+	blackedOutView = nil;
 }
 
 #pragma mark -

@@ -21,8 +21,10 @@
 - (void)hideLoginView:(BOOL)animated;
 - (void)showLoginView:(BOOL)animated;
 
+@property (nonatomic, readonly) BOOL isBlackingOutMainView;
 - (void)blackOutMainViewBottomIncluded:(BOOL)bottomIncluded animated:(BOOL)animated;
 - (void)hideBlackOutMainViewAnimated:(BOOL)animated;
+@property (nonatomic, assign) UIView *blackedOutView;
 
 + (AppDelegate *)sharedAppDelegate;
 
