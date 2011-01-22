@@ -33,7 +33,7 @@
 		243A370012E3FBC600A6D402 /* icon_settings_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A36FC12E3FBC600A6D402 /* icon_settings_off@2x.png */; };
 		243A370112E3FBC600A6D402 /* icon_settings_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A36FD12E3FBC600A6D402 /* icon_settings_touch.png */; };
 		243A370212E3FBC600A6D402 /* icon_settings_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A36FE12E3FBC600A6D402 /* icon_settings_touch@2x.png */; };
-		243A370812E3FDB600A6D402 /* CustomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A370712E3FDB600A6D402 /* CustomToolBar.m */; };
+		243A370812E3FDB600A6D402 /* CustomToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A370712E3FDB600A6D402 /* CustomToolbar.m */; };
 		243A372912E400E700A6D402 /* taskbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A372712E400E700A6D402 /* taskbar.png */; };
 		243A372A12E400E700A6D402 /* taskbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A372812E400E700A6D402 /* taskbar@2x.png */; };
 		243A37C212E40E8600A6D402 /* GroupsEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A37C112E40E8600A6D402 /* GroupsEditViewController.m */; };
@@ -345,8 +345,8 @@
 		243A36FC12E3FBC600A6D402 /* icon_settings_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_settings_off@2x.png"; sourceTree = "<group>"; };
 		243A36FD12E3FBC600A6D402 /* icon_settings_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_settings_touch.png; sourceTree = "<group>"; };
 		243A36FE12E3FBC600A6D402 /* icon_settings_touch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_settings_touch@2x.png"; sourceTree = "<group>"; };
-		243A370612E3FDB600A6D402 /* CustomToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomToolBar.h; sourceTree = "<group>"; };
-		243A370712E3FDB600A6D402 /* CustomToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomToolBar.m; sourceTree = "<group>"; };
+		243A370612E3FDB600A6D402 /* CustomToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomToolbar.h; sourceTree = "<group>"; };
+		243A370712E3FDB600A6D402 /* CustomToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomToolbar.m; sourceTree = "<group>"; };
 		243A372712E400E700A6D402 /* taskbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taskbar.png; sourceTree = "<group>"; };
 		243A372812E400E700A6D402 /* taskbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "taskbar@2x.png"; sourceTree = "<group>"; };
 		243A37C012E40E8600A6D402 /* GroupsEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsEditViewController.h; sourceTree = "<group>"; };
@@ -1341,8 +1341,8 @@
 				24F8811312D16A7200370A5F /* ChoicesListDataSource.m */,
 				2490FC1412E2FC6100F56B39 /* CustomNavigationBar.h */,
 				2490FC1512E2FC6100F56B39 /* CustomNavigationBar.m */,
-				243A370612E3FDB600A6D402 /* CustomToolBar.h */,
-				243A370712E3FDB600A6D402 /* CustomToolBar.m */,
+				243A370612E3FDB600A6D402 /* CustomToolbar.h */,
+				243A370712E3FDB600A6D402 /* CustomToolbar.m */,
 				243A481112E5A3CA00A6D402 /* CustomSearchBar.h */,
 				243A481212E5A3CA00A6D402 /* CustomSearchBar.m */,
 				243A360F12E3E18600A6D402 /* CustomNavigationController.xib */,
@@ -2007,7 +2007,7 @@
 				243A35D012E3DC4300A6D402 /* DefaultStyleSheet.m in Sources */,
 				243A360612E3E06A00A6D402 /* UINavigationController+Custom.m in Sources */,
 				243A362D12E3E2E800A6D402 /* CustomNavigationController.m in Sources */,
-				243A370812E3FDB600A6D402 /* CustomToolBar.m in Sources */,
+				243A370812E3FDB600A6D402 /* CustomToolbar.m in Sources */,
 				243A37C212E40E8600A6D402 /* GroupsEditViewController.m in Sources */,
 				243A386412E4296D00A6D402 /* GroupsEditDataSource.m in Sources */,
 				243A3C2112E4511500A6D402 /* CTXDOTableHeaderView.m in Sources */,

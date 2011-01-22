@@ -48,7 +48,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	
 	[self.navigationController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 														  forBarStyle:UIBarStyleBlackOpaque];
-	[self.navigationController.customToolBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolBarBackgroundImage
+	[self.navigationController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
 													forBarStyle:UIBarStyleBlackOpaque];
 
     return YES;
@@ -164,14 +164,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	return (self.blackedOutView != nil);
 }
 
+#define BlackoutToolbarHeightDiff(hideToolbar) ((hideToolbar) ?  0.0 : 44.0)
+
 - (void)blackOutMainViewBottomIncluded:(BOOL)bottomIncluded animated:(BOOL)animated
 {
 	if (self.isBlackingOutMainView) {
 		return;
 	}
 	
-	CGSize boundsSize =[UIScreen mainScreen].applicationFrame.size;
-	self.blackedOutView = [[[UIView alloc]initWithFrame:CGRectMake(0.0, -boundsSize.height, boundsSize.width, boundsSize.height - 24.0)]autorelease];
+	CGSize boundsSize = self.window.bounds.size;
+	self.blackedOutView = [[[UIView alloc]initWithFrame:CGRectMake(0.0, 
+																   -boundsSize.height,
+																   boundsSize.width,
+																   boundsSize.height - BlackoutToolbarHeightDiff(bottomIncluded))]autorelease];
 	self.blackedOutView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].blackedOutColor;
 	[self.window addSubview:self.blackedOutView];
 	
@@ -179,7 +184,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 		[UIView beginAnimations:nil context:NULL];
 	}
 	
-	self.blackedOutView.frame = CGRectMake(0.0, 0.0, boundsSize.width, boundsSize.height - 24.0);
+	self.blackedOutView.frame = CGRectMake(0.0, 
+										   0.0,
+										   boundsSize.width,
+										   boundsSize.height - BlackoutToolbarHeightDiff(bottomIncluded));
 	
 	if (animated) {
 		[UIView commitAnimations];
@@ -198,8 +206,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 		[UIView setAnimationDidStopSelector:@selector(hideBlackoutAnimationDidStop)];
 	}
 	
-	CGSize boundsSize =[UIScreen mainScreen].applicationFrame.size;
-	self.blackedOutView.frame = CGRectMake(0.0, -boundsSize.height, boundsSize.width, boundsSize.height - 24.0);
+	CGSize boundsSize = self.window.bounds.size;
+	self.blackedOutView.frame = CGRectMake(0.0, 
+										   -boundsSize.height,
+										   boundsSize.width,
+										   self.blackedOutView.frame.size.height);
 	
 	if (animated) {
 		[UIView commitAnimations];

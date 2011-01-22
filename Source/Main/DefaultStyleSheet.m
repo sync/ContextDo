@@ -134,7 +134,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	return item;
 }
 
-- (UIImage *)toolBarBackgroundImage
+- (UIImage *)toolbarBackgroundImage
 {
 	return [UIImage imageNamed:@"taskbar.png"];
 }

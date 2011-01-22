@@ -337,7 +337,7 @@
 {
 	// todo
 	if (![AppDelegate sharedAppDelegate].isBlackingOutMainView) {
-		[[AppDelegate sharedAppDelegate]blackOutMainViewBottomIncluded:TRUE animated:TRUE];
+		[[AppDelegate sharedAppDelegate]blackOutMainViewBottomIncluded:FALSE animated:TRUE];
 	} else {
 		[[AppDelegate sharedAppDelegate]hideBlackOutMainViewAnimated:TRUE];
 	}
