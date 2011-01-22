@@ -21,6 +21,9 @@
 - (void)hideLoginView:(BOOL)animated;
 - (void)showLoginView:(BOOL)animated;
 
+- (void)blackOutMainViewBottomIncluded:(BOOL)bottomIncluded animated:(BOOL)animated;
+- (void)hideBlackOutMainViewAnimated:(BOOL)animated;
+
 + (AppDelegate *)sharedAppDelegate;
 
 @end

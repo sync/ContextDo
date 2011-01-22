@@ -157,6 +157,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 }
 
 #pragma mark -
+#pragma mark Blackout Main View
+
+- (void)blackOutMainViewBottomIncluded:(BOOL)bottomIncluded animated:(BOOL)animated
+{
+	
+}
+
+- (void)hideBlackOutMainViewAnimated:(BOOL)animated
+{
+	
+}
+
+#pragma mark -
 #pragma mark Geolocation:
 
 - (MyLocationGetter *)locationGetter
