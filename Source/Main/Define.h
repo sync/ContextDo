@@ -18,7 +18,6 @@
 #define RegionShouldUpdateThresholdInMeters 1000.0
 
 // URL
-// contextdo.heroku.com
 #define BASE_URL ([[NSUserDefaults standardUserDefaults]boolForKey:ShouldUseDevServer]) ? [[NSUserDefaults standardUserDefaults]stringForKey:DevServerIp] : @"http://contextdo.heroku.com"
 #define CTXDOURL(base, path) [NSString stringWithFormat:@"%@%@", base, path]
 // Login
@@ -39,7 +38,7 @@
 #define TASKSSEARCHURL(base, path, query, page, perPage) [NSString stringWithFormat:@"%@?q=%@&page=%d&per_page=%d", CTXDOURL(base, path), query, page, perPage]
 
 // Task
-#define TASKURL(base, path, taskId) [NSString stringWithFormat:@"%@/%@", CTXDOURL(base, path), taskId]
+#define TASKURL(base, path, groupId, taskId) [NSString stringWithFormat:@"%@%@%@", GROUPURL(base, path, groupId), TASKS_PATH, ((taskId) ? [NSString stringWithFormat:@"/%@", taskId] : @"")]
 
 // Notifications
 #define PlacemarkDidChangeNotification @"PlacemarkDidChangeNotification"

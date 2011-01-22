@@ -25,6 +25,6 @@
 - (void)refreshTasksWithQuery:(NSString *)query page:(NSInteger)page;
 - (void)addTask:(Task *)task;
 - (void)editTask:(Task *)task;
-- (void)deleteTaskWitId:(NSNumber *)taskId;
+- (void)deleteTask:(Task *)task;
 
 @end

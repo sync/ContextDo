@@ -328,14 +328,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 							  task, @"object",
 							  nil];
 	
-	NSString *url = CTXDOURL(BASE_URL, TASKS_PATH);
+	NSString *url = TASKURL(BASE_URL, GROUPS_PATH, task.groupId, task.taskId);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
+	[request addRequestHeader:@"Content-Type" value:@"application/json"];
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
-	NSString *string = [task toJSON];
+	NSArray *excluding = [NSArray arrayWithObjects:
+						  @"groupName",
+						  @"taskId",
+						  @"groupId",
+						  @"updatedAt",
+						  @"createdAt",
+						  @"formattedContact",
+						  nil];
+	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
 	[self.networkQueue addOperation:request];
@@ -358,16 +367,25 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 							  task, @"object",
 							  nil];
 	
-	NSString *url = TASKURL(BASE_URL, TASKS_PATH, task.taskId);
+	NSString *url = TASKURL(BASE_URL, TASKS_PATH, task.groupId, task.taskId);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
+	[request addRequestHeader:@"Content-Type" value:@"application/json"];
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
 	[request setRequestMethod:@"PUT"];
 	
-	NSString *string = [task toJSON];
+	NSArray *excluding = [NSArray arrayWithObjects:
+						  @"groupName",
+						  @"taskId",
+						  @"groupId",
+						  @"updatedAt",
+						  @"createdAt",
+						  @"formattedContact",
+						  nil];
+	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
 	[self.networkQueue addOperation:request];
@@ -375,9 +393,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
-- (void)deleteTaskWitId:(NSNumber *)taskId
+- (void)deleteTask:(Task *)task
 {
-	if (!taskId) {
+	if (!task) {
 		return;
 	}
 	
@@ -387,10 +405,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
 							  notificationName, @"notificationName",
-							  taskId, @"object",
+							  task, @"object",
 							  nil];
 	
-	NSString *url = TASKURL(BASE_URL, TASKS_PATH, taskId);
+	NSString *url = TASKURL(BASE_URL, TASKS_PATH, task.groupId, task.taskId);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;

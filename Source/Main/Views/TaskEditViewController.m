@@ -52,7 +52,7 @@
 {
 	[super setupNavigationBar];
 	
-	self.navigationItem.rightBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Done"
+	self.navigationItem.rightBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Save"
 																												target:self
 																											  selector:@selector(saveTouched)];
 	
@@ -407,7 +407,6 @@
 	} else {
 		[[APIServices sharedAPIServices]addTask:self.taskEditDataSource.tempTask];
 	}
-	[self dismissModalViewControllerAnimated:TRUE];
 }
 
 - (void)startEditing

@@ -34,7 +34,7 @@
 	
 	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	
-	self.userEdited = (self.taskEditDataSource.tempTask.location  != nil);
+	self.userEdited = (self.taskEditDataSource.tempTask.location.length  != 0);
 	
 	placemark = [[AppDelegate sharedAppDelegate].placemark retain];
 	[self showCurrentLocation];
@@ -230,6 +230,7 @@
 	self.userEdited = FALSE;
 	[self.taskEditDataSource setValue:nil forIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
 	[self setStreet:nil suburb:nil];
+	
 }
 
 #define MapViewPlacesCloseSpanInMeters 300.0
