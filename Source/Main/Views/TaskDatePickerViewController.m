@@ -28,7 +28,8 @@
 	
 	[super viewDidLoad];
 	
-	[self.datePicker setDate:(self.task.dueAt) ? self.task.dueAt : [NSDate date] animated:FALSE];
+	[self.datePicker setDate:(self.task.dueAt) ? self.task.dueAt : [NSDate date] animated:FALSE];	
+	[self.onOffSwitch setOn:(self.task.dueAt != nil)];
 }
 
 - (void)viewDidUnload
@@ -58,7 +59,7 @@
 	[super setupDataSource];
 	
 	self.taskDatePickerDataSource = [[[TaskDatePickerDataSource alloc]init]autorelease];
-	self.taskDatePickerDataSource.tempTask = task;
+	self.taskDatePickerDataSource.tempTask = self.task;
 	self.tableView.dataSource = self.taskDatePickerDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.tableView.allowsSelection = FALSE;
@@ -97,10 +98,8 @@
 {
 	UISwitch *aOnOffSwitch = (UISwitch *)sender;
 	if (aOnOffSwitch.on) {
-		self.datePicker.enabled = TRUE;
 		self.task.dueAt = [self.datePicker date];
 	} else {
-		self.datePicker.enabled = FALSE;
 		self.task.dueAt = nil;
 	}
 }

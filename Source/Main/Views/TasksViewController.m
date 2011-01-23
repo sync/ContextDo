@@ -1,5 +1,6 @@
 #import "TasksViewController.h"
 #import "TasksCell.h"
+#import "TaskContainerViewController.h"
 
 @interface TasksViewController (private)
 
@@ -13,7 +14,7 @@
 
 @implementation TasksViewController
 
-@synthesize tasksDataSource, tasks, page, group, searchTasksDataSource, searchBar, pageSave, tasksSave;
+@synthesize tasksDataSource, tasks, page, group, searchTasksDataSource, searchBar, pageSave, tasksSave, mainNavController;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -177,7 +178,11 @@
 	Task *task  = [dataSource taskForIndexPath:indexPath];
 	
 	if (task.taskId.integerValue != NSNotFound) {
-		
+		TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
+		controller.hidesBottomBarWhenPushed = TRUE;
+		controller.task = task;
+		controller.tasks = self.tasks;
+		[self.mainNavController pushViewController:controller animated:TRUE];
 	} else {
 		if ([task.name isEqualToString:ShowMorePlaceholder]) {
 			self.page += 1;

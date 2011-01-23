@@ -26,4 +26,6 @@
 @property (nonatomic) NSInteger pageSave;
 @property (nonatomic, copy) NSArray *tasksSave;
 
+@property (nonatomic,  assign) UINavigationController *mainNavController;
+
 @end

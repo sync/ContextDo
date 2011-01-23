@@ -69,7 +69,8 @@
 }
 
 - (void)setupToolbar
-{	
+{	[super setupToolbar];
+	
 	[self.navigationController setToolbarHidden:FALSE animated:FALSE];
 	
 	UIBarButtonItem *settingsItem = [[DefaultStyleSheet sharedDefaultStyleSheet] buttonItemWithImageNamed:@"icon_settings_off.png" 

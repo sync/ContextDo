@@ -210,4 +210,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	return [UIColor colorWithHexString:@"00000075"];
 }
 
+- (UIColor *)taskDarkGrayColor
+{
+	return [UIColor colorWithHexString:@"7d7d81"];
+}
+
 @end

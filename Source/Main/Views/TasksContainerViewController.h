@@ -7,6 +7,7 @@
 }
 
 @property (nonatomic, retain) IBOutlet UINavigationController *containerNavController;
+@property (nonatomic, retain) IBOutlet UIView *containerView;
 
 @property (nonatomic, readonly) TasksViewController *tasksViewController;
 

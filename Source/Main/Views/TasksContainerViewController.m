@@ -13,7 +13,7 @@
 
 @implementation TasksContainerViewController
 
-@synthesize containerNavController, tasksViewController, group;
+@synthesize containerNavController, tasksViewController, group, containerView;
 
 #pragma mark -
 #pragma mark Setup
@@ -24,8 +24,10 @@
 	
 	[super viewDidLoad];
 	
-	self.containerNavController.view.frame = self.view.bounds;
-	[self.view addSubview:self.containerNavController.view];
+	self.containerNavController.navigationBarHidden = TRUE;
+	self.containerNavController.toolbarHidden = TRUE;
+	[self.containerView addSubview:self.containerNavController.view];
+	self.containerNavController.view.frame = self.containerView.bounds;
 	
 	[self showList];
 }
@@ -43,7 +45,8 @@
 {
 	if (!tasksViewController) {
 		tasksViewController = [[TasksViewController alloc]initWithNibName:@"TasksView" bundle:nil];
-		self.tasksViewController.group = self.group;
+		tasksViewController.group = self.group;
+		tasksViewController.mainNavController = self.navigationController;
 	}
 	
 	return tasksViewController;
@@ -62,6 +65,8 @@
 
 - (void)setupToolbar
 {	
+	[super setupToolbar];
+	
 	[self.navigationController setToolbarHidden:FALSE animated:FALSE];
 	
 	UIBarButtonItem *flexItem = [[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -136,8 +141,8 @@
 #pragma mark -
 #pragma mark Dealloc
 
-- (void)dealloc 
-{
+- (void)dealloc {
+	[containerView release];
 	[group release];
 	[tasksViewController release];
 	[containerNavController release];

@@ -241,6 +241,19 @@
 		24E4499212EBA8B500F08B7E /* taskbar_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E4499012EBA8B500F08B7E /* taskbar_shadow.png */; };
 		24E44A1412EBB58500F08B7E /* TasksInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44A1312EBB58500F08B7E /* TasksInfoCell.m */; };
 		24E44BFC12EBD6C500F08B7E /* TaskContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44BFB12EBD6C500F08B7E /* TaskContainerViewController.m */; };
+		24E44C0D12EBD8F700F08B7E /* TaskContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E44C0C12EBD8F700F08B7E /* TaskContainerView.xib */; };
+		24E44C2412EBDAF500F08B7E /* CTXDOSegmentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44C2312EBDAF500F08B7E /* CTXDOSegmentControl.m */; };
+		24E44C7812EBE02F00F08B7E /* taskdetails_tab_lefton.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E44C7212EBE02F00F08B7E /* taskdetails_tab_lefton.png */; };
+		24E44C7912EBE02F00F08B7E /* taskdetails_tab_lefton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E44C7312EBE02F00F08B7E /* taskdetails_tab_lefton@2x.png */; };
+		24E44C7A12EBE02F00F08B7E /* taskdetails_tab_midon.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E44C7412EBE02F00F08B7E /* taskdetails_tab_midon.png */; };
+		24E44C7B12EBE02F00F08B7E /* taskdetails_tab_midon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E44C7512EBE02F00F08B7E /* taskdetails_tab_midon@2x.png */; };
+		24E44C7C12EBE02F00F08B7E /* taskdetails_tab_righton.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E44C7612EBE02F00F08B7E /* taskdetails_tab_righton.png */; };
+		24E44C7D12EBE02F00F08B7E /* taskdetails_tab_righton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E44C7712EBE02F00F08B7E /* taskdetails_tab_righton@2x.png */; };
+		24E44F6812EC09C400F08B7E /* TaskScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44F6712EC09C400F08B7E /* TaskScheduleViewController.m */; };
+		24E44F6A12EC09D200F08B7E /* TaskScheduleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E44F6912EC09D200F08B7E /* TaskScheduleView.xib */; };
+		24E44F9C12EC0DB100F08B7E /* TaskDirectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44F9B12EC0DB100F08B7E /* TaskDirectionViewController.m */; };
+		24E44FB212EC0E5300F08B7E /* TaskAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44FB112EC0E5300F08B7E /* TaskAnnotation.m */; };
+		24E44FD312EC0F2A00F08B7E /* TaskDirectionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E44FD212EC0F2A00F08B7E /* TaskDirectionsView.xib */; };
 		24F8814812D16A7200370A5F /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878BB12D16A6F00370A5F /* ASIAuthenticationDialog.m */; };
 		24F8814912D16A7200370A5F /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878BE12D16A6F00370A5F /* ASIDataCompressor.m */; };
 		24F8814A12D16A7200370A5F /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878C012D16A6F00370A5F /* ASIDataDecompressor.m */; };
@@ -601,6 +614,23 @@
 		24E44A1312EBB58500F08B7E /* TasksInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksInfoCell.m; sourceTree = "<group>"; };
 		24E44BFA12EBD6C500F08B7E /* TaskContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskContainerViewController.h; sourceTree = "<group>"; };
 		24E44BFB12EBD6C500F08B7E /* TaskContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskContainerViewController.m; sourceTree = "<group>"; };
+		24E44C0C12EBD8F700F08B7E /* TaskContainerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskContainerView.xib; sourceTree = "<group>"; };
+		24E44C2212EBDAF500F08B7E /* CTXDOSegmentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOSegmentControl.h; sourceTree = "<group>"; };
+		24E44C2312EBDAF500F08B7E /* CTXDOSegmentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOSegmentControl.m; sourceTree = "<group>"; };
+		24E44C7212EBE02F00F08B7E /* taskdetails_tab_lefton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taskdetails_tab_lefton.png; sourceTree = "<group>"; };
+		24E44C7312EBE02F00F08B7E /* taskdetails_tab_lefton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "taskdetails_tab_lefton@2x.png"; sourceTree = "<group>"; };
+		24E44C7412EBE02F00F08B7E /* taskdetails_tab_midon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taskdetails_tab_midon.png; sourceTree = "<group>"; };
+		24E44C7512EBE02F00F08B7E /* taskdetails_tab_midon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "taskdetails_tab_midon@2x.png"; sourceTree = "<group>"; };
+		24E44C7612EBE02F00F08B7E /* taskdetails_tab_righton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taskdetails_tab_righton.png; sourceTree = "<group>"; };
+		24E44C7712EBE02F00F08B7E /* taskdetails_tab_righton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "taskdetails_tab_righton@2x.png"; sourceTree = "<group>"; };
+		24E44F6612EC09C400F08B7E /* TaskScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskScheduleViewController.h; sourceTree = "<group>"; };
+		24E44F6712EC09C400F08B7E /* TaskScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskScheduleViewController.m; sourceTree = "<group>"; };
+		24E44F6912EC09D200F08B7E /* TaskScheduleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskScheduleView.xib; sourceTree = "<group>"; };
+		24E44F9A12EC0DB100F08B7E /* TaskDirectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDirectionViewController.h; sourceTree = "<group>"; };
+		24E44F9B12EC0DB100F08B7E /* TaskDirectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDirectionViewController.m; sourceTree = "<group>"; };
+		24E44FB012EC0E5300F08B7E /* TaskAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskAnnotation.h; sourceTree = "<group>"; };
+		24E44FB112EC0E5300F08B7E /* TaskAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskAnnotation.m; sourceTree = "<group>"; };
+		24E44FD212EC0F2A00F08B7E /* TaskDirectionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskDirectionsView.xib; sourceTree = "<group>"; };
 		24F878BA12D16A6F00370A5F /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		24F878BB12D16A6F00370A5F /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		24F878BC12D16A6F00370A5F /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -920,11 +950,9 @@
 				243A536C12E676B700A6D402 /* TasksContainerViewController.h */,
 				243A536D12E676B700A6D402 /* TasksContainerViewController.m */,
 				243A537312E677F200A6D402 /* TasksContainerView.xib */,
-				2489CAA212BE10E300C1A58A /* TasksDataSource.h */,
-				2489CAA312BE10E300C1A58A /* TasksDataSource.m */,
-				2489CAD912BE1D5E00C1A58A /* TasksViewController.h */,
-				2489CADA12BE1D5E00C1A58A /* TasksViewController.m */,
-				2489CADC12BE1D6700C1A58A /* TasksView.xib */,
+				24E44F5C12EC06AE00F08B7E /* List */,
+				24E44F5D12EC06BF00F08B7E /* Map */,
+				24E44F5E12EC06D000F08B7E /* Calendar */,
 			);
 			name = Tasks;
 			sourceTree = "<group>";
@@ -985,14 +1013,74 @@
 			name = Info;
 			sourceTree = "<group>";
 		};
-		24E44BF812EBD5D800F08B7E /* Tasks */ = {
+		24E44BF812EBD5D800F08B7E /* Task */ = {
 			isa = PBXGroup;
 			children = (
+				24E44C2212EBDAF500F08B7E /* CTXDOSegmentControl.h */,
+				24E44C2312EBDAF500F08B7E /* CTXDOSegmentControl.m */,
 				24E44BFA12EBD6C500F08B7E /* TaskContainerViewController.h */,
 				24E44BFB12EBD6C500F08B7E /* TaskContainerViewController.m */,
+				24E44C0C12EBD8F700F08B7E /* TaskContainerView.xib */,
+				24E44F9912EC0D9300F08B7E /* Direction */,
+				24E44F6512EC06F200F08B7E /* Reschedule */,
 				24ADA8C412C84C97000BE62C /* Edition */,
 			);
-			name = Tasks;
+			name = Task;
+			sourceTree = "<group>";
+		};
+		24E44F5C12EC06AE00F08B7E /* List */ = {
+			isa = PBXGroup;
+			children = (
+				2489CAA212BE10E300C1A58A /* TasksDataSource.h */,
+				2489CAA312BE10E300C1A58A /* TasksDataSource.m */,
+				2489CAD912BE1D5E00C1A58A /* TasksViewController.h */,
+				2489CADA12BE1D5E00C1A58A /* TasksViewController.m */,
+				2489CADC12BE1D6700C1A58A /* TasksView.xib */,
+			);
+			name = List;
+			sourceTree = "<group>";
+		};
+		24E44F5D12EC06BF00F08B7E /* Map */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Map;
+			sourceTree = "<group>";
+		};
+		24E44F5E12EC06D000F08B7E /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Calendar;
+			sourceTree = "<group>";
+		};
+		24E44F6512EC06F200F08B7E /* Reschedule */ = {
+			isa = PBXGroup;
+			children = (
+				24E44F6612EC09C400F08B7E /* TaskScheduleViewController.h */,
+				24E44F6712EC09C400F08B7E /* TaskScheduleViewController.m */,
+				24E44F6912EC09D200F08B7E /* TaskScheduleView.xib */,
+			);
+			name = Reschedule;
+			sourceTree = "<group>";
+		};
+		24E44F9912EC0D9300F08B7E /* Direction */ = {
+			isa = PBXGroup;
+			children = (
+				24E44F9A12EC0DB100F08B7E /* TaskDirectionViewController.h */,
+				24E44F9B12EC0DB100F08B7E /* TaskDirectionViewController.m */,
+				24E44FD212EC0F2A00F08B7E /* TaskDirectionsView.xib */,
+			);
+			name = Direction;
+			sourceTree = "<group>";
+		};
+		24E44FC912EC0E5700F08B7E /* Annotations */ = {
+			isa = PBXGroup;
+			children = (
+				24E44FB012EC0E5300F08B7E /* TaskAnnotation.h */,
+				24E44FB112EC0E5300F08B7E /* TaskAnnotation.m */,
+			);
+			name = Annotations;
 			sourceTree = "<group>";
 		};
 		24F8786312D16A6F00370A5F /* ObjectiveDump3 */ = {
@@ -1653,6 +1741,12 @@
 				2448DDD412E9D1B4005EEEDA /* groupPanelsTouch@2x.png */,
 				24E4498F12EBA8B500F08B7E /* taskbar_shadow@2x.png */,
 				24E4499012EBA8B500F08B7E /* taskbar_shadow.png */,
+				24E44C7212EBE02F00F08B7E /* taskdetails_tab_lefton.png */,
+				24E44C7312EBE02F00F08B7E /* taskdetails_tab_lefton@2x.png */,
+				24E44C7412EBE02F00F08B7E /* taskdetails_tab_midon.png */,
+				24E44C7512EBE02F00F08B7E /* taskdetails_tab_midon@2x.png */,
+				24E44C7612EBE02F00F08B7E /* taskdetails_tab_righton.png */,
+				24E44C7712EBE02F00F08B7E /* taskdetails_tab_righton@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -1698,6 +1792,7 @@
 				2489C9CC12BDEB1E00C1A58A /* Group.m */,
 				2489CA7412BDFCC500C1A58A /* Task.h */,
 				2489CA7512BDFCC500C1A58A /* Task.m */,
+				24E44FC912EC0E5700F08B7E /* Annotations */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1724,7 +1819,7 @@
 				2489CA0312BDF04000C1A58A /* Groups */,
 				24E4496712EBA52600F08B7E /* Info */,
 				2489CAA112BE102F00C1A58A /* Tasks */,
-				24E44BF812EBD5D800F08B7E /* Tasks */,
+				24E44BF812EBD5D800F08B7E /* Task */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1974,6 +2069,15 @@
 				24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */,
 				24E4499112EBA8B500F08B7E /* taskbar_shadow@2x.png in Resources */,
 				24E4499212EBA8B500F08B7E /* taskbar_shadow.png in Resources */,
+				24E44C0D12EBD8F700F08B7E /* TaskContainerView.xib in Resources */,
+				24E44C7812EBE02F00F08B7E /* taskdetails_tab_lefton.png in Resources */,
+				24E44C7912EBE02F00F08B7E /* taskdetails_tab_lefton@2x.png in Resources */,
+				24E44C7A12EBE02F00F08B7E /* taskdetails_tab_midon.png in Resources */,
+				24E44C7B12EBE02F00F08B7E /* taskdetails_tab_midon@2x.png in Resources */,
+				24E44C7C12EBE02F00F08B7E /* taskdetails_tab_righton.png in Resources */,
+				24E44C7D12EBE02F00F08B7E /* taskdetails_tab_righton@2x.png in Resources */,
+				24E44F6A12EC09D200F08B7E /* TaskScheduleView.xib in Resources */,
+				24E44FD312EC0F2A00F08B7E /* TaskDirectionsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2085,6 +2189,10 @@
 				24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */,
 				24E44A1412EBB58500F08B7E /* TasksInfoCell.m in Sources */,
 				24E44BFC12EBD6C500F08B7E /* TaskContainerViewController.m in Sources */,
+				24E44C2412EBDAF500F08B7E /* CTXDOSegmentControl.m in Sources */,
+				24E44F6812EC09C400F08B7E /* TaskScheduleViewController.m in Sources */,
+				24E44F9C12EC0DB100F08B7E /* TaskDirectionViewController.m in Sources */,
+				24E44FB212EC0E5300F08B7E /* TaskAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

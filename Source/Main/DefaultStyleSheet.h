@@ -29,5 +29,6 @@
 - (UIButton *)inputTextFieldButtonWithText:(NSString *)text target:(id)target selector:(SEL)action;
 
 @property (nonatomic, readonly) UIColor *blackedOutColor;
+@property (nonatomic, readonly) UIColor *taskDarkGrayColor;
 
 @end
