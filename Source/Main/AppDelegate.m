@@ -50,6 +50,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 														  forBarStyle:UIBarStyleBlackOpaque];
 	[self.navigationController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
 													forBarStyle:UIBarStyleBlackOpaque];
+	[self.navigationController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
+												forBarStyle:UIBarStyleBlackOpaque];
 
     return YES;
 }
@@ -303,7 +305,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 #pragma mark -
 #pragma mark Dealloc
 
-- (void)dealloc {
+- (void)dealloc 
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[locationGetter release];

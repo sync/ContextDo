@@ -139,6 +139,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	return [UIImage imageNamed:@"taskbar.png"];
 }
 
+- (UIImage *)toolbarShadowImage
+{
+	return [UIImage imageNamed:@"taskbar_shadow.png"];
+}
+
 - (UIBarButtonItem *)buttonItemWithImageNamed:(NSString *)imageNamed highlightedImageNamed:(NSString *)highlightedImageNamed target:(id)target selector:(SEL)action
 {
 	UIButton *button = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];

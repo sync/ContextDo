@@ -136,7 +136,8 @@
 #pragma mark -
 #pragma mark Dealloc
 
-- (void)dealloc {
+- (void)dealloc 
+{
 	[group release];
 	[tasksViewController release];
 	[containerNavController release];

@@ -19,6 +19,7 @@
 - (UIBarButtonItem *)editBarButtonItemEditing:(BOOL)editing target:(id)target selector:(SEL)action;
 
 @property (nonatomic, readonly) UIImage *toolbarBackgroundImage;
+@property (nonatomic, readonly) UIImage *toolbarShadowImage;
 
 - (UIBarButtonItem *)buttonItemWithImageNamed:(NSString *)imageNamed highlightedImageNamed:(NSString *)highlightedImageNamed target:(id)target selector:(SEL)action;
 
