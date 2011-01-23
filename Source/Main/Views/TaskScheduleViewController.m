@@ -5,6 +5,14 @@
 
 #pragma mark -
 #pragma mark Setup
+
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+	
+	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].taskDarkGrayColor;
+}
+
 - (void)setupNavigationBar
 {
 	// Nothing

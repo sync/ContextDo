@@ -17,6 +17,8 @@
 {
     [super viewDidLoad];
 	
+	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].taskDarkGrayColor;
+	
 	self.mapView.showsUserLocation = TRUE;
 	
 	// Add new contact show popover

@@ -12,7 +12,7 @@
 @implementation TaskContainerViewController
 
 @synthesize containerNavController, tasks, task, segmentControl, containerView, taskScheduleViewController;
-@synthesize taskDirectionsViewController;
+@synthesize taskDirectionsViewController, taskDetailsViewController;
 
 #pragma mark -
 #pragma mark Setup
@@ -65,6 +65,16 @@
 	return taskDirectionsViewController;
 }
 
+- (TaskDetailsViewController *)taskDetailsViewController
+{
+	if (!taskDetailsViewController) {
+		taskDetailsViewController = [[TaskDetailsViewController alloc]initWithNibName:@"TaskDetailsView" bundle:nil];
+		taskDetailsViewController.task = self.task;
+	}
+	
+	return taskDetailsViewController;
+}
+
 - (void)setupNavigationBar
 {
 	[super setupNavigationBar];
@@ -96,7 +106,7 @@
 
 - (void)showDetails
 {
-	// TODO
+	[self.containerNavController setViewControllers:[NSArray arrayWithObject:self.taskDetailsViewController]];
 }
 
 - (void)showDirections
@@ -114,6 +124,7 @@
 
 - (void)dealloc 
 {
+	[taskDetailsViewController release];
 	[taskDirectionsViewController release];
 	[taskScheduleViewController release];
 	[containerView release];

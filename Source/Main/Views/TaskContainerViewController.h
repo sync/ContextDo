@@ -3,6 +3,7 @@
 #import "CTXDOSegmentControl.h"
 #import "TaskScheduleViewController.h"
 #import "TaskDirectionViewController.h"
+#import "TaskDetailsViewController.h"
 
 @interface TaskContainerViewController : BaseTableViewController {
 
@@ -17,5 +18,6 @@
 
 @property (nonatomic, retain) IBOutlet TaskScheduleViewController *taskScheduleViewController;
 @property (nonatomic, retain) IBOutlet TaskDirectionsViewController *taskDirectionsViewController;
+@property (nonatomic, retain) IBOutlet TaskDetailsViewController *taskDetailsViewController;
 
 @end

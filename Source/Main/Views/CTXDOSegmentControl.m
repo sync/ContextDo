@@ -99,8 +99,9 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
 	// Font
-	UIFont *normalFont = [UIFont systemFontOfSize:14.0];
-	//UIFont *boldFont = [UIFont boldSystemFontOfSize:14.0];
+#define FontSize 14.0
+	UIFont *normalFont = [UIFont systemFontOfSize:FontSize];
+	UIFont *boldFont = [UIFont boldSystemFontOfSize:FontSize];
 	// Color
 	UIColor *normalColor = [UIColor colorWithRed:231.0/255.0 green:231.0/255.0 blue:231.0/255.0 alpha:1.0];
 	[normalColor set];
@@ -117,16 +118,37 @@
 		[backgroundImage drawInRect:rect];
 	}
 	
+#define BottomDiff 10.0
+#define FontHeight (FontSize + 4.0)
+#define FontY ((self.bounds.size.height -BottomDiff - FontHeight) / 2.0)
 	
 	// Left part
 	NSString *leftText = [self.segments objectAtIndex:0];
-	[leftText drawInRect:CGRectMake(0.0, (self.bounds.size.height-12.0)/2-1, self.bounds.size.width/3, self.bounds.size.height) withFont:normalFont lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentCenter];
+	[leftText drawInRect:CGRectMake(0.0, 
+									FontY, 
+									self.bounds.size.width/3,
+									FontHeight) 
+				withFont:(self.selectedSegmentIndex == 0) ? boldFont : normalFont
+		   lineBreakMode:UILineBreakModeTailTruncation 
+			   alignment:UITextAlignmentCenter];
 	// Midlle part
 	NSString *middleText = [self.segments objectAtIndex:1];
-	[middleText drawInRect:CGRectMake(self.bounds.size.width/3, (self.bounds.size.height-12.0)/2-1, self.bounds.size.width/3, self.bounds.size.height) withFont:normalFont lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentCenter];
+	[middleText drawInRect:CGRectMake(self.bounds.size.width/3,
+									  FontY, 
+									  self.bounds.size.width/3,
+									  FontHeight) 
+				  withFont:(self.selectedSegmentIndex == 10) ? boldFont : normalFont 
+			 lineBreakMode:UILineBreakModeTailTruncation 
+				 alignment:UITextAlignmentCenter];
 	// Right part
 	NSString *rightText = [self.segments objectAtIndex:2];
-	[rightText drawInRect:CGRectMake(self.bounds.size.width/3 * 2, (self.bounds.size.height-12.0)/2-1, self.bounds.size.width/3, self.bounds.size.height) withFont:normalFont lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentCenter];
+	[rightText drawInRect:CGRectMake(self.bounds.size.width/3 * 2, 
+									 FontY, 
+									 self.bounds.size.width/3,
+									 FontHeight) 
+				 withFont:(self.selectedSegmentIndex == 2) ? boldFont : normalFont 
+			lineBreakMode:UILineBreakModeTailTruncation 
+				alignment:UITextAlignmentCenter];
 }
 
 - (void)dealloc {
