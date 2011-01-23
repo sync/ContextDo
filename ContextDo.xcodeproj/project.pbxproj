@@ -240,6 +240,7 @@
 		24E4499112EBA8B500F08B7E /* taskbar_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E4498F12EBA8B500F08B7E /* taskbar_shadow@2x.png */; };
 		24E4499212EBA8B500F08B7E /* taskbar_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E4499012EBA8B500F08B7E /* taskbar_shadow.png */; };
 		24E44A1412EBB58500F08B7E /* TasksInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44A1312EBB58500F08B7E /* TasksInfoCell.m */; };
+		24E44BFC12EBD6C500F08B7E /* TaskContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44BFB12EBD6C500F08B7E /* TaskContainerViewController.m */; };
 		24F8814812D16A7200370A5F /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878BB12D16A6F00370A5F /* ASIAuthenticationDialog.m */; };
 		24F8814912D16A7200370A5F /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878BE12D16A6F00370A5F /* ASIDataCompressor.m */; };
 		24F8814A12D16A7200370A5F /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878C012D16A6F00370A5F /* ASIDataDecompressor.m */; };
@@ -598,6 +599,8 @@
 		24E4499012EBA8B500F08B7E /* taskbar_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taskbar_shadow.png; sourceTree = "<group>"; };
 		24E44A1212EBB58500F08B7E /* TasksInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksInfoCell.h; sourceTree = "<group>"; };
 		24E44A1312EBB58500F08B7E /* TasksInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksInfoCell.m; sourceTree = "<group>"; };
+		24E44BFA12EBD6C500F08B7E /* TaskContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskContainerViewController.h; sourceTree = "<group>"; };
+		24E44BFB12EBD6C500F08B7E /* TaskContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskContainerViewController.m; sourceTree = "<group>"; };
 		24F878BA12D16A6F00370A5F /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		24F878BB12D16A6F00370A5F /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		24F878BC12D16A6F00370A5F /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -954,7 +957,7 @@
 			path = "UIColor-i7HexColor";
 			sourceTree = "<group>";
 		};
-		24ADA8C412C84C97000BE62C /* Task */ = {
+		24ADA8C412C84C97000BE62C /* Edition */ = {
 			isa = PBXGroup;
 			children = (
 				2448D18712E83402005EEEDA /* TaskEditDataSource.h */,
@@ -967,7 +970,7 @@
 				2448D55312E8B2DF005EEEDA /* Date */,
 				2448D55212E8B2C9005EEEDA /* Group */,
 			);
-			name = Task;
+			name = Edition;
 			sourceTree = "<group>";
 		};
 		24E4496712EBA52600F08B7E /* Info */ = {
@@ -980,6 +983,16 @@
 				24E4497012EBA5A400F08B7E /* InfoView.xib */,
 			);
 			name = Info;
+			sourceTree = "<group>";
+		};
+		24E44BF812EBD5D800F08B7E /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				24E44BFA12EBD6C500F08B7E /* TaskContainerViewController.h */,
+				24E44BFB12EBD6C500F08B7E /* TaskContainerViewController.m */,
+				24ADA8C412C84C97000BE62C /* Edition */,
+			);
+			name = Tasks;
 			sourceTree = "<group>";
 		};
 		24F8786312D16A6F00370A5F /* ObjectiveDump3 */ = {
@@ -1711,7 +1724,7 @@
 				2489CA0312BDF04000C1A58A /* Groups */,
 				24E4496712EBA52600F08B7E /* Info */,
 				2489CAA112BE102F00C1A58A /* Tasks */,
-				24ADA8C412C84C97000BE62C /* Task */,
+				24E44BF812EBD5D800F08B7E /* Tasks */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2071,6 +2084,7 @@
 				24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */,
 				24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */,
 				24E44A1412EBB58500F08B7E /* TasksInfoCell.m in Sources */,
+				24E44BFC12EBD6C500F08B7E /* TaskContainerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
