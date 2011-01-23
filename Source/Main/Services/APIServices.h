@@ -16,7 +16,7 @@
 
 - (void)refreshGroups;
 - (void)addGroupWithName:(NSString *)name position:(NSNumber *)position;
-- (void)editGroupWithId:(NSNumber *)groupId name:(NSString *)name position:(NSNumber *)position;
+- (void)updateGroupWithId:(NSNumber *)groupId name:(NSString *)name position:(NSNumber *)position;
 - (void)deleteGroupWitId:(NSNumber *)groupId;
 
 - (void)refreshTasksWithGroupId:(NSNumber *)groupId page:(NSInteger)page;
@@ -25,7 +25,7 @@
 - (void)refreshTasksWithQuery:(NSString *)query page:(NSInteger)page;
 - (void)refreshTasksEdited;
 - (void)addTask:(Task *)task;
-- (void)editTask:(Task *)task;
+- (void)updateTask:(Task *)task;
 - (void)deleteTask:(Task *)task;
 
 @end

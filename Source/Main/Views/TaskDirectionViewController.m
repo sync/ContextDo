@@ -261,6 +261,9 @@
 {
 	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
 	
+	self.mapView.delegate = nil;
+	self.directions.delegate = nil;
+	
 	[startPoint release];
 	[endPoint release];
 	

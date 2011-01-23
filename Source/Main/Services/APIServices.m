@@ -211,7 +211,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 }
 
 
-- (void)editGroupWithId:(NSNumber *)groupId name:(NSString *)name position:(NSNumber *)position
+- (void)updateGroupWithId:(NSNumber *)groupId name:(NSString *)name position:(NSNumber *)position
 {
 	if (!name) {
 		return;
@@ -364,7 +364,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
-- (void)editTask:(Task *)task
+- (void)updateTask:(Task *)task
 {
 	if (!task) {
 		return;
@@ -379,7 +379,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 							  task, @"object",
 							  nil];
 	
-	NSString *url = TASKURL(BASE_URL, TASKS_PATH, task.groupId, task.taskId);
+	NSString *url = TASKURL(BASE_URL, GROUPS_PATH, task.groupId, task.taskId);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
@@ -420,7 +420,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 							  task, @"object",
 							  nil];
 	
-	NSString *url = TASKURL(BASE_URL, TASKS_PATH, task.groupId, task.taskId);
+	NSString *url = TASKURL(BASE_URL, GROUPS_PATH, task.groupId, task.taskId);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;

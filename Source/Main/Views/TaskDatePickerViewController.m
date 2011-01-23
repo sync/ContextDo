@@ -91,7 +91,7 @@
 	}
 	
 	self.onOffSwitch = [[[UISwitch alloc]initWithFrame:CGRectZero]autorelease];
-	[self.onOffSwitch setOn:TRUE];
+	[self.onOffSwitch setOn:(self.task.dueAt != nil)];
 	[self.onOffSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
 	cell.accessoryView = self.onOffSwitch;
 }

@@ -403,7 +403,7 @@
 	}
 	
 	if (self.task) {
-		[[APIServices sharedAPIServices]editTask:self.taskEditDataSource.tempTask];
+		[[APIServices sharedAPIServices]updateTask:self.taskEditDataSource.tempTask];
 	} else {
 		[[APIServices sharedAPIServices]addTask:self.taskEditDataSource.tempTask];
 	}

@@ -28,7 +28,7 @@
 	[self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 						   forBarStyle:UIBarStyleBlackOpaque];
 	
-	[self.tableView setContentOffset:CGPointMake(0.0, self.searchBar.frame.size.height)];
+	//[self.tableView setContentOffset:CGPointMake(0.0, self.searchBar.frame.size.height)];
 
 }
 
@@ -168,8 +168,8 @@
 		task.completedAt = [NSDate date];
 	}
 	
-	// TODO update task api
 	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+	[[APIServices sharedAPIServices]updateTask:task];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

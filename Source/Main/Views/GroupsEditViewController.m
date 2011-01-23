@@ -79,7 +79,7 @@
 	cell.textField.tag = [self.groupsEditDataSource tagForRow:toIndexPath.row];
 	
 	
-	[[APIServices sharedAPIServices]editGroupWithId:group.groupId name:group.name position:[NSNumber numberWithInteger:toIndexPath.row]];
+	[[APIServices sharedAPIServices]updateGroupWithId:group.groupId name:group.name position:[NSNumber numberWithInteger:toIndexPath.row]];
 	self.editChangesMade = TRUE;
 }
 
@@ -178,7 +178,7 @@
 	Group *group =[self.groupsEditDataSource groupForIndexPath:indexPath];
 	group.name = textField.text;
 	
-	[[APIServices sharedAPIServices]editGroupWithId:group.groupId name:group.name position:nil];
+	[[APIServices sharedAPIServices]updateGroupWithId:group.groupId name:group.name position:nil];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
