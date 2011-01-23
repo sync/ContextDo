@@ -28,6 +28,8 @@
 	
 	self.mapView.showsUserLocation = TRUE;
 	
+	// Test if its right around you less than 100 m??
+	
 //	// Add new contact show popover
 //	CLLocationCoordinate2D coordinate;
 //	coordinate.latitude = self.task.latitude.doubleValue;
@@ -82,7 +84,7 @@
 
 - (void)updateDirections
 {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+	[self baseLoadingViewCenterDidStartForKey:@"directions"];
 	
 	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
 	options.travelMode = UICGTravelModeDriving;
@@ -97,15 +99,15 @@
 }
 
 - (void)directions:(UICGDirections *)directions didFailInitializeWithError:(NSError *)error {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	
+	[self baseLoadingViewCenterDidStopForKey:@"directions"];
+		
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
 	[alertView show];
 	[alertView release];
 }
 
 - (void)directionsDidUpdateDirections:(UICGDirections *)directions {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	[self baseLoadingViewCenterDidStopForKey:@"directions"];
 	
 	// Overlay polylines
 	UICGPolyline *polyline = [self.directions polyline];
@@ -126,7 +128,7 @@
 }
 
 - (void)directions:(UICGDirections *)directions didFailWithMessage:(NSString *)message {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	[self baseLoadingViewCenterDidStopForKey:@"directions"];
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
 	[alertView show];
 	[alertView release];
