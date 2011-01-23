@@ -7,4 +7,6 @@
 
 @property (nonatomic, retain) Task *task;
 
+- (void)refreshTask;
+
 @end

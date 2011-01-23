@@ -12,6 +12,11 @@
 	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].taskDarkGrayColor;
 }
 
+- (void)refreshTask
+{
+	// todo
+}
+
 - (void)dealloc
 {
 	[task release];

@@ -1,5 +1,21 @@
 #import "CTXDOSegmentControl.h"
 
+@interface CTXDOSegmentControl ()
+
+- (CGRect)leftRect;
+- (CGRect)middleRect;
+- (CGRect)rightRect;
+
+@property (nonatomic, assign) id target;
+@property SEL action;
+
+@property (nonatomic, retain) UITapGestureRecognizer *gestureRecognizer;
+
+- (void)setupCustomInitialisation;
+
+
+@end
+
 
 @implementation CTXDOSegmentControl
 
@@ -151,7 +167,8 @@
 				alignment:UITextAlignmentCenter];
 }
 
-- (void)dealloc {
+- (void)dealloc 
+{
 	[gestureRecognizer release];
 	[segments release];
 	

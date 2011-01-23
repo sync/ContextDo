@@ -18,4 +18,6 @@
 @property (nonatomic, retain) UICRouteOverlayMapView *routeOverlayView;
 @property (nonatomic, retain) UICGDirections *directions;
 
+- (void)refreshTask;
+
 @end

@@ -4,10 +4,13 @@
 #import "TaskScheduleViewController.h"
 #import "TaskDirectionViewController.h"
 #import "TaskDetailsViewController.h"
+#import "CTXDONavigationArrowsControl.h"
 
 @interface TaskContainerViewController : BaseTableViewController {
 
 }
+
+@property (nonatomic, retain) CTXDONavigationArrowsControl *arrowsControl;
 
 @property (nonatomic, retain) IBOutlet UINavigationController *containerNavController;
 @property (nonatomic, retain) IBOutlet UIView *containerView;
@@ -19,5 +22,7 @@
 @property (nonatomic, retain) IBOutlet TaskScheduleViewController *taskScheduleViewController;
 @property (nonatomic, retain) IBOutlet TaskDirectionsViewController *taskDirectionsViewController;
 @property (nonatomic, retain) IBOutlet TaskDetailsViewController *taskDetailsViewController;
+
+- (void)refreshTask;
 
 @end

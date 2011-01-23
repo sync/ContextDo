@@ -28,6 +28,11 @@
 	
 	[super viewDidLoad];
 	
+	[self refreshTask];
+}
+
+- (void)refreshTask
+{
 	[self.datePicker setDate:(self.task.dueAt) ? self.task.dueAt : [NSDate date] animated:FALSE];	
 	[self.onOffSwitch setOn:(self.task.dueAt != nil)];
 }

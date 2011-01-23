@@ -12,15 +12,13 @@
 @implementation TaskContainerViewController
 
 @synthesize containerNavController, tasks, task, segmentControl, containerView, taskScheduleViewController;
-@synthesize taskDirectionsViewController, taskDetailsViewController;
+@synthesize taskDirectionsViewController, taskDetailsViewController, arrowsControl;
 
 #pragma mark -
 #pragma mark Setup
 
 - (void)viewDidLoad
 {
-	self.title = self.task.name;
-	
 	[super viewDidLoad];
 	
 	self.segmentControl.segments = [NSArray arrayWithObjects:
@@ -34,6 +32,8 @@
 	self.containerNavController.toolbarHidden = TRUE;
 	[self.containerView addSubview:self.containerNavController.view];
 	self.containerNavController.view.frame = self.containerView.bounds;
+	
+	[self refreshTask];
 	
 	[self showDetails];
 }
@@ -83,13 +83,55 @@
 																								   target:self.navigationController
 																								 selector:@selector(customBackButtonTouched)];
 	
+	self.arrowsControl = [CTXDONavigationArrowsControl navigationArrowsControl];
+	[self.arrowsControl addBackTarget:self action:@selector(shouldGoBack) forControlEvents:UIControlEventTouchUpInside];
+	[self.arrowsControl addNextTarget:self action:@selector(shouldGoNext) forControlEvents:UIControlEventTouchUpInside];
+	UIBarButtonItem *rightItem = [[[UIBarButtonItem alloc]initWithCustomView:self.arrowsControl]autorelease];
+	rightItem.width = self.arrowsControl.frame.size.width;
+	self.navigationItem.rightBarButtonItem = rightItem;
+}
+
+- (void)refreshTask
+{
+	self.title = self.task.name;
 	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 	
-	// todo previous / next button
+	NSInteger index = [self.tasks indexOfObject:self.task];
+	self.arrowsControl.canGoBack = (index > 0);
+	self.arrowsControl.canGoNext = (index < self.tasks.count - 1);
+	
+	self.taskDetailsViewController.task = self.task;
+	[self.taskDetailsViewController refreshTask];
+	self.taskDirectionsViewController.task = self.task;
+	[self.taskDirectionsViewController refreshTask];
+	self.taskScheduleViewController.task = self.task;
+	[self.taskScheduleViewController refreshTask];
 }
 
 #pragma mark -
 #pragma mark Actions
+
+- (void)shouldGoBack
+{
+	NSInteger index = [self.tasks indexOfObject:self.task];
+	if (index == 0) {
+		return;
+	}
+	Task *newTask = [self.tasks objectAtIndex:index - 1];
+	self.task = newTask;
+	[self refreshTask];
+}
+
+- (void)shouldGoNext
+{
+	NSInteger index = [self.tasks indexOfObject:self.task];
+	if (index + 1 > self.tasks.count) {
+		return;
+	}
+	Task *newTask = [self.tasks objectAtIndex:index + 1];
+	self.task = newTask;
+	[self refreshTask];
+}
 
 - (void)segementControlChanged:(id)sender
 {
@@ -124,6 +166,7 @@
 
 - (void)dealloc 
 {
+	[arrowsControl release];
 	[taskDetailsViewController release];
 	[taskDirectionsViewController release];
 	[taskScheduleViewController release];

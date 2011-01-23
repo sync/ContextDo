@@ -41,6 +41,24 @@
 //	[self.mapView addAnnotation:self.currentAnnotation];
 //	[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(self.currentAnnotation.coordinate, MapViewLocationDefaultSpanInMeters, MapViewLocationDefaultSpanInMeters) animated:TRUE];
 	
+	[self refreshTask];
+}
+
+- (void)refreshTask
+{
+	if (!self.view) {
+		return;
+	}
+	
+	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStartForKey:) withObject:@"direction" waitUntilDone:FALSE];
+	
+	for (id<MKAnnotation> annotation in self.mapView.annotations) {
+		if ([annotation isKindOfClass:[UICRouteAnnotation class]]) {
+			[self.mapView removeAnnotation:annotation];
+		}
+	}
+	[self.routeOverlayView removeFromSuperview];
+	self.routeOverlayView = nil;
 	self.routeOverlayView = [[[UICRouteOverlayMapView alloc] initWithMapView:self.mapView]autorelease];
 	self.directions = [UICGDirections sharedDirections];
 	self.directions.delegate = self;
@@ -48,12 +66,22 @@
 	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
 	options.travelMode = UICGTravelModeDriving;
 	
+	
+	CLLocation *startLocation = nil;
+	if (TARGET_IPHONE_SIMULATOR) {
+		startLocation = [AppDelegate sharedAppDelegate].currentLocation;
+	} else {
+		startLocation = self.mapView.userLocation.location;
+	}
+	
 	self.startPoint = [self stringForLatitude:[AppDelegate sharedAppDelegate].currentLocation.coordinate.latitude
-										 longitude:[AppDelegate sharedAppDelegate].currentLocation.coordinate.longitude];
+									longitude:[AppDelegate sharedAppDelegate].currentLocation.coordinate.longitude];
 	self.endPoint = [self stringForLatitude:self.task.latitude.doubleValue
-									   longitude:self.task.longitude.doubleValue];
+								  longitude:self.task.longitude.doubleValue];
 	[self.directions loadWithStartPoint:self.startPoint endPoint:self.endPoint options:options];
-	[self updateDirections];
+	if (self.directions.isInitialized) {
+		[self updateDirections];
+	}
 }
 
 - (void)viewDidUnload {
@@ -63,29 +91,10 @@
 	self.mapView = nil;
 }
 
-#pragma mark -
-#pragma mark Actions
 
-- (void)showCurrentLocation
-{
-	CLLocation *location = self.mapView.userLocation.location;
-	if (!location && self.mapView.userLocation.updating) {
-		[self performSelector:@selector(showCurrentLocation) withObject:nil afterDelay:0.5];
-	} else {
-		if (!self.mapView.showsUserLocation) {
-			self.mapView.showsUserLocation = TRUE;
-			[self performSelector:@selector(showCurrentLocation) withObject:nil afterDelay:0.5];
-		} else {
-			// zoom to current location
-			[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewLocationDefaultSpanInMeters, MapViewLocationDefaultSpanInMeters) animated:TRUE];
-		}
-	}
-}
 
 - (void)updateDirections
 {
-	[self baseLoadingViewCenterDidStartForKey:@"directions"];
-	
 	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
 	options.travelMode = UICGTravelModeDriving;
 	[self.directions loadWithStartPoint:self.startPoint endPoint:self.endPoint options:options];
@@ -99,7 +108,7 @@
 }
 
 - (void)directions:(UICGDirections *)directions didFailInitializeWithError:(NSError *)error {
-	[self baseLoadingViewCenterDidStopForKey:@"directions"];
+	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStopForKey:) withObject:@"direction" waitUntilDone:FALSE];
 		
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
 	[alertView show];
@@ -107,12 +116,12 @@
 }
 
 - (void)directionsDidUpdateDirections:(UICGDirections *)directions {
-	[self baseLoadingViewCenterDidStopForKey:@"directions"];
+	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStopForKey:) withObject:@"direction" waitUntilDone:FALSE];
 	
 	// Overlay polylines
 	UICGPolyline *polyline = [self.directions polyline];
 	NSArray *routePoints = [polyline routePoints];
-	[routeOverlayView setRoutes:routePoints];
+	[self.routeOverlayView setRoutes:routePoints];
 	
 	// Add annotations
 	UICRouteAnnotation *startAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
@@ -128,7 +137,7 @@
 }
 
 - (void)directions:(UICGDirections *)directions didFailWithMessage:(NSString *)message {
-	[self baseLoadingViewCenterDidStopForKey:@"directions"];
+	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStopForKey:) withObject:@"direction" waitUntilDone:FALSE];
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
 	[alertView show];
 	[alertView release];
@@ -196,8 +205,8 @@
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-	routeOverlayView.hidden = NO;
-	[routeOverlayView setNeedsDisplay];
+	self.routeOverlayView.hidden = NO;
+	[self.routeOverlayView setNeedsDisplay];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation {
@@ -224,6 +233,25 @@
 	}
 	
 	return nil;
+}
+
+#pragma mark -
+#pragma mark Actions
+
+- (void)showCurrentLocation
+{
+	CLLocation *location = self.mapView.userLocation.location;
+	if (!location && self.mapView.userLocation.updating) {
+		[self performSelector:@selector(showCurrentLocation) withObject:nil afterDelay:0.5];
+	} else {
+		if (!self.mapView.showsUserLocation) {
+			self.mapView.showsUserLocation = TRUE;
+			[self performSelector:@selector(showCurrentLocation) withObject:nil afterDelay:0.5];
+		} else {
+			// zoom to current location
+			[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewLocationDefaultSpanInMeters, MapViewLocationDefaultSpanInMeters) animated:TRUE];
+		}
+	}
 }
 
 #pragma mark -

@@ -14,4 +14,6 @@
 
 @property (nonatomic,retain) UISwitch *onOffSwitch;
 
+- (void)refreshTask;
+
 @end
