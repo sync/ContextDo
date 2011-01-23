@@ -1,17 +1,24 @@
 #import "TaskDirectionViewController.h"
+#import "UICRouteAnnotation.h"
 
 @interface TaskDirectionsViewController (private)
 
 - (void)showCurrentLocation;
+- (void)updateDirections;
 
 @end
 
 @implementation TaskDirectionsViewController
 
-@synthesize mapView, currentAnnotation, task;
+@synthesize mapView, task, routeOverlayView, directions, startPoint, endPoint;
 
 #pragma mark -
 #pragma mark Setup
+
+- (NSString *)stringForLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude
+{
+	return [NSString stringWithFormat:@"%f, %f", latitude, longitude];
+}
 
 - (void)viewDidLoad 
 {
@@ -21,16 +28,30 @@
 	
 	self.mapView.showsUserLocation = TRUE;
 	
-	// Add new contact show popover
-	CLLocationCoordinate2D coordinate;
-	coordinate.latitude = self.task.latitude.doubleValue;
-	coordinate.longitude = self.task.longitude.doubleValue;
-	self.currentAnnotation = [[[TaskAnnotation alloc]initWithCoordinate:coordinate]autorelease];
-	self.currentAnnotation.task = self.task;
-	self.currentAnnotation.title = self.task.name;
-	self.currentAnnotation.subtitle = self.task.location;
-	[self.mapView addAnnotation:self.currentAnnotation];
-	[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(self.currentAnnotation.coordinate, MapViewLocationDefaultSpanInMeters, MapViewLocationDefaultSpanInMeters) animated:TRUE];
+//	// Add new contact show popover
+//	CLLocationCoordinate2D coordinate;
+//	coordinate.latitude = self.task.latitude.doubleValue;
+//	coordinate.longitude = self.task.longitude.doubleValue;
+//	self.currentAnnotation = [[[TaskAnnotation alloc]initWithCoordinate:coordinate]autorelease];
+//	self.currentAnnotation.task = self.task;
+//	self.currentAnnotation.title = self.task.name;
+//	self.currentAnnotation.subtitle = self.task.location;
+//	[self.mapView addAnnotation:self.currentAnnotation];
+//	[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(self.currentAnnotation.coordinate, MapViewLocationDefaultSpanInMeters, MapViewLocationDefaultSpanInMeters) animated:TRUE];
+	
+	self.routeOverlayView = [[[UICRouteOverlayMapView alloc] initWithMapView:self.mapView]autorelease];
+	self.directions = [UICGDirections sharedDirections];
+	self.directions.delegate = self;
+	
+	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
+	options.travelMode = UICGTravelModeDriving;
+	
+	self.startPoint = [self stringForLatitude:[AppDelegate sharedAppDelegate].currentLocation.coordinate.latitude
+										 longitude:[AppDelegate sharedAppDelegate].currentLocation.coordinate.longitude];
+	self.endPoint = [self stringForLatitude:self.task.latitude.doubleValue
+									   longitude:self.task.longitude.doubleValue];
+	[self.directions loadWithStartPoint:self.startPoint endPoint:self.endPoint options:options];
+	[self updateDirections];
 }
 
 - (void)viewDidUnload {
@@ -59,6 +80,58 @@
 	}
 }
 
+- (void)updateDirections
+{
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+	
+	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
+	options.travelMode = UICGTravelModeDriving;
+	[self.directions loadWithStartPoint:self.startPoint endPoint:self.endPoint options:options];
+}
+
+#pragma mark -
+#pragma mark UICGDirectionsDelegate
+
+- (void)directionsDidFinishInitialize:(UICGDirections *)directions {
+	[self updateDirections];
+}
+
+- (void)directions:(UICGDirections *)directions didFailInitializeWithError:(NSError *)error {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+	[alertView show];
+	[alertView release];
+}
+
+- (void)directionsDidUpdateDirections:(UICGDirections *)directions {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	
+	// Overlay polylines
+	UICGPolyline *polyline = [self.directions polyline];
+	NSArray *routePoints = [polyline routePoints];
+	[routeOverlayView setRoutes:routePoints];
+	
+	// Add annotations
+	UICRouteAnnotation *startAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
+																					title:@"Current Location"
+																				 subtitle:nil
+																		   annotationType:UICRouteAnnotationTypeStart] autorelease];
+	UICRouteAnnotation *endAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints lastObject] coordinate]
+																				  title:self.task.name
+																			   subtitle:self.task.location
+																		 annotationType:UICRouteAnnotationTypeEnd] autorelease];
+	
+	[self.mapView addAnnotations:[NSArray arrayWithObjects:startAnnotation, endAnnotation, nil]];
+}
+
+- (void)directions:(UICGDirections *)directions didFailWithMessage:(NSString *)message {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+	[alertView show];
+	[alertView release];
+}
+
 #pragma mark -
 #pragma mark Map View Delegate + Utilities
 
@@ -77,46 +150,78 @@
 	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
-	if ([annotation respondsToSelector:@selector(task)]) {
-		static NSString *defaultPinID = @"DefaultPinID";
-		
-		MKPinAnnotationView *mkav = (MKPinAnnotationView *)[aMapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
-		if (mkav == nil) {
-			mkav = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:defaultPinID] autorelease];
-			mkav.canShowCallout = TRUE;
-			mkav.pinColor = MKPinAnnotationColorPurple;
+//- (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id <MKAnnotation>)annotation
+//{
+//	if ([annotation respondsToSelector:@selector(task)]) {
+//		static NSString *defaultPinID = @"DefaultPinID";
+//		
+//		MKPinAnnotationView *mkav = (MKPinAnnotationView *)[aMapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
+//		if (mkav == nil) {
+//			mkav = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:defaultPinID] autorelease];
+//			mkav.canShowCallout = TRUE;
+//			mkav.pinColor = MKPinAnnotationColorPurple;
+//		}
+//		
+//		return mkav;
+//	}
+//	return nil;
+//}
+//
+//- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
+//	CGRect visibleRect = [self.mapView annotationVisibleRect]; 
+//    for (MKAnnotationView *view in views) {
+//		TaskAnnotation *annotation = (TaskAnnotation *)view.annotation;
+//		if ([annotation respondsToSelector:@selector(task)]) {
+//			CGRect endingFrame = view.frame;
+//			CGRect startingFrame = endingFrame; 
+//			startingFrame.origin.y = visibleRect.origin.y - startingFrame.size.height;
+//			view.frame = startingFrame;
+//			[UIView beginAnimations:@"mapPin" context:NULL]; 
+//			[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+//			[UIView setAnimationDuration:0.15];
+//			[UIView setAnimationDelegate:self];
+//			[UIView setAnimationDidStopSelector:@selector(mapPinAnimationDidStop)];
+//			view.frame = endingFrame;
+//			[UIView commitAnimations];
+//		}
+//    }
+//}
+
+#pragma mark <MKMapViewDelegate> Methods
+
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
+	self.routeOverlayView.hidden = YES;
+}
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+	routeOverlayView.hidden = NO;
+	[routeOverlayView setNeedsDisplay];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation {
+	static NSString *identifier = @"RoutePinAnnotation";
+	
+	if ([annotation isKindOfClass:[UICRouteAnnotation class]]) {
+		MKPinAnnotationView *pinAnnotation = (MKPinAnnotationView *)[aMapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+		if(!pinAnnotation) {
+			pinAnnotation = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier] autorelease];
 		}
 		
-		return mkav;
+		if ([(UICRouteAnnotation *)annotation annotationType] == UICRouteAnnotationTypeStart) {
+			pinAnnotation.pinColor = MKPinAnnotationColorGreen;
+		} else if ([(UICRouteAnnotation *)annotation annotationType] == UICRouteAnnotationTypeEnd) {
+			pinAnnotation.pinColor = MKPinAnnotationColorRed;
+		} else {
+			pinAnnotation.pinColor = MKPinAnnotationColorPurple;
+		}
+		
+		pinAnnotation.animatesDrop = YES;
+		pinAnnotation.enabled = YES;
+		pinAnnotation.canShowCallout = YES;
+		return pinAnnotation;
 	}
+	
 	return nil;
-}
-
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
-	CGRect visibleRect = [self.mapView annotationVisibleRect]; 
-    for (MKAnnotationView *view in views) {
-		TaskAnnotation *annotation = (TaskAnnotation *)view.annotation;
-		if ([annotation respondsToSelector:@selector(task)]) {
-			CGRect endingFrame = view.frame;
-			CGRect startingFrame = endingFrame; 
-			startingFrame.origin.y = visibleRect.origin.y - startingFrame.size.height;
-			view.frame = startingFrame;
-			[UIView beginAnimations:@"mapPin" context:NULL]; 
-			[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-			[UIView setAnimationDuration:0.15];
-			[UIView setAnimationDelegate:self];
-			[UIView setAnimationDidStopSelector:@selector(mapPinAnimationDidStop)];
-			view.frame = endingFrame;
-			[UIView commitAnimations];
-		}
-    }
-}
-
-- (void)mapPinAnimationDidStop
-{
-	[self.mapView selectAnnotation:self.currentAnnotation animated:TRUE];
 }
 
 #pragma mark -
@@ -126,8 +231,10 @@
 {
 	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
 	
+	[startPoint release];
+	[endPoint release];
+	
 	[task release];
-	[currentAnnotation release];
 	[mapView release];
 	
 	[super dealloc];

@@ -234,6 +234,17 @@
 		2490FE5C12E3572D00F56B39 /* btn_backarrow_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FE5812E3572D00F56B39 /* btn_backarrow_touch.png */; };
 		2490FE5D12E3572D00F56B39 /* btn_backarrow_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FE5912E3572D00F56B39 /* btn_backarrow_touch@2x.png */; };
 		2490FFF712E36D9900F56B39 /* UIColor+i7HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2490FFCD12E36D9900F56B39 /* UIColor+i7HexColor.m */; };
+		2491129812EC2E44009191BA /* json2.js in Resources */ = {isa = PBXBuildFile; fileRef = 2491129612EC2E44009191BA /* json2.js */; };
+		2491129912EC2E44009191BA /* api.html in Resources */ = {isa = PBXBuildFile; fileRef = 2491129712EC2E44009191BA /* api.html */; };
+		249112AE12EC2E94009191BA /* UICRouteOverlayMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491129C12EC2E94009191BA /* UICRouteOverlayMapView.m */; };
+		249112AF12EC2E94009191BA /* UICRouteAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491129E12EC2E94009191BA /* UICRouteAnnotation.m */; };
+		249112B012EC2E94009191BA /* UICGStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112A012EC2E94009191BA /* UICGStep.m */; };
+		249112B112EC2E94009191BA /* UICGRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112A212EC2E94009191BA /* UICGRoute.m */; };
+		249112B212EC2E94009191BA /* UICGPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112A412EC2E94009191BA /* UICGPolyline.m */; };
+		249112B312EC2E94009191BA /* UICGoogleMapsAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112A612EC2E94009191BA /* UICGoogleMapsAPI.m */; };
+		249112B412EC2E94009191BA /* UICGDirectionsOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112A812EC2E94009191BA /* UICGDirectionsOptions.m */; };
+		249112B512EC2E94009191BA /* UICGDirections.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112AA12EC2E94009191BA /* UICGDirections.m */; };
+		249112B612EC2E94009191BA /* UICGClientGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112AC12EC2E94009191BA /* UICGClientGeocoder.m */; };
 		24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */; };
 		24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* InfoViewController.m */; };
 		24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoView.xib */; };
@@ -256,6 +267,15 @@
 		24E44FD312EC0F2A00F08B7E /* TaskDirectionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E44FD212EC0F2A00F08B7E /* TaskDirectionsView.xib */; };
 		24E44FEE12EC125A00F08B7E /* TaskDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44FED12EC125A00F08B7E /* TaskDetailsViewController.m */; };
 		24E4500512EC138E00F08B7E /* TaskDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4500412EC138E00F08B7E /* TaskDetailsView.xib */; };
+		24EDF26812EC2A3D00BC02B7 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF25512EC2A3D00BC02B7 /* SBJsonWriter.m */; };
+		24EDF26912EC2A3D00BC02B7 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF25712EC2A3D00BC02B7 /* SBJsonTokeniser.m */; };
+		24EDF26A12EC2A3D00BC02B7 /* SBJsonStreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF25912EC2A3D00BC02B7 /* SBJsonStreamWriterState.m */; };
+		24EDF26B12EC2A3D00BC02B7 /* SBJsonStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF25B12EC2A3D00BC02B7 /* SBJsonStreamWriter.m */; };
+		24EDF26C12EC2A3D00BC02B7 /* SBJsonStreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF25D12EC2A3D00BC02B7 /* SBJsonStreamParserState.m */; };
+		24EDF26D12EC2A3D00BC02B7 /* SBJsonStreamParserAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF25F12EC2A3D00BC02B7 /* SBJsonStreamParserAdapter.m */; };
+		24EDF26E12EC2A3D00BC02B7 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF26112EC2A3D00BC02B7 /* SBJsonStreamParser.m */; };
+		24EDF26F12EC2A3D00BC02B7 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF26312EC2A3D00BC02B7 /* SBJsonParser.m */; };
+		24EDF27012EC2A3D00BC02B7 /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EDF26512EC2A3D00BC02B7 /* NSObject+JSON.m */; };
 		24F8814812D16A7200370A5F /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878BB12D16A6F00370A5F /* ASIAuthenticationDialog.m */; };
 		24F8814912D16A7200370A5F /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878BE12D16A6F00370A5F /* ASIDataCompressor.m */; };
 		24F8814A12D16A7200370A5F /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878C012D16A6F00370A5F /* ASIDataDecompressor.m */; };
@@ -279,15 +299,6 @@
 		24F883C712D16A7200370A5F /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24F87C6E12D16A7000370A5F /* grayArrow@2x.png */; };
 		24F883C812D16A7200370A5F /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 24F87C6F12D16A7000370A5F /* whiteArrow.png */; };
 		24F883C912D16A7200370A5F /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24F87C7012D16A7000370A5F /* whiteArrow@2x.png */; };
-		24F8841612D16A7200370A5F /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87D0712D16A7000370A5F /* NSObject+JSON.m */; };
-		24F8841712D16A7200370A5F /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87D0912D16A7000370A5F /* SBJsonParser.m */; };
-		24F8841812D16A7200370A5F /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87D0B12D16A7000370A5F /* SBJsonStreamParser.m */; };
-		24F8841912D16A7200370A5F /* SBJsonStreamParserAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87D0D12D16A7000370A5F /* SBJsonStreamParserAdapter.m */; };
-		24F8841A12D16A7200370A5F /* SBJsonStreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87D0F12D16A7000370A5F /* SBJsonStreamParserState.m */; };
-		24F8841B12D16A7200370A5F /* SBJsonStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87D1112D16A7000370A5F /* SBJsonStreamWriter.m */; };
-		24F8841C12D16A7200370A5F /* SBJsonStreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87D1312D16A7000370A5F /* SBJsonStreamWriterState.m */; };
-		24F8841D12D16A7200370A5F /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87D1512D16A7000370A5F /* SBJsonTokeniser.m */; };
-		24F8841E12D16A7200370A5F /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87D1712D16A7000370A5F /* SBJsonWriter.m */; };
 		24F8852112D16A7200370A5F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87E4A12D16A7100370A5F /* MBProgressHUD.m */; };
 		24F8859512D16A7300370A5F /* NSDate-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87F0E12D16A7100370A5F /* NSDate-Utilities.m */; };
 		24F8859B12D16A7300370A5F /* TimeFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F87F1612D16A7100370A5F /* TimeFormatters.m */; };
@@ -605,6 +616,26 @@
 		2490FE5912E3572D00F56B39 /* btn_backarrow_touch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_backarrow_touch@2x.png"; sourceTree = "<group>"; };
 		2490FFCC12E36D9900F56B39 /* UIColor+i7HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+i7HexColor.h"; sourceTree = "<group>"; };
 		2490FFCD12E36D9900F56B39 /* UIColor+i7HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+i7HexColor.m"; sourceTree = "<group>"; };
+		2491129612EC2E44009191BA /* json2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = json2.js; sourceTree = "<group>"; };
+		2491129712EC2E44009191BA /* api.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = api.html; sourceTree = "<group>"; };
+		2491129C12EC2E94009191BA /* UICRouteOverlayMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICRouteOverlayMapView.m; sourceTree = "<group>"; };
+		2491129D12EC2E94009191BA /* UICRouteOverlayMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICRouteOverlayMapView.h; sourceTree = "<group>"; };
+		2491129E12EC2E94009191BA /* UICRouteAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICRouteAnnotation.m; sourceTree = "<group>"; };
+		2491129F12EC2E94009191BA /* UICRouteAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICRouteAnnotation.h; sourceTree = "<group>"; };
+		249112A012EC2E94009191BA /* UICGStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGStep.m; sourceTree = "<group>"; };
+		249112A112EC2E94009191BA /* UICGStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGStep.h; sourceTree = "<group>"; };
+		249112A212EC2E94009191BA /* UICGRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGRoute.m; sourceTree = "<group>"; };
+		249112A312EC2E94009191BA /* UICGRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGRoute.h; sourceTree = "<group>"; };
+		249112A412EC2E94009191BA /* UICGPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGPolyline.m; sourceTree = "<group>"; };
+		249112A512EC2E94009191BA /* UICGPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGPolyline.h; sourceTree = "<group>"; };
+		249112A612EC2E94009191BA /* UICGoogleMapsAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGoogleMapsAPI.m; sourceTree = "<group>"; };
+		249112A712EC2E94009191BA /* UICGoogleMapsAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGoogleMapsAPI.h; sourceTree = "<group>"; };
+		249112A812EC2E94009191BA /* UICGDirectionsOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGDirectionsOptions.m; sourceTree = "<group>"; };
+		249112A912EC2E94009191BA /* UICGDirectionsOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGDirectionsOptions.h; sourceTree = "<group>"; };
+		249112AA12EC2E94009191BA /* UICGDirections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGDirections.m; sourceTree = "<group>"; };
+		249112AB12EC2E94009191BA /* UICGDirections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGDirections.h; sourceTree = "<group>"; };
+		249112AC12EC2E94009191BA /* UICGClientGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGClientGeocoder.m; sourceTree = "<group>"; };
+		249112AD12EC2E94009191BA /* UICGClientGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGClientGeocoder.h; sourceTree = "<group>"; };
 		24E4496812EBA54900F08B7E /* TasksUpdatedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksUpdatedDataSource.h; sourceTree = "<group>"; };
 		24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksUpdatedDataSource.m; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -636,6 +667,25 @@
 		24E44FEC12EC125A00F08B7E /* TaskDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailsViewController.h; sourceTree = "<group>"; };
 		24E44FED12EC125A00F08B7E /* TaskDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailsViewController.m; sourceTree = "<group>"; };
 		24E4500412EC138E00F08B7E /* TaskDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskDetailsView.xib; sourceTree = "<group>"; };
+		24EDF25512EC2A3D00BC02B7 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		24EDF25612EC2A3D00BC02B7 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		24EDF25712EC2A3D00BC02B7 /* SBJsonTokeniser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonTokeniser.m; sourceTree = "<group>"; };
+		24EDF25812EC2A3D00BC02B7 /* SBJsonTokeniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonTokeniser.h; sourceTree = "<group>"; };
+		24EDF25912EC2A3D00BC02B7 /* SBJsonStreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriterState.m; sourceTree = "<group>"; };
+		24EDF25A12EC2A3D00BC02B7 /* SBJsonStreamWriterState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriterState.h; sourceTree = "<group>"; };
+		24EDF25B12EC2A3D00BC02B7 /* SBJsonStreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriter.m; sourceTree = "<group>"; };
+		24EDF25C12EC2A3D00BC02B7 /* SBJsonStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriter.h; sourceTree = "<group>"; };
+		24EDF25D12EC2A3D00BC02B7 /* SBJsonStreamParserState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserState.m; sourceTree = "<group>"; };
+		24EDF25E12EC2A3D00BC02B7 /* SBJsonStreamParserState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserState.h; sourceTree = "<group>"; };
+		24EDF25F12EC2A3D00BC02B7 /* SBJsonStreamParserAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserAdapter.m; sourceTree = "<group>"; };
+		24EDF26012EC2A3D00BC02B7 /* SBJsonStreamParserAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAdapter.h; sourceTree = "<group>"; };
+		24EDF26112EC2A3D00BC02B7 /* SBJsonStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParser.m; sourceTree = "<group>"; };
+		24EDF26212EC2A3D00BC02B7 /* SBJsonStreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParser.h; sourceTree = "<group>"; };
+		24EDF26312EC2A3D00BC02B7 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		24EDF26412EC2A3D00BC02B7 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		24EDF26512EC2A3D00BC02B7 /* NSObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JSON.m"; sourceTree = "<group>"; };
+		24EDF26612EC2A3D00BC02B7 /* NSObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSON.h"; sourceTree = "<group>"; };
+		24EDF26712EC2A3D00BC02B7 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		24F878BA12D16A6F00370A5F /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		24F878BB12D16A6F00370A5F /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		24F878BC12D16A6F00370A5F /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -679,25 +729,6 @@
 		24F87C6F12D16A7000370A5F /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		24F87C7012D16A7000370A5F /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		24F87CDA12D16A7000370A5F /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
-		24F87D0512D16A7000370A5F /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
-		24F87D0612D16A7000370A5F /* NSObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSON.h"; sourceTree = "<group>"; };
-		24F87D0712D16A7000370A5F /* NSObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JSON.m"; sourceTree = "<group>"; };
-		24F87D0812D16A7000370A5F /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
-		24F87D0912D16A7000370A5F /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
-		24F87D0A12D16A7000370A5F /* SBJsonStreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParser.h; sourceTree = "<group>"; };
-		24F87D0B12D16A7000370A5F /* SBJsonStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParser.m; sourceTree = "<group>"; };
-		24F87D0C12D16A7000370A5F /* SBJsonStreamParserAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAdapter.h; sourceTree = "<group>"; };
-		24F87D0D12D16A7000370A5F /* SBJsonStreamParserAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserAdapter.m; sourceTree = "<group>"; };
-		24F87D0E12D16A7000370A5F /* SBJsonStreamParserState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserState.h; sourceTree = "<group>"; };
-		24F87D0F12D16A7000370A5F /* SBJsonStreamParserState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserState.m; sourceTree = "<group>"; };
-		24F87D1012D16A7000370A5F /* SBJsonStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriter.h; sourceTree = "<group>"; };
-		24F87D1112D16A7000370A5F /* SBJsonStreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriter.m; sourceTree = "<group>"; };
-		24F87D1212D16A7000370A5F /* SBJsonStreamWriterState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriterState.h; sourceTree = "<group>"; };
-		24F87D1312D16A7000370A5F /* SBJsonStreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriterState.m; sourceTree = "<group>"; };
-		24F87D1412D16A7000370A5F /* SBJsonTokeniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonTokeniser.h; sourceTree = "<group>"; };
-		24F87D1512D16A7000370A5F /* SBJsonTokeniser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonTokeniser.m; sourceTree = "<group>"; };
-		24F87D1612D16A7000370A5F /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		24F87D1712D16A7000370A5F /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		24F87E4912D16A7100370A5F /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		24F87E4A12D16A7100370A5F /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		24F87F0D12D16A7100370A5F /* NSDate-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate-Utilities.h"; sourceTree = "<group>"; };
@@ -990,6 +1021,41 @@
 			path = "UIColor-i7HexColor";
 			sourceTree = "<group>";
 		};
+		2491124F12EC2E0F009191BA /* MapKit-Route-Directions */ = {
+			isa = PBXGroup;
+			children = (
+				2491129612EC2E44009191BA /* json2.js */,
+				2491129712EC2E44009191BA /* api.html */,
+				2491127912EC2E0F009191BA /* Classes */,
+			);
+			path = "MapKit-Route-Directions";
+			sourceTree = "<group>";
+		};
+		2491127912EC2E0F009191BA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2491129D12EC2E94009191BA /* UICRouteOverlayMapView.h */,
+				2491129C12EC2E94009191BA /* UICRouteOverlayMapView.m */,
+				2491129F12EC2E94009191BA /* UICRouteAnnotation.h */,
+				2491129E12EC2E94009191BA /* UICRouteAnnotation.m */,
+				249112A112EC2E94009191BA /* UICGStep.h */,
+				249112A012EC2E94009191BA /* UICGStep.m */,
+				249112A312EC2E94009191BA /* UICGRoute.h */,
+				249112A212EC2E94009191BA /* UICGRoute.m */,
+				249112A512EC2E94009191BA /* UICGPolyline.h */,
+				249112A412EC2E94009191BA /* UICGPolyline.m */,
+				249112A712EC2E94009191BA /* UICGoogleMapsAPI.h */,
+				249112A612EC2E94009191BA /* UICGoogleMapsAPI.m */,
+				249112A912EC2E94009191BA /* UICGDirectionsOptions.h */,
+				249112A812EC2E94009191BA /* UICGDirectionsOptions.m */,
+				249112AB12EC2E94009191BA /* UICGDirections.h */,
+				249112AA12EC2E94009191BA /* UICGDirections.m */,
+				249112AD12EC2E94009191BA /* UICGClientGeocoder.h */,
+				249112AC12EC2E94009191BA /* UICGClientGeocoder.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		24ADA8C412C84C97000BE62C /* Edition */ = {
 			isa = PBXGroup;
 			children = (
@@ -1119,6 +1185,7 @@
 		24F8788D12D16A6F00370A5F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				2491124F12EC2E0F009191BA /* MapKit-Route-Directions */,
 				2448D76D12E9241D005EEEDA /* OHAttributedLabel */,
 				2448CB4A12E7EA5E005EEEDA /* modelobject */,
 				2490FF8412E36D9900F56B39 /* UIColor-i7HexColor */,
@@ -1304,25 +1371,25 @@
 		24F87D0412D16A7000370A5F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				24F87D0512D16A7000370A5F /* JSON.h */,
-				24F87D0612D16A7000370A5F /* NSObject+JSON.h */,
-				24F87D0712D16A7000370A5F /* NSObject+JSON.m */,
-				24F87D0812D16A7000370A5F /* SBJsonParser.h */,
-				24F87D0912D16A7000370A5F /* SBJsonParser.m */,
-				24F87D0A12D16A7000370A5F /* SBJsonStreamParser.h */,
-				24F87D0B12D16A7000370A5F /* SBJsonStreamParser.m */,
-				24F87D0C12D16A7000370A5F /* SBJsonStreamParserAdapter.h */,
-				24F87D0D12D16A7000370A5F /* SBJsonStreamParserAdapter.m */,
-				24F87D0E12D16A7000370A5F /* SBJsonStreamParserState.h */,
-				24F87D0F12D16A7000370A5F /* SBJsonStreamParserState.m */,
-				24F87D1012D16A7000370A5F /* SBJsonStreamWriter.h */,
-				24F87D1112D16A7000370A5F /* SBJsonStreamWriter.m */,
-				24F87D1212D16A7000370A5F /* SBJsonStreamWriterState.h */,
-				24F87D1312D16A7000370A5F /* SBJsonStreamWriterState.m */,
-				24F87D1412D16A7000370A5F /* SBJsonTokeniser.h */,
-				24F87D1512D16A7000370A5F /* SBJsonTokeniser.m */,
-				24F87D1612D16A7000370A5F /* SBJsonWriter.h */,
-				24F87D1712D16A7000370A5F /* SBJsonWriter.m */,
+				24EDF25512EC2A3D00BC02B7 /* SBJsonWriter.m */,
+				24EDF25612EC2A3D00BC02B7 /* SBJsonWriter.h */,
+				24EDF25712EC2A3D00BC02B7 /* SBJsonTokeniser.m */,
+				24EDF25812EC2A3D00BC02B7 /* SBJsonTokeniser.h */,
+				24EDF25912EC2A3D00BC02B7 /* SBJsonStreamWriterState.m */,
+				24EDF25A12EC2A3D00BC02B7 /* SBJsonStreamWriterState.h */,
+				24EDF25B12EC2A3D00BC02B7 /* SBJsonStreamWriter.m */,
+				24EDF25C12EC2A3D00BC02B7 /* SBJsonStreamWriter.h */,
+				24EDF25D12EC2A3D00BC02B7 /* SBJsonStreamParserState.m */,
+				24EDF25E12EC2A3D00BC02B7 /* SBJsonStreamParserState.h */,
+				24EDF25F12EC2A3D00BC02B7 /* SBJsonStreamParserAdapter.m */,
+				24EDF26012EC2A3D00BC02B7 /* SBJsonStreamParserAdapter.h */,
+				24EDF26112EC2A3D00BC02B7 /* SBJsonStreamParser.m */,
+				24EDF26212EC2A3D00BC02B7 /* SBJsonStreamParser.h */,
+				24EDF26312EC2A3D00BC02B7 /* SBJsonParser.m */,
+				24EDF26412EC2A3D00BC02B7 /* SBJsonParser.h */,
+				24EDF26512EC2A3D00BC02B7 /* NSObject+JSON.m */,
+				24EDF26612EC2A3D00BC02B7 /* NSObject+JSON.h */,
+				24EDF26712EC2A3D00BC02B7 /* JSON.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2095,6 +2162,8 @@
 				24E44F6A12EC09D200F08B7E /* TaskScheduleView.xib in Resources */,
 				24E44FD312EC0F2A00F08B7E /* TaskDirectionsView.xib in Resources */,
 				24E4500512EC138E00F08B7E /* TaskDetailsView.xib in Resources */,
+				2491129912EC2E44009191BA /* api.html in Resources */,
+				2491129812EC2E44009191BA /* json2.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2135,15 +2204,6 @@
 				24F8837912D16A7200370A5F /* EGOImageLoader.m in Sources */,
 				24F8837A12D16A7200370A5F /* EGOImageView.m in Sources */,
 				24F883C112D16A7200370A5F /* EGORefreshTableHeaderView.m in Sources */,
-				24F8841612D16A7200370A5F /* NSObject+JSON.m in Sources */,
-				24F8841712D16A7200370A5F /* SBJsonParser.m in Sources */,
-				24F8841812D16A7200370A5F /* SBJsonStreamParser.m in Sources */,
-				24F8841912D16A7200370A5F /* SBJsonStreamParserAdapter.m in Sources */,
-				24F8841A12D16A7200370A5F /* SBJsonStreamParserState.m in Sources */,
-				24F8841B12D16A7200370A5F /* SBJsonStreamWriter.m in Sources */,
-				24F8841C12D16A7200370A5F /* SBJsonStreamWriterState.m in Sources */,
-				24F8841D12D16A7200370A5F /* SBJsonTokeniser.m in Sources */,
-				24F8841E12D16A7200370A5F /* SBJsonWriter.m in Sources */,
 				24F8852112D16A7200370A5F /* MBProgressHUD.m in Sources */,
 				24F8859512D16A7300370A5F /* NSDate-Utilities.m in Sources */,
 				24F8859B12D16A7300370A5F /* TimeFormatters.m in Sources */,
@@ -2211,6 +2271,24 @@
 				24E44F9C12EC0DB100F08B7E /* TaskDirectionViewController.m in Sources */,
 				24E44FB212EC0E5300F08B7E /* TaskAnnotation.m in Sources */,
 				24E44FEE12EC125A00F08B7E /* TaskDetailsViewController.m in Sources */,
+				24EDF26812EC2A3D00BC02B7 /* SBJsonWriter.m in Sources */,
+				24EDF26912EC2A3D00BC02B7 /* SBJsonTokeniser.m in Sources */,
+				24EDF26A12EC2A3D00BC02B7 /* SBJsonStreamWriterState.m in Sources */,
+				24EDF26B12EC2A3D00BC02B7 /* SBJsonStreamWriter.m in Sources */,
+				24EDF26C12EC2A3D00BC02B7 /* SBJsonStreamParserState.m in Sources */,
+				24EDF26D12EC2A3D00BC02B7 /* SBJsonStreamParserAdapter.m in Sources */,
+				24EDF26E12EC2A3D00BC02B7 /* SBJsonStreamParser.m in Sources */,
+				24EDF26F12EC2A3D00BC02B7 /* SBJsonParser.m in Sources */,
+				24EDF27012EC2A3D00BC02B7 /* NSObject+JSON.m in Sources */,
+				249112AE12EC2E94009191BA /* UICRouteOverlayMapView.m in Sources */,
+				249112AF12EC2E94009191BA /* UICRouteAnnotation.m in Sources */,
+				249112B012EC2E94009191BA /* UICGStep.m in Sources */,
+				249112B112EC2E94009191BA /* UICGRoute.m in Sources */,
+				249112B212EC2E94009191BA /* UICGPolyline.m in Sources */,
+				249112B312EC2E94009191BA /* UICGoogleMapsAPI.m in Sources */,
+				249112B412EC2E94009191BA /* UICGDirectionsOptions.m in Sources */,
+				249112B512EC2E94009191BA /* UICGDirections.m in Sources */,
+				249112B612EC2E94009191BA /* UICGClientGeocoder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2222,19 +2300,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-IPhone/Libraries\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-MacOSX/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Libraries-MaxOSX/BWToolkit.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForSnowLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-IPhone/Libraries\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-MacOSX/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Libraries-MaxOSX/BWToolkit.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForSnowLeopard.ibplugin/Contents/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2242,13 +2308,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Source/External/objectivesupport/google_toolbar/TigerGcov\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/Mobclix/mobclix.lib\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/Mobclix/mobclix.lib-nonthumb\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/objectivesupport/google_toolbar/TigerGcov\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "-DDEBUG";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2263,31 +2323,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-IPhone/Libraries\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-MacOSX/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Libraries-MaxOSX/BWToolkit.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForSnowLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-IPhone/Libraries\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-MacOSX/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Libraries-MaxOSX/BWToolkit.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForSnowLeopard.ibplugin/Contents/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Source/Main/Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Source/External/objectivesupport/google_toolbar/TigerGcov\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/Mobclix/mobclix.lib\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/Mobclix/mobclix.lib-nonthumb\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/objectivesupport/google_toolbar/TigerGcov\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -2320,31 +2362,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-IPhone/Libraries\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-MacOSX/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Libraries-MaxOSX/BWToolkit.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForSnowLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-IPhone/Libraries\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-MacOSX/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Libraries-MaxOSX/BWToolkit.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForSnowLeopard.ibplugin/Contents/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Source/Main/Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Source/External/objectivesupport/google_toolbar/TigerGcov\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/Mobclix/mobclix.lib\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/Mobclix/mobclix.lib-nonthumb\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/objectivesupport/google_toolbar/TigerGcov\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -2378,31 +2402,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-IPhone/Libraries\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-MacOSX/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Libraries-MaxOSX/BWToolkit.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForSnowLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-IPhone/Libraries\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Examples/MyTestable-MacOSX/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Libraries-MaxOSX/BWToolkit.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForLeopard.ibplugin/Contents/Frameworks\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/asihttprequest/External/GHUnit/Project/Plugins/BWToolkitForSnowLeopard.ibplugin/Contents/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Source/Main/Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Source/External/objectivesupport/google_toolbar/TigerGcov\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/Mobclix/mobclix.lib\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/Mobclix/mobclix.lib-nonthumb\"",
-					"\"$(SRCROOT)/Source/External/ObjectiveDump3/Source/External/objectivesupport/google_toolbar/TigerGcov\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
