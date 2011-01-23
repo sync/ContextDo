@@ -17,6 +17,7 @@
 @property (nonatomic, readonly) BOOL isShowingGroupsEdit;
 @property (nonatomic, readonly) InfoViewController *infoViewController;
 @property (nonatomic, readonly) BOOL isShowingInfoView;
+@property (nonatomic, assign) UIView *blackedOutView;
 
 @property (nonatomic, retain) IBOutlet CTXDODarkTextField *addGroupTextField;
 

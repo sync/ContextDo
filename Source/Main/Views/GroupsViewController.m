@@ -19,13 +19,15 @@
 - (Group *)groupForId:(NSNumber *)groupId;
 - (void)showInfoAnimated:(BOOL)animated;
 - (void)hideInfoAnimated:(BOOL)animated;
+- (void)blackOutMainViewAnimated:(BOOL)animated;
+- (void)hideBlackOutMainViewAnimated:(BOOL)animated;
 @end
 
 
 @implementation GroupsViewController
 
 @synthesize groupsDataSource, groups, groupsEditViewController, addGroupTextField;
-@synthesize infoViewController, isShowingInfoView;
+@synthesize infoViewController, isShowingInfoView, blackedOutView;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -47,6 +49,7 @@
 	[groupsEditViewController release];
 	groupsEditViewController = nil;
 	
+	[self hideInfoAnimated:FALSE];
 	[infoViewController release];
 	infoViewController = nil;
 	
@@ -478,6 +481,7 @@
 													InfoShowingHeight);
 	
 	[[AppDelegate sharedAppDelegate]blackOutTopViewElementsAnimated:animated];
+	[self blackOutMainViewAnimated:animated];
 	
 	if (animated) {
 		[UIView commitAnimations];
@@ -502,10 +506,82 @@
 													InfoShowingHeight);
 	
 	[[AppDelegate sharedAppDelegate]hideBlackOutTopViewElementsAnimated:animated];
+	[self hideBlackOutMainViewAnimated:TRUE];
 	
 	if (animated) {
 		[UIView commitAnimations];
 	}
+}
+
+#pragma mark -
+#pragma mark Blackout Main View
+
+- (BOOL)isBlackingOutMainView
+{
+	return (self.blackedOutView != nil);
+}
+
+- (void)blackOutMainViewAnimated:(BOOL)animated
+{
+	if (self.isBlackingOutMainView) {
+		return;
+	}
+	
+	CGSize boundsSize = self.view.bounds.size;
+	self.blackedOutView = [[[UIView alloc]initWithFrame:CGRectMake(0.0, 
+																   -boundsSize.height,
+																   boundsSize.width,
+																   boundsSize.height)]autorelease];
+	self.blackedOutView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].blackedOutColor;
+	[self.view insertSubview:self.blackedOutView belowSubview:self.infoViewController.view];
+	
+	
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDelay:0.1];
+		[UIView setAnimationDuration:0.3];
+		[UIView setAnimationCurve:UIViewAnimationCurveLinear];
+	}
+	
+	self.blackedOutView.frame = CGRectMake(0.0, 
+										   0.0,
+										   boundsSize.width,
+										   boundsSize.height);
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
+}
+
+- (void)hideBlackOutMainViewAnimated:(BOOL)animated
+{
+	if (!self.isBlackingOutMainView) {
+		return;
+	}
+	
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDuration:0.3];
+		[UIView setAnimationCurve:UIViewAnimationCurveLinear];
+		[UIView setAnimationDelegate:self];
+		[UIView setAnimationDidStopSelector:@selector(hideBlackoutAnimationDidStop)];
+	}
+	
+	CGSize boundsSize = self.view.bounds.size;
+	self.blackedOutView.frame = CGRectMake(0.0, 
+										   -boundsSize.height,
+										   boundsSize.width,
+										   boundsSize.height);
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
+}
+
+- (void)hideBlackoutAnimationDidStop
+{
+	[self.blackedOutView removeFromSuperview];
+	blackedOutView = nil;
 }
 
 #pragma mark -
