@@ -55,6 +55,7 @@
 	UIColor *highlightedTextColor = nil;
 	UIFont *font = nil;
 	NSString *leftImageNamed = nil;
+	UIColor *shadowColor = [UIColor colorWithHexString:@"00000040"];
 	if (cellContext == CTXDOCellContextExpiring) {
 		imageNamed = @"table_arrow_off.png";
 		highlightedImageNamed = @"table_arrow_touch.png";
@@ -76,13 +77,14 @@
 		highlightedTextColor = [UIColor whiteColor];
 		font = [UIFont boldSystemFontOfSize:16.0];
 		leftImageNamed = @"table_vertical_line_separator.png";
-	} else if (cellContext == CTXDOCellContextDueLight) {
+	} else if (cellContext == CTXDOCellContextUpatedTasksLight) {
 		imageNamed = @"table_arrow_due_off.png";
 		highlightedImageNamed = @"table_arrow_due_touch.png";
 		textColor = [UIColor whiteColor];
 		highlightedTextColor = [UIColor whiteColor];
-		font = [UIFont boldSystemFontOfSize:10.0];
+		font = [UIFont boldSystemFontOfSize:13.0];
 		leftImageNamed = nil;
+		shadowColor = nil;
 	} else {
 		imageNamed = @"table_arrow_off.png";
 		highlightedImageNamed = @"table_arrow_touch.png";
@@ -98,6 +100,7 @@
 	self.textLabel.font = font;
 	self.textLabel.textColor = textColor;
 	self.textLabel.highlightedTextColor = highlightedTextColor;
+	self.textLabel.shadowColor = shadowColor;
 	
 	self.imageView.image = (leftImageNamed) ? [UIImage imageNamed:leftImageNamed] : nil;
 }
@@ -111,7 +114,7 @@
 #define LeftDiff 5.0
 #define ImageLeftDiff 10.0
 #define ImageSeparatorLeftDiff 27.0
-#define TitleLefDiff 33.0
+#define TitleLefDiff ((self.cellContext != CTXDOCellContextUpatedTasksLight) ? 33.0 : 10.0)
 #define RightDiff 10.0
 #define CounterWidth 20.0
 	

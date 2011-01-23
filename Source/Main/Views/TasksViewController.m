@@ -173,12 +173,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-	Task *task  = nil;
-	if (self.searchDisplayController.active) {
-		[self.tasksDataSource taskForIndexPath:indexPath];
-	} else {
-		[self.searchTasksDataSource taskForIndexPath:indexPath];
-	}
+	TasksDataSource *dataSource = (TasksDataSource *)self.tableView.dataSource;
+	Task *task  = [dataSource taskForIndexPath:indexPath];
 	
 	if (task.taskId.integerValue != NSNotFound) {
 		

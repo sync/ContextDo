@@ -236,9 +236,10 @@
 		2490FFF712E36D9900F56B39 /* UIColor+i7HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2490FFCD12E36D9900F56B39 /* UIColor+i7HexColor.m */; };
 		24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */; };
 		24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* InfoViewController.m */; };
-		24E4497112EBA5A400F08B7E /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoViewController.xib */; };
+		24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoView.xib */; };
 		24E4499112EBA8B500F08B7E /* taskbar_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E4498F12EBA8B500F08B7E /* taskbar_shadow@2x.png */; };
 		24E4499212EBA8B500F08B7E /* taskbar_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E4499012EBA8B500F08B7E /* taskbar_shadow.png */; };
+		24E44A1412EBB58500F08B7E /* TasksInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44A1312EBB58500F08B7E /* TasksInfoCell.m */; };
 		24F8814812D16A7200370A5F /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878BB12D16A6F00370A5F /* ASIAuthenticationDialog.m */; };
 		24F8814912D16A7200370A5F /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878BE12D16A6F00370A5F /* ASIDataCompressor.m */; };
 		24F8814A12D16A7200370A5F /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F878C012D16A6F00370A5F /* ASIDataDecompressor.m */; };
@@ -592,9 +593,11 @@
 		24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksUpdatedDataSource.m; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
 		24E4496C12EBA56600F08B7E /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
-		24E4497012EBA5A400F08B7E /* InfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
+		24E4497012EBA5A400F08B7E /* InfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoView.xib; sourceTree = "<group>"; };
 		24E4498F12EBA8B500F08B7E /* taskbar_shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "taskbar_shadow@2x.png"; sourceTree = "<group>"; };
 		24E4499012EBA8B500F08B7E /* taskbar_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taskbar_shadow.png; sourceTree = "<group>"; };
+		24E44A1212EBB58500F08B7E /* TasksInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksInfoCell.h; sourceTree = "<group>"; };
+		24E44A1312EBB58500F08B7E /* TasksInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksInfoCell.m; sourceTree = "<group>"; };
 		24F878BA12D16A6F00370A5F /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		24F878BB12D16A6F00370A5F /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		24F878BC12D16A6F00370A5F /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -936,6 +939,8 @@
 				2489CAC312BE185000C1A58A /* TasksCell.m */,
 				2448D18E12E83B14005EEEDA /* TaskEditCell.h */,
 				2448D18F12E83B14005EEEDA /* TaskEditCell.m */,
+				24E44A1212EBB58500F08B7E /* TasksInfoCell.h */,
+				24E44A1312EBB58500F08B7E /* TasksInfoCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -972,7 +977,7 @@
 				24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */,
 				24E4496B12EBA56600F08B7E /* InfoViewController.h */,
 				24E4496C12EBA56600F08B7E /* InfoViewController.m */,
-				24E4497012EBA5A400F08B7E /* InfoViewController.xib */,
+				24E4497012EBA5A400F08B7E /* InfoView.xib */,
 			);
 			name = Info;
 			sourceTree = "<group>";
@@ -1953,7 +1958,7 @@
 				2448DDD612E9D1B4005EEEDA /* groupPanels_greenTouch@2x.png in Resources */,
 				2448DDD712E9D1B4005EEEDA /* groupPanelsTouch.png in Resources */,
 				2448DDD812E9D1B4005EEEDA /* groupPanelsTouch@2x.png in Resources */,
-				24E4497112EBA5A400F08B7E /* InfoViewController.xib in Resources */,
+				24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */,
 				24E4499112EBA8B500F08B7E /* taskbar_shadow@2x.png in Resources */,
 				24E4499212EBA8B500F08B7E /* taskbar_shadow.png in Resources */,
 			);
@@ -2065,6 +2070,7 @@
 				2448DCAB12E9AB77005EEEDA /* TaskLocationDataSource.m in Sources */,
 				24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */,
 				24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */,
+				24E44A1412EBB58500F08B7E /* TasksInfoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

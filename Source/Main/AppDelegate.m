@@ -161,56 +161,56 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 #pragma mark -
 #pragma mark Blackout Main View
 
-- (BOOL)isBlackingOutMainView
+- (BOOL)isBlackingOutTopViewElements
 {
 	return (self.blackedOutView != nil);
 }
 
-#define BlackoutToolbarHeightDiff(hideToolbar) ((hideToolbar) ?  0.0 : 44.0)
-
-- (void)blackOutMainViewBottomIncluded:(BOOL)bottomIncluded animated:(BOOL)animated
+- (void)blackOutTopViewElementsAnimated:(BOOL)animated
 {
-	if (self.isBlackingOutMainView) {
+	if (self.isBlackingOutTopViewElements) {
 		return;
 	}
 	
 	CGSize boundsSize = self.window.bounds.size;
 	self.blackedOutView = [[[UIView alloc]initWithFrame:CGRectMake(0.0, 
-																   -boundsSize.height,
+																   -(20 + 44),
 																   boundsSize.width,
-																   boundsSize.height - BlackoutToolbarHeightDiff(bottomIncluded))]autorelease];
+																   20 + 44)]autorelease];
 	self.blackedOutView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].blackedOutColor;
 	[self.window addSubview:self.blackedOutView];
 	
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDuration:0.4];
 	}
 	
 	self.blackedOutView.frame = CGRectMake(0.0, 
 										   0.0,
 										   boundsSize.width,
-										   boundsSize.height - BlackoutToolbarHeightDiff(bottomIncluded));
+										   self.blackedOutView.frame.size.height);
 	
 	if (animated) {
 		[UIView commitAnimations];
 	}
 }
 
-- (void)hideBlackOutMainViewAnimated:(BOOL)animated
+- (void)hideBlackOutTopViewElementsAnimated:(BOOL)animated
 {
-	if (!self.isBlackingOutMainView) {
+	if (!self.isBlackingOutTopViewElements) {
 		return;
 	}
 	
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDuration:0.4];
 		[UIView setAnimationDelegate:self];
 		[UIView setAnimationDidStopSelector:@selector(hideBlackoutAnimationDidStop)];
 	}
 	
 	CGSize boundsSize = self.window.bounds.size;
 	self.blackedOutView.frame = CGRectMake(0.0, 
-										   -boundsSize.height,
+										   -self.blackedOutView.frame.size.height,
 										   boundsSize.width,
 										   self.blackedOutView.frame.size.height);
 	

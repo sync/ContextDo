@@ -96,7 +96,7 @@
 			topImageNamed = @"table_due_top.png";
 			middleImageNamed = @"table_due_mid.png";
 			bottomImageNamed = @"table_due_bot.png";
-		} else if (self.cellContext == CTXDOCellContextDueLight) {
+		} else if (self.cellContext == CTXDOCellContextUpatedTasksLight) {
 			topImageNamed = @"table_info_top.png";
 			middleImageNamed = @"table_info_mid.png";
 			bottomImageNamed = @"table_info_bot.png";
@@ -130,7 +130,7 @@
 			topImageNamed = @"table_dueTouch_top.png";
 			middleImageNamed = @"table_dueTouch_mid.png";
 			bottomImageNamed = @"table_dueTouch_bot.png";
-		} else if (self.cellContext == CTXDOCellContextDueLight) {
+		} else if (self.cellContext == CTXDOCellContextUpatedTasksLight) {
 			topImageNamed = @"table_infoTouch_top.png";
 			middleImageNamed = @"table_infoTouch_mid.png";
 			bottomImageNamed = @"table_infoTouch_bot.png";
@@ -191,10 +191,13 @@
 	if (drawSeparator) {
 		CGContextRef context = UIGraphicsGetCurrentContext();
 		
+		CGFloat leftRightDiff = 1.0;
+		
 		if (self.cellContext == CTXDOCellContextTaskEditInput) {
 			[[UIColor colorWithHexString:@"bbbbbb"]set];
-		} else if (self.cellContext != CTXDOCellContextDueLight) {
+		} else if (self.cellContext != CTXDOCellContextUpatedTasksLight) {
 			[[UIColor colorWithHexString:@"242022"]set];
+			leftRightDiff = 0.0;
 		} else {
 			[[UIColor whiteColor]set];
 		}
@@ -202,8 +205,8 @@
 		CGContextSetLineWidth(context, 1.0);
 		
 		CGContextBeginPath(context);
-		CGContextMoveToPoint(context, LeftRightDiff, (boundsSize.height - 1.0) + 0.5);
-		CGContextAddLineToPoint(context, boundsSize.width - LeftRightDiff, (boundsSize.height - 1.0) + 0.5);
+		CGContextMoveToPoint(context, leftRightDiff, (boundsSize.height - 1.0) + 0.5);
+		CGContextAddLineToPoint(context, boundsSize.width - leftRightDiff, (boundsSize.height - 1.0) + 0.5);
 		CGContextStrokePath(context);
 	}
 	

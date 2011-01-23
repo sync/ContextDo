@@ -312,6 +312,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
+- (void)refreshTasksEdited
+{
+	NSString *notificationName = TasksWithinDidLoadNotification;
+	NSString *path = @"editedTasks";
+	
+	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc]init]autorelease];
+	[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+	[dateFormatter setDateStyle:NSDateFormatterShortStyle];
+	NSString *updatedSince = [dateFormatter stringFromDate:[NSDate date]];
+	NSString *url = TASKSUPDATEDSINCEURL(BASE_URL, TASKS_PATH, updatedSince, 1000000000);
+	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+}
 
 - (void)addTask:(Task *)task
 {
@@ -471,7 +483,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		} else if ([path isEqualToString:@"tasksWithGroupId"]|| 
 				   [path isEqualToString:@"tasksWithDue"] ||
 				   [path isEqualToString:@"tasksWithLatitude"] ||
-				   [path isEqualToString:@"tasksWithQuery"]) {
+				   [path isEqualToString:@"tasksWithQuery"] || 
+				   [path isEqualToString:@"editedTasks"]) {
 			[self parseTasks:request];
 		} else if ([path isEqualToString:@"addGroupWithName"]|| 
 				   [path isEqualToString:@"editGroupWithId"] ||

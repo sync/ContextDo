@@ -17,12 +17,15 @@
 - (void)showGroupsEditAnimated:(BOOL)animated;
 - (void)hideGroupsEditAnimated:(BOOL)animated;
 - (Group *)groupForId:(NSNumber *)groupId;
+- (void)showInfoAnimated:(BOOL)animated;
+- (void)hideInfoAnimated:(BOOL)animated;
 @end
 
 
 @implementation GroupsViewController
 
 @synthesize groupsDataSource, groups, groupsEditViewController, addGroupTextField;
+@synthesize infoViewController, isShowingInfoView;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -32,6 +35,8 @@
     self.title = @"Groups";
 	
 	[super viewDidLoad];
+	
+	[self hideInfoAnimated:FALSE];
 }
 
 - (void)viewDidUnload
@@ -41,6 +46,9 @@
 	[self hideGroupsEditAnimated:FALSE];
 	[groupsEditViewController release];
 	groupsEditViewController = nil;
+	
+	[infoViewController release];
+	infoViewController = nil;
 	
 	self.addGroupTextField = nil;
 }
@@ -123,11 +131,6 @@
 	
 	Group *group = [dict valueForKey:@"object"];
 	if (group) {
-//		NSInteger index = [self.groups indexOfObject:group];
-//		if (index != NSNotFound) {
-//			[self.groups replaceObjectAtIndex:index withObject:group];
-//			[self.tableView reloadData];
-//		}
 		if (!self.isShowingGroupsEdit) {
 			[self refreshGroups];
 		}
@@ -336,11 +339,6 @@
 - (void)showSettings
 {
 	// todo
-	if (![AppDelegate sharedAppDelegate].isBlackingOutMainView) {
-		[[AppDelegate sharedAppDelegate]blackOutMainViewBottomIncluded:FALSE animated:TRUE];
-	} else {
-		[[AppDelegate sharedAppDelegate]hideBlackOutMainViewAnimated:TRUE];
-	}
 }
 
 - (void)editButtonPressed
@@ -350,6 +348,15 @@
 	} else {
 		[self.groupsEditViewController.editingTextField resignFirstResponder];
 		[self hideGroupsEditAnimated:TRUE];
+	}
+}
+
+- (void)infoButtonPressed
+{
+	if (!self.isShowingInfoView) {
+		[self showInfoAnimated:TRUE];
+	} else {
+		[self hideInfoAnimated:TRUE];
 	}
 }
 
@@ -400,7 +407,7 @@
 	}
 }
 
-- (void)hideGroupsEditAnimated:(BOOL)animated;
+- (void)hideGroupsEditAnimated:(BOOL)animated
 {
 	if (!self.isShowingGroupsEdit) {
 		return;
@@ -415,8 +422,6 @@
 	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] editBarButtonItemEditing:FALSE
 																										   target:self
 																										 selector:@selector(editButtonPressed)];
-	//self.navigationItem.rightBarButtonItem = nil;
-	
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.4];
@@ -424,6 +429,79 @@
 	
 	CGSize boundsSize = self.view.bounds.size;
 	self.groupsEditViewController.view.frame = CGRectMake(0.0, boundsSize.height, boundsSize.width, boundsSize.height);
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
+}
+
+#pragma mark -
+#pragma mark InfoViewController
+
+#define InfoHiddenHeight 42.0
+#define InfoShowingHeight 290.0
+
+- (InfoViewController *)infoViewController
+{
+	if (!infoViewController) {
+		infoViewController = [[InfoViewController alloc]initWithNibName:@"InfoView" bundle:nil];
+		[self.view addSubview:infoViewController.view];
+		[self.view bringSubviewToFront:infoViewController.view];
+		[self.view bringSubviewToFront:self.groupsEditViewController.view];
+		[self.infoViewController.infoButton addTarget:self action:@selector(infoButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+	}
+	
+	return infoViewController;
+}
+
+- (BOOL)isShowingInfoView
+{
+	CGSize boundsSize = self.view.bounds.size;
+	return (self.infoViewController.view.frame.origin.y != boundsSize.height  - (boundsSize.height - InfoShowingHeight - InfoHiddenHeight));
+}
+
+- (void)showInfoAnimated:(BOOL)animated
+{
+	if (self.isShowingInfoView) {
+		return;
+	}
+	
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDuration:0.4];
+	}
+	
+	CGSize boundsSize = self.view.bounds.size;
+	self.infoViewController.view.frame = CGRectMake(0.0, 
+													boundsSize.height - InfoShowingHeight, 
+													boundsSize.width, 
+													InfoShowingHeight);
+	
+	[[AppDelegate sharedAppDelegate]blackOutTopViewElementsAnimated:animated];
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
+}
+
+- (void)hideInfoAnimated:(BOOL)animated
+{
+	if (!self.isShowingInfoView) {
+		return;
+	}
+		
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDuration:0.4];
+	}
+	
+	CGSize boundsSize = self.view.bounds.size;
+	self.infoViewController.view.frame = CGRectMake(0.0, 
+													boundsSize.height  - (boundsSize.height - InfoShowingHeight - InfoHiddenHeight), 
+													boundsSize.width, 
+													InfoShowingHeight);
+	
+	[[AppDelegate sharedAppDelegate]hideBlackOutTopViewElementsAnimated:animated];
 	
 	if (animated) {
 		[UIView commitAnimations];
@@ -467,6 +545,7 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupsDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupAddNotification];
 	
+	[infoViewController release];
 	[addGroupTextField release];
 	[groupsEditViewController release];
 	[groups release];

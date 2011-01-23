@@ -36,6 +36,7 @@
 #define TASKSDUEURL(base, path, due, page, perPage) [NSString stringWithFormat:@"%@?due=%@&page=%d&per_page=%d", CTXDOURL(base, path), due, page, perPage]
 #define TASKSWITHINURL(base, path, latitude, longitude, within, perPage) [NSString stringWithFormat:@"%@?latitude=%f&longitude=%f&within=%f&per_page=%d", CTXDOURL(base, path), latitude, longitude, within, perPage]
 #define TASKSSEARCHURL(base, path, query, page, perPage) [NSString stringWithFormat:@"%@?q=%@&page=%d&per_page=%d", CTXDOURL(base, path), query, page, perPage]
+#define TASKSUPDATEDSINCEURL(base, path, updatedSince, perPage) [NSString stringWithFormat:@"%@?updated_since=%@&per_page=%d", CTXDOURL(base, path), updatedSince, perPage]
 
 // Task
 #define TASKURL(base, path, groupId, taskId) [NSString stringWithFormat:@"%@%@%@", GROUPURL(base, path, groupId), TASKS_PATH, ((taskId) ? [NSString stringWithFormat:@"/%@", taskId] : @"")]
@@ -49,6 +50,7 @@
 #define TasksDidLoadNotification @"TasksDidLoadNotification"
 #define TasksDueDidLoadNotification @"TasksDueDidLoadNotification"
 #define TasksWithinDidLoadNotification @"TasksWithinDidLoadNotification"
+#define TasksUpdatedSinceDidLoadNotification @"TasksUpdatedSinceDidLoadNotification"
 #define TasksSearchDidLoadNotification @"TasksSearchDidLoadNotification"
 #define TaskAddNotification @"TaskAddNotification"
 #define TaskEditNotification @"TaskEditNotification"
@@ -71,7 +73,7 @@ typedef enum {
 	CTXDOCellContextExpiring,
 	CTXDOCellContextLocationAware,
 	CTXDOCellContextDue,
-	CTXDOCellContextDueLight,
+	CTXDOCellContextUpatedTasksLight,
 	CTXDOCellContextTaskEditInput,
 	CTXDOCellContextTaskEdit,
 	CTXDOCellContextTaskEditInputMutliLine,

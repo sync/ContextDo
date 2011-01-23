@@ -1,16 +1,10 @@
-//
-//  TasksUpdatedDataSource.h
-//  ContextDo
-//
-//  Created by Anthony Mittaz on 23/01/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
+#import "BaseTableViewDataSource.h"
 
-
-@interface TasksUpdatedDataSource : NSObject {
+@interface TasksUpdatedDataSource : BaseTableViewDataSource {
 
 }
+
+- (Task *)taskForIndexPath:(NSIndexPath *)indexPath;
 
 @end
