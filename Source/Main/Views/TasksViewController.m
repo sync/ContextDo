@@ -5,7 +5,6 @@
 @interface TasksViewController (private)
 
 - (void)reloadTasks:(NSArray *)newTasks removeCache:(BOOL)removeCache showMore:(BOOL)showMore;
-- (void)refreshTasks;
 - (void)reloadSearchTasks:(NSArray *)newTasks;
 - (void)cancelSearch;
 
@@ -292,6 +291,7 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDueDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksSearchDidLoadNotification];
 	
+	[mainNavController release];
 	[tasksSave release];
 	[searchBar release];
 	[group release];

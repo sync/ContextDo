@@ -38,7 +38,8 @@
 {
     [super viewDidLoad];
 	
-	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].taskDarkGrayColor;
+	[self.customSearchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+								 forBarStyle:UIBarStyleBlackOpaque];
 	
 	self.mapView.showsUserLocation = TRUE;
 	

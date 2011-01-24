@@ -254,6 +254,8 @@
 		2491210512EDC4E4009191BA /* UICGLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491210412EDC4E4009191BA /* UICGLeg.m */; };
 		2491212012EDC638009191BA /* TasksMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491211F12EDC638009191BA /* TasksMapViewController.m */; };
 		2491212212EDC725009191BA /* TasksMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2491212112EDC725009191BA /* TasksMapView.xib */; };
+		249121E112EDD946009191BA /* TasksCalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 249121E012EDD946009191BA /* TasksCalendarView.xib */; };
+		249121E412EDD957009191BA /* TasksCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 249121E312EDD957009191BA /* TasksCalendarViewController.m */; };
 		24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */; };
 		24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* InfoViewController.m */; };
 		24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoView.xib */; };
@@ -656,6 +658,9 @@
 		2491211E12EDC638009191BA /* TasksMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksMapViewController.h; sourceTree = "<group>"; };
 		2491211F12EDC638009191BA /* TasksMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksMapViewController.m; sourceTree = "<group>"; };
 		2491212112EDC725009191BA /* TasksMapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TasksMapView.xib; sourceTree = "<group>"; };
+		249121E012EDD946009191BA /* TasksCalendarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TasksCalendarView.xib; sourceTree = "<group>"; };
+		249121E212EDD957009191BA /* TasksCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksCalendarViewController.h; sourceTree = "<group>"; };
+		249121E312EDD957009191BA /* TasksCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksCalendarViewController.m; sourceTree = "<group>"; };
 		24E4496812EBA54900F08B7E /* TasksUpdatedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksUpdatedDataSource.h; sourceTree = "<group>"; };
 		24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksUpdatedDataSource.m; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -1145,6 +1150,9 @@
 		24E44F5E12EC06D000F08B7E /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				249121E212EDD957009191BA /* TasksCalendarViewController.h */,
+				249121E312EDD957009191BA /* TasksCalendarViewController.m */,
+				249121E012EDD946009191BA /* TasksCalendarView.xib */,
 			);
 			name = Calendar;
 			sourceTree = "<group>";
@@ -2202,6 +2210,7 @@
 				249113CA12EC4CB1009191BA /* btn_tbar_uparrow_touch.png in Resources */,
 				249113CB12EC4CB1009191BA /* btn_tbar_uparrow_touch@2x.png in Resources */,
 				2491212212EDC725009191BA /* TasksMapView.xib in Resources */,
+				249121E112EDD946009191BA /* TasksCalendarView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2329,6 +2338,7 @@
 				2491177412ED3B06009191BA /* GoogleMapApiServices.m in Sources */,
 				2491210512EDC4E4009191BA /* UICGLeg.m in Sources */,
 				2491212012EDC638009191BA /* TasksMapViewController.m in Sources */,
+				249121E412EDD957009191BA /* TasksCalendarViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

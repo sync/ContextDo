@@ -26,4 +26,6 @@
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;
 
+- (void)refreshTasks;
+
 @end

@@ -13,7 +13,7 @@
 
 @implementation TasksContainerViewController
 
-@synthesize containerNavController, tasksViewController, group, containerView, tasksMapViewController;
+@synthesize containerNavController, tasksViewController, group, containerView, tasksMapViewController, tasksCalendarViewController;
 
 #pragma mark -
 #pragma mark Setup
@@ -61,6 +61,17 @@
 	}
 	
 	return tasksMapViewController;
+}
+
+- (TasksCalendarViewController *)tasksCalendarViewController
+{
+	if (!tasksCalendarViewController) {
+		tasksCalendarViewController = [[TasksCalendarViewController alloc]initWithNibName:@"tTasksCalendarView" bundle:nil];
+		tasksCalendarViewController.group = self.group;
+		tasksCalendarViewController.mainNavController = self.navigationController;
+	}
+	
+	return tasksCalendarViewController;
 }
 
 - (void)setupNavigationBar
@@ -153,6 +164,7 @@
 #pragma mark Dealloc
 
 - (void)dealloc {
+	[tasksCalendarViewController release];
 	[containerView release];
 	[group release];
 	[tasksViewController release];

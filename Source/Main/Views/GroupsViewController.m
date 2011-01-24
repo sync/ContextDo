@@ -265,6 +265,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+	[self.addGroupTextField resignFirstResponder];
+	
 	Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
 	
 	TasksContainerViewController *controller = [[[TasksContainerViewController alloc]initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
