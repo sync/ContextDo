@@ -1,16 +1,17 @@
-#import "TaskDirectionViewController.h"
+#import "TasksMapViewController.h"
 #import "UICRouteAnnotation.h"
 
-@interface TaskDirectionsViewController (private)
+@interface TasksMapViewController (private)
 
 - (void)showCurrentLocation;
 - (void)updateDirections;
+- (void)refreshTasks;
 
 @end
 
-@implementation TaskDirectionsViewController
+@implementation TasksMapViewController
 
-@synthesize mapView, task, routeOverlayView, directions, startPoint, endPoint;
+@synthesize mapView, tasks, routeOverlayView, directions, customSearchBar, group, mainNavController;
 
 #pragma mark -
 #pragma mark Setup
@@ -20,6 +21,19 @@
 	return [NSString stringWithFormat:@"%f,%f", latitude, longitude];
 }
 
+- (BOOL)isTodayTasks
+{
+	return [self.group.name isEqualToString:TodaysTasksPlacholder];
+}
+
+- (NSString *)nowDue
+{
+	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	// 2010-07-24
+	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
+	return [dateFormatter stringFromDate:[NSDate date]];
+}
+
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
@@ -27,15 +41,44 @@
 	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].taskDarkGrayColor;
 	
 	self.mapView.showsUserLocation = TRUE;
-	[self refreshTask];
+	
+	if (!self.isTodayTasks) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
+		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
+	} else {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueDidLoadNotification object:nil];
+		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueDidLoadNotification];
+	}
+	[self refreshTasks];
 }
 
-- (void)refreshTask
+#pragma mark -
+#pragma mark Actions
+
+- (void)refreshTasks
 {
-	if (!self.view) {
-		return;
+	if (!self.isTodayTasks) {
+		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId page:1];
+	} else {
+		[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue page:1];
 	}
+}
+
+#pragma mark -
+#pragma mark Content reloading
+
+- (void)shouldReloadContent:(NSNotification *)notification
+{
+	NSDictionary *dict = [notification object];
 	
+	NSArray *newTasks = [dict valueForKey:@"tasks"];
+	self.tasks = newTasks;
+	
+	[self refreshTasksDirection];
+}
+
+- (void)refreshTasksDirection
+{
 	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStartForKey:) withObject:@"direction" waitUntilDone:FALSE];
 	
 	for (id<MKAnnotation> annotation in self.mapView.annotations) {
@@ -60,9 +103,6 @@
 		startLocation = self.mapView.userLocation.location;
 	}
 	
-	self.startPoint = [self stringForLatitude:[AppDelegate sharedAppDelegate].currentLocation.coordinate.latitude
-									longitude:[AppDelegate sharedAppDelegate].currentLocation.coordinate.longitude];
-	self.endPoint = [self.task latLngString];
 	[self updateDirections];
 }
 
@@ -71,6 +111,8 @@
 	
 	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
 	self.mapView = nil;
+	
+	self.customSearchBar = nil;
 }
 
 
@@ -79,7 +121,7 @@
 {
 	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
 	options.travelMode = UICGTravelModeDriving;
-	[self.directions loadWithStartPoint:self.startPoint endPoint:self.endPoint options:options];
+	[self.directions loadFromWaypoints:[self.tasks valueForKey:@"latLngString"] options:options];
 }
 
 #pragma mark -
@@ -101,7 +143,7 @@
 																				 subtitle:[[route.legs objectAtIndex:0]startAddress]
 																		   annotationType:UICRouteAnnotationTypeStart] autorelease];
 	UICRouteAnnotation *endAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints lastObject] coordinate]
-																				  title:self.task.name
+																				  title:@"TODO"
 																			   subtitle:[[route.legs objectAtIndex:0]endAddress]
 																		 annotationType:UICRouteAnnotationTypeEnd] autorelease];
 	
@@ -195,17 +237,22 @@
 - (void)dealloc
 {
 	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDidLoadNotification];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDueDidLoadNotification];
 	
 	self.mapView.delegate = nil;
 	self.directions.delegate = nil;
 	
-	[startPoint release];
-	[endPoint release];
+	[customSearchBar release];
 	
-	[task release];
+	[group release];
+	[mainNavController release];
+	[tasks release];
 	[mapView release];
 	
 	[super dealloc];
 }
+
 
 @end

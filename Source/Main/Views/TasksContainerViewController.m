@@ -13,7 +13,7 @@
 
 @implementation TasksContainerViewController
 
-@synthesize containerNavController, tasksViewController, group, containerView;
+@synthesize containerNavController, tasksViewController, group, containerView, tasksMapViewController;
 
 #pragma mark -
 #pragma mark Setup
@@ -50,6 +50,17 @@
 	}
 	
 	return tasksViewController;
+}
+
+- (TasksMapViewController *)tasksMapViewController
+{
+	if (!tasksMapViewController) {
+		tasksMapViewController = [[TasksMapViewController alloc]initWithNibName:@"TasksMapView" bundle:nil];
+		tasksMapViewController.group = self.group;
+		tasksMapViewController.mainNavController = self.navigationController;
+	}
+	
+	return tasksMapViewController;
 }
 
 - (void)setupNavigationBar
@@ -121,7 +132,7 @@
 
 - (void)showMap
 {
-	// TODO
+	[self.containerNavController setViewControllers:[NSArray arrayWithObject:self.tasksMapViewController]];
 }
 
 - (void)showCalendar
@@ -145,6 +156,7 @@
 	[containerView release];
 	[group release];
 	[tasksViewController release];
+	[tasksMapViewController release];
 	[containerNavController release];
 	
     [super dealloc];

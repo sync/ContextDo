@@ -60,4 +60,10 @@
 	return (string.length > 0) ? string : nil;
 }
 
+- (NSString *)latLngString
+{
+	return [NSString stringWithFormat:@"%f,%f", self.latitude.doubleValue, self.longitude.doubleValue];
+	
+}
+
 @end

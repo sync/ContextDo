@@ -59,6 +59,8 @@
 #define GroupEditNotification @"GroupEditNotification"
 #define GroupDeleteNotification @"GroupDeleteNotification"
 
+#define TodaysTasksPlacholder @"Todays tasks"
+
 // Cells
 typedef enum {
 	CTXDOCellPositionSingle,

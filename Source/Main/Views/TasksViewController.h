@@ -2,8 +2,6 @@
 #import "BaseTableViewController.h"
 #import "TasksDataSource.h"
 
-#define TodaysTasksPlacholder @"Todays tasks"
-
 
 @interface TasksViewController : BaseTableViewController <UISearchBarDelegate> {
 

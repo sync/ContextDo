@@ -355,6 +355,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"updatedAt",
 						  @"createdAt",
 						  @"formattedContact",
+						  @"latLngString",
 						  nil];
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
@@ -396,6 +397,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"updatedAt",
 						  @"createdAt",
 						  @"formattedContact",
+						  @"latLngString",
 						  nil];
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
