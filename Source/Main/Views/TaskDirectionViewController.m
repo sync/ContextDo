@@ -41,7 +41,7 @@
 //	[self.mapView addAnnotation:self.currentAnnotation];
 //	[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(self.currentAnnotation.coordinate, MapViewLocationDefaultSpanInMeters, MapViewLocationDefaultSpanInMeters) animated:TRUE];
 	
-	[self refreshTask];
+	//[self refreshTask];
 }
 
 - (void)refreshTask
