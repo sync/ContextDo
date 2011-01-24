@@ -101,22 +101,24 @@
 #pragma mark -
 #pragma mark UICGDirectionsDelegate
 
-- (void)directionsDidUpdateDirections:(UICGDirections *)directions {
+- (void)directionsDidUpdateDirections:(UICGDirections *)aDirections {
 	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStopForKey:) withObject:@"direction" waitUntilDone:FALSE];
 	
 	// Overlay polylines
-	UICGPolyline *polyline = [self.directions polyline];
-	NSArray *routePoints = [polyline routePoints];
-	[self.routeOverlayView setRoutes:routePoints];
+	UICGPolyline *polyline = [[aDirections routeAtIndex:0] overviewPolyline];
+	NSArray *routePoints = [polyline points];
+	[routeOverlayView setRoutes:routePoints];
+	
+	UICGRoute *route = [aDirections routeAtIndex:0];
 	
 	// Add annotations
 	UICRouteAnnotation *startAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
 																					title:@"Current Location"
-																				 subtitle:nil
+																				 subtitle:[[route.legs objectAtIndex:0]startAddress]
 																		   annotationType:UICRouteAnnotationTypeStart] autorelease];
 	UICRouteAnnotation *endAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints lastObject] coordinate]
 																				  title:self.task.name
-																			   subtitle:self.task.location
+																			   subtitle:[[route.legs objectAtIndex:0]endAddress]
 																		 annotationType:UICRouteAnnotationTypeEnd] autorelease];
 	
 	[self.mapView addAnnotations:[NSArray arrayWithObjects:startAnnotation, endAnnotation, nil]];

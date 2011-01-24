@@ -251,6 +251,7 @@
 		249113D112EC4D4B009191BA /* CTXDONavigationArrowsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 249113D012EC4D4B009191BA /* CTXDONavigationArrowsControl.m */; };
 		2491176512ED389A009191BA /* UICGDirections.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491176412ED389A009191BA /* UICGDirections.m */; };
 		2491177412ED3B06009191BA /* GoogleMapApiServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491177312ED3B06009191BA /* GoogleMapApiServices.m */; };
+		2491210512EDC4E4009191BA /* UICGLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491210412EDC4E4009191BA /* UICGLeg.m */; };
 		24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */; };
 		24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* InfoViewController.m */; };
 		24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoView.xib */; };
@@ -648,6 +649,8 @@
 		2491176412ED389A009191BA /* UICGDirections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGDirections.m; sourceTree = "<group>"; };
 		2491177212ED3B06009191BA /* GoogleMapApiServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapApiServices.h; sourceTree = "<group>"; };
 		2491177312ED3B06009191BA /* GoogleMapApiServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapApiServices.m; sourceTree = "<group>"; };
+		2491210312EDC4E4009191BA /* UICGLeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGLeg.h; sourceTree = "<group>"; };
+		2491210412EDC4E4009191BA /* UICGLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGLeg.m; sourceTree = "<group>"; };
 		24E4496812EBA54900F08B7E /* TasksUpdatedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksUpdatedDataSource.h; sourceTree = "<group>"; };
 		24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksUpdatedDataSource.m; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -1052,6 +1055,8 @@
 				249112A012EC2E94009191BA /* UICGStep.m */,
 				249112A312EC2E94009191BA /* UICGRoute.h */,
 				249112A212EC2E94009191BA /* UICGRoute.m */,
+				2491210312EDC4E4009191BA /* UICGLeg.h */,
+				2491210412EDC4E4009191BA /* UICGLeg.m */,
 				249112A512EC2E94009191BA /* UICGPolyline.h */,
 				249112A412EC2E94009191BA /* UICGPolyline.m */,
 				249112A912EC2E94009191BA /* UICGDirectionsOptions.h */,
@@ -2313,6 +2318,7 @@
 				249113D112EC4D4B009191BA /* CTXDONavigationArrowsControl.m in Sources */,
 				2491176512ED389A009191BA /* UICGDirections.m in Sources */,
 				2491177412ED3B06009191BA /* GoogleMapApiServices.m in Sources */,
+				2491210512EDC4E4009191BA /* UICGLeg.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
