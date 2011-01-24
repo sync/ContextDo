@@ -234,17 +234,12 @@
 		2490FE5C12E3572D00F56B39 /* btn_backarrow_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FE5812E3572D00F56B39 /* btn_backarrow_touch.png */; };
 		2490FE5D12E3572D00F56B39 /* btn_backarrow_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FE5912E3572D00F56B39 /* btn_backarrow_touch@2x.png */; };
 		2490FFF712E36D9900F56B39 /* UIColor+i7HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2490FFCD12E36D9900F56B39 /* UIColor+i7HexColor.m */; };
-		2491129812EC2E44009191BA /* json2.js in Resources */ = {isa = PBXBuildFile; fileRef = 2491129612EC2E44009191BA /* json2.js */; };
-		2491129912EC2E44009191BA /* api.html in Resources */ = {isa = PBXBuildFile; fileRef = 2491129712EC2E44009191BA /* api.html */; };
 		249112AE12EC2E94009191BA /* UICRouteOverlayMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491129C12EC2E94009191BA /* UICRouteOverlayMapView.m */; };
 		249112AF12EC2E94009191BA /* UICRouteAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491129E12EC2E94009191BA /* UICRouteAnnotation.m */; };
 		249112B012EC2E94009191BA /* UICGStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112A012EC2E94009191BA /* UICGStep.m */; };
 		249112B112EC2E94009191BA /* UICGRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112A212EC2E94009191BA /* UICGRoute.m */; };
 		249112B212EC2E94009191BA /* UICGPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112A412EC2E94009191BA /* UICGPolyline.m */; };
-		249112B312EC2E94009191BA /* UICGoogleMapsAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112A612EC2E94009191BA /* UICGoogleMapsAPI.m */; };
 		249112B412EC2E94009191BA /* UICGDirectionsOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112A812EC2E94009191BA /* UICGDirectionsOptions.m */; };
-		249112B512EC2E94009191BA /* UICGDirections.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112AA12EC2E94009191BA /* UICGDirections.m */; };
-		249112B612EC2E94009191BA /* UICGClientGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 249112AC12EC2E94009191BA /* UICGClientGeocoder.m */; };
 		249113C412EC4CB1009191BA /* btn_tbar_dwnarrow_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 249113BC12EC4CB1009191BA /* btn_tbar_dwnarrow_off.png */; };
 		249113C512EC4CB1009191BA /* btn_tbar_dwnarrow_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 249113BD12EC4CB1009191BA /* btn_tbar_dwnarrow_off@2x.png */; };
 		249113C612EC4CB1009191BA /* btn_tbar_dwnarrow_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 249113BE12EC4CB1009191BA /* btn_tbar_dwnarrow_touch.png */; };
@@ -254,6 +249,8 @@
 		249113CA12EC4CB1009191BA /* btn_tbar_uparrow_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 249113C212EC4CB1009191BA /* btn_tbar_uparrow_touch.png */; };
 		249113CB12EC4CB1009191BA /* btn_tbar_uparrow_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 249113C312EC4CB1009191BA /* btn_tbar_uparrow_touch@2x.png */; };
 		249113D112EC4D4B009191BA /* CTXDONavigationArrowsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 249113D012EC4D4B009191BA /* CTXDONavigationArrowsControl.m */; };
+		2491176512ED389A009191BA /* UICGDirections.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491176412ED389A009191BA /* UICGDirections.m */; };
+		2491177412ED3B06009191BA /* GoogleMapApiServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491177312ED3B06009191BA /* GoogleMapApiServices.m */; };
 		24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */; };
 		24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* InfoViewController.m */; };
 		24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoView.xib */; };
@@ -625,8 +622,6 @@
 		2490FE5912E3572D00F56B39 /* btn_backarrow_touch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_backarrow_touch@2x.png"; sourceTree = "<group>"; };
 		2490FFCC12E36D9900F56B39 /* UIColor+i7HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+i7HexColor.h"; sourceTree = "<group>"; };
 		2490FFCD12E36D9900F56B39 /* UIColor+i7HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+i7HexColor.m"; sourceTree = "<group>"; };
-		2491129612EC2E44009191BA /* json2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = json2.js; sourceTree = "<group>"; };
-		2491129712EC2E44009191BA /* api.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = api.html; sourceTree = "<group>"; };
 		2491129C12EC2E94009191BA /* UICRouteOverlayMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICRouteOverlayMapView.m; sourceTree = "<group>"; };
 		2491129D12EC2E94009191BA /* UICRouteOverlayMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICRouteOverlayMapView.h; sourceTree = "<group>"; };
 		2491129E12EC2E94009191BA /* UICRouteAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICRouteAnnotation.m; sourceTree = "<group>"; };
@@ -637,14 +632,8 @@
 		249112A312EC2E94009191BA /* UICGRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGRoute.h; sourceTree = "<group>"; };
 		249112A412EC2E94009191BA /* UICGPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGPolyline.m; sourceTree = "<group>"; };
 		249112A512EC2E94009191BA /* UICGPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGPolyline.h; sourceTree = "<group>"; };
-		249112A612EC2E94009191BA /* UICGoogleMapsAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGoogleMapsAPI.m; sourceTree = "<group>"; };
-		249112A712EC2E94009191BA /* UICGoogleMapsAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGoogleMapsAPI.h; sourceTree = "<group>"; };
 		249112A812EC2E94009191BA /* UICGDirectionsOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGDirectionsOptions.m; sourceTree = "<group>"; };
 		249112A912EC2E94009191BA /* UICGDirectionsOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGDirectionsOptions.h; sourceTree = "<group>"; };
-		249112AA12EC2E94009191BA /* UICGDirections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGDirections.m; sourceTree = "<group>"; };
-		249112AB12EC2E94009191BA /* UICGDirections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGDirections.h; sourceTree = "<group>"; };
-		249112AC12EC2E94009191BA /* UICGClientGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGClientGeocoder.m; sourceTree = "<group>"; };
-		249112AD12EC2E94009191BA /* UICGClientGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGClientGeocoder.h; sourceTree = "<group>"; };
 		249113BC12EC4CB1009191BA /* btn_tbar_dwnarrow_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_tbar_dwnarrow_off.png; sourceTree = "<group>"; };
 		249113BD12EC4CB1009191BA /* btn_tbar_dwnarrow_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_tbar_dwnarrow_off@2x.png"; sourceTree = "<group>"; };
 		249113BE12EC4CB1009191BA /* btn_tbar_dwnarrow_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_tbar_dwnarrow_touch.png; sourceTree = "<group>"; };
@@ -655,6 +644,10 @@
 		249113C312EC4CB1009191BA /* btn_tbar_uparrow_touch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_tbar_uparrow_touch@2x.png"; sourceTree = "<group>"; };
 		249113CF12EC4D4B009191BA /* CTXDONavigationArrowsControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDONavigationArrowsControl.h; sourceTree = "<group>"; };
 		249113D012EC4D4B009191BA /* CTXDONavigationArrowsControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDONavigationArrowsControl.m; sourceTree = "<group>"; };
+		2491176312ED389A009191BA /* UICGDirections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICGDirections.h; sourceTree = "<group>"; };
+		2491176412ED389A009191BA /* UICGDirections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICGDirections.m; sourceTree = "<group>"; };
+		2491177212ED3B06009191BA /* GoogleMapApiServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapApiServices.h; sourceTree = "<group>"; };
+		2491177312ED3B06009191BA /* GoogleMapApiServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapApiServices.m; sourceTree = "<group>"; };
 		24E4496812EBA54900F08B7E /* TasksUpdatedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksUpdatedDataSource.h; sourceTree = "<group>"; };
 		24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksUpdatedDataSource.m; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -1043,8 +1036,6 @@
 		2491124F12EC2E0F009191BA /* MapKit-Route-Directions */ = {
 			isa = PBXGroup;
 			children = (
-				2491129612EC2E44009191BA /* json2.js */,
-				2491129712EC2E44009191BA /* api.html */,
 				2491127912EC2E0F009191BA /* Classes */,
 			);
 			path = "MapKit-Route-Directions";
@@ -1063,14 +1054,12 @@
 				249112A212EC2E94009191BA /* UICGRoute.m */,
 				249112A512EC2E94009191BA /* UICGPolyline.h */,
 				249112A412EC2E94009191BA /* UICGPolyline.m */,
-				249112A712EC2E94009191BA /* UICGoogleMapsAPI.h */,
-				249112A612EC2E94009191BA /* UICGoogleMapsAPI.m */,
 				249112A912EC2E94009191BA /* UICGDirectionsOptions.h */,
 				249112A812EC2E94009191BA /* UICGDirectionsOptions.m */,
-				249112AB12EC2E94009191BA /* UICGDirections.h */,
-				249112AA12EC2E94009191BA /* UICGDirections.m */,
-				249112AD12EC2E94009191BA /* UICGClientGeocoder.h */,
-				249112AC12EC2E94009191BA /* UICGClientGeocoder.m */,
+				2491176312ED389A009191BA /* UICGDirections.h */,
+				2491176412ED389A009191BA /* UICGDirections.m */,
+				2491177212ED3B06009191BA /* GoogleMapApiServices.h */,
+				2491177312ED3B06009191BA /* GoogleMapApiServices.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2191,8 +2180,6 @@
 				24E44F6A12EC09D200F08B7E /* TaskScheduleView.xib in Resources */,
 				24E44FD312EC0F2A00F08B7E /* TaskDirectionsView.xib in Resources */,
 				24E4500512EC138E00F08B7E /* TaskDetailsView.xib in Resources */,
-				2491129912EC2E44009191BA /* api.html in Resources */,
-				2491129812EC2E44009191BA /* json2.js in Resources */,
 				249113C412EC4CB1009191BA /* btn_tbar_dwnarrow_off.png in Resources */,
 				249113C512EC4CB1009191BA /* btn_tbar_dwnarrow_off@2x.png in Resources */,
 				249113C612EC4CB1009191BA /* btn_tbar_dwnarrow_touch.png in Resources */,
@@ -2322,11 +2309,10 @@
 				249112B012EC2E94009191BA /* UICGStep.m in Sources */,
 				249112B112EC2E94009191BA /* UICGRoute.m in Sources */,
 				249112B212EC2E94009191BA /* UICGPolyline.m in Sources */,
-				249112B312EC2E94009191BA /* UICGoogleMapsAPI.m in Sources */,
 				249112B412EC2E94009191BA /* UICGDirectionsOptions.m in Sources */,
-				249112B512EC2E94009191BA /* UICGDirections.m in Sources */,
-				249112B612EC2E94009191BA /* UICGClientGeocoder.m in Sources */,
 				249113D112EC4D4B009191BA /* CTXDONavigationArrowsControl.m in Sources */,
+				2491176512ED389A009191BA /* UICGDirections.m in Sources */,
+				2491177412ED3B06009191BA /* GoogleMapApiServices.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,7 +17,7 @@
 
 - (NSString *)stringForLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude
 {
-	return [NSString stringWithFormat:@"%f, %f", latitude, longitude];
+	return [NSString stringWithFormat:@"%f,%f", latitude, longitude];
 }
 
 - (void)viewDidLoad 
@@ -79,9 +79,7 @@
 	self.endPoint = [self stringForLatitude:self.task.latitude.doubleValue
 								  longitude:self.task.longitude.doubleValue];
 	[self.directions loadWithStartPoint:self.startPoint endPoint:self.endPoint options:options];
-	if (self.directions.isInitialized) {
-		[self updateDirections];
-	}
+	[self updateDirections];
 }
 
 - (void)viewDidUnload {
@@ -102,18 +100,6 @@
 
 #pragma mark -
 #pragma mark UICGDirectionsDelegate
-
-- (void)directionsDidFinishInitialize:(UICGDirections *)directions {
-	[self updateDirections];
-}
-
-- (void)directions:(UICGDirections *)directions didFailInitializeWithError:(NSError *)error {
-	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStopForKey:) withObject:@"direction" waitUntilDone:FALSE];
-		
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-	[alertView show];
-	[alertView release];
-}
 
 - (void)directionsDidUpdateDirections:(UICGDirections *)directions {
 	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStopForKey:) withObject:@"direction" waitUntilDone:FALSE];
