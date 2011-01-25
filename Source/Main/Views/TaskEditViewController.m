@@ -75,7 +75,9 @@
 	
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TaskAddNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TaskEditNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TaskAddNotification];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TaskEditNotification];
 	self.taskEditDataSource = [[[TaskEditDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.taskEditDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
@@ -395,6 +397,8 @@
 
 - (void)saveTouched
 {
+	[self endEditing];
+	
 	if (self.taskEditDataSource.tempTask.name.length == 0 ||
 		self.taskEditDataSource.tempTask.location.length == 0 ||
 		!self.taskEditDataSource.tempTask.groupId) {
@@ -429,6 +433,7 @@
 
 - (void)dealloc
 {
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TaskEditNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TaskAddNotification];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	

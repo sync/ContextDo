@@ -1,5 +1,5 @@
 #import "TaskDetailsViewController.h"
-
+#import "TaskEditViewController.h"
 
 @implementation TaskDetailsViewController
 
@@ -46,7 +46,12 @@
 
 - (IBAction)editTouched
 {
-	// todo
+	TaskEditViewController *controller = [[[TaskEditViewController alloc]initWithNibName:@"TaskEditView" bundle:nil]autorelease];
+	controller.task = self.task;
+	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
+	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+											  forBarStyle:UIBarStyleDefault];
+	[self.mainNavController presentModalViewController:navController animated:TRUE];
 }
 
 - (IBAction)deleteTouched
