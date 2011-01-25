@@ -248,6 +248,7 @@
 	[customSearchBar release];
 	
 	[group release];
+	
 	[tasks release];
 	[mapView release];
 	

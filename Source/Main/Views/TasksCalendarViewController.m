@@ -1,4 +1,5 @@
 #import "TasksCalendarViewController.h"
+#import "NSDate-Utilities.h"
 
 @implementation TasksCalendarViewController
 
@@ -12,7 +13,7 @@
 {
 	[super viewDidLoad];
 	
-	
+	[self setupDataSource];
 	
 }
 
@@ -29,30 +30,22 @@
 	return [self.group.name isEqualToString:TodaysTasksPlacholder];
 }
 
-- (NSString *)nowDue
-{
-	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	// 2010-07-24
-	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
-	return [dateFormatter stringFromDate:[NSDate date]];
-}
-
 - (void)setupDataSource
 {
-	if (!self.isTodayTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
-		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
-	} else {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueDidLoadNotification object:nil];
-		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueDidLoadNotification];
-	}
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueDidLoadNotification object:nil];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueDidLoadNotification];
 	
 	self.tasksCalendarDataSource = [[[TasksCalendarDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksCalendarDataSource;
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
 	[self refreshTasks];
-	
-	[self refreshTasks];
+}
+
+- (void)refreshTasks
+{
+	//- (NSDate*) dateSelected;
+//	- (NSDate*) monthDate;
+	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:self.monthView.monthDate] page:1];
 }
 
 #pragma mark -
@@ -64,26 +57,48 @@
 	
 	NSArray *newTasks = [dict valueForKey:@"tasks"];
 	self.tasks = newTasks;
-	// todo refresh calendar
+	[self.monthView reload];
+	[self.tableView reloadData];
 }
 
 #pragma mark -
 #pragma mark Actions
 
-- (void)refreshTasks
+- (NSString *)calendarMonthForDate:(NSDate *)date
 {
-	if (!self.isTodayTasks) {
-		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId page:1];
-	} else {
-		[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue page:1];
-	}
+	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	// 2010-07
+	[dateFormatter setDateFormat:@"yyyy-MM"];
+	return [dateFormatter stringFromDate:date];
 }
 
 #pragma mark -
 #pragma mark Calendar View
 
 - (NSArray*)calendarMonthView:(TKCalendarMonthView*)monthView marksFromDate:(NSDate*)startDate toDate:(NSDate*)lastDate{
-	return nil; // todo
+	NSArray *dueAtList = [self.tasks valueForKey:@"dueAt"];
+	
+	NSMutableArray *dataArray = [NSMutableArray array];
+	
+	NSDate *d = startDate;
+	while(YES){
+		BOOL found = FALSE;
+		for (NSDate *dueAt in dueAtList) {
+			if ([d isSameDay:dueAt]) {
+				found = TRUE;
+				break;
+			}
+		}
+		[dataArray addObject:[NSNumber numberWithBool:found]];
+		
+		TKDateInformation info = [d dateInformationWithTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+		info.day++;
+		d = [NSDate dateFromDateInformation:info timeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+		if([d compare:lastDate]==NSOrderedDescending) break;
+	}
+	
+	return dataArray;
+	
 }
 - (void) calendarMonthView:(TKCalendarMonthView*)monthView didSelectDate:(NSDate*)date{
 	
@@ -97,6 +112,8 @@
 }
 - (void) calendarMonthView:(TKCalendarMonthView*)mv monthDidChange:(NSDate*)d{
 	[super calendarMonthView:mv monthDidChange:d];
+	
+	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:d] page:1];
 	
 	[self.tableView reloadData];
 }
@@ -184,7 +201,6 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDueDidLoadNotification];
 	
 	[group release];

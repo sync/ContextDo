@@ -17,7 +17,7 @@
 @property (nonatomic, retain) Group *group;
 
 @property (nonatomic, readonly) BOOL isTodayTasks;
-@property (nonatomic, readonly) NSString *nowDue;
+- (NSString *)calendarMonthForDate:(NSDate *)date;
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;
 
