@@ -1,6 +1,13 @@
 #import "TasksCalendarViewController.h"
 #import "NSDate-Utilities.h"
 
+@interface TasksCalendarViewController (private)
+
+- (NSArray *)filterdTasksForDate:(NSDate *)date;
+
+@end
+
+
 @implementation TasksCalendarViewController
 
 @synthesize tasks, group, mainNavController;
@@ -58,7 +65,24 @@
 	NSArray *newTasks = [dict valueForKey:@"tasks"];
 	self.tasks = newTasks;
 	[self.monthView reload];
+	
+	NSArray *filteredTasks = [self filterdTasksForDate:[NSDate date]];
+	if (filteredTasks.count > 0) {
+		[self.tasksCalendarDataSource.content addObject:filteredTasks];
+	}
 	[self.tableView reloadData];
+}
+
+- (NSArray *)filterdTasksForDate:(NSDate *)date
+{
+	NSMutableArray *filterdEventsForDate = [NSMutableArray array];
+	for (Task *task in self.tasks) {
+		if ([date isSameDay:task.dueAt]) {
+			[filterdEventsForDate addObject:task];
+		}
+	}
+	
+	return (filterdEventsForDate.count > 0) ? [NSArray arrayWithArray:filterdEventsForDate] : nil;
 }
 
 #pragma mark -
@@ -108,14 +132,22 @@
 	
 	DLog(@"Date Selected: %@",myTimeZoneDay);
 	
+	[self.tasksCalendarDataSource resetContent];
+	
+	NSArray *filteredTasks = [self filterdTasksForDate:date];
+	if (filteredTasks.count > 0) {
+		[self.tasksCalendarDataSource.content addObject:filteredTasks];
+	}
+	
 	[self.tableView reloadData];
 }
 - (void) calendarMonthView:(TKCalendarMonthView*)mv monthDidChange:(NSDate*)d{
 	[super calendarMonthView:mv monthDidChange:d];
 	
-	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:d] page:1];
-	
+	[self.tasksCalendarDataSource resetContent];
 	[self.tableView reloadData];
+	
+	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:d] page:1];
 }
 
 #pragma mark -

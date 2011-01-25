@@ -18,6 +18,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TasksCalendarCellIdentifier] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		cell.selectionStyle = UITableViewCellSelectionStyleGray;
+		cell.textLabel.textColor = [UIColor whiteColor];
     }
 	
 	Task *task = [self taskForIndexPath:indexPath];
