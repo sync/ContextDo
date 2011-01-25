@@ -50,6 +50,7 @@
 	if (!taskScheduleViewController) {
 		taskScheduleViewController = [[TaskScheduleViewController alloc]initWithNibName:@"TaskScheduleView" bundle:nil];
 		taskScheduleViewController.task = self.task;
+		taskScheduleViewController.mainNavController = self.navigationController;
 	}
 	
 	return taskScheduleViewController;
@@ -60,6 +61,7 @@
 	if (!taskDirectionsViewController) {
 		taskDirectionsViewController = [[TaskDirectionsViewController alloc]initWithNibName:@"TaskDirectionsView" bundle:nil];
 		taskDirectionsViewController.task = self.task;
+		taskDirectionsViewController.mainNavController = self.navigationController;
 	}
 	
 	return taskDirectionsViewController;
@@ -70,6 +72,7 @@
 	if (!taskDetailsViewController) {
 		taskDetailsViewController = [[TaskDetailsViewController alloc]initWithNibName:@"TaskDetailsView" bundle:nil];
 		taskDetailsViewController.task = self.task;
+		taskDetailsViewController.mainNavController = self.navigationController;
 	}
 	
 	return taskDetailsViewController;

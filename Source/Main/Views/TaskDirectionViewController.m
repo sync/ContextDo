@@ -10,7 +10,7 @@
 
 @implementation TaskDirectionsViewController
 
-@synthesize mapView, task, routeOverlayView, directions, startPoint, endPoint;
+@synthesize mapView, task, routeOverlayView, directions, startPoint, endPoint, mainNavController;
 
 #pragma mark -
 #pragma mark Setup

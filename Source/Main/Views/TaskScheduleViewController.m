@@ -3,6 +3,8 @@
 
 @implementation TaskScheduleViewController
 
+@synthesize mainNavController;
+
 #pragma mark -
 #pragma mark Setup
 

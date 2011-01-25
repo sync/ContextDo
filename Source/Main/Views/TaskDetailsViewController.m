@@ -3,7 +3,7 @@
 
 @implementation TaskDetailsViewController
 
-@synthesize task, taskDetailsView;
+@synthesize task, taskDetailsView, mainNavController;
 
 #pragma mark -
 #pragma mark Setup
@@ -51,7 +51,8 @@
 
 - (IBAction)deleteTouched
 {
-	// todo
+	[self.mainNavController popViewControllerAnimated:TRUE];
+	[[APIServices sharedAPIServices]deleteTask:self.task];
 }
 
 #pragma mark -
