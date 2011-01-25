@@ -1,5 +1,6 @@
 #import "TasksCalendarViewController.h"
 #import "NSDate-Utilities.h"
+#import "TaskContainerViewController.h"
 
 @interface TasksCalendarViewController (private)
 
@@ -45,6 +46,7 @@
 	self.tasksCalendarDataSource = [[[TasksCalendarDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksCalendarDataSource;
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
+	self.tableView.delegate = self;
 	[self refreshTasks];
 }
 
@@ -148,6 +150,22 @@
 	[self.tableView reloadData];
 	
 	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:d] page:1];
+}
+
+#pragma mark -
+#pragma mark tableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+	Task *task  = [self.tasksCalendarDataSource taskForIndexPath:indexPath];
+	
+	TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
+	controller.hidesBottomBarWhenPushed = TRUE;
+	controller.task = task;
+	controller.tasks = self.tasks;
+	[self.mainNavController pushViewController:controller animated:TRUE];
+	
+	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }
 
 #pragma mark -
