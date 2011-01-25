@@ -14,7 +14,8 @@
 
 @implementation TasksContainerViewController
 
-@synthesize containerNavController, tasksViewController, group, containerView, tasksMapViewController, tasksCalendarViewController;
+@synthesize containerNavController, tasksViewController, group, containerView, tasksMapViewController;
+@synthesize tasksCalendarViewController, showCloseButton;
 
 #pragma mark -
 #pragma mark Setup
@@ -79,10 +80,18 @@
 {
 	[super setupNavigationBar];
 	
-	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:self.navigationController.navigationBar.topItem.title
-																								   target:self.navigationController
-																								 selector:@selector(customBackButtonTouched)];
+	if (!self.showCloseButton) {
+		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:self.navigationController.navigationBar.topItem.title
+																									   target:self.navigationController
+																									 selector:@selector(customBackButtonTouched)];
+	} else {
+		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Close"
+																											   target:self.navigationController
+																											 selector:@selector(closeButtonTouched)];
+		
+	}
 	
+		
 	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 }
 
@@ -164,6 +173,11 @@
 	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
 									forBarStyle:UIBarStyleBlackOpaque];
 	[self.navigationController presentModalViewController:navController animated:TRUE];
+}
+
+- (void)closeButtonTouched
+{
+	[self dismissModalViewControllerAnimated:TRUE];
 }
 
 #pragma mark -

@@ -17,4 +17,6 @@
 
 @property (nonatomic, retain) Group *group;
 
+@property (nonatomic) BOOL showCloseButton;
+
 @end

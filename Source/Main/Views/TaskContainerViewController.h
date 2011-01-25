@@ -25,4 +25,6 @@
 
 - (void)refreshTask;
 
+@property (nonatomic) BOOL showCloseButton;
+
 @end

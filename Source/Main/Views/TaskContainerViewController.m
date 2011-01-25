@@ -12,7 +12,7 @@
 @implementation TaskContainerViewController
 
 @synthesize containerNavController, tasks, task, segmentControl, containerView, taskScheduleViewController;
-@synthesize taskDirectionsViewController, taskDetailsViewController, arrowsControl;
+@synthesize taskDirectionsViewController, taskDetailsViewController, arrowsControl, showCloseButton;
 
 #pragma mark -
 #pragma mark Setup
@@ -93,9 +93,16 @@
 {
 	[super setupNavigationBar];
 	
-	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:self.navigationController.navigationBar.topItem.title
-																								   target:self.navigationController
-																								 selector:@selector(customBackButtonTouched)];
+	if (!self.showCloseButton) {
+		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:self.navigationController.navigationBar.topItem.title
+																									   target:self.navigationController
+																									 selector:@selector(customBackButtonTouched)];
+	} else {
+		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Close"
+																											   target:self.navigationController
+																											 selector:@selector(closeButtonTouched)];
+		
+	}
 	
 	self.arrowsControl = [CTXDONavigationArrowsControl navigationArrowsControl];
 	[self.arrowsControl addBackTarget:self action:@selector(shouldGoBack) forControlEvents:UIControlEventTouchUpInside];

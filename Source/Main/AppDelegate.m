@@ -476,6 +476,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
 	controller.task = task;
 	controller.tasks = [NSArray arrayWithObject:task];
+	controller.showCloseButton = TRUE;
 	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
 	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
@@ -497,6 +498,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	
 	TasksContainerViewController *controller = [[[TasksContainerViewController alloc]initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
 	controller.group = nearGroup;
+	controller.showCloseButton = TRUE;
 	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
 	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
