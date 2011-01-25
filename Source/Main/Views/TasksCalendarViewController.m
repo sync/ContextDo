@@ -54,7 +54,7 @@
 {
 	//- (NSDate*) dateSelected;
 //	- (NSDate*) monthDate;
-	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:self.monthView.monthDate] page:1];
+	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:self.monthView.monthDate]];
 }
 
 #pragma mark -
@@ -149,7 +149,7 @@
 	[self.tasksCalendarDataSource resetContent];
 	[self.tableView reloadData];
 	
-	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:d] page:1];
+	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:d]];
 }
 
 #pragma mark -

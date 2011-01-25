@@ -59,9 +59,9 @@
 - (void)refreshTasks
 {
 	if (!self.isTodayTasks) {
-		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId page:1];
+		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
 	} else {
-		[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue page:1];
+		[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue];
 	}
 }
 

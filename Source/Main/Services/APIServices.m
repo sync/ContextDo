@@ -171,7 +171,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 - (void)refreshGroups
 {
 	NSString *notificationName = GroupsDidLoadNotification;
-	NSString *path = @"groupsWithPage";
+	NSString *path = @"groups";
 	
 	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
@@ -276,22 +276,22 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 #pragma mark -
 #pragma mark Tasks
 
-- (void)refreshTasksWithGroupId:(NSNumber *)groupId page:(NSInteger)page
+- (void)refreshTasksWithGroupId:(NSNumber *)groupId
 {
 	NSString *notificationName = TasksDidLoadNotification;
 	NSString *path = @"tasksWithGroupId";
 	
-	NSString *url = TASKSURL(BASE_URL, TASKS_PATH, groupId, page, 10);
-	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
+	NSString *url = TASKSURL(BASE_URL, TASKS_PATH, groupId);
+	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
-- (void)refreshTasksWithDue:(NSString *)due page:(NSInteger)page
+- (void)refreshTasksWithDue:(NSString *)due
 {
 	NSString *notificationName = TasksDueDidLoadNotification;
 	NSString *path = @"tasksWithDue";
 	
-	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due, page, 10);
-	[self downloadContentForUrl:url withObject:[NSNumber numberWithInteger:page] path:path notificationName:notificationName];
+	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due);
+	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
 - (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude within:(CGFloat)withinInKm
@@ -299,16 +299,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *notificationName = TasksWithinDidLoadNotification;
 	NSString *path = @"tasksWithLatitude";
 	
-	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, withinInKm, 1000000000);
+	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, withinInKm);
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
-- (void)refreshTasksWithQuery:(NSString *)query page:(NSInteger)page;
+- (void)refreshTasksWithQuery:(NSString *)query;
 {
 	NSString *notificationName = TasksSearchDidLoadNotification;
 	NSString *path = @"tasksWithQuery";
 	
-	NSString *url = TASKSSEARCHURL(BASE_URL, TASKS_PATH, query, page, 10);
+	NSString *url = TASKSSEARCHURL(BASE_URL, TASKS_PATH, query);
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
@@ -321,7 +321,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
 	[dateFormatter setDateStyle:NSDateFormatterShortStyle];
 	NSString *updatedSince = [dateFormatter stringFromDate:[NSDate date]];
-	NSString *url = TASKSUPDATEDSINCEURL(BASE_URL, TASKS_PATH, updatedSince, 1000000000);
+	NSString *url = TASKSUPDATEDSINCEURL(BASE_URL, TASKS_PATH, updatedSince);
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
@@ -480,7 +480,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 			[self parseRegister:request];
 		} else if ([path isEqualToString:@"resetPasswordWithUsername"]) {
 			[self parseResetPassword:request];
-		} else if ([path isEqualToString:@"groupsWithPage"]) {
+		} else if ([path isEqualToString:@"groups"]) {
 			[self parseGroups:request];
 		} else if ([path isEqualToString:@"tasksWithGroupId"]|| 
 				   [path isEqualToString:@"tasksWithDue"] ||

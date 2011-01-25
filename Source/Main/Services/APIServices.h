@@ -19,10 +19,10 @@
 - (void)updateGroupWithId:(NSNumber *)groupId name:(NSString *)name position:(NSNumber *)position;
 - (void)deleteGroupWitId:(NSNumber *)groupId;
 
-- (void)refreshTasksWithGroupId:(NSNumber *)groupId page:(NSInteger)page;
-- (void)refreshTasksWithDue:(NSString *)due page:(NSInteger)page;
+- (void)refreshTasksWithGroupId:(NSNumber *)groupId;
+- (void)refreshTasksWithDue:(NSString *)due;
 - (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude within:(CGFloat)withinInKm;
-- (void)refreshTasksWithQuery:(NSString *)query page:(NSInteger)page;
+- (void)refreshTasksWithQuery:(NSString *)query;
 - (void)refreshTasksEdited;
 - (void)addTask:(Task *)task;
 - (void)updateTask:(Task *)task;

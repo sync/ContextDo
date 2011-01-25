@@ -4,7 +4,7 @@
 
 @interface TasksViewController (private)
 
-- (void)reloadTasks:(NSArray *)newTasks removeCache:(BOOL)removeCache showMore:(BOOL)showMore;
+- (void)reloadTasks:(NSArray *)newTasks;
 - (void)reloadSearchTasks:(NSArray *)newTasks;
 - (void)cancelSearch;
 
@@ -13,7 +13,7 @@
 
 @implementation TasksViewController
 
-@synthesize tasksDataSource, tasks, page, group, searchTasksDataSource, searchBar, pageSave, tasksSave, mainNavController;
+@synthesize tasksDataSource, tasks, group, searchTasksDataSource, searchBar, tasksSave, mainNavController;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -21,8 +21,6 @@
 - (void)viewDidLoad 
 {
 	[super viewDidLoad];
-	
-	self.page = 1;
 	
 	[self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 						   forBarStyle:UIBarStyleBlackOpaque];
@@ -83,11 +81,8 @@
 {
 	NSDictionary *dict = [notification object];
 	
-	NSNumber *currentPage = [dict valueForKey:@"object"];
-	self.page = currentPage.integerValue;
-	
 	NSArray *newTasks = [dict valueForKey:@"tasks"];
-	[self reloadTasks:newTasks removeCache:(self.page == 1) showMore:newTasks.count == 10];
+	[self reloadTasks:newTasks];
 }
 
 - (NSMutableArray *)tasks
@@ -99,30 +94,16 @@
 	return tasks;
 }
 
-#define ShowMorePlaceholder @"Load More Groups..."
-
-- (void)reloadTasks:(NSArray *)newTasks removeCache:(BOOL)removeCache showMore:(BOOL)showMore
+- (void)reloadTasks:(NSArray *)newTasks
 {
 	[self.tasksDataSource resetContent];
 	
-	if (removeCache) {
-		[self.tasks removeAllObjects];
-	}
-	
+	[self.tasks removeAllObjects];
 	if (newTasks.count) {
 		[self.tasks addObjectsFromArray:newTasks];
 	}
 	
 	[self.tasksDataSource.content addObjectsFromArray:self.tasks];
-	
-	
-	if (showMore) {
-		Task *showMore = [Task taskWithId:[NSNumber numberWithInt:NSNotFound] 
-									 name: ShowMorePlaceholder
-								 location:nil];
-		[self.tasksDataSource.content addObject:showMore];
-	}
-	
 	[self.tableView reloadData];
 }
 
@@ -176,22 +157,11 @@
 	TasksDataSource *dataSource = (TasksDataSource *)self.tableView.dataSource;
 	Task *task  = [dataSource taskForIndexPath:indexPath];
 	
-	if (task.taskId.integerValue != NSNotFound) {
-		TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
-		controller.hidesBottomBarWhenPushed = TRUE;
-		controller.task = task;
-		controller.tasks = self.tasks;
-		[self.mainNavController pushViewController:controller animated:TRUE];
-	} else {
-		if ([task.name isEqualToString:ShowMorePlaceholder]) {
-			self.page += 1;
-			if (!self.isTodayTasks) {
-				[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId page:self.page];
-			} else {
-				[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue page:self.page];
-			}
-		}
-	}
+	TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
+	controller.hidesBottomBarWhenPushed = TRUE;
+	controller.task = task;
+	controller.tasks = self.tasks;
+	[self.mainNavController pushViewController:controller animated:TRUE];
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }
@@ -213,12 +183,10 @@
 
 - (void)refreshTasks
 {
-	self.page = 1;
-	
 	if (!self.isTodayTasks) {
-		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId page:self.page];
+		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
 	} else {
-		[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue page:self.page];
+		[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue];
 	}
 }
 
@@ -265,8 +233,7 @@
 	[self.searchBar resignFirstResponder];
 	self.searchBar.text = nil;
 	self.searchString = nil;
-	self.page = self.pageSave;
-	[self reloadTasks:self.tasksSave removeCache:TRUE showMore:FALSE]; // TODO
+	[self reloadTasks:self.tasksSave];
 }
 
 #pragma mark -
@@ -277,8 +244,7 @@
 	[self.searchBar resignFirstResponder];
 	self.searchString = searchText;
 	
-	self.page = 1;
-	[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString page:self.page];
+	[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
 }
 
 #pragma mark -

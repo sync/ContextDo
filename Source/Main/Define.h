@@ -32,11 +32,11 @@
 #define GROUPURL(base, path, groupId) [NSString stringWithFormat:@"%@/%@", CTXDOURL(base, path), groupId]
 // Tasks
 #define TASKS_PATH @"/tasks"
-#define TASKSURL(base, path, groupId, page, perPage) [NSString stringWithFormat:@"%@/groups/%@%@?page=%d&per_page=%d", base, groupId, path, page, perPage]
-#define TASKSDUEURL(base, path, due, page, perPage) [NSString stringWithFormat:@"%@?due=%@&page=%d&per_page=%d", CTXDOURL(base, path), due, page, perPage]
-#define TASKSWITHINURL(base, path, latitude, longitude, within, perPage) [NSString stringWithFormat:@"%@?latitude=%f&longitude=%f&within=%f&per_page=%d", CTXDOURL(base, path), latitude, longitude, within, perPage]
-#define TASKSSEARCHURL(base, path, query, page, perPage) [NSString stringWithFormat:@"%@?q=%@&page=%d&per_page=%d", CTXDOURL(base, path), query, page, perPage]
-#define TASKSUPDATEDSINCEURL(base, path, updatedSince, perPage) [NSString stringWithFormat:@"%@?updated_since=%@&per_page=%d", CTXDOURL(base, path), updatedSince, perPage]
+#define TASKSURL(base, path, groupId) [NSString stringWithFormat:@"%@/groups/%@%@", base, groupId, path]
+#define TASKSDUEURL(base, path, due) [NSString stringWithFormat:@"%@?due=%@", CTXDOURL(base, path), due]
+#define TASKSWITHINURL(base, path, latitude, longitude, within) [NSString stringWithFormat:@"%@?latitude=%f&longitude=%f&within=%f", CTXDOURL(base, path), latitude, longitude, within]
+#define TASKSSEARCHURL(base, path, query) [NSString stringWithFormat:@"%@?q=%@", CTXDOURL(base, path), query]
+#define TASKSUPDATEDSINCEURL(base, path, updatedSince) [NSString stringWithFormat:@"%@?updated_since=%@", CTXDOURL(base, path), updatedSince]
 
 // Task
 #define TASKURL(base, path, groupId, taskId) [NSString stringWithFormat:@"%@%@%@", GROUPURL(base, path, groupId), TASKS_PATH, ((taskId) ? [NSString stringWithFormat:@"/%@", taskId] : @"")]

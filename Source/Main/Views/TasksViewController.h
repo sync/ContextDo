@@ -10,8 +10,6 @@
 @property (nonatomic, retain) TasksDataSource *tasksDataSource;
 @property (nonatomic, retain) TasksDataSource *searchTasksDataSource;
 
-@property (nonatomic) NSInteger page;
-
 @property (nonatomic, readonly) NSMutableArray *tasks;
 
 @property (nonatomic, retain) Group *group;
@@ -21,7 +19,6 @@
 
 @property (nonatomic, retain) IBOutlet CustomSearchBar *searchBar;
 
-@property (nonatomic) NSInteger pageSave;
 @property (nonatomic, copy) NSArray *tasksSave;
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;
