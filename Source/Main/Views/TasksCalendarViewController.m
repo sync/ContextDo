@@ -189,7 +189,6 @@
 	
 	[group release];
 	[tasks release];
-	[mainNavController release];
 	
 	[tasksCalendarDataSource release];
 	

@@ -248,7 +248,6 @@
 	[customSearchBar release];
 	
 	[group release];
-	[mainNavController release];
 	[tasks release];
 	[mapView release];
 	
