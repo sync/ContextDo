@@ -268,6 +268,7 @@
 		2491272B12EE631E009191BA /* 100-coffee@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2491272A12EE631E009191BA /* 100-coffee@2x.png */; };
 		2491273A12EE647B009191BA /* TaskDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491273912EE647B009191BA /* TaskDetailsView.m */; };
 		2491279212EE6AD0009191BA /* shadow_separator_task_details.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2491279112EE6AD0009191BA /* shadow_separator_task_details.jpg */; };
+		24912A2D12EE9CC0009191BA /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24912A2C12EE9CC0009191BA /* MessageUI.framework */; };
 		24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */; };
 		24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* InfoViewController.m */; };
 		24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoView.xib */; };
@@ -711,6 +712,7 @@
 		2491273812EE647B009191BA /* TaskDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailsView.h; sourceTree = "<group>"; };
 		2491273912EE647B009191BA /* TaskDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailsView.m; sourceTree = "<group>"; };
 		2491279112EE6AD0009191BA /* shadow_separator_task_details.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = shadow_separator_task_details.jpg; sourceTree = "<group>"; };
+		24912A2C12EE9CC0009191BA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		24E4496812EBA54900F08B7E /* TasksUpdatedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksUpdatedDataSource.h; sourceTree = "<group>"; };
 		24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksUpdatedDataSource.m; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -911,6 +913,7 @@
 				24892202128EE67500DC9712 /* MapKit.framework in Frameworks */,
 				2448D73D12E91C43005EEEDA /* CoreText.framework in Frameworks */,
 				2491251712EE41A4009191BA /* libTapkuLibrary.a in Frameworks */,
+				24912A2D12EE9CC0009191BA /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1703,6 +1706,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				24912A2C12EE9CC0009191BA /* MessageUI.framework */,
 				2448D73C12E91C43005EEEDA /* CoreText.framework */,
 				3A57006411FFB58400248D1D /* CFNetwork.framework */,
 				3A57FE2311FFB1F300248D1D /* AddressBook.framework */,

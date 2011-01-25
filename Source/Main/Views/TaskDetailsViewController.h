@@ -1,8 +1,10 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "TaskDetailsView.h"
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface TaskDetailsViewController : BaseViewController {
+@interface TaskDetailsViewController : BaseViewController <MFMailComposeViewControllerDelegate> {
 
 }
 

@@ -41,7 +41,20 @@
 
 - (IBAction)mailTouched
 {
-	// todo
+	if ([MFMailComposeViewController canSendMail]) {
+		MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+		picker.mailComposeDelegate = self;
+		
+		[picker setSubject:@"Check out this task!"];
+		
+		// Fill out the email body text
+		NSString *emailBody = [NSString stringWithFormat:@"For now only task name: %@, ", self.task.name];
+		
+		[picker setMessageBody:emailBody isHTML:NO];
+		
+		[self.mainNavController presentModalViewController:picker animated:YES];
+		[picker release];
+	}
 }
 
 - (IBAction)editTouched
@@ -58,6 +71,38 @@
 {
 	[self.mainNavController popViewControllerAnimated:TRUE];
 	[[APIServices sharedAPIServices]deleteTask:self.task];
+}
+
+#pragma mark -
+#pragma mark MFMailComposeViewController Delegate
+
+// Dismisses the email composition interface when users tap Cancel or Send. Proceeds to update the message field with the result of the operation.
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error 
+{	
+	NSString *message = nil;
+	// Notifies users about errors associated with the interface
+	switch (result)
+	{
+		case MFMailComposeResultCancelled:
+			message = @"result: canceled";
+			break;
+		case MFMailComposeResultSaved:
+			message = @"result: saved";
+			break;
+		case MFMailComposeResultSent:
+			message = @"result: sent";
+			break;
+		case MFMailComposeResultFailed:
+			message = @"result: failed";
+			break;
+		default:
+			message = @"result: not sent";
+			break;
+	}
+	// Display error
+	DLog(@"%@", message);
+	// Dismiss the modal view controller
+	[[AppDelegate sharedAppDelegate].navigationController dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark -
