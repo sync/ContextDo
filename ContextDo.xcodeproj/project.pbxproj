@@ -209,6 +209,7 @@
 		2448DDD612E9D1B4005EEEDA /* groupPanels_greenTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2448DDD212E9D1B4005EEEDA /* groupPanels_greenTouch@2x.png */; };
 		2448DDD712E9D1B4005EEEDA /* groupPanelsTouch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2448DDD312E9D1B4005EEEDA /* groupPanelsTouch.png */; };
 		2448DDD812E9D1B4005EEEDA /* groupPanelsTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2448DDD412E9D1B4005EEEDA /* groupPanelsTouch@2x.png */; };
+		2456726812EF50450004189D /* CTXDONotificationsServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456726712EF50450004189D /* CTXDONotificationsServices.m */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -628,6 +629,8 @@
 		2448DDD212E9D1B4005EEEDA /* groupPanels_greenTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupPanels_greenTouch@2x.png"; sourceTree = "<group>"; };
 		2448DDD312E9D1B4005EEEDA /* groupPanelsTouch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = groupPanelsTouch.png; sourceTree = "<group>"; };
 		2448DDD412E9D1B4005EEEDA /* groupPanelsTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupPanelsTouch@2x.png"; sourceTree = "<group>"; };
+		2456726612EF50450004189D /* CTXDONotificationsServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDONotificationsServices.h; sourceTree = "<group>"; };
+		2456726712EF50450004189D /* CTXDONotificationsServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDONotificationsServices.m; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -1029,6 +1032,15 @@
 				2448DCAC12E9AB8C005EEEDA /* TaskLocationView.xib */,
 			);
 			name = Location;
+			sourceTree = "<group>";
+		};
+		2456726512EF50180004189D /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				2456726612EF50450004189D /* CTXDONotificationsServices.h */,
+				2456726712EF50450004189D /* CTXDONotificationsServices.m */,
+			);
+			name = Notifications;
 			sourceTree = "<group>";
 		};
 		248921C3128ED27000DC9712 /* API */ = {
@@ -2017,6 +2029,7 @@
 			isa = PBXGroup;
 			children = (
 				248921C3128ED27000DC9712 /* API */,
+				2456726512EF50180004189D /* Notifications */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2468,6 +2481,7 @@
 				249121E412EDD957009191BA /* TasksCalendarViewController.m in Sources */,
 				2491256312EE490D009191BA /* TasksCalendarDataSource.m in Sources */,
 				2491273A12EE647B009191BA /* TaskDetailsView.m in Sources */,
+				2456726812EF50450004189D /* CTXDONotificationsServices.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

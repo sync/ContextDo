@@ -18,7 +18,6 @@
 
 @property (nonatomic, readonly) BOOL isTodayTasks;
 @property (nonatomic, readonly) BOOL isNearTasks;
-- (NSString *)calendarMonthForDate:(NSDate *)date;
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;
 

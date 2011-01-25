@@ -1,6 +1,7 @@
 #import "TasksCalendarViewController.h"
 #import "NSDate-Utilities.h"
 #import "TaskContainerViewController.h"
+#import "NSDate+Extensions.h"
 
 @interface TasksCalendarViewController (private)
 
@@ -45,6 +46,7 @@
 
 - (void)setupDataSource
 {
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskDeleteNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
 	
@@ -60,7 +62,7 @@
 
 - (void)refreshTasks
 {
-	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:self.monthView.monthDate]];
+	[[APIServices sharedAPIServices]refreshTasksWithDue:[self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]];
 }
 
 #pragma mark -
@@ -95,14 +97,6 @@
 
 #pragma mark -
 #pragma mark Actions
-
-- (NSString *)calendarMonthForDate:(NSDate *)date
-{
-	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	// 2010-07
-	[dateFormatter setDateFormat:@"yyyy-MM"];
-	return [dateFormatter stringFromDate:date];
-}
 
 #pragma mark -
 #pragma mark Calendar View
@@ -155,7 +149,7 @@
 	[self.tasksCalendarDataSource resetContent];
 	[self.tableView reloadData];
 	
-	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:d]];
+	[[APIServices sharedAPIServices]refreshTasksWithDue:[d getUTCDateWithformat:@"yyyy-MM"]];
 }
 
 #pragma mark -

@@ -85,9 +85,9 @@
 																									   target:self.navigationController
 																									 selector:@selector(customBackButtonTouched)];
 	} else {
-		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Close"
-																											   target:self.navigationController
-																											 selector:@selector(closeButtonTouched)];
+		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Close"
+																												   target:self
+																												 selector:@selector(closeButtonTouched)];
 		
 	}
 	
@@ -168,6 +168,7 @@
 	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 											  forBarStyle:UIBarStyleBlackOpaque];
+	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	[navController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
 										forBarStyle:UIBarStyleBlackOpaque];
 	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage

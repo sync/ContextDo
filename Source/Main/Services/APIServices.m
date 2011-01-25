@@ -1,6 +1,7 @@
 #import "APIServices.h"
 #import "BaseASIServices+Utils.h"
 #import "APIServices+Parsing.h"
+#import "NSDate+Extensions.h"
 
 @implementation APIServices
 
@@ -307,11 +308,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *notificationName = TasksDueTodayDidLoadNotification;
 	NSString *path = @"tasksDueToday";
 	
-	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	// 2010-07-24
-	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
-	
-	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, [dateFormatter stringFromDate:[NSDate date]]);
+	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"]);
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 

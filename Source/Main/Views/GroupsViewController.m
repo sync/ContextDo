@@ -339,6 +339,7 @@
 	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 											  forBarStyle:UIBarStyleBlackOpaque];
+	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	[navController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
 										forBarStyle:UIBarStyleBlackOpaque];
 	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage

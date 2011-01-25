@@ -22,6 +22,9 @@
 - (void)hideLoginView:(BOOL)animated;
 - (void)showLoginView:(BOOL)animated;
 
+- (void)showTask:(Task *)task animated:(BOOL)animated;
+- (void)showNearTasksAnimated:(BOOL)animated;
+
 @property (nonatomic, readonly) BOOL isBlackingOutTopViewElements;
 - (void)blackOutTopViewElementsAnimated:(BOOL)animated;
 - (void)hideBlackOutTopViewElementsAnimated:(BOOL)animated;

@@ -98,9 +98,9 @@
 																									   target:self.navigationController
 																									 selector:@selector(customBackButtonTouched)];
 	} else {
-		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Close"
-																											   target:self.navigationController
-																											 selector:@selector(closeButtonTouched)];
+		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Close"
+																												   target:self
+																												 selector:@selector(closeButtonTouched)];
 		
 	}
 	
@@ -180,6 +180,11 @@
 - (void)showReschedule
 {
 	[self.containerNavController setViewControllers:[NSArray arrayWithObject:self.taskScheduleViewController]];
+}
+
+- (void)closeButtonTouched
+{
+	[self dismissModalViewControllerAnimated:TRUE];
 }
 
 #pragma mark -
