@@ -13,6 +13,8 @@
 	[super viewDidLoad];
 	
 	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].taskDarkGrayColor;
+	[self.taskDetailsView.completedButton addTarget:self action:@selector(completedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+
 	[self refreshTask];
 }
 
@@ -23,6 +25,19 @@
 
 #pragma mark -
 #pragma mark Actions
+
+- (void)completedButtonTouched:(id)sender
+{
+	if (self.task.completed) {
+		self.task.completedAt = nil;
+	} else {
+		self.task.completedAt = [NSDate date];
+	}
+	
+	[self refreshTask];
+	
+	[[APIServices sharedAPIServices]updateTask:self.task];
+}
 
 - (IBAction)mailTouched
 {
