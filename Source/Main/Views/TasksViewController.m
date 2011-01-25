@@ -44,6 +44,11 @@
 	return [self.group.name isEqualToString:TodaysTasksPlacholder];
 }
 
+- (BOOL)isNearTasks
+{
+	return [self.group.name isEqualToString:NearTasksPlacholder];
+}
+
 - (void)setupDataSource
 {
 	[super setupDataSource];
@@ -57,6 +62,9 @@
 	if (!self.isTodayTasks) {
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
+	} else if (self.isNearTasks) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
+		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksWithinDidLoadNotification];
 	} else {
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueDidLoadNotification];
@@ -182,6 +190,9 @@
 	if (!self.tasksSave) {
 		if (!self.isTodayTasks) {
 			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
+		} else if (self.isNearTasks) {
+			CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0]; // TODO within user's pref
 		} else {
 			[[APIServices sharedAPIServices]refreshTasksDueToday];
 		}

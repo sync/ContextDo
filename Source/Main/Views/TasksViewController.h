@@ -15,6 +15,7 @@
 @property (nonatomic, retain) Group *group;
 
 @property (nonatomic, readonly) BOOL isTodayTasks;
+@property (nonatomic, readonly) BOOL isNearTasks;
 
 @property (nonatomic, retain) IBOutlet CustomSearchBar *searchBar;
 

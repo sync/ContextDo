@@ -8,7 +8,8 @@
 
 + (Task *)taskWithId:(NSNumber *)aTaskId
 				name:(NSString *)aName
-			location:(NSString *)aLocation;
+			latitude:(CLLocationDegrees)aLatitude 
+		   longitude:(CLLocationDegrees)aLongitude
 {
 	if (!aTaskId || !aName) {
 		return nil;
@@ -17,7 +18,9 @@
 	Task *task = [[[Task alloc]init]autorelease];
 	task.taskId = aTaskId;
 	task.name = aName;
-	task.location = aLocation;
+	task.latitude = [NSNumber numberWithDouble:aLatitude];
+	task.longitude = [NSNumber numberWithDouble:aLongitude
+					  ];
 	
 	return task;
 }

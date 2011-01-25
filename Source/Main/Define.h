@@ -61,6 +61,9 @@
 #define GroupDeleteNotification @"GroupDeleteNotification"
 
 #define TodaysTasksPlacholder @"Todays tasks"
+#define NearTasksPlacholder @"Near tasks"
+
+#define CURRENT_LOCATION_PLACEHOLDER @"Current Location"
 
 // Cells
 typedef enum {

@@ -97,7 +97,7 @@
 	
 	// Add annotations
 	UICRouteAnnotation *startAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
-																					title:@"Current Location"
+																					title:CURRENT_LOCATION_PLACEHOLDER
 																				 subtitle:[[route.legs objectAtIndex:0]startAddress]
 																		   annotationType:UICRouteAnnotationTypeStart] autorelease];
 	UICRouteAnnotation *endAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints lastObject] coordinate]

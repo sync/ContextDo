@@ -26,6 +26,11 @@
 	return [self.group.name isEqualToString:TodaysTasksPlacholder];
 }
 
+- (BOOL)isNearTasks
+{
+	return [self.group.name isEqualToString:NearTasksPlacholder];
+}
+
 - (NSString *)nowDue
 {
 	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
@@ -49,6 +54,9 @@
 	if (!self.isTodayTasks) {
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
+	} else if (self.isNearTasks) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
+		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksWithinDidLoadNotification];
 	} else {
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueDidLoadNotification];
@@ -63,6 +71,9 @@
 {
 	if (!self.isTodayTasks) {
 		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
+	} else if (self.isNearTasks) {
+		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0]; // TODO within user's pref
 	} else {
 		[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue];
 	}
@@ -76,7 +87,23 @@
 	NSDictionary *dict = [notification object];
 	
 	NSArray *newTasks = [dict valueForKey:@"tasks"];
-	self.tasks = newTasks;
+	
+	NSMutableArray *tasksToAdd = [NSMutableArray arrayWithArray:newTasks];
+	if (self.mapView.userLocation) {
+		CLLocation *startLocation = nil;
+		if (TARGET_IPHONE_SIMULATOR) {
+			startLocation = [AppDelegate sharedAppDelegate].currentLocation;
+		} else {
+			startLocation = self.mapView.userLocation.location;
+		}
+		Task *currentLocation = [Task taskWithId:[NSNumber numberWithInteger:NSNotFound]
+											name:CURRENT_LOCATION_PLACEHOLDER
+										latitude:startLocation.coordinate.latitude
+									   longitude:startLocation.coordinate.longitude];
+		[tasksToAdd insertObject:currentLocation atIndex:0];
+	}
+	
+	self.tasks = [NSArray arrayWithArray:tasksToAdd];;
 	
 	[self refreshTasksDirection];
 }
@@ -99,14 +126,6 @@
 	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
 	options.travelMode = UICGTravelModeDriving;
 	
-	
-	CLLocation *startLocation = nil;
-	if (TARGET_IPHONE_SIMULATOR) {
-		startLocation = [AppDelegate sharedAppDelegate].currentLocation;
-	} else {
-		startLocation = self.mapView.userLocation.location;
-	}
-	
 	[self updateDirections];
 }
 
@@ -118,8 +137,6 @@
 	
 	self.customSearchBar = nil;
 }
-
-
 
 - (void)updateDirections
 {
@@ -236,6 +253,12 @@
 			pinAnnotation.pinColor = MKPinAnnotationColorRed;
 		} else {
 			pinAnnotation.pinColor = MKPinAnnotationColorPurple;
+		}
+		
+		if (![annotation.title isEqualToString:CURRENT_LOCATION_PLACEHOLDER] && 
+			[(UICRouteAnnotation *)annotation annotationType] != UICRouteAnnotationTypeStart) {
+			UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+			pinAnnotation.rightCalloutAccessoryView = button;
 		}
 		
 		pinAnnotation.animatesDrop = YES;

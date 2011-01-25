@@ -10,9 +10,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	if (self.content.count == 0) {
-		return nil;
-	}
+//	if (self.content.count == 0) {
+//		return nil;
+//	}
 	
 	return @"Tasks Updated Today";
 }

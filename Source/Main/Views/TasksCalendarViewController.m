@@ -38,6 +38,11 @@
 	return [self.group.name isEqualToString:TodaysTasksPlacholder];
 }
 
+- (BOOL)isNearTasks
+{
+	return [self.group.name isEqualToString:NearTasksPlacholder];
+}
+
 - (void)setupDataSource
 {
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];

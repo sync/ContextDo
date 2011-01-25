@@ -11,6 +11,7 @@
 - (void)handleLocalNotification:(NSDictionary *)launchOptions;
 - (NSDictionary *)userInfoForTaskId:(NSNumber *)taskId today:(BOOL)today;
 - (UILocalNotification *)hasLocalNotificationForTaskId:(NSNumber *)taskId today:(BOOL)today;
+- (void)refreshTasksForLocalNotification;
 
 @end
 
@@ -58,6 +59,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	
 	[self handleLocalNotification:launchOptions];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasksForLocalNotification) name:GroupEditNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasksForLocalNotification) name:GroupAddNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckTodayTasks:) name:TasksDueTodayDidLoadNotification object:nil];
 	
     return YES;
@@ -128,8 +131,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	[self enableGPS];
 	[[APIServices sharedAPIServices]refreshGroups];
-	[[APIServices sharedAPIServices]refreshTasksEdited];
-	[[APIServices sharedAPIServices]refreshTasksDueToday];
+	[self refreshTasksForLocalNotification];
 	// todo refres tasks
 }
 
@@ -316,6 +318,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 #pragma mark -
 #pragma mark LocalNotifications
 
+- (void)refreshTasksForLocalNotification
+{
+	[[APIServices sharedAPIServices]refreshTasksEdited];
+	[[APIServices sharedAPIServices]refreshTasksDueToday];
+}
+
 - (void)shouldCheckWithinTasks:(NSNotification *)notification
 {
 	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
@@ -406,6 +414,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)handleLocalNotification:(NSDictionary *)launchOptions
 {
+	[[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
 	if ([UILocalNotification class]) {
 		UILocalNotification *notification = [launchOptions valueForKey:UIApplicationLaunchOptionsLocalNotificationKey];
 		if (notification.userInfo) {
@@ -420,6 +429,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 		// todo
 	}
 }
+
+#pragma mark -
+#pragma mark View Task
+
+#pragma mark -
+#pragma mark View Near Tasks
 
 #pragma mark -
 #pragma mark Memory management

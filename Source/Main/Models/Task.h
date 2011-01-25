@@ -31,6 +31,7 @@
 
 + (Task *)taskWithId:(NSNumber *)aTaskId
 				name:(NSString *)aName
-			location:(NSString *)aLocation;
+			latitude:(CLLocationDegrees)aLatitude 
+		   longitude:(CLLocationDegrees)aLongitude;
 
 @end

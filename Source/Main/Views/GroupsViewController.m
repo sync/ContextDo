@@ -112,6 +112,8 @@
 	self.tableView.dataSource = self.groupsDataSource;
 	self.tableView.allowsSelectionDuringEditing = TRUE;
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
+	self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0);
+	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, 10.0, 0.0);
 	[self refreshGroups];
 	self.addGroupTextField.rightView = [[DefaultStyleSheet sharedDefaultStyleSheet]inputTextFieldButtonWithText:@"Add" 
 																										 target:self 
@@ -185,7 +187,10 @@
 	Group *todayGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
 									  name:TodaysTasksPlacholder];
 	
-	[self.groupsDataSource.content addObject:[NSArray arrayWithObject:todayGroup]];
+	Group *nearGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
+									 name:NearTasksPlacholder];
+	
+	[self.groupsDataSource.content addObject:[NSArray arrayWithObjects:todayGroup, nearGroup, nil]];
 	
 	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
 	
@@ -438,7 +443,7 @@
 #pragma mark -
 #pragma mark InfoViewController
 
-#define InfoHiddenHeight 42.0
+#define InfoHiddenHeight 46.0
 #define InfoShowingHeight 290.0
 
 - (InfoViewController *)infoViewController

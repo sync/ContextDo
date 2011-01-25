@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSArray *tasks;
 
 @property (nonatomic, readonly) BOOL isTodayTasks;
+@property (nonatomic, readonly) BOOL isNearTasks;
 @property (nonatomic, readonly) NSString *nowDue;
 
 @property (nonatomic, retain) UICRouteOverlayMapView *routeOverlayView;
