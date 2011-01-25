@@ -54,7 +54,7 @@
 
 - (CGRect)editingRectForBounds:(CGRect)bounds
 {
-	CGRect rect = [super textRectForBounds:bounds];
+	CGRect rect = [super editingRectForBounds:bounds];
 	rect.origin.x = 10.0;
 	rect.size.width = bounds.size.width - 2 * 10.0 - 54.0 - 5.0;
 	return rect;

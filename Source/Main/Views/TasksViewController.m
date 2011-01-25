@@ -56,6 +56,9 @@
 {
 	[super setupDataSource];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
+	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksSearchDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
@@ -183,11 +186,18 @@
 
 - (void)refreshTasks
 {
-	if (!self.isTodayTasks) {
-		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
+	// little bit of a hax
+	if (!self.tasksSave) {
+		if (!self.isTodayTasks) {
+			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
+		} else {
+			[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue];
+		}
 	} else {
-		[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue];
+		// search mode
+		[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
 	}
+	
 }
 
 #pragma mark -
@@ -234,6 +244,7 @@
 	self.searchBar.text = nil;
 	self.searchString = nil;
 	[self reloadTasks:self.tasksSave];
+	self.tasksSave = nil;
 }
 
 #pragma mark -

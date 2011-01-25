@@ -40,6 +40,9 @@
 
 - (void)setupDataSource
 {
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
+	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueDidLoadNotification];
 	
@@ -52,8 +55,6 @@
 
 - (void)refreshTasks
 {
-	//- (NSDate*) dateSelected;
-//	- (NSDate*) monthDate;
 	[[APIServices sharedAPIServices]refreshTasksWithDue:[self calendarMonthForDate:self.monthView.monthDate]];
 }
 
