@@ -1,5 +1,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "TaskContainerViewController.h"
+#import "TasksContainerViewController.h"
 
 @interface AppDelegate (private)
 
@@ -9,9 +11,13 @@
 - (void)locationDidStop;
 - (void)logout:(BOOL)showingLogin animated:(BOOL)animated;
 - (void)handleLocalNotification:(NSDictionary *)launchOptions;
-- (NSDictionary *)userInfoForTaskId:(NSNumber *)taskId today:(BOOL)today;
+- (NSDictionary *)userInfoForTask:(Task *)task today:(BOOL)today;
 - (UILocalNotification *)hasLocalNotificationForTaskId:(NSNumber *)taskId today:(BOOL)today;
 - (void)refreshTasksForLocalNotification;
+- (Task *)taskForUserInfo:(NSDictionary *)userInfo;
+- (void)parseNotification:(UILocalNotification *)notification;
+- (void)showTask:(Task *)task animated:(BOOL)animated;
+- (void)showNearTasksAnimated:(BOOL)animated;
 
 @end
 
@@ -29,8 +35,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	LoginViewController *controller = [[[LoginViewController alloc]initWithNibName:@"LoginView" bundle:nil]autorelease];
 	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
+	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-											  forBarStyle:UIBarStyleDefault];
+														  forBarStyle:UIBarStyleBlackOpaque];
+	[navController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
+													forBarStyle:UIBarStyleBlackOpaque];
+	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
+												forBarStyle:UIBarStyleBlackOpaque];
 	
 	return navController;
 }
@@ -59,8 +70,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	
 	[self handleLocalNotification:launchOptions];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasksForLocalNotification) name:GroupEditNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasksForLocalNotification) name:GroupAddNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasksForLocalNotification) name:TaskEditNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasksForLocalNotification) name:TaskAddNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckTodayTasks:) name:TasksDueTodayDidLoadNotification object:nil];
 	
     return YES;
@@ -328,8 +339,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
 	
-	NSPredicate *precicate = [NSPredicate predicateWithFormat:@"isClose == %@", [NSNumber numberWithBool:TRUE]];
-	NSArray *closeTasks = [newTasks filteredArrayUsingPredicate:precicate];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isClose == %@", [NSNumber numberWithBool:TRUE]];
+	NSArray *closeTasks = [newTasks filteredArrayUsingPredicate:predicate];
 	
 	UIDevice* device = [UIDevice currentDevice];
 	UIApplication *app = [UIApplication sharedApplication];
@@ -345,6 +356,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 			notification.alertAction = @"View";
 			notification.applicationIconBadgeNumber = 1;
 			notification.soundName= UILocalNotificationDefaultSoundName;
+			notification.userInfo = [self userInfoForTask:task today:FALSE];
 			[app scheduleLocalNotification:notification];
 		}
 	} else if (closeTasks.count > 1) {
@@ -356,15 +368,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 			notification.alertAction = @"View";
 			notification.applicationIconBadgeNumber = closeTasks.count;
 			notification.soundName= UILocalNotificationDefaultSoundName;
+			notification.userInfo = [self userInfoForTask:nil today:FALSE];
 			[app scheduleLocalNotification:notification];
 		}
 	}
 }
 
-- (NSDictionary *)userInfoForTaskId:(NSNumber *)taskId today:(BOOL)today
+- (NSDictionary *)userInfoForTask:(Task *)task today:(BOOL)today
 {
+	NSData *taskData = [NSKeyedArchiver archivedDataWithRootObject:task];
+	
 	return [NSDictionary dictionaryWithObjectsAndKeys:
-			taskId, @"taskId",
+			taskData, @"taskData",
 			[NSNumber numberWithBool:today], @"today",
 			nil
 			];
@@ -374,7 +389,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	NSArray *notifications =  [[UIApplication sharedApplication]scheduledLocalNotifications];
 	for (UILocalNotification *notification in notifications) {
-		NSNumber *notificationTaskId = [notification.userInfo valueForKey:@"taskId"];
+		Task *notificationTask = [NSKeyedUnarchiver unarchiveObjectWithData:[notification.userInfo valueForKey:@"taskData"]];
+		if (!notificationTask) {
+			return nil;
+		}
+		
+		NSNumber *notificationTaskId = notificationTask.taskId;
 		BOOL notificationCurrentToday = [[notification.userInfo valueForKey:@"today"]boolValue];
 		if ([taskId isEqualToNumber:notificationTaskId] && today == notificationCurrentToday) {
 			return notification;
@@ -387,8 +407,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
 	
-	NSPredicate *precicate = [NSPredicate predicateWithFormat:@"dueAt != nil && expired == %@", [NSNumber numberWithBool:FALSE]];
-	NSArray *dueTasks = [newTasks filteredArrayUsingPredicate:precicate];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueAt != nil && expired == %@", [NSNumber numberWithBool:FALSE]];
+	NSArray *dueTasks = [newTasks filteredArrayUsingPredicate:predicate];
 	
 	UIDevice* device = [UIDevice currentDevice];
 	UIApplication *app = [UIApplication sharedApplication];
@@ -406,10 +426,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 			notification.alertAction = @"View";
 			notification.applicationIconBadgeNumber = 1;
 			notification.soundName= UILocalNotificationDefaultSoundName;
-			notification.userInfo = [self userInfoForTaskId:task.taskId today:TRUE];
+			notification.userInfo = [self userInfoForTask:task today:TRUE];
 			[app scheduleLocalNotification:notification];
 		}
 	}
+}
+
+- (Task *)taskForUserInfo:(NSDictionary *)userInfo
+{
+	Task *notificationTask = [NSKeyedUnarchiver unarchiveObjectWithData:[userInfo valueForKey:@"taskData"]];
+	return notificationTask;
 }
 
 - (void)handleLocalNotification:(NSDictionary *)launchOptions
@@ -417,9 +443,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	[[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
 	if ([UILocalNotification class]) {
 		UILocalNotification *notification = [launchOptions valueForKey:UIApplicationLaunchOptionsLocalNotificationKey];
-		if (notification.userInfo) {
-			// todo
-		}
+		[self parseNotification:notification];
 	}
 }
 
@@ -430,11 +454,59 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	}
 }
 
+- (void)parseNotification:(UILocalNotification *)notification
+{
+	if (!notification && !notification.userInfo) {
+		return;
+	}
+	
+	Task *notificationTask = [NSKeyedUnarchiver unarchiveObjectWithData:[notification.userInfo valueForKey:@"taskData"]];
+	if (notificationTask) {
+		[self showTask:notificationTask animated:TRUE];
+	} else {
+		[self showNearTasksAnimated:TRUE];
+	}
+}
+
 #pragma mark -
 #pragma mark View Task
 
+- (void)showTask:(Task *)task animated:(BOOL)animated
+{
+	TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
+	controller.task = task;
+	controller.tasks = [NSArray arrayWithObject:task];
+	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
+	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+											  forBarStyle:UIBarStyleBlackOpaque];
+	[navController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
+										forBarStyle:UIBarStyleBlackOpaque];
+	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
+									forBarStyle:UIBarStyleBlackOpaque];
+	[self.navigationController presentModalViewController:navController animated:TRUE];
+}
+
 #pragma mark -
 #pragma mark View Near Tasks
+
+- (void)showNearTasksAnimated:(BOOL)animated
+{
+	Group *nearGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
+									 name:NearTasksPlacholder];
+	
+	TasksContainerViewController *controller = [[[TasksContainerViewController alloc]initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
+	controller.group = nearGroup;
+	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
+	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+											  forBarStyle:UIBarStyleBlackOpaque];
+	[navController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
+										forBarStyle:UIBarStyleBlackOpaque];
+	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
+									forBarStyle:UIBarStyleBlackOpaque];
+	[self.navigationController presentModalViewController:navController animated:TRUE];
+}
 
 #pragma mark -
 #pragma mark Memory management
