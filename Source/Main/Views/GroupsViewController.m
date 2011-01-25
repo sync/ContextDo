@@ -190,12 +190,6 @@
 	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
 	
 	[self.tableView reloadData];
-	
-	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
-		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0];
-	}
-	
 }
 
 - (Group *)groupForId:(NSNumber *)groupId

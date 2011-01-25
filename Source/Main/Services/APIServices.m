@@ -278,6 +278,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 - (void)refreshTasksWithGroupId:(NSNumber *)groupId
 {
+	if (!groupId) {
+		return;
+	}
+	
 	NSString *notificationName = TasksDidLoadNotification;
 	NSString *path = @"tasksWithGroupId";
 	
@@ -287,10 +291,27 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 - (void)refreshTasksWithDue:(NSString *)due
 {
+	if (due.length == 0) {
+		return;
+	}
+	
 	NSString *notificationName = TasksDueDidLoadNotification;
 	NSString *path = @"tasksWithDue";
 	
 	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due);
+	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+}
+
+- (void)refreshTasksDueToday
+{
+	NSString *notificationName = TasksDueTodayDidLoadNotification;
+	NSString *path = @"tasksDueToday";
+	
+	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	// 2010-07-24
+	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
+	
+	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, [dateFormatter stringFromDate:[NSDate date]]);
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
@@ -305,6 +326,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 - (void)refreshTasksWithQuery:(NSString *)query;
 {
+	if (query.length == 0) {
+		return;
+	}
+	
 	NSString *notificationName = TasksSearchDidLoadNotification;
 	NSString *path = @"tasksWithQuery";
 	
@@ -486,7 +511,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 				   [path isEqualToString:@"tasksWithDue"] ||
 				   [path isEqualToString:@"tasksWithLatitude"] ||
 				   [path isEqualToString:@"tasksWithQuery"] || 
-				   [path isEqualToString:@"editedTasks"]) {
+				   [path isEqualToString:@"editedTasks"] || 
+				   [path isEqualToString:@"tasksDueToday"]) {
 			[self parseTasks:request];
 		} else if ([path isEqualToString:@"addGroupWithName"]|| 
 				   [path isEqualToString:@"editGroupWithId"] ||

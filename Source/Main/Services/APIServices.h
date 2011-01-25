@@ -21,6 +21,7 @@
 
 - (void)refreshTasksWithGroupId:(NSNumber *)groupId;
 - (void)refreshTasksWithDue:(NSString *)due;
+- (void)refreshTasksDueToday;
 - (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude within:(CGFloat)withinInKm;
 - (void)refreshTasksWithQuery:(NSString *)query;
 - (void)refreshTasksEdited;

@@ -8,6 +8,7 @@
 - (void)locationDidFix;
 - (void)locationDidStop;
 - (void)logout:(BOOL)showingLogin animated:(BOOL)animated;
+- (void)handleLocalNotification:(NSDictionary *)launchOptions;
 
 @end
 
@@ -16,7 +17,7 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
-@synthesize window, navigationController, placemark, reverseGeocoder, locationGetter, firstGPSFix, blackedOutView;
+@synthesize window, navigationController, placemark, reverseGeocoder, locationGetter, firstGPSFix, blackedOutView, lastCurrentLocation;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -52,6 +53,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 													forBarStyle:UIBarStyleBlackOpaque];
 	[self.navigationController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
 												forBarStyle:UIBarStyleBlackOpaque];
+	
+	[self handleLocalNotification:launchOptions];
 
     return YES;
 }
@@ -109,9 +112,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)enableGPS
 {
-	if ([self.locationGetter.locationManager locationServicesEnabled]) {
+	if ([CLLocationManager locationServicesEnabled]) {
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidFix) name:GPSLocationDidFix object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidStop) name:GPSLocationDidStop object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 		[self.locationGetter startUpdates];
 	}
 }
@@ -119,7 +123,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (void)refreshAllControllers
 {
 	[self enableGPS];
-	[[APIServices sharedAPIServices]refreshGroups]; // todo better way
+	[[APIServices sharedAPIServices]refreshGroups];
+	// todo refres tasks
 }
 
 - (void)logout:(BOOL)showingLogin animated:(BOOL)animated
@@ -251,8 +256,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	if (self.hasValidCurrentLocation) {
 		CLLocationCoordinate2D coordinate = self.currentLocation.coordinate;
 		
-		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0]; // TODO within user's pref
-		
+		// todo get this value from the user's default
+		if (!self.lastCurrentLocation || [self.currentLocation distanceFromLocation:self.lastCurrentLocation] >= 1000) {
+			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0]; // TODO within user's pref
+		}
+			
 		if (reverseGeocoder) {
 			[reverseGeocoder cancel];
 			reverseGeocoder.delegate = nil;
@@ -263,6 +271,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 		reverseGeocoder.delegate = self;
 		[reverseGeocoder start];
 	}
+	
+	self.lastCurrentLocation = self.currentLocation;
 }
 
 - (void)locationDidStop
@@ -274,6 +284,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	return (self.currentLocation && CLLocationCoordinate2DIsValid(self.currentLocation.coordinate));
 }
+
 
 #pragma mark -
 #pragma mark MKReverseGeocoderDelegate methods
@@ -297,6 +308,60 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 }
 
 #pragma mark -
+#pragma mark LocalNotifications
+
+- (void)shouldCheckWithinTasks:(NSNotification *)notification
+{
+	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
+	
+	NSPredicate *precicate = [NSPredicate predicateWithFormat:@"isClose == %@", [NSNumber numberWithBool:TRUE]];
+	NSArray *closeTasks = [newTasks filteredArrayUsingPredicate:precicate];
+	
+	UIDevice* device = [UIDevice currentDevice];
+	UIApplication *app = [UIApplication sharedApplication];
+	
+	if (closeTasks.count == 1) {
+		Task *task = [closeTasks objectAtIndex:0];
+		
+		UILocalNotification *notification = [[[UILocalNotification alloc] init]autorelease];
+		notification.fireDate  = nil;
+		notification.timeZone  = [NSTimeZone systemTimeZone];
+		notification.alertBody = [NSString stringWithFormat:@"You are close to %@, would you like to view it?", task.name];
+		notification.alertAction = @"View";
+		[app scheduleLocalNotification:notification];
+	} else if (closeTasks.count > 1) {
+		if ([device respondsToSelector:@selector(isMultitaskingSupported)] && device.isMultitaskingSupported) {
+			UILocalNotification *notification = [[[UILocalNotification alloc] init]autorelease];
+			notification.fireDate  = nil;
+			notification.timeZone  = [NSTimeZone systemTimeZone];
+			notification.alertBody = @"More than one task are close to your current location, would you like to see them?";
+			notification.alertAction = @"View";
+			[app scheduleLocalNotification:notification];
+		}
+	}
+}
+
+// same for isLaterThanDate
+// TasksDueTodayDidLoadNotification
+
+- (void)handleLocalNotification:(NSDictionary *)launchOptions
+{
+	if ([UILocalNotification class]) {
+		UILocalNotification *notification = [launchOptions valueForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+		if (notification.userInfo) {
+			// todo
+		}
+	}
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+	if (notification.userInfo) {
+		// todo
+	}
+}
+
+#pragma mark -
 #pragma mark Memory management
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
@@ -312,6 +377,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 	
+	[lastCurrentLocation release];
 	[locationGetter release];
 	[reverseGeocoder release];
 	[placemark release];

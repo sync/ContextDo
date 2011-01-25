@@ -1,5 +1,13 @@
 #import "InfoViewController.h"
 #import "TasksInfoCell.h"
+#import "TaskContainerViewController.h"
+
+@interface InfoViewController (private)
+
+- (void)refreshTasks;
+
+@end
+
 
 @implementation InfoViewController
 
@@ -30,6 +38,8 @@
 {
 	[super setupDataSource];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
 	// remove this todo
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
 	// end remove
@@ -39,6 +49,11 @@
 	self.tasksUpdatedDataSource = [[[TasksUpdatedDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksUpdatedDataSource;
 	self.tableView.backgroundColor = [UIColor clearColor];
+	
+}
+
+- (void)refreshTasks
+{
 	[[APIServices sharedAPIServices]refreshTasksEdited];
 }
 
@@ -80,9 +95,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-	__unused Task *task  = [self.tasksUpdatedDataSource taskForIndexPath:indexPath];;
+	Task *task  = [self.tasksUpdatedDataSource taskForIndexPath:indexPath];;
 	
-	// TODO
+	TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
+	controller.hidesBottomBarWhenPushed = TRUE;
+	controller.task = task;
+	controller.tasks = self.tasksUpdatedDataSource.content;
+	[self.navigationController pushViewController:controller animated:TRUE];
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }

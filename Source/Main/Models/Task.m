@@ -25,7 +25,7 @@
 - (CLLocationDistance)distance
 {
 	CLLocation *taskLocation = [[[CLLocation alloc]initWithLatitude:self.latitude.doubleValue longitude:self.longitude.doubleValue]autorelease];
-	return [(id)[AppDelegate sharedAppDelegate].currentLocation getDistanceFrom:taskLocation];
+	return [(id)[AppDelegate sharedAppDelegate].currentLocation distanceFromLocation:taskLocation];
 }
 
 - (BOOL)isClose

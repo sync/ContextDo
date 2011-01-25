@@ -15,7 +15,6 @@
 @property (nonatomic, retain) Group *group;
 
 @property (nonatomic, readonly) BOOL isTodayTasks;
-@property (nonatomic, readonly) NSString *nowDue;
 
 @property (nonatomic, retain) IBOutlet CustomSearchBar *searchBar;
 

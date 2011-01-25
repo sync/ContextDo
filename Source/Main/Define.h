@@ -49,6 +49,7 @@
 #define GroupsDidLoadNotification @"GroupsDidLoadNotification"
 #define TasksDidLoadNotification @"TasksDidLoadNotification"
 #define TasksDueDidLoadNotification @"TasksDueDidLoadNotification"
+#define TasksDueTodayDidLoadNotification @"TasksDueTodayDidLoadNotification"
 #define TasksWithinDidLoadNotification @"TasksWithinDidLoadNotification"
 #define TasksUpdatedSinceDidLoadNotification @"TasksUpdatedSinceDidLoadNotification"
 #define TasksSearchDidLoadNotification @"TasksSearchDidLoadNotification"

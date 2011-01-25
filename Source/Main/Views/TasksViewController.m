@@ -44,14 +44,6 @@
 	return [self.group.name isEqualToString:TodaysTasksPlacholder];
 }
 
-- (NSString *)nowDue
-{
-	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	// 2010-07-24
-	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
-	return [dateFormatter stringFromDate:[NSDate date]];
-}
-
 - (void)setupDataSource
 {
 	[super setupDataSource];
@@ -191,7 +183,7 @@
 		if (!self.isTodayTasks) {
 			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
 		} else {
-			[[APIServices sharedAPIServices]refreshTasksWithDue:self.nowDue];
+			[[APIServices sharedAPIServices]refreshTasksDueToday];
 		}
 	} else {
 		// search mode

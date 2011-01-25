@@ -10,6 +10,7 @@
 
 @property (nonatomic, readonly) MyLocationGetter *locationGetter;
 @property (nonatomic, readonly) CLLocation *currentLocation;
+@property (nonatomic, retain) CLLocation *lastCurrentLocation;
 
 @property (nonatomic, readonly) BOOL hasValidCurrentLocation;
 
