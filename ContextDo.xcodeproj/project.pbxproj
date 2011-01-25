@@ -258,6 +258,16 @@
 		2491249F12EE409E009191BA /* TapkuLibrary.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2491249B12EE409E009191BA /* TapkuLibrary.bundle */; };
 		2491251712EE41A4009191BA /* libTapkuLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 249124A812EE409E009191BA /* libTapkuLibrary.a */; };
 		2491256312EE490D009191BA /* TasksCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491256212EE490D009191BA /* TasksCalendarDataSource.m */; };
+		2491272012EE62F8009191BA /* 103-map.png in Resources */ = {isa = PBXBuildFile; fileRef = 2491271C12EE62F8009191BA /* 103-map.png */; };
+		2491272112EE62F8009191BA /* 187-pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 2491271D12EE62F8009191BA /* 187-pencil.png */; };
+		2491272212EE62F8009191BA /* 18-envelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 2491271E12EE62F8009191BA /* 18-envelope.png */; };
+		2491272312EE62F8009191BA /* 100-coffee.png in Resources */ = {isa = PBXBuildFile; fileRef = 2491271F12EE62F8009191BA /* 100-coffee.png */; };
+		2491272512EE6303009191BA /* 103-map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2491272412EE6303009191BA /* 103-map@2x.png */; };
+		2491272712EE6308009191BA /* 187-pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2491272612EE6308009191BA /* 187-pencil@2x.png */; };
+		2491272912EE6319009191BA /* 18-envelope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2491272812EE6319009191BA /* 18-envelope@2x.png */; };
+		2491272B12EE631E009191BA /* 100-coffee@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2491272A12EE631E009191BA /* 100-coffee@2x.png */; };
+		2491273A12EE647B009191BA /* TaskDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491273912EE647B009191BA /* TaskDetailsView.m */; };
+		2491279212EE6AD0009191BA /* shadow_separator_task_details.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2491279112EE6AD0009191BA /* shadow_separator_task_details.jpg */; };
 		24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */; };
 		24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* InfoViewController.m */; };
 		24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoView.xib */; };
@@ -690,6 +700,17 @@
 		2491249C12EE409E009191BA /* TapkuLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TapkuLibrary.xcodeproj; path = src/TapkuLibrary.xcodeproj; sourceTree = "<group>"; };
 		2491256112EE490D009191BA /* TasksCalendarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksCalendarDataSource.h; sourceTree = "<group>"; };
 		2491256212EE490D009191BA /* TasksCalendarDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksCalendarDataSource.m; sourceTree = "<group>"; };
+		2491271C12EE62F8009191BA /* 103-map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "103-map.png"; sourceTree = "<group>"; };
+		2491271D12EE62F8009191BA /* 187-pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "187-pencil.png"; sourceTree = "<group>"; };
+		2491271E12EE62F8009191BA /* 18-envelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "18-envelope.png"; sourceTree = "<group>"; };
+		2491271F12EE62F8009191BA /* 100-coffee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "100-coffee.png"; sourceTree = "<group>"; };
+		2491272412EE6303009191BA /* 103-map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "103-map@2x.png"; sourceTree = "<group>"; };
+		2491272612EE6308009191BA /* 187-pencil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "187-pencil@2x.png"; sourceTree = "<group>"; };
+		2491272812EE6319009191BA /* 18-envelope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "18-envelope@2x.png"; sourceTree = "<group>"; };
+		2491272A12EE631E009191BA /* 100-coffee@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "100-coffee@2x.png"; sourceTree = "<group>"; };
+		2491273812EE647B009191BA /* TaskDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailsView.h; sourceTree = "<group>"; };
+		2491273912EE647B009191BA /* TaskDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailsView.m; sourceTree = "<group>"; };
+		2491279112EE6AD0009191BA /* shadow_separator_task_details.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = shadow_separator_task_details.jpg; sourceTree = "<group>"; };
 		24E4496812EBA54900F08B7E /* TasksUpdatedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksUpdatedDataSource.h; sourceTree = "<group>"; };
 		24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksUpdatedDataSource.m; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -1127,6 +1148,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2491271712EE62E7009191BA /* Temp */ = {
+			isa = PBXGroup;
+			children = (
+				2491271C12EE62F8009191BA /* 103-map.png */,
+				2491272412EE6303009191BA /* 103-map@2x.png */,
+				2491271D12EE62F8009191BA /* 187-pencil.png */,
+				2491272612EE6308009191BA /* 187-pencil@2x.png */,
+				2491271E12EE62F8009191BA /* 18-envelope.png */,
+				2491272812EE6319009191BA /* 18-envelope@2x.png */,
+				2491271F12EE62F8009191BA /* 100-coffee.png */,
+				2491272A12EE631E009191BA /* 100-coffee@2x.png */,
+				2491279112EE6AD0009191BA /* shadow_separator_task_details.jpg */,
+			);
+			name = Temp;
+			sourceTree = "<group>";
+		};
 		24ADA8C412C84C97000BE62C /* Edition */ = {
 			isa = PBXGroup;
 			children = (
@@ -1238,6 +1275,8 @@
 		24E44FEB12EC122200F08B7E /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				2491273812EE647B009191BA /* TaskDetailsView.h */,
+				2491273912EE647B009191BA /* TaskDetailsView.m */,
 				24E44FEC12EC125A00F08B7E /* TaskDetailsViewController.h */,
 				24E44FED12EC125A00F08B7E /* TaskDetailsViewController.m */,
 				24E4500412EC138E00F08B7E /* TaskDetailsView.xib */,
@@ -1919,6 +1958,7 @@
 				249113C112EC4CB1009191BA /* btn_tbar_uparrow_off@2x.png */,
 				249113C212EC4CB1009191BA /* btn_tbar_uparrow_touch.png */,
 				249113C312EC4CB1009191BA /* btn_tbar_uparrow_touch@2x.png */,
+				2491271712EE62E7009191BA /* Temp */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -2285,6 +2325,15 @@
 				249113CB12EC4CB1009191BA /* btn_tbar_uparrow_touch@2x.png in Resources */,
 				2491212212EDC725009191BA /* TasksMapView.xib in Resources */,
 				2491249F12EE409E009191BA /* TapkuLibrary.bundle in Resources */,
+				2491272012EE62F8009191BA /* 103-map.png in Resources */,
+				2491272112EE62F8009191BA /* 187-pencil.png in Resources */,
+				2491272212EE62F8009191BA /* 18-envelope.png in Resources */,
+				2491272312EE62F8009191BA /* 100-coffee.png in Resources */,
+				2491272512EE6303009191BA /* 103-map@2x.png in Resources */,
+				2491272712EE6308009191BA /* 187-pencil@2x.png in Resources */,
+				2491272912EE6319009191BA /* 18-envelope@2x.png in Resources */,
+				2491272B12EE631E009191BA /* 100-coffee@2x.png in Resources */,
+				2491279212EE6AD0009191BA /* shadow_separator_task_details.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2414,6 +2463,7 @@
 				2491212012EDC638009191BA /* TasksMapViewController.m in Sources */,
 				249121E412EDD957009191BA /* TasksCalendarViewController.m in Sources */,
 				2491256312EE490D009191BA /* TasksCalendarDataSource.m in Sources */,
+				2491273A12EE647B009191BA /* TaskDetailsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

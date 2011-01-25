@@ -1,8 +1,8 @@
-#import "TasksCell.h"
-#import "AccessoryViewWithImage.h"
+#import "TaskDetailsView.h"
 #import "NSDate+Extensions.h"
 
-@implementation TasksCell
+@implementation TaskDetailsView
+
 
 @synthesize distanceLabel, cellContext, completedButton, addressLabel, nameLabel, detailLabel, locationImageView;
 
@@ -10,14 +10,32 @@
 #define AddressLabelFontSize 11.0
 #define DetailLabelFontSize 11.0
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code.
-		[self setCellContext:CTXDOCellContextStandard];
+// The designated initializer. Override to perform setup that is required before the view is loaded.
+// Only when xibless (interface buildder)
+- (id)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        // Custom initialization
+		[self setupCustomInitialisation];
     }
     return self;
+}
+
+// The designated initializer. Override to perform setup that is required before the view is loaded.
+// Only when using xib (interface buildder)
+- (id)initWithCoder:(NSCoder *)decoder {
+	if (self = [super initWithCoder:decoder]) {
+		// Custom initialization
+		[self setupCustomInitialisation];
+	}
+	return self;
+}
+
+#pragma mark -
+#pragma mark Setup
+
+- (void)setupCustomInitialisation
+{	
+	self.backgroundColor = [UIColor clearColor];
 }
 
 - (UILabel *)textLabel
@@ -34,7 +52,7 @@
 {
 	if (!completedButton) {
 		completedButton = [UIButton buttonWithType:UIButtonTypeCustom];
-		[self.contentView addSubview:completedButton];
+		[self addSubview:completedButton];
 	}
 	
 	return completedButton;
@@ -44,7 +62,7 @@
 {
 	if (!locationImageView) {
 		locationImageView = [[[UIImageView alloc]initWithFrame:CGRectZero]autorelease];
-		[self.contentView addSubview:locationImageView];
+		[self addSubview:locationImageView];
 	}
 	
 	return locationImageView;
@@ -57,7 +75,7 @@
 		distanceLabel.backgroundColor = [UIColor clearColor];
 		distanceLabel.highlightedTextColor = [UIColor whiteColor];
 		distanceLabel.shadowOffset = CGSizeMake(0,-1);
-		[self.contentView addSubview:distanceLabel];
+		[self addSubview:distanceLabel];
 	}
 	
 	return distanceLabel;
@@ -76,7 +94,7 @@
 		nameLabel.numberOfLines = 0;
 		nameLabel.lineBreakMode = UILineBreakModeTailTruncation;
 		
-		[self.contentView addSubview:nameLabel];
+		[self addSubview:nameLabel];
 	}
 	
 	return nameLabel;
@@ -94,7 +112,7 @@
 		detailLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		detailLabel.backgroundColor = [UIColor clearColor];
 		detailLabel.numberOfLines = 1;
-		[self.contentView addSubview:detailLabel];
+		[self addSubview:detailLabel];
 	}
 	
 	return detailLabel;
@@ -111,7 +129,7 @@
 		addressLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		addressLabel.backgroundColor = [UIColor clearColor];
 		addressLabel.numberOfLines = 0;
-		[self.contentView addSubview:addressLabel];
+		[self addSubview:addressLabel];
 	}
 	
 	return addressLabel;
@@ -121,59 +139,33 @@
 {
 	cellContext = aCellContext;
 	
-	NSString *backgroundImageNamed = nil;
-	NSString *selectedBackgroundImageNamed = nil;
-	NSString *imageNamed = nil;
-	NSString *highlightedImageNamed = nil;
 	if (cellContext == CTXDOCellContextStandardAlternate) {
-		backgroundImageNamed = @"groupPanels_light.png";
-		selectedBackgroundImageNamed = @"groupPanelsTouch.png";
-		imageNamed = @"table_arrow_off.png";
-		highlightedImageNamed = @"table_arrow_touch.png";
 		self.distanceLabel.font = [UIFont boldSystemFontOfSize:11.0];
 		self.distanceLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
 		self.distanceLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		self.nameLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
 		self.addressLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
 	} else if (cellContext == CTXDOCellContextLocationAware) {
-		backgroundImageNamed = @"groupPanels_green.png";
-		selectedBackgroundImageNamed = @"groupPanels_greenTouch.png";
-		imageNamed = @"table_arrow_loc.png";
-		highlightedImageNamed = @"table_arrow_loc_touch.png";
 		self.distanceLabel.font = [UIFont boldSystemFontOfSize:12.0];
 		self.distanceLabel.textColor = [UIColor colorWithHexString:@"004624"];
 		self.distanceLabel.shadowColor = [UIColor clearColor];
 		self.nameLabel.textColor = [UIColor colorWithHexString:@"f7f3ea"];
 		self.addressLabel.textColor = [UIColor colorWithHexString:@"FFF"];
 	} else {
-		backgroundImageNamed = @"groupPanels_dark.png";
-		selectedBackgroundImageNamed = @"groupPanelsTouch.png";
-		imageNamed = @"table_arrow_off.png";
-		highlightedImageNamed = @"table_arrow_touch.png";
 		self.distanceLabel.font = [UIFont boldSystemFontOfSize:11.0];
 		self.distanceLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
 		self.distanceLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		self.nameLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
 		self.addressLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
 	}
-	
-	self.backgroundView =  [[[UIImageView alloc]initWithImage:[UIImage imageNamed:backgroundImageNamed]]autorelease];;
-	self.selectedBackgroundView =  [[[UIImageView alloc]initWithImage:[UIImage imageNamed:selectedBackgroundImageNamed]]autorelease];
-	
-	self.accessoryView = [AccessoryViewWithImage accessoryViewWithImageNamed:imageNamed
-													   highlightedImageNamed:highlightedImageNamed 
-																  cellHeight:self.bounds.size.height 
-															   leftRightDiff:10.0];
-	
-	[self setNeedsLayout];
 }
 
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
 	
-	CGSize boundsSize = self.contentView.bounds.size;
-
+	CGSize boundsSize = self.bounds.size;
+	
 #define ImageLeftDiff 10.0
 	CGSize imageSize = [self.completedButton backgroundImageForState:UIControlStateNormal].size;
 	self.completedButton.frame = CGRectIntegral(CGRectMake(ImageLeftDiff, 
@@ -186,7 +178,7 @@
 		CGSize locImageSize = self.locationImageView.image.size;
 		self.locationImageView.frame = CGRectIntegral(CGRectMake(LocationImageLeftDiff, LocationImageTopDiff, locImageSize.width, locImageSize.height));
 	}
-
+	
 #define TopDiff 11.0
 #define LeftDiff 80
 #define LabelsRightDiff 15.0
@@ -233,8 +225,8 @@
 		if (self.addressLabel.text.length > 0) {
 			CGFloat addressLabelTwoLinesHeight = 2 * AddressLabelFontSize + 8.0;
 			CGSize addressSize = [self.addressLabel.text sizeWithFont:[UIFont systemFontOfSize:AddressLabelFontSize] 
-												   constrainedToSize:CGSizeMake(LabelsWidth, addressLabelTwoLinesHeight)
-													   lineBreakMode:UILineBreakModeTailTruncation];
+													constrainedToSize:CGSizeMake(LabelsWidth, addressLabelTwoLinesHeight)
+														lineBreakMode:UILineBreakModeTailTruncation];
 			addressSize.width = LabelsWidth;
 			[self.addressLabel sizeToFit];
 			CGRect addressLabelFrame = self.addressLabel.frame;
@@ -267,8 +259,8 @@
 		if (self.addressLabel.text.length > 0) {
 			CGFloat addressLabelTwoLinesHeight = 2 * AddressLabelFontSize + 8.0;
 			CGSize addressSize = [self.addressLabel.text sizeWithFont:[UIFont systemFontOfSize:AddressLabelFontSize] 
-												   constrainedToSize:CGSizeMake(LabelsWidth, addressLabelTwoLinesHeight)
-													   lineBreakMode:UILineBreakModeTailTruncation];
+													constrainedToSize:CGSizeMake(LabelsWidth, addressLabelTwoLinesHeight)
+														lineBreakMode:UILineBreakModeTailTruncation];
 			addressSize.width = LabelsWidth;
 			[self.addressLabel sizeToFit];
 			CGRect addressLabelFrame = self.addressLabel.frame;
@@ -317,10 +309,11 @@
 	
 	if (task.isClose) {
 		self.locationImageView.image = [UIImage imageNamed:@"icon_location_white.png"];
-		self.detailLabel.text = nil;
+		self.cellContext = CTXDOCellContextLocationAware;
 	} else {
 		self.locationImageView.image = nil;
 		self.detailLabel.text = task.info;
+		self.cellContext = CTXDOCellContextStandard;
 	}
 	
 	self.addressLabel.text = task.location;
