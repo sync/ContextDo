@@ -1,5 +1,6 @@
 #import "TasksContainerViewController.h"
 #import "TaskEditViewController.h"
+#import <TapkuLibrary/TapkuLibrary.h>
 
 @interface TasksContainerViewController (private)
 
@@ -66,7 +67,7 @@
 - (TasksCalendarViewController *)tasksCalendarViewController
 {
 	if (!tasksCalendarViewController) {
-		tasksCalendarViewController = [[TasksCalendarViewController alloc]initWithNibName:@"tTasksCalendarView" bundle:nil];
+		tasksCalendarViewController = [[TasksCalendarViewController alloc]initWithNibName:nil bundle:nil];
 		tasksCalendarViewController.group = self.group;
 		tasksCalendarViewController.mainNavController = self.navigationController;
 	}
@@ -148,7 +149,7 @@
 
 - (void)showCalendar
 {
-	// TODO
+	[self.containerNavController setViewControllers:[NSArray arrayWithObject:self.tasksCalendarViewController]];
 }
 
 - (void)addTask

@@ -13,7 +13,6 @@
     return self;
 }
 
-
 - (void)setTask:(Task *)task;
 {
 	self.textLabel.text = task.name;
