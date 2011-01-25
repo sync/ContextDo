@@ -339,12 +339,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 - (void)refreshTasksEdited
 {
-	NSString *notificationName = TasksWithinDidLoadNotification;
+	NSString *notificationName = TasksUpdatedSinceDidLoadNotification;
 	NSString *path = @"editedTasks";
 	
-	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc]init]autorelease];
-	[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-	[dateFormatter setDateStyle:NSDateFormatterShortStyle];
+	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+	// 2010-07-24
+	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
+	
 	NSString *updatedSince = [dateFormatter stringFromDate:[NSDate date]];
 	NSString *url = TASKSUPDATEDSINCEURL(BASE_URL, TASKS_PATH, updatedSince);
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];

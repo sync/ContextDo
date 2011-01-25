@@ -6,5 +6,6 @@
 }
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;
+@property (nonatomic) BOOL userEdited;
 
 @end

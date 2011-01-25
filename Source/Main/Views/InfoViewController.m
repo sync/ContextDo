@@ -40,16 +40,13 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
-	// remove this todo
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
-	// end remove
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksUpdatedSinceDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksUpdatedSinceDidLoadNotification];
 	
 	self.tasksUpdatedDataSource = [[[TasksUpdatedDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksUpdatedDataSource;
 	self.tableView.backgroundColor = [UIColor clearColor];
-	
+	[self refreshTasks];
 }
 
 - (void)refreshTasks

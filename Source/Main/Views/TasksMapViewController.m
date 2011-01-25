@@ -139,19 +139,50 @@
 	NSArray *routePoints = [polyline points];
 	[routeOverlayView setRoutes:routePoints];
 	
-	UICGRoute *route = [aDirections routeAtIndex:0];
-	
-	// Add annotations
-	UICRouteAnnotation *startAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
-																					title:@"Current Location"
-																				 subtitle:[[route.legs objectAtIndex:0]startAddress]
-																		   annotationType:UICRouteAnnotationTypeStart] autorelease];
-	UICRouteAnnotation *endAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints lastObject] coordinate]
-																				  title:@"TODO"
-																			   subtitle:[[route.legs objectAtIndex:0]endAddress]
-																		 annotationType:UICRouteAnnotationTypeEnd] autorelease];
-	
-	[self.mapView addAnnotations:[NSArray arrayWithObjects:startAnnotation, endAnnotation, nil]];
+	// here we can have multiple routes todo
+	NSInteger numberOfRoutes = [self.directions numberOfRoutes];
+	if (numberOfRoutes > 0) {
+		UICGRoute *route = [self.directions routeAtIndex:0];
+		
+		NSArray *waypointOrder = route.waypointOrder;
+		NSMutableArray *organizedTasks = [NSMutableArray arrayWithArray:self.tasks];
+		if (waypointOrder.count > 1) {
+			NSInteger index = 1;
+			for (NSNumber *orderNum in waypointOrder) {
+				NSInteger order = orderNum.integerValue;
+				[organizedTasks replaceObjectAtIndex:index withObject:[self.tasks objectAtIndex:order+1]];
+				index++;
+			}
+		}
+		
+		UICRouteAnnotation *startAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[[route legAtIndex:0]startLocation]coordinate]
+																						title:[[organizedTasks objectAtIndex:0]name]
+																					 subtitle:[[route legAtIndex:0]startAddress]
+																			   annotationType:UICRouteAnnotationTypeStart] autorelease];
+		
+		[self.mapView addAnnotation:startAnnotation];
+		
+		for (NSInteger index = 0; index < route.numberOfLegs; index++) {
+			if (index == route.numberOfLegs - 1) {
+				break;
+			}
+			
+			UICGLeg *leg = [route legAtIndex:index];
+			UICRouteAnnotation *annotation = [[[UICRouteAnnotation alloc] initWithCoordinate:leg.endLocation.coordinate
+																					   title:[[organizedTasks objectAtIndex:index + 1]name]
+																					subtitle:leg.endAddress
+																			  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
+			[self.mapView addAnnotation:annotation];
+			
+		}
+		
+		UICRouteAnnotation *endAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[[route.legs lastObject]endLocation]coordinate]
+																					  title:[[organizedTasks lastObject]name]
+																				   subtitle:[[route.legs lastObject]endAddress]
+																			 annotationType:UICRouteAnnotationTypeEnd] autorelease];
+		
+		[self.mapView addAnnotation:endAnnotation];
+	}
 }
 
 - (void)directions:(UICGDirections *)directions didFailWithMessage:(NSString *)message {

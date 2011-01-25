@@ -9,6 +9,8 @@
 - (void)locationDidStop;
 - (void)logout:(BOOL)showingLogin animated:(BOOL)animated;
 - (void)handleLocalNotification:(NSDictionary *)launchOptions;
+- (NSDictionary *)userInfoForTaskId:(NSNumber *)taskId today:(BOOL)today;
+- (UILocalNotification *)hasLocalNotificationForTaskId:(NSNumber *)taskId today:(BOOL)today;
 
 @end
 
@@ -55,7 +57,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 												forBarStyle:UIBarStyleBlackOpaque];
 	
 	[self handleLocalNotification:launchOptions];
-
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckTodayTasks:) name:TasksDueTodayDidLoadNotification object:nil];
+	
     return YES;
 }
 
@@ -124,6 +128,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	[self enableGPS];
 	[[APIServices sharedAPIServices]refreshGroups];
+	[[APIServices sharedAPIServices]refreshTasksEdited];
+	[[APIServices sharedAPIServices]refreshTasksDueToday];
 	// todo refres tasks
 }
 
@@ -323,12 +329,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	if (closeTasks.count == 1) {
 		Task *task = [closeTasks objectAtIndex:0];
 		
-		UILocalNotification *notification = [[[UILocalNotification alloc] init]autorelease];
-		notification.fireDate  = nil;
-		notification.timeZone  = [NSTimeZone systemTimeZone];
-		notification.alertBody = [NSString stringWithFormat:@"You are close to %@, would you like to view it?", task.name];
-		notification.alertAction = @"View";
-		[app scheduleLocalNotification:notification];
+		if ([device respondsToSelector:@selector(isMultitaskingSupported)] && device.isMultitaskingSupported) {
+			UILocalNotification *notification = [[[UILocalNotification alloc] init]autorelease];
+			notification.fireDate  = nil;
+			notification.timeZone  = [NSTimeZone systemTimeZone];
+			notification.alertBody = [NSString stringWithFormat:@"You are close to %@, would you like to view it?", task.name];
+			notification.alertAction = @"View";
+			notification.applicationIconBadgeNumber = 1;
+			notification.soundName= UILocalNotificationDefaultSoundName;
+			[app scheduleLocalNotification:notification];
+		}
 	} else if (closeTasks.count > 1) {
 		if ([device respondsToSelector:@selector(isMultitaskingSupported)] && device.isMultitaskingSupported) {
 			UILocalNotification *notification = [[[UILocalNotification alloc] init]autorelease];
@@ -336,13 +346,63 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 			notification.timeZone  = [NSTimeZone systemTimeZone];
 			notification.alertBody = @"More than one task are close to your current location, would you like to see them?";
 			notification.alertAction = @"View";
+			notification.applicationIconBadgeNumber = closeTasks.count;
+			notification.soundName= UILocalNotificationDefaultSoundName;
 			[app scheduleLocalNotification:notification];
 		}
 	}
 }
 
-// same for isLaterThanDate
-// TasksDueTodayDidLoadNotification
+- (NSDictionary *)userInfoForTaskId:(NSNumber *)taskId today:(BOOL)today
+{
+	return [NSDictionary dictionaryWithObjectsAndKeys:
+			taskId, @"taskId",
+			[NSNumber numberWithBool:today], @"today",
+			nil
+			];
+}
+
+- (UILocalNotification *)hasLocalNotificationForTaskId:(NSNumber *)taskId today:(BOOL)today
+{
+	NSArray *notifications =  [[UIApplication sharedApplication]scheduledLocalNotifications];
+	for (UILocalNotification *notification in notifications) {
+		NSNumber *notificationTaskId = [notification.userInfo valueForKey:@"taskId"];
+		BOOL notificationCurrentToday = [[notification.userInfo valueForKey:@"today"]boolValue];
+		if ([taskId isEqualToNumber:notificationTaskId] && today == notificationCurrentToday) {
+			return notification;
+		}
+	}
+	return nil;
+}
+
+- (void)shouldCheckTodayTasks:(NSNotification *)notification
+{
+	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
+	
+	NSPredicate *precicate = [NSPredicate predicateWithFormat:@"dueAt != nil && expired == %@", [NSNumber numberWithBool:FALSE]];
+	NSArray *dueTasks = [newTasks filteredArrayUsingPredicate:precicate];
+	
+	UIDevice* device = [UIDevice currentDevice];
+	UIApplication *app = [UIApplication sharedApplication];
+	
+	for (Task *task in dueTasks) {
+		if ([device respondsToSelector:@selector(isMultitaskingSupported)] && device.isMultitaskingSupported) {
+			UILocalNotification *previousNotification = [self hasLocalNotificationForTaskId:task.taskId today:TRUE];
+			if (previousNotification) {
+				[[UIApplication sharedApplication]cancelLocalNotification:previousNotification];
+			}
+			UILocalNotification *notification = [[[UILocalNotification alloc] init]autorelease];
+			notification.fireDate  = task.dueAt;;
+			notification.timeZone  = [NSTimeZone systemTimeZone];
+			notification.alertBody = [NSString stringWithFormat:@"Task %@ is due, would you like to see it?", task.name];
+			notification.alertAction = @"View";
+			notification.applicationIconBadgeNumber = 1;
+			notification.soundName= UILocalNotificationDefaultSoundName;
+			notification.userInfo = [self userInfoForTaskId:task.taskId today:TRUE];
+			[app scheduleLocalNotification:notification];
+		}
+	}
+}
 
 - (void)handleLocalNotification:(NSDictionary *)launchOptions
 {
