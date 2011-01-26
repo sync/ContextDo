@@ -101,6 +101,7 @@
 {
 	[super setupDataSource];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldHidInfo) name:GroupShouldDismissInfo object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupEditNotification:) name:GroupEditNotification object:nil];
@@ -535,6 +536,11 @@
 	if (animated) {
 		[UIView commitAnimations];
 	}
+}
+
+- (void)shouldHidInfo
+{
+	[self hideInfoAnimated:TRUE];
 }
 
 #pragma mark -

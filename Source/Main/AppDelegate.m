@@ -343,6 +343,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)showTask:(Task *)task animated:(BOOL)animated
 {
+	[[NSNotificationCenter defaultCenter]postNotificationName:GroupShouldDismissInfo object:nil];
+	
 	TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
 	controller.task = task;
 	controller.tasks = [NSArray arrayWithObject:task];
@@ -356,6 +358,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)showNearTasksAnimated:(BOOL)animated
 {
+	[[NSNotificationCenter defaultCenter]postNotificationName:GroupShouldDismissInfo object:nil];
+	
 	Group *nearGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
 									 name:NearTasksPlacholder];
 	

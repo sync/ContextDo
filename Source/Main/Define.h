@@ -10,6 +10,9 @@
 #define DevServerIp @"DevServerIp"
 #define AlertsDistanceWithinDefaultValue 1.0
 
+// Other
+#define GroupShouldDismissInfo @"GroupShouldDismissInfo"
+
 // Developer
 #define APITokenEabled TRUE
 
