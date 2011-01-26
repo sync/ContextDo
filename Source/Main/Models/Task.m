@@ -46,6 +46,11 @@
 	return (self.completedAt != nil);
 }
 
+- (BOOL)isFacebook
+{
+	return TRUE; // TODO check
+}
+
 - (NSString *)formattedContact
 {
 	NSString *string = @"";

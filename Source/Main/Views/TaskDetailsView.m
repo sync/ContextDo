@@ -5,6 +5,7 @@
 
 
 @synthesize distanceLabel, cellContext, completedButton, addressLabel, nameLabel, detailLabel, locationImageView;
+@synthesize separatorLine, facebookIconView;
 
 #define NameLabelFontSize 16.0
 #define AddressLabelFontSize 11.0
@@ -87,6 +88,7 @@
 		nameLabel = [[[OHAttributedLabel alloc]initWithFrame:CGRectZero]autorelease];
 		nameLabel.backgroundColor = [UIColor clearColor];
 		nameLabel.font = [UIFont boldSystemFontOfSize:NameLabelFontSize];
+		nameLabel.textColor = [UIColor colorWithHexString:@"FFF"];
 		nameLabel.highlightedTextColor = [UIColor whiteColor];
 		nameLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 		nameLabel.shadowOffset = CGSizeMake(0,-1);
@@ -106,10 +108,10 @@
 		detailLabel = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
 		detailLabel.backgroundColor = [UIColor clearColor];
 		detailLabel.font = [UIFont boldSystemFontOfSize:DetailLabelFontSize];
-		detailLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
+		detailLabel.textColor = [UIColor colorWithHexString:@"181316"];
 		detailLabel.highlightedTextColor = [UIColor whiteColor];
 		detailLabel.shadowOffset = CGSizeMake(0,-1);
-		detailLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
+		detailLabel.shadowColor = [UIColor clearColor];
 		detailLabel.backgroundColor = [UIColor clearColor];
 		detailLabel.numberOfLines = 0;
 		[self addSubview:detailLabel];
@@ -126,7 +128,8 @@
 		addressLabel.font = [UIFont systemFontOfSize:AddressLabelFontSize];
 		addressLabel.highlightedTextColor = [UIColor whiteColor];
 		addressLabel.shadowOffset = CGSizeMake(0,-1);
-		addressLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
+		addressLabel.shadowColor = [UIColor clearColor];
+		self.addressLabel.textColor = [UIColor colorWithHexString:@"181316"];
 		addressLabel.backgroundColor = [UIColor clearColor];
 		addressLabel.numberOfLines = 0;
 		[self addSubview:addressLabel];
@@ -140,24 +143,39 @@
 	cellContext = aCellContext;
 	
 	if (cellContext == CTXDOCellContextStandardAlternate) {
-		self.distanceLabel.font = [UIFont boldSystemFontOfSize:11.0];
-		self.distanceLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
-		self.distanceLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
-		self.nameLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
-		self.addressLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
-	} else if (cellContext == CTXDOCellContextLocationAware) {
-		self.distanceLabel.font = [UIFont boldSystemFontOfSize:12.0];
-		self.distanceLabel.textColor = [UIColor colorWithHexString:@"004624"];
+		self.distanceLabel.font = [UIFont systemFontOfSize:11.0];
+		self.distanceLabel.textColor = [UIColor colorWithHexString:@"1813167"];
 		self.distanceLabel.shadowColor = [UIColor clearColor];
-		self.nameLabel.textColor = [UIColor colorWithHexString:@"f7f3ea"];
-		self.addressLabel.textColor = [UIColor colorWithHexString:@"FFF"];
+	} else if (cellContext == CTXDOCellContextLocationAware) {
+		self.distanceLabel.font = [UIFont systemFontOfSize:12.0];
+		self.distanceLabel.textColor = [UIColor colorWithHexString:@"FFF"];
+		self.distanceLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 	} else {
 		self.distanceLabel.font = [UIFont boldSystemFontOfSize:11.0];
-		self.distanceLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
-		self.distanceLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
-		self.nameLabel.textColor = [UIColor colorWithHexString:@"d8d8da"];
-		self.addressLabel.textColor = [UIColor colorWithHexString:@"6b6867"];
+		self.distanceLabel.textColor = [UIColor colorWithHexString:@"181316"];
+		self.distanceLabel.shadowColor = [UIColor clearColor];
 	}
+}
+
+- (UIImageView *)separatorLine
+{
+	if (!separatorLine) {
+		separatorLine = [[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"taskDetails_divider.png"]]autorelease];
+		[self addSubview:separatorLine];
+	}
+	
+	return separatorLine;
+}
+
+- (UIImageView *)facebookIconView
+
+{
+	if (!facebookIconView) {
+		facebookIconView = [[[UIImageView alloc]initWithFrame:CGRectZero]autorelease];
+		[self addSubview:facebookIconView];
+	}
+	
+	return facebookIconView;
 }
 
 - (void)layoutSubviews
@@ -188,6 +206,8 @@
 	
 #define LabelsWidth (boundsSize.width - LeftDiff - LabelsRightDiff)
 	
+	CGFloat totalHeight = 0.0;
+	
 	if (self.cellContext != CTXDOCellContextLocationAware) {		
 		CGSize nameSize = [self.nameLabel sizeThatFits:CGSizeMake(LabelsWidth, CGFLOAT_MAX)];
 		nameSize.width = LabelsWidth;
@@ -197,6 +217,7 @@
 		nameLabelFrame.origin.y =TopDiff;
 		nameLabelFrame.size = nameSize;
 		self.nameLabel.frame = CGRectIntegral(nameLabelFrame);
+		totalHeight = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height;
 		
 		if (self.detailLabel.text.length > 0) {
 			CGSize detailSize = [self.detailLabel sizeThatFits:CGSizeMake(LabelsWidth, CGFLOAT_MAX)];
@@ -204,9 +225,10 @@
 			[self.detailLabel sizeToFit];
 			CGRect detailLabelFrame = self.detailLabel.frame;
 			detailLabelFrame.origin.x = LeftDiff;
-			detailLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff;
+			detailLabelFrame.origin.y = totalHeight + LabelsDiff;
 			detailLabelFrame.size = detailSize;
 			self.detailLabel.frame = CGRectIntegral(detailLabelFrame);
+			totalHeight = self.detailLabel.frame.origin.y + self.detailLabel.frame.size.height;
 		} else {
 			self.detailLabel.frame = CGRectZero;
 		}
@@ -219,10 +241,11 @@
 			[self.addressLabel sizeToFit];
 			CGRect addressLabelFrame = self.addressLabel.frame;
 			addressLabelFrame.origin.x = LeftDiff;
-			addressLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff + self.detailLabel.frame.size.height + LabelsDiff;
+			addressLabelFrame.origin.y =  totalHeight + LabelsDiff;
 			addressLabelFrame.size = addressSize;
 			addressLabelFrame.size.height = addressLabelFrame.size.height; 
 			self.addressLabel.frame = CGRectIntegral(addressLabelFrame);
+			totalHeight = self.addressLabel.frame.origin.y + self.addressLabel.frame.size.height;
 		} else {
 			self.addressLabel.frame = CGRectZero;
 		}
@@ -231,9 +254,9 @@
 		[self.distanceLabel sizeToFit];
 		CGRect distanceLabelFrame = self.distanceLabel.frame;
 		distanceLabelFrame.origin.x = LeftDiff;
-		distanceLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff + self.detailLabel.frame.size.height + LabelsDiff + self.addressLabel.frame.size.height + LabelsDiff;
+		distanceLabelFrame.origin.y = totalHeight + LabelsDiff;
 		self.distanceLabel.frame = CGRectIntegral(distanceLabelFrame);
-		
+		totalHeight = self.distanceLabel.frame.origin.y + self.distanceLabel.frame.size.height;
 	} else {
 #define DistanceTopDiff 10.0
 		[self.distanceLabel sizeToFit];
@@ -241,16 +264,17 @@
 		distanceLabelFrame.origin.x = LeftDiff;
 		distanceLabelFrame.origin.y = TopDiff;
 		self.distanceLabel.frame = CGRectIntegral(distanceLabelFrame);
+		totalHeight = self.distanceLabel.frame.origin.y + self.distanceLabel.frame.size.height;
 		
 		CGSize nameSize = [self.nameLabel sizeThatFits:CGSizeMake(LabelsWidth, CGFLOAT_MAX)];
 		nameSize.width = LabelsWidth;
 		[self.nameLabel sizeToFit];
 		CGRect nameLabelFrame = self.nameLabel.frame;
 		nameLabelFrame.origin.x = LeftDiff;
-		nameLabelFrame.origin.y = self.distanceLabel.frame.origin.y + self.distanceLabel.frame.size.height + LabelsDiff;
+		nameLabelFrame.origin.y = totalHeight + LabelsDiff;
 		nameLabelFrame.size = nameSize;
-		nameLabelFrame.size.height = 0.0;
 		self.nameLabel.frame = CGRectIntegral(nameLabelFrame);
+		totalHeight = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height;
 		
 		if (self.detailLabel.text.length > 0) {
 			CGSize detailSize = [self.detailLabel sizeThatFits:CGSizeMake(LabelsWidth, CGFLOAT_MAX)];
@@ -258,9 +282,10 @@
 			[self.detailLabel sizeToFit];
 			CGRect detailLabelFrame = self.detailLabel.frame;
 			detailLabelFrame.origin.x = LeftDiff;
-			detailLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff;
+			detailLabelFrame.origin.y = totalHeight + LabelsDiff;
 			detailLabelFrame.size = detailSize;
 			self.detailLabel.frame = CGRectIntegral(detailLabelFrame);
+			totalHeight = self.detailLabel.frame.origin.y + self.detailLabel.frame.size.height;
 		} else {
 			self.detailLabel.frame = CGRectZero;
 		}
@@ -273,17 +298,45 @@
 			[self.addressLabel sizeToFit];
 			CGRect addressLabelFrame = self.addressLabel.frame;
 			addressLabelFrame.origin.x = LeftDiff;
-			addressLabelFrame.origin.y = self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + LabelsDiff + self.detailLabel.frame.size.height + LabelsDiff;
+			addressLabelFrame.origin.y = totalHeight +  LabelsDiff;
 			addressLabelFrame.size = addressSize;
 			self.addressLabel.frame = CGRectIntegral(addressLabelFrame);
+			totalHeight = self.addressLabel.frame.origin.y + self.addressLabel.frame.size.height;
 		} else {
 			self.addressLabel.frame = CGRectZero;
 		}
+	}
+	
+#define SeparatorToDiff 13.0
+	CGSize separatorSize = self.separatorLine.image.size;
+	self.separatorLine.frame = CGRectIntegral(CGRectMake(LeftDiff,
+														 totalHeight + SeparatorToDiff, 
+														 LabelsWidth,
+														 separatorSize.height));
+	totalHeight = self.separatorLine.frame.origin.y + self.separatorLine.frame.size.height;
+	
+	if (self.facebookIconView.image) {
+		#define FacebookIconTopDiff 9.0
+		CGSize facbookSize = self.facebookIconView.image.size;
+		self.facebookIconView.frame = CGRectIntegral(CGRectMake(LeftDiff,
+																totalHeight + FacebookIconTopDiff, 
+																facbookSize.width,
+																facbookSize.height));
+		totalHeight = self.facebookIconView.frame.origin.y + self.facebookIconView.frame.size.height;
 	}
 }
 
 - (void)setTask:(Task *)task
 {
+	if (task.isClose) {
+		self.cellContext = CTXDOCellContextLocationAware;
+	} else if (task.isFacebook) {
+		self.cellContext = CTXDOCellContextStandard;
+	} else {
+		self.cellContext = CTXDOCellContextStandard;
+	}
+	
+	
 	NSString *imageNamed = nil;
 	if (task.expired) {
 		imageNamed = @"btn_todo_due.png";
@@ -298,7 +351,9 @@
 	[self.completedButton setBackgroundImage:image forState:UIControlStateNormal];
 	[self.completedButton setBackgroundImage:image forState:UIControlStateHighlighted];
 	
-	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation && task.latitude && task.longitude) {
+	if (task.isClose) {
+		self.distanceLabel.text = [NSString stringWithFormat:@"within %.1fkm", task.distance / 1000.0] ;
+	} else if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation && task.latitude && task.longitude) {
 		self.distanceLabel.text = (task.distance / 1000.0 < 1000.0) ? [NSString stringWithFormat:@"%.1fkm", task.distance / 1000.0] : @"far away";
 	} else {
 		self.distanceLabel.text = nil;
@@ -309,22 +364,26 @@
 	self.nameLabel.text = (relativeTime) ? [NSString stringWithFormat:@"%@ - %@", relativeTime, task.name] : task.name;
 	
 	[self.nameLabel resetAttributedText];
-	if (relativeTime) { 
-		NSMutableAttributedString *attributedString = [NSMutableAttributedString attributedStringWithAttributedString:self.nameLabel.attributedText];
-		[attributedString setFont:[UIFont systemFontOfSize:DetailLabelFontSize] range:NSMakeRange(0, relativeTime.length)];
-		self.nameLabel.attributedText = attributedString;
-	}
+	NSMutableAttributedString *attributedString = [NSMutableAttributedString attributedStringWithAttributedString:self.nameLabel.attributedText];
+	[attributedString setFont:[UIFont systemFontOfSize:DetailLabelFontSize] range:NSMakeRange(0, relativeTime.length)];
+	self.nameLabel.attributedText = attributedString;
 	
 	if (task.isClose) {
 		self.locationImageView.image = [UIImage imageNamed:@"icon_location_white.png"];
-		self.cellContext = CTXDOCellContextLocationAware;
+		self.facebookIconView.image = nil;
 	} else {
 		self.locationImageView.image = nil;
-		self.cellContext = CTXDOCellContextStandard;
+		self.facebookIconView.image = nil;
 	}
 	
 	self.detailLabel.text = task.info;
 	self.addressLabel.text = task.location;
+	
+	if (task.isFacebook) {
+		self.locationImageView.image = nil;
+		self.facebookIconView.image = nil;
+		self.facebookIconView.image = [UIImage imageNamed:@"ico_fb.png"];
+	}
 	
 	[self setNeedsLayout];
 }

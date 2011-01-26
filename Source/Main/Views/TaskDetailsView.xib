@@ -45,7 +45,7 @@
 					<object class="IBUIButton" id="386251714">
 						<reference key="NSNextResponder" ref="155135716"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{145, 260}, {30, 30}}</string>
+						<string key="NSFrame">{{145, 260}, {32, 32}}</string>
 						<reference key="NSSuperview" ref="155135716"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -68,15 +68,19 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
+						<object class="NSCustomResource" key="IBUIHighlightedImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">icon_edit_whtTouch.png</string>
+						</object>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">187-pencil.png</string>
+							<string key="NSResourceName">icon_edit_wht.png</string>
 						</object>
 					</object>
 					<object class="IBUIButton" id="821584533">
 						<reference key="NSNextResponder" ref="155135716"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{45, 260}, {30, 30}}</string>
+						<string key="NSFrame">{{45, 260}, {32, 32}}</string>
 						<reference key="NSSuperview" ref="155135716"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -89,15 +93,19 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="634667143"/>
+						<object class="NSCustomResource" key="IBUIHighlightedImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">icon_mail_whtTouch.png</string>
+						</object>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">18-envelope.png</string>
+							<string key="NSResourceName">icon_mail_wht.png</string>
 						</object>
 					</object>
 					<object class="IBUIButton" id="739814310">
 						<reference key="NSNextResponder" ref="155135716"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{245, 260}, {30, 30}}</string>
+						<string key="NSFrame">{{245, 260}, {32, 32}}</string>
 						<reference key="NSSuperview" ref="155135716"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -110,9 +118,13 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="634667143"/>
+						<object class="NSCustomResource" key="IBUIHighlightedImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">icon_delete_touch.png</string>
+						</object>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">100-coffee.png</string>
+							<string key="NSResourceName">icon_delete.png</string>
 						</object>
 					</object>
 					<object class="IBUIView" id="353953641">
@@ -123,18 +135,19 @@
 						<reference key="IBUIBackgroundColor" ref="404930331"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
-					<object class="IBUIImageView" id="250768214">
+					<object class="IBUIImageView" id="184565340">
 						<reference key="NSNextResponder" ref="155135716"/>
 						<int key="NSvFlags">256</int>
-						<string key="NSFrame">{{0, 232}, {320, 20}}</string>
+						<string key="NSFrame">{{3, 232}, {320, 12}}</string>
 						<reference key="NSSuperview" ref="155135716"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
+						<int key="IBUIContentMode">4</int>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">shadow_separator_task_details.jpg</string>
+							<string key="NSResourceName">divider_groupdetails.png</string>
 						</object>
 					</object>
 				</object>
@@ -224,9 +237,9 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="386251714"/>
 							<reference ref="821584533"/>
-							<reference ref="739814310"/>
 							<reference ref="353953641"/>
-							<reference ref="250768214"/>
+							<reference ref="184565340"/>
+							<reference ref="739814310"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -251,8 +264,8 @@
 						<reference key="parent" ref="155135716"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">17</int>
-						<reference key="object" ref="250768214"/>
+						<int key="objectID">18</int>
+						<reference key="object" ref="184565340"/>
 						<reference key="parent" ref="155135716"/>
 					</object>
 				</object>
@@ -280,7 +293,7 @@
 					<string>UIResponder</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">AUN9AABDkQAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDdQAAw5EAAA</bytes>
 					</object>
 					<string>TaskDetailsView</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -312,7 +325,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">17</int>
+			<int key="maxID">18</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -663,17 +676,23 @@
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>100-coffee.png</string>
-				<string>18-envelope.png</string>
-				<string>187-pencil.png</string>
-				<string>shadow_separator_task_details.jpg</string>
+				<string>divider_groupdetails.png</string>
+				<string>icon_delete.png</string>
+				<string>icon_delete_touch.png</string>
+				<string>icon_edit_wht.png</string>
+				<string>icon_edit_whtTouch.png</string>
+				<string>icon_mail_wht.png</string>
+				<string>icon_mail_whtTouch.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{20, 24}</string>
-				<string>{24, 16}</string>
-				<string>{23, 23}</string>
-				<string>{415, 20}</string>
+				<string>{320, 12}</string>
+				<string>{32, 32}</string>
+				<string>{32, 32}</string>
+				<string>{32, 32}</string>
+				<string>{32, 32}</string>
+				<string>{32, 32}</string>
+				<string>{32, 32}</string>
 			</object>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">132</string>

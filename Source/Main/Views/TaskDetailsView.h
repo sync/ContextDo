@@ -11,6 +11,8 @@
 @property (nonatomic, readonly) UILabel *detailLabel;
 @property (nonatomic, readonly) UILabel *addressLabel;
 @property (nonatomic, readonly) UIButton *completedButton;
+@property (nonatomic, readonly) UIImageView *separatorLine;
+@property (nonatomic, readonly) UIImageView *facebookIconView;
 
 @property (nonatomic) CTXDOCellContext cellContext;
 

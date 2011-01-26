@@ -28,6 +28,7 @@
 @property (nonatomic, readonly) BOOL completed;
 @property (nonatomic, readonly) NSString *formattedContact;
 @property (nonatomic, readonly) NSString *latLngString;
+@property (nonatomic, readonly) BOOL isFacebook;
 
 + (Task *)taskWithId:(NSNumber *)aTaskId
 				name:(NSString *)aName
