@@ -164,6 +164,7 @@
 - (void)addTask
 {
 	TaskEditViewController *controller = [[[TaskEditViewController alloc]initWithNibName:@"TaskEditView" bundle:nil]autorelease];
+	controller.group = self.group;
 	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
 	[self.navigationController presentModalViewController:navController animated:TRUE];
 }

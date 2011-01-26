@@ -7,6 +7,7 @@
 }
 
 @property (nonatomic, retain) Task *task;
+@property (nonatomic, retain) Group *group;
 
 @property (nonatomic, retain) TaskEditDataSource *taskEditDataSource;
 

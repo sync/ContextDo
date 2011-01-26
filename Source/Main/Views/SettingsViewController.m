@@ -148,7 +148,7 @@
 		NSDictionary *settings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.lastSliderValue]
 															 forKey:AlertsDistanceWithin];
 		
-		[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:self.lastSliderValue];
+		[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:self.settingsSliderView.slider.value];
 		User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken]; // todo remember fb token and pass it there
 		[[APIServices sharedAPIServices]updateUser:user];
 	}

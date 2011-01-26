@@ -3,7 +3,6 @@
 #import "ChooseGroupViewController.h"
 #import "TaskDatePickerViewController.h"
 #import "TaskContactViewController.h"
-#import "TaskLocationViewController.h"
 
 @interface TaskEditViewController (private)
 
@@ -12,7 +11,7 @@
 
 @implementation TaskEditViewController
 
-@synthesize taskEditDataSource, editingTextField, keyboardShown, task, editingTextView;
+@synthesize taskEditDataSource, editingTextField, keyboardShown, task, editingTextView, group;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -82,6 +81,10 @@
 	self.tableView.dataSource = self.taskEditDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.taskEditDataSource.tempTask = (self.task) ? [[self.task copy]autorelease] : [[[Task alloc]init]autorelease];
+	if (self.group && self.group.groupId.integerValue != NSNotFound) {
+		self.taskEditDataSource.tempTask.groupId = self.group.groupId;
+		self.taskEditDataSource.tempTask.groupName = self.group.name;
+	}
 	self.tableView.sectionFooterHeight = 0.0;
 	self.tableView.sectionHeaderHeight = 12.0;
 	
@@ -133,6 +136,10 @@
 		context = CTXDOCellContextTaskEditInput;
 		[(TaskEditCell *)cell textField].delegate = self;
 		[[(TaskEditCell	*)cell noteButton] addTarget:self action:@selector(showInfoCell:) forControlEvents:UIControlEventTouchUpInside];
+	} else if ([self.taskEditDataSource hasTargetButton:indexPath]) {
+		context = CTXDOCellContextTaskEditInput;
+		[(TaskEditCell *)cell textField].delegate = self;
+		[[(TaskEditCell	*)cell noteButton] addTarget:self action:@selector(fillLocation:) forControlEvents:UIControlEventTouchUpInside];
 	} else if ([self.taskEditDataSource isIndexPathInputMulti:indexPath]) {
 		context = CTXDOCellContextTaskEditInputMutliLine;
 		[(TaskEditCell *)cell textView].delegate = self;
@@ -188,6 +195,35 @@
 	
 }
 
+- (void)fillLocation:(id)sender
+{
+	UIButton *button = (UIButton *)sender;
+	NSIndexPath *index = [self.taskEditDataSource indexPathForTag:button.tag];
+	
+	MKPlacemark *placemark = [AppDelegate sharedAppDelegate].placemark;
+	
+	if (placemark.addressDictionary) {
+		NSString *formattedAddress = @"";
+		NSArray *keys = [NSArray arrayWithObjects:
+						 @"subThoroughfare", 
+						 @"thoroughfare", 
+						 @"locality",
+						 @"subLocality",
+						 @"administrativeArea",
+						 @"subAdministrativeArea",
+						 @"postalCode",
+						 @"country",
+						 nil];
+		for (NSString *key in keys) {
+			if ([placemark valueForKey:key]) {
+				formattedAddress = [formattedAddress stringByAppendingFormat:@"%@%@", (formattedAddress.length == 0) ? @"" : (([key isEqualToString:@"thoroughfare"] || [key isEqualToString:@"postalCode"]) ? @" " : @", "), [placemark valueForKey:key]];
+			}
+		}
+		[self.taskEditDataSource setValue:formattedAddress forIndexPath:index];
+		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:index] withRowAnimation:UITableViewRowAnimationNone];
+	}
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if (indexPath.section == 0 && indexPath.row == 1) {
@@ -225,10 +261,6 @@
 	NSString *placeholder = [self.taskEditDataSource objectForIndexPath:indexPath];
 	if ([placeholder isEqualToString:AddContactPlaceholder]) {
 		TaskContactViewController *controller = [[[TaskContactViewController alloc]initWithNibName:@"TaskContactView" bundle:nil]autorelease];
-		controller.task = self.taskEditDataSource.tempTask;
-		[self.navigationController pushViewController:controller animated:TRUE];
-	}  else if ([placeholder isEqualToString:LocationPlaceholder]) {
-		TaskLocationViewController *controller = [[[TaskLocationViewController alloc]initWithNibName:@"TaskLocationView" bundle:nil]autorelease];
 		controller.task = self.taskEditDataSource.tempTask;
 		[self.navigationController pushViewController:controller animated:TRUE];
 	}
@@ -437,6 +469,7 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TaskAddNotification];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
+	[group release];
 	[editingTextView release];
 	[task release];
 	[editingTextField release];

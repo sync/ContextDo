@@ -87,11 +87,16 @@
 	return [placeholder isEqualToString:TitlePlaceholder];
 }
 
+- (BOOL)hasTargetButton:(NSIndexPath *)indexPath
+{
+	NSString *placeholder = [self objectForIndexPath:indexPath];
+	return [placeholder isEqualToString:LocationPlaceholder];
+}
+
 - (BOOL)hasDetailDisclosure:(NSIndexPath *)indexPath
 {
 	NSString *placeholder = [self objectForIndexPath:indexPath];
-	return ([placeholder isEqualToString:LocationPlaceholder] ||
-			[placeholder isEqualToString:AddContactPlaceholder]);
+	return ([placeholder isEqualToString:AddContactPlaceholder]);
 }
 
 // Customize the appearance of table view cells.
@@ -116,6 +121,18 @@
 			UIButton *button = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];
 			
 			UIImage *image = [UIImage imageNamed:@"icon_notes.png"];
+			[button setBackgroundImage:image forState:UIControlStateNormal];
+			
+			button.frame = CGRectMake(button.frame.origin.x, 
+									  button.frame.origin.y, 
+									  image.size.width, 
+									  image.size.height);
+			button.tag = [self tagForIndexPath:indexPath];
+			cell.accessoryView = button;
+		} else if ([self hasTargetButton:indexPath]) {
+			UIButton *button = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];
+			
+			UIImage *image = [UIImage imageNamed:@"icon_locate.png"];
 			[button setBackgroundImage:image forState:UIControlStateNormal];
 			
 			button.frame = CGRectMake(button.frame.origin.x, 

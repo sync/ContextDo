@@ -3,7 +3,7 @@
 
 #define TitlePlaceholder @"Title"
 #define InfoPlaceholder @"Info"
-#define LocationPlaceholder @"Place, Street, Suburb"
+#define LocationPlaceholder @"Location"
 #define AddContactPlaceholder @"Contact Name - Detail"
 #define TimePlaceholder @"Time"
 #define AlertsPlaceholder @"Alerts Inform / update"
@@ -25,6 +25,7 @@
 - (BOOL)isIndexPathInput:(NSIndexPath *)indexPath;
 - (BOOL)isIndexPathInputMulti:(NSIndexPath *)indexPath;
 - (BOOL)hasNoteEdit:(NSIndexPath *)indexPath;
+- (BOOL)hasTargetButton:(NSIndexPath *)indexPath;
 - (BOOL)hasDetailDisclosure:(NSIndexPath *)indexPath;
 
 @end
