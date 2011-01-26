@@ -293,7 +293,7 @@
 		2456800612F06AAA0004189D /* icon_locateTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456800412F06AAA0004189D /* icon_locateTouch@2x.png */; };
 		245680A912F06F720004189D /* TISwipeableTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456808712F06F720004189D /* TISwipeableTableView.m */; };
 		245680B412F06FBC0004189D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B112F06FBC0004189D /* Icon@2x.png */; };
-		245680B512F06FBC0004189D /* LocateToDoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B212F06FBC0004189D /* LocateToDoIcon.png */; };
+		245680B512F06FBC0004189D /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 245680B212F06FBC0004189D /* iTunesArtwork */; };
 		245680B612F06FBC0004189D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B312F06FBC0004189D /* Icon.png */; };
 		245680FF12F072730004189D /* TasksCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 245680FE12F072730004189D /* TasksCalendarCell.m */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
@@ -807,7 +807,7 @@
 		2456808612F06F720004189D /* TISwipeableTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TISwipeableTableView.h; sourceTree = "<group>"; };
 		2456808712F06F720004189D /* TISwipeableTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISwipeableTableView.m; sourceTree = "<group>"; };
 		245680B112F06FBC0004189D /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		245680B212F06FBC0004189D /* LocateToDoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocateToDoIcon.png; sourceTree = "<group>"; };
+		245680B212F06FBC0004189D /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		245680B312F06FBC0004189D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		245680FD12F072730004189D /* TasksCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksCalendarCell.h; sourceTree = "<group>"; };
 		245680FE12F072730004189D /* TasksCalendarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksCalendarCell.m; sourceTree = "<group>"; };
@@ -2267,7 +2267,7 @@
 				24567E7E12F04FDD0004189D /* refresh_bg_top.png */,
 				245680B312F06FBC0004189D /* Icon.png */,
 				245680B112F06FBC0004189D /* Icon@2x.png */,
-				245680B212F06FBC0004189D /* LocateToDoIcon.png */,
+				245680B212F06FBC0004189D /* iTunesArtwork */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -2707,7 +2707,7 @@
 				2456800512F06AAA0004189D /* icon_locateTouch.png in Resources */,
 				2456800612F06AAA0004189D /* icon_locateTouch@2x.png in Resources */,
 				245680B412F06FBC0004189D /* Icon@2x.png in Resources */,
-				245680B512F06FBC0004189D /* LocateToDoIcon.png in Resources */,
+				245680B512F06FBC0004189D /* iTunesArtwork in Resources */,
 				245680B612F06FBC0004189D /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
