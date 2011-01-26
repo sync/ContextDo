@@ -5,6 +5,7 @@
 
 @synthesize taskId, action, contactDetail, contactName, dueAt, location, name;
 @synthesize updatedAt, createdAt, groupId, latitude, longitude, groupName, completedAt, info;
+@synthesize sourceName, sourceId;
 
 + (Task *)taskWithId:(NSNumber *)aTaskId
 				name:(NSString *)aName
@@ -48,7 +49,7 @@
 
 - (BOOL)isFacebook
 {
-	return TRUE; // TODO check
+	return [self.sourceName isEqualToString:@"facebook"];
 }
 
 - (NSString *)formattedContact

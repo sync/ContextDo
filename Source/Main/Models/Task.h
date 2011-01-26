@@ -20,6 +20,8 @@
 @property (nonatomic, copy) NSNumber *longitude;
 @property (nonatomic, copy) NSDate *completedAt;
 @property (nonatomic, copy) NSString *info;
+@property (nonatomic, copy) NSString *sourceName;
+@property (nonatomic, copy) NSNumber *sourceId;
 
 
 @property (nonatomic, readonly) CLLocationDistance distance;

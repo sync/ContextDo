@@ -629,7 +629,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		} else if ([path isEqualToString:@"addTask"]|| 
 				   [path isEqualToString:@"updateTask"] ||
 				   [path isEqualToString:@"deleteTaskWitId"]) {
-			[self parseUser:request];
+			[self parseTask:request];
 		} else if ([path isEqualToString:@"user"]|| 
 				   [path isEqualToString:@"updateUser"]) {
 			[self parseUser:request];
