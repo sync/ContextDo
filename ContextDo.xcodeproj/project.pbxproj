@@ -291,6 +291,10 @@
 		24567FFD12F069FB0004189D /* icon_delete_whtTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24567FF912F069FB0004189D /* icon_delete_whtTouch@2x.png */; };
 		2456800512F06AAA0004189D /* icon_locateTouch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456800312F06AAA0004189D /* icon_locateTouch.png */; };
 		2456800612F06AAA0004189D /* icon_locateTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456800412F06AAA0004189D /* icon_locateTouch@2x.png */; };
+		245680A912F06F720004189D /* TISwipeableTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456808712F06F720004189D /* TISwipeableTableView.m */; };
+		245680B412F06FBC0004189D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B112F06FBC0004189D /* Icon@2x.png */; };
+		245680B512F06FBC0004189D /* LocateToDoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B212F06FBC0004189D /* LocateToDoIcon.png */; };
+		245680B612F06FBC0004189D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B312F06FBC0004189D /* Icon.png */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -799,6 +803,11 @@
 		24567FF912F069FB0004189D /* icon_delete_whtTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_delete_whtTouch@2x.png"; sourceTree = "<group>"; };
 		2456800312F06AAA0004189D /* icon_locateTouch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_locateTouch.png; sourceTree = "<group>"; };
 		2456800412F06AAA0004189D /* icon_locateTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_locateTouch@2x.png"; sourceTree = "<group>"; };
+		2456808612F06F720004189D /* TISwipeableTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TISwipeableTableView.h; sourceTree = "<group>"; };
+		2456808712F06F720004189D /* TISwipeableTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISwipeableTableView.m; sourceTree = "<group>"; };
+		245680B112F06FBC0004189D /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		245680B212F06FBC0004189D /* LocateToDoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocateToDoIcon.png; sourceTree = "<group>"; };
+		245680B312F06FBC0004189D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -1249,6 +1258,15 @@
 			name = "Pull to Refresh";
 			sourceTree = "<group>";
 		};
+		2456804C12F06F720004189D /* TISwipeableTableView.git */ = {
+			isa = PBXGroup;
+			children = (
+				2456808612F06F720004189D /* TISwipeableTableView.h */,
+				2456808712F06F720004189D /* TISwipeableTableView.m */,
+			);
+			path = TISwipeableTableView.git;
+			sourceTree = "<group>";
+		};
 		248921C3128ED27000DC9712 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -1513,6 +1531,7 @@
 		24F8788D12D16A6F00370A5F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				2456804C12F06F720004189D /* TISwipeableTableView.git */,
 				24567AE912F01C2E0004189D /* facebook-ios-sdk */,
 				2491229612EE4018009191BA /* tapkulibrary */,
 				2491124F12EC2E0F009191BA /* MapKit-Route-Directions */,
@@ -2169,10 +2188,10 @@
 				24E44C7712EBE02F00F08B7E /* taskdetails_tab_righton@2x.png */,
 				249113BC12EC4CB1009191BA /* btn_tbar_dwnarrow_off.png */,
 				249113BD12EC4CB1009191BA /* btn_tbar_dwnarrow_off@2x.png */,
-				249113BE12EC4CB1009191BA /* btn_tbar_dwnarrow_touch.png */,
-				249113BF12EC4CB1009191BA /* btn_tbar_dwnarrow_touch@2x.png */,
 				249113C012EC4CB1009191BA /* btn_tbar_uparrow_off.png */,
 				249113C112EC4CB1009191BA /* btn_tbar_uparrow_off@2x.png */,
+				249113BE12EC4CB1009191BA /* btn_tbar_dwnarrow_touch.png */,
+				249113BF12EC4CB1009191BA /* btn_tbar_dwnarrow_touch@2x.png */,
 				249113C212EC4CB1009191BA /* btn_tbar_uparrow_touch.png */,
 				249113C312EC4CB1009191BA /* btn_tbar_uparrow_touch@2x.png */,
 				2456743812EFB8BC0004189D /* btn_std_off@2x.png */,
@@ -2241,6 +2260,9 @@
 				24567E7C12F04FDD0004189D /* refresh_bg_middle.png */,
 				24567E7D12F04FDD0004189D /* refresh_bg_bottom.png */,
 				24567E7E12F04FDD0004189D /* refresh_bg_top.png */,
+				245680B312F06FBC0004189D /* Icon.png */,
+				245680B112F06FBC0004189D /* Icon@2x.png */,
+				245680B212F06FBC0004189D /* LocateToDoIcon.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -2679,6 +2701,9 @@
 				24567FFD12F069FB0004189D /* icon_delete_whtTouch@2x.png in Resources */,
 				2456800512F06AAA0004189D /* icon_locateTouch.png in Resources */,
 				2456800612F06AAA0004189D /* icon_locateTouch@2x.png in Resources */,
+				245680B412F06FBC0004189D /* Icon@2x.png in Resources */,
+				245680B512F06FBC0004189D /* LocateToDoIcon.png in Resources */,
+				245680B612F06FBC0004189D /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2824,6 +2849,7 @@
 				24567BA612F01C2F0004189D /* FBRequest.m in Sources */,
 				24567E1912F04A740004189D /* CTXDORefreshTableHeaderView.m in Sources */,
 				24567E2F12F04C650004189D /* CTXDOTableViewRefreshController.m in Sources */,
+				245680A912F06F720004189D /* TISwipeableTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
