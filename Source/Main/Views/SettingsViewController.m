@@ -1,7 +1,6 @@
 #import "SettingsViewController.h"
 #import "SettingsCell.h"
 #import "CTXDOTableHeaderView.h"
-#import "SettingsSliderView.h"
 
 @interface SettingsViewController (private)
 
@@ -9,7 +8,7 @@
 
 @implementation SettingsViewController
 
-@synthesize settingsDataSource;
+@synthesize settingsDataSource, lastSliderValue, settingsSliderView;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -19,6 +18,8 @@
 	self.title = @"Settings";
 	
     [super viewDidLoad];
+	
+	self.lastSliderValue = -1.0;
 }
 
 #pragma mark -
@@ -28,12 +29,21 @@
 {
 	[super setupDataSource];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:UserDidLoadNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:UserEditNotification object:nil];
+	
 	NSArray *section1 = [NSArray arrayWithObjects:@"", nil];
 	NSArray *choicesList = [NSArray arrayWithObjects:section1, nil];
 	
 	self.settingsDataSource = [[[SettingsDataSource alloc]initWitChoicesList:choicesList]autorelease];
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
 	self.tableView.dataSource = self.settingsDataSource;
+	[self.tableView reloadData];
+}
+
+- (void)refresh
+{
+	
 }
 
 #pragma mark -
@@ -48,6 +58,22 @@
 																											  selector:@selector(doneTouched)];
 	
 	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
+}
+
+- (SettingsSliderView *)settingsSliderView
+{
+	if (!settingsSliderView) {
+		settingsSliderView = [[SettingsSliderView alloc]initWithFrame:CGRectZero];
+		[settingsSliderView.slider addTarget:self action:@selector(sliderDidChangeValue:) forControlEvents:UIControlEventValueChanged];
+		settingsSliderView.slider.minimumValue = 0.0;
+		settingsSliderView.slider.maximumValue = 4.0;
+		CGFloat value = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
+		self.settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];;
+	}
+	
+	return settingsSliderView;
+	
+	
 }
 
 #pragma mark -
@@ -66,13 +92,10 @@
 	}
 	
 	if (indexPath.section == 0) {
-		SettingsSliderView *settingsSliderView = [[[SettingsSliderView alloc]initWithFrame:cell.contentView.bounds]autorelease];
-		[settingsSliderView.slider addTarget:self action:@selector(sliderDidChangeValue:) forControlEvents:UIControlEventValueChanged];
-		settingsSliderView.slider.minimumValue = 0.0;
-		settingsSliderView.slider.maximumValue = 4.0;
 		CGFloat value = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
-		settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];;
-		[cell addSubview:settingsSliderView];
+		self.settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];;
+		self.settingsSliderView.frame = cell.contentView.bounds;
+		[cell addSubview:self.settingsSliderView];
 	}
 }
 
@@ -101,13 +124,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-	NSString *choice  = [self.settingsDataSource choiceForIndexPath:indexPath];
+	__unused NSString *choice  = [self.settingsDataSource choiceForIndexPath:indexPath];
 	
-	if ([choice isEqualToString:@"Reset Password"]) {
-		[[APIServices sharedAPIServices]resetPasswordWithUsername:[[NSUserDefaults standardUserDefaults]stringForKey:UsernameUserDefaults]];
-	} else if ([choice isEqualToString:@"Logout"]) {
-		[self shouldLogout];
-	}
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }
@@ -133,11 +151,20 @@
 	}
 	
 	slider.value = sliderValue;
+	self.lastSliderValue = value;
 }
 
 - (void)doneTouched
 {
-	// todo
+	if (self.lastSliderValue != -1.0) {
+		NSDictionary *settings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.lastSliderValue]
+															 forKey:AlertsDistanceWithin];
+		
+		[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:self.lastSliderValue];
+		User *user = [User userWithSettings:settings facebookAccessToken:nil]; // todo remember fb token and pass it there
+		[[APIServices sharedAPIServices]updateUser:user];
+	}
+	
 	[self dismissModalViewControllerAnimated:TRUE];
 }
 
@@ -152,6 +179,7 @@
 
 - (void)dealloc
 {
+	[settingsSliderView release];
 	[settingsDataSource release];
 	
 	[super dealloc];

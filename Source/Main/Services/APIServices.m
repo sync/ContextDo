@@ -509,7 +509,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 - (void)setAlertsDistanceWithin:(NSNumber *)alertsDistanceWithin
 {
 	if (!alertsDistanceWithin) {
-		[[NSUserDefaults standardUserDefaults]removeObjectForKey:AlertsDistanceWithin];
+		[[NSUserDefaults standardUserDefaults]setValue:[NSNumber numberWithInteger:AlertsDistanceWithinDefaultValue] forKey:AlertsDistanceWithin];
 	} else {
 		[[NSUserDefaults standardUserDefaults]setValue:alertsDistanceWithin forKey:AlertsDistanceWithin];
 	}

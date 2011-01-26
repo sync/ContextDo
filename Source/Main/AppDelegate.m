@@ -11,6 +11,7 @@
 - (void)locationDidFix;
 - (void)locationDidStop;
 - (void)handleLocalNotification:(NSDictionary *)launchOptions;
+- (void)checkUserSettings;
 
 @end
 
@@ -38,12 +39,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
-    
-	[[APIServices sharedAPIServices]refreshUser];
-	
 	// Override point for customization after application launch.
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
-															 [NSNumber numberWithFloat:1.0], AlertsDistanceWithin,
+															 [NSNumber numberWithFloat:AlertsDistanceWithinDefaultValue], AlertsDistanceWithin,
 															 nil]];
 	
 	// Add the navigation controller's view to the window and display.
@@ -59,7 +57,27 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	
 	[self handleLocalNotification:launchOptions];
 	
+	[self checkUserSettings];
+	
     return YES;
+}
+
+- (void)checkUserSettings
+{
+	[[APIServices sharedAPIServices]refreshUser];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserSettings:) name:UserDidLoadNotification object:nil];
+}
+
+- (void)handleUserSettings:(NSNotification *)notification
+{
+	if (notification.object) {
+		User *user = (User *)notification.object;
+		NSDictionary *settings = user.settings;
+		if (settings) {
+			NSNumber *alertsDistanceWithin = [settings valueForKey:AlertsDistanceWithin];
+			[APIServices sharedAPIServices].alertsDistanceWithin = alertsDistanceWithin;
+		}
+	}
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

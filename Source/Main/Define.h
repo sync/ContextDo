@@ -8,6 +8,7 @@
 #define AlertsDistanceWithin @"AlertsDistanceWithin"
 #define ShouldUseDevServer @"ShouldUseDevServer"
 #define DevServerIp @"DevServerIp"
+#define AlertsDistanceWithinDefaultValue 1.0
 
 // Developer
 #define APITokenEabled TRUE

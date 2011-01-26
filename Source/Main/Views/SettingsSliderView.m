@@ -80,7 +80,7 @@
 	
 #define LegendDiff ((boundsSize.width - 2 * SliderLeftRigthDiff) / 4.0)
 #define LegendLeftRightDiff 5.0	
-#define SliderLegendDiff 15.0
+#define SliderLegendDiff 7.0
 	
 	NSInteger i = 0;
 	for (NSString *legend in legends) {
