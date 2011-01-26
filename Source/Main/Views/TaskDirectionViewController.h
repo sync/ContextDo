@@ -3,7 +3,6 @@
 #import "BaseViewController.h"
 #import "TaskAnnotation.h"
 #import "UICGDirections.h"
-#import "UICRouteOverlayMapView.h"
 
 @interface TaskDirectionsViewController : BaseViewController <MKMapViewDelegate, UICGDirectionsDelegate> {
 
@@ -15,7 +14,8 @@
 @property (nonatomic, retain) NSString *startPoint;
 @property (nonatomic, retain) NSString *endPoint;
 
-@property (nonatomic, retain) UICRouteOverlayMapView *routeOverlayView;
+@property (nonatomic, retain) MKPolyline *routeLine;
+@property (nonatomic, retain) MKPolylineView* routeLineView;
 @property (nonatomic, retain) UICGDirections *directions;
 
 - (void)refreshTask;

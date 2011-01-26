@@ -32,9 +32,9 @@
 - (void)viewDidLoad 
 {
 	if (!self.task) {
-		self.title = @"Add to do";
+		self.title = @"New Task";
 	} else {
-		self.title = @"Edit to do";
+		self.title = @"Edit Task";
 	}
 	
     [super viewDidLoad];

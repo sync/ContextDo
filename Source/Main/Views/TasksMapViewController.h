@@ -3,7 +3,6 @@
 #import "BaseViewController.h"
 #import "TaskAnnotation.h"
 #import "UICGDirections.h"
-#import "UICRouteOverlayMapView.h"
 
 @interface TasksMapViewController : BaseViewController <MKMapViewDelegate, UICGDirectionsDelegate, UISearchBarDelegate> {
 
@@ -19,7 +18,8 @@
 @property (nonatomic, readonly) BOOL isNearTasks;
 @property (nonatomic, readonly) NSString *nowDue;
 
-@property (nonatomic, retain) UICRouteOverlayMapView *routeOverlayView;
+@property (nonatomic, retain) MKPolyline *routeLine;
+@property (nonatomic, retain) MKPolylineView* routeLineView;
 @property (nonatomic, retain) UICGDirections *directions;
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;

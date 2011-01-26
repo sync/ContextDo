@@ -1,5 +1,8 @@
 #import "TasksMapViewController.h"
 #import "UICRouteAnnotation.h"
+#import "UICRouteOverlay.h"
+#import "TaskAnnotation.h"
+#import "TaskContainerViewController.h"
 
 @interface TasksMapViewController (private)
 
@@ -11,7 +14,8 @@
 
 @implementation TasksMapViewController
 
-@synthesize mapView, tasks, routeOverlayView, directions, customSearchBar, group, mainNavController;
+@synthesize mapView, tasks, directions, customSearchBar, group, mainNavController;
+@synthesize routeLine, routeLineView;
 
 #pragma mark -
 #pragma mark Setup
@@ -118,9 +122,7 @@
 			[self.mapView removeAnnotation:annotation];
 		}
 	}
-	[self.routeOverlayView removeFromSuperview];
-	self.routeOverlayView = nil;
-	self.routeOverlayView = [[[UICRouteOverlayMapView alloc] initWithMapView:self.mapView]autorelease];
+	self.routeLineView = nil;
 	self.directions = [UICGDirections sharedDirections];
 	self.directions.delegate = self;
 	
@@ -155,7 +157,11 @@
 	// Overlay polylines
 	UICGPolyline *polyline = [[aDirections routeAtIndex:0] overviewPolyline];
 	NSArray *routePoints = [polyline points];
-	[routeOverlayView setRoutes:routePoints];
+	
+	UICRouteOverlay *overlay = [UICRouteOverlay routeOverlayWithPoints:routePoints];
+	self.routeLine = overlay.polyline;
+	[self.mapView addOverlay:self.routeLine];
+	[self.mapView setVisibleMapRect:overlay.mapRect];
 	
 	// here we can have multiple routes todo
 	NSInteger numberOfRoutes = [self.directions numberOfRoutes];
@@ -173,11 +179,11 @@
 			}
 		}
 		
-		UICRouteAnnotation *startAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[[route legAtIndex:0]startLocation]coordinate]
+		TaskAnnotation *startAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[[[route legAtIndex:0]startLocation]coordinate]
 																						title:[[organizedTasks objectAtIndex:0]name]
 																					 subtitle:[[route legAtIndex:0]startAddress]
 																			   annotationType:UICRouteAnnotationTypeStart] autorelease];
-		
+		startAnnotation.task = [organizedTasks objectAtIndex:0];
 		[self.mapView addAnnotation:startAnnotation];
 		
 		for (NSInteger index = 0; index < route.numberOfLegs; index++) {
@@ -186,19 +192,21 @@
 			}
 			
 			UICGLeg *leg = [route legAtIndex:index];
-			UICRouteAnnotation *annotation = [[[UICRouteAnnotation alloc] initWithCoordinate:leg.endLocation.coordinate
+			TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:leg.endLocation.coordinate
 																					   title:[[organizedTasks objectAtIndex:index + 1]name]
 																					subtitle:leg.endAddress
 																			  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
+			annotation.task = [organizedTasks objectAtIndex:index + 1];
 			[self.mapView addAnnotation:annotation];
 			
 		}
 		
-		UICRouteAnnotation *endAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[[route.legs lastObject]endLocation]coordinate]
+		TaskAnnotation *endAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[[[route.legs lastObject]endLocation]coordinate]
 																					  title:[[organizedTasks lastObject]name]
 																				   subtitle:[[route.legs lastObject]endAddress]
 																			 annotationType:UICRouteAnnotationTypeEnd] autorelease];
 		
+		endAnnotation.task = [organizedTasks lastObject];
 		[self.mapView addAnnotation:endAnnotation];
 	}
 }
@@ -228,16 +236,8 @@
 	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
 }
 
+#pragma mark -
 #pragma mark <MKMapViewDelegate> Methods
-
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
-	self.routeOverlayView.hidden = YES;
-}
-
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-	self.routeOverlayView.hidden = NO;
-	[self.routeOverlayView setNeedsDisplay];
-}
 
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation {
 	static NSString *identifier = @"RoutePinAnnotation";
@@ -269,6 +269,36 @@
 	}
 	
 	return nil;
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+	if ([view.annotation isKindOfClass:[TaskAnnotation class]]) {
+		TaskAnnotation *annotation = (TaskAnnotation *)view.annotation;
+		Task *task = annotation.task;
+		
+		TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
+		controller.hidesBottomBarWhenPushed = TRUE;
+		controller.task = task;
+		controller.tasks = self.tasks;
+		[self.mainNavController pushViewController:controller animated:TRUE];
+	}
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
+{
+	MKOverlayView* overlayView = nil;
+	if(overlay == self.routeLine) {
+		//if we have not yet created an overlay view for this overlay, create it now. 
+		if(nil == self.routeLineView) {
+			self.routeLineView = [[[MKPolylineView alloc] initWithPolyline:self.routeLine] autorelease];
+			self.routeLineView.strokeColor = [UIColor colorWithHexString:@"0000ff50"];
+			self.routeLineView.fillColor = [UIColor colorWithHexString:@"0000ff"];
+			self.routeLineView.lineWidth = 4.0;
+		}
+		overlayView = self.routeLineView;
+	}
+	return overlayView;
 }
 
 #pragma mark -
@@ -303,6 +333,9 @@
 	
 	self.mapView.delegate = nil;
 	self.directions.delegate = nil;
+	
+	[routeLine release];
+	[routeLineView release];
 	
 	[customSearchBar release];
 	
