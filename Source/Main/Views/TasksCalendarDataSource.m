@@ -1,5 +1,5 @@
 #import "TasksCalendarDataSource.h"
-
+#import "TasksCalendarCell.h"
 
 @implementation TasksCalendarDataSource
 
@@ -13,16 +13,16 @@
 {
 #define TasksCalendarCellIdentifier @"TasksCalendarCellIdentifier"
 	
-	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:TasksCalendarCellIdentifier];
+	TasksCalendarCell *cell = (TasksCalendarCell *)[tableView dequeueReusableCellWithIdentifier:TasksCalendarCellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TasksCalendarCellIdentifier] autorelease];
+        cell = [[[TasksCalendarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TasksCalendarCellIdentifier] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		cell.selectionStyle = UITableViewCellSelectionStyleGray;
 		cell.textLabel.textColor = [UIColor whiteColor];
     }
 	
 	Task *task = [self taskForIndexPath:indexPath];
-	cell.textLabel.text = task.name;
+	[cell setTask:task];
 	
     return cell;
 }

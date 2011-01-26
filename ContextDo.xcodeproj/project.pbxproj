@@ -295,6 +295,7 @@
 		245680B412F06FBC0004189D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B112F06FBC0004189D /* Icon@2x.png */; };
 		245680B512F06FBC0004189D /* LocateToDoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B212F06FBC0004189D /* LocateToDoIcon.png */; };
 		245680B612F06FBC0004189D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B312F06FBC0004189D /* Icon.png */; };
+		245680FF12F072730004189D /* TasksCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 245680FE12F072730004189D /* TasksCalendarCell.m */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -808,6 +809,8 @@
 		245680B112F06FBC0004189D /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		245680B212F06FBC0004189D /* LocateToDoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocateToDoIcon.png; sourceTree = "<group>"; };
 		245680B312F06FBC0004189D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		245680FD12F072730004189D /* TasksCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksCalendarCell.h; sourceTree = "<group>"; };
+		245680FE12F072730004189D /* TasksCalendarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksCalendarCell.m; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -1325,6 +1328,8 @@
 				24E44A1312EBB58500F08B7E /* TasksInfoCell.m */,
 				245673C712EFB1EE0004189D /* SettingsCell.h */,
 				245673C812EFB1EE0004189D /* SettingsCell.m */,
+				245680FD12F072730004189D /* TasksCalendarCell.h */,
+				245680FE12F072730004189D /* TasksCalendarCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -2850,6 +2855,7 @@
 				24567E1912F04A740004189D /* CTXDORefreshTableHeaderView.m in Sources */,
 				24567E2F12F04C650004189D /* CTXDOTableViewRefreshController.m in Sources */,
 				245680A912F06F720004189D /* TISwipeableTableView.m in Sources */,
+				245680FF12F072730004189D /* TasksCalendarCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

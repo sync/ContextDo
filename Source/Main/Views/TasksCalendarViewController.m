@@ -2,6 +2,7 @@
 #import "NSDate-Utilities.h"
 #import "TaskContainerViewController.h"
 #import "NSDate+Extensions.h"
+#import "TasksCalendarCell.h"
 
 @interface TasksCalendarViewController (private)
 
@@ -153,6 +154,16 @@
 
 #pragma mark -
 #pragma mark tableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	CTXDOCellContext context = CTXDOCellContextStandard;
+	if (indexPath.row % 2 > 0) {
+		context = CTXDOCellContextStandardAlternate;
+	}
+	
+	[(TasksCalendarCell *)cell setCellContext:context];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     

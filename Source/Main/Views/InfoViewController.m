@@ -102,6 +102,8 @@
 	[self.mainNavController pushViewController:controller animated:TRUE];
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+	
+	[[NSNotificationCenter defaultCenter]postNotificationName:GroupShouldDismissInfo object:nil];
 }
 
 #pragma mark -
