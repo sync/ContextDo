@@ -126,7 +126,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 			notification.fireDate  = nil;
 			notification.timeZone  = [NSTimeZone systemTimeZone];
 			notification.alertBody = [NSString stringWithFormat:@"You are close to %@, would you like to view it?", task.name];
-			notification.alertAction = @"View";
+			notification.alertAction = @"View"; // todo already default
 			notification.applicationIconBadgeNumber = 1;
 			notification.soundName= UILocalNotificationDefaultSoundName;
 			notification.userInfo = [self userInfoForTask:task today:FALSE];

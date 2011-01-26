@@ -282,6 +282,31 @@
 	}
 }
 
+- (void)drawBackView:(CGRect)rect {
+	
+	[[UIImage imageNamed:@"panel_swipe.png"]drawInRect:rect];
+}
+
+- (void)drawContentView:(CGRect)rect {
+	
+	UIColor * textColour = [UIColor blackColor];
+	
+	if (self.selected) {
+		textColour = [UIColor whiteColor];
+		[[UIImage imageNamed:@"selectiongradient.png"] drawInRect:rect];
+	}
+	
+	[textColour set];
+	
+	UIFont * textFont = [UIFont boldSystemFontOfSize:22];
+	
+	CGSize textSize = [@"test" sizeWithFont:textFont constrainedToSize:rect.size];
+	[@"test" drawInRect:CGRectMake((rect.size.width / 2) - (textSize.width / 2), 
+								(rect.size.height / 2) - (textSize.height / 2),
+								textSize.width, textSize.height)
+			withFont:textFont];
+}
+
 - (void)setTask:(Task *)task
 {
 	NSString *imageNamed = nil;

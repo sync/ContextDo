@@ -76,6 +76,7 @@
 	self.tableView.dataSource = self.tasksDataSource;
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
 	self.tableView.rowHeight = 88.0;
+	[self.swipeableTableView setSwipeDelegate:self];
 	[self refreshTasks];
 }
 

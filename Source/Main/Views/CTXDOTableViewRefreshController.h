@@ -1,8 +1,9 @@
 #import <UIKit/UIKit.h>
 #import "BaseTableViewRefreshController.h"
 #import "CTXDORefreshTableHeaderView.h"
+#import "TISwipeableTableView.h"
 
-@interface CTXDOTableViewRefreshController : BaseTableViewRefreshController {
+@interface CTXDOTableViewRefreshController : BaseTableViewRefreshController <TISwipeableTableViewDelegate> {
 	EGORefreshTableHeaderView *refreshHeaderView;
 	
 	id _delegate;
@@ -13,5 +14,7 @@
 	CALayer *_arrowImage;
 	UIActivityIndicatorView *_activityView;
 }
+
+@property (nonatomic, readonly) TISwipeableTableView *swipeableTableView;
 
 @end

@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "EGORefreshTableHeaderView.h"
 
-@interface CTXDORefreshTableHeaderView : EGORefreshTableHeaderView {
+@interface CTXDORefreshTableHeaderView : EGORefreshTableHeaderView  {
 	
 }
 
