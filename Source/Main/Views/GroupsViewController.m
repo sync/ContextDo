@@ -238,7 +238,7 @@
 		
 		// todo get this value from the user's default
 		if (!self.lastCurrentLocation || [[AppDelegate sharedAppDelegate].currentLocation distanceFromLocation:self.lastCurrentLocation] >= 1000) {
-			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0 inBackground:FALSE]; // TODO within user's pref
+			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:FALSE]; // TODO within user's pref
 		}
 	}
 	

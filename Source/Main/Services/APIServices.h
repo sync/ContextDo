@@ -24,7 +24,6 @@
 - (void)refreshTasksDueToday;
 - (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude
 					   longitude:(CLLocationDegrees)longitude
-						  within:(CGFloat)withinInKm 
 					inBackground:(BOOL)background;
 - (void)refreshTasksWithQuery:(NSString *)query;
 - (void)refreshTasksEdited;
@@ -34,5 +33,8 @@
 
 - (void)refreshUser;
 - (void)updateUser:(User *)user;
+@property (nonatomic, assign) NSNumber *alertsDistanceWithin;
+- (CGFloat)alertsDistancKmToSliderValue:(CGFloat)value;
+- (CGFloat)sliderValueToAlertsDistancKm:(CGFloat)value;
 
 @end

@@ -7,4 +7,6 @@
 
 @property (nonatomic, readonly, assign) UILabel *textLabel;
 
+- (void)setupCustomInitialisation;
+
 @end

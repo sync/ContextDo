@@ -25,12 +25,19 @@
 	
 	NSString *choice = [self choiceForIndexPath:indexPath];
 	
-	cell.textLabel.text = choice;
+	if (indexPath.section != 0) {
+		cell.textLabel.text = choice;
+		
+		cell.accessoryView = [AccessoryViewWithImage accessoryViewWithImageNamed:@"btn_std_arrow_off.png"
+														   highlightedImageNamed:@"btn_std_arrow_touch.png" 
+																	  cellHeight:cell.bounds.size.height 
+																   leftRightDiff:10.0];
+	} else {
+		cell.textLabel.text = nil;
+		cell.accessoryView = nil;
+	}
 	
-	cell.accessoryView = [AccessoryViewWithImage accessoryViewWithImageNamed:@"btn_std_arrow_off.png"
-													   highlightedImageNamed:@"btn_std_arrow_touch.png" 
-																  cellHeight:cell.bounds.size.height 
-															   leftRightDiff:10.0];
+	
 	
     return cell;
 }

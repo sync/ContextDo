@@ -1,6 +1,7 @@
 #import "SettingsViewController.h"
 #import "SettingsCell.h"
 #import "CTXDOTableHeaderView.h"
+#import "SettingsSliderView.h"
 
 @interface SettingsViewController (private)
 
@@ -63,6 +64,25 @@
 	} else {
 		[(SettingsCell *)cell setCellPosition:CTXDOCellPositionMiddle];
 	}
+	
+	if (indexPath.section == 0) {
+		SettingsSliderView *settingsSliderView = [[[SettingsSliderView alloc]initWithFrame:cell.contentView.bounds]autorelease];
+		[settingsSliderView.slider addTarget:self action:@selector(sliderDidChangeValue:) forControlEvents:UIControlEventValueChanged];
+		settingsSliderView.slider.minimumValue = 0.0;
+		settingsSliderView.slider.maximumValue = 4.0;
+		CGFloat value = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
+		settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];;
+		[cell addSubview:settingsSliderView];
+	}
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if (indexPath.section == 0) {
+		return 86.0;
+	}
+	
+	return tableView.rowHeight;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -94,6 +114,26 @@
 
 #pragma mark -
 #pragma mark Actions
+
+- (void)sliderDidChangeValue:(id)sender
+{
+	CTXDoSlider *slider = (CTXDoSlider *)sender;
+	CGFloat value = slider.value;
+	CGFloat sliderValue = value;
+	if (value < 0.5) {
+		sliderValue = 0.0;
+	} else if (value < 1.5) {
+		sliderValue = 1.0;
+	} else if (value < 2.5) {
+		sliderValue = 2.0;
+	} else if (value < 3.5) {
+		sliderValue = 3.0;
+	} else {
+		sliderValue = 4.0;
+	}
+	
+	slider.value = sliderValue;
+}
 
 - (void)doneTouched
 {

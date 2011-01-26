@@ -43,7 +43,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	
 	// Override point for customization after application launch.
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
-															 [NSNumber numberWithBool:FALSE], ShouldResetCredentialsAtStartup,
+															 [NSNumber numberWithFloat:1.0], AlertsDistanceWithin,
 															 nil]];
 	
 	// Add the navigation controller's view to the window and display.
@@ -252,7 +252,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 		
 		// todo get this value from the user's default
 		if (!self.lastCurrentLocation || [self.currentLocation distanceFromLocation:self.lastCurrentLocation] >= 1000) {
-			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0 inBackground:TRUE]; // TODO within user's pref
+			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:TRUE]; // TODO within user's pref
 		}
 			
 		if (reverseGeocoder) {

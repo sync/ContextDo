@@ -218,6 +218,16 @@
 		2456743E12EFB8BC0004189D /* btn_std_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456743A12EFB8BC0004189D /* btn_std_touch.png */; };
 		2456743F12EFB8BC0004189D /* btn_std_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456743B12EFB8BC0004189D /* btn_std_touch@2x.png */; };
 		2456745E12EFBC570004189D /* CTXDOButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456745D12EFBC570004189D /* CTXDOButton.m */; };
+		245674D312EFC3F40004189D /* CTXDoSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 245674D212EFC3F40004189D /* CTXDoSlider.m */; };
+		245674F312EFC5170004189D /* UISliderWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 245674E612EFC5170004189D /* UISliderWhite@2x.png */; };
+		245674F812EFC5170004189D /* UISliderBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 245674EB12EFC5170004189D /* UISliderBlue@2x.png */; };
+		245674FB12EFC5170004189D /* UISliderBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 245674EE12EFC5170004189D /* UISliderBlue.png */; };
+		245674FC12EFC5170004189D /* UISliderHandleDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 245674EF12EFC5170004189D /* UISliderHandleDown@2x.png */; };
+		245674FD12EFC5170004189D /* UISliderHandle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 245674F012EFC5170004189D /* UISliderHandle@2x.png */; };
+		245674FE12EFC5170004189D /* UISliderHandleDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 245674F112EFC5170004189D /* UISliderHandleDown.png */; };
+		245674FF12EFC5170004189D /* UISliderHandle.png in Resources */ = {isa = PBXBuildFile; fileRef = 245674F212EFC5170004189D /* UISliderHandle.png */; };
+		2456750512EFC52E0004189D /* UISliderWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456750212EFC52E0004189D /* UISliderWhite.png */; };
+		2456752D12EFC9630004189D /* SettingsSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456752C12EFC9630004189D /* SettingsSliderView.m */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -651,6 +661,18 @@
 		2456743B12EFB8BC0004189D /* btn_std_touch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_std_touch@2x.png"; sourceTree = "<group>"; };
 		2456745C12EFBC570004189D /* CTXDOButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOButton.h; sourceTree = "<group>"; };
 		2456745D12EFBC570004189D /* CTXDOButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOButton.m; sourceTree = "<group>"; };
+		245674D112EFC3F40004189D /* CTXDoSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDoSlider.h; sourceTree = "<group>"; };
+		245674D212EFC3F40004189D /* CTXDoSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDoSlider.m; sourceTree = "<group>"; };
+		245674E612EFC5170004189D /* UISliderWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UISliderWhite@2x.png"; sourceTree = "<group>"; };
+		245674EB12EFC5170004189D /* UISliderBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UISliderBlue@2x.png"; sourceTree = "<group>"; };
+		245674EE12EFC5170004189D /* UISliderBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UISliderBlue.png; sourceTree = "<group>"; };
+		245674EF12EFC5170004189D /* UISliderHandleDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UISliderHandleDown@2x.png"; sourceTree = "<group>"; };
+		245674F012EFC5170004189D /* UISliderHandle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UISliderHandle@2x.png"; sourceTree = "<group>"; };
+		245674F112EFC5170004189D /* UISliderHandleDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UISliderHandleDown.png; sourceTree = "<group>"; };
+		245674F212EFC5170004189D /* UISliderHandle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UISliderHandle.png; sourceTree = "<group>"; };
+		2456750212EFC52E0004189D /* UISliderWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UISliderWhite.png; sourceTree = "<group>"; };
+		2456752B12EFC9630004189D /* SettingsSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSliderView.h; sourceTree = "<group>"; };
+		2456752C12EFC9630004189D /* SettingsSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsSliderView.m; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -1068,6 +1090,8 @@
 		2456745B12EFBC030004189D /* UISliders */ = {
 			isa = PBXGroup;
 			children = (
+				245674D112EFC3F40004189D /* CTXDoSlider.h */,
+				245674D212EFC3F40004189D /* CTXDoSlider.m */,
 			);
 			name = UISliders;
 			sourceTree = "<group>";
@@ -1792,6 +1816,8 @@
 		3A034D43125D629A00F49FA6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				2456752B12EFC9630004189D /* SettingsSliderView.h */,
+				2456752C12EFC9630004189D /* SettingsSliderView.m */,
 				245673D612EFB4F20004189D /* SettingsDataSource.h */,
 				245673D712EFB4F20004189D /* SettingsDataSource.m */,
 				3A034D49125D62DD00F49FA6 /* SettingsViewController.h */,
@@ -2011,6 +2037,14 @@
 				2456743912EFB8BC0004189D /* btn_std_off.png */,
 				2456743A12EFB8BC0004189D /* btn_std_touch.png */,
 				2456743B12EFB8BC0004189D /* btn_std_touch@2x.png */,
+				2456750212EFC52E0004189D /* UISliderWhite.png */,
+				245674E612EFC5170004189D /* UISliderWhite@2x.png */,
+				245674EE12EFC5170004189D /* UISliderBlue.png */,
+				245674EB12EFC5170004189D /* UISliderBlue@2x.png */,
+				245674F212EFC5170004189D /* UISliderHandle.png */,
+				245674F012EFC5170004189D /* UISliderHandle@2x.png */,
+				245674EF12EFC5170004189D /* UISliderHandleDown@2x.png */,
+				245674F112EFC5170004189D /* UISliderHandleDown.png */,
 				2491271712EE62E7009191BA /* Temp */,
 			);
 			path = Images;
@@ -2395,6 +2429,14 @@
 				2456743D12EFB8BC0004189D /* btn_std_off.png in Resources */,
 				2456743E12EFB8BC0004189D /* btn_std_touch.png in Resources */,
 				2456743F12EFB8BC0004189D /* btn_std_touch@2x.png in Resources */,
+				245674F312EFC5170004189D /* UISliderWhite@2x.png in Resources */,
+				245674F812EFC5170004189D /* UISliderBlue@2x.png in Resources */,
+				245674FB12EFC5170004189D /* UISliderBlue.png in Resources */,
+				245674FC12EFC5170004189D /* UISliderHandleDown@2x.png in Resources */,
+				245674FD12EFC5170004189D /* UISliderHandle@2x.png in Resources */,
+				245674FE12EFC5170004189D /* UISliderHandleDown.png in Resources */,
+				245674FF12EFC5170004189D /* UISliderHandle.png in Resources */,
+				2456750512EFC52E0004189D /* UISliderWhite.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2530,6 +2572,8 @@
 				245673C912EFB1EE0004189D /* SettingsCell.m in Sources */,
 				245673D812EFB4F20004189D /* SettingsDataSource.m in Sources */,
 				2456745E12EFBC570004189D /* CTXDOButton.m in Sources */,
+				245674D312EFC3F40004189D /* CTXDoSlider.m in Sources */,
+				2456752D12EFC9630004189D /* SettingsSliderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

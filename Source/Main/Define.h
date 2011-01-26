@@ -5,7 +5,7 @@
 #define UsernameUserDefaults @"UsernameUserDefaults"
 #define PasswordUserDefaults @"PasswordUserDefaults"
 #define APITokenUserDefaults @"APITokenUserDefaults"
-#define ShouldResetCredentialsAtStartup @"ShouldResetCredentialsAtStartup"
+#define AlertsDistanceWithin @"AlertsDistanceWithin"
 #define ShouldUseDevServer @"ShouldUseDevServer"
 #define DevServerIp @"DevServerIp"
 
