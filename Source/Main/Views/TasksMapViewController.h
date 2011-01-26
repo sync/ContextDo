@@ -9,7 +9,9 @@
 }
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
-@property (nonatomic, retain) IBOutlet CustomSearchBar *customSearchBar;
+@property (nonatomic, retain) IBOutlet CustomSearchBar *searchBar;
+
+@property (nonatomic, copy) NSArray *tasksSave;
 
 @property (nonatomic, retain) Group *group;
 @property (nonatomic, retain) NSArray *tasks;
@@ -26,5 +28,8 @@
 @property (nonatomic,  assign) UINavigationController *mainNavController;
 
 - (void)refreshTasksDirection;
+
+// Content Filtering
+@property (nonatomic, copy) NSString *searchString;
 
 @end

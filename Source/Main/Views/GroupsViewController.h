@@ -4,8 +4,9 @@
 #import "GroupsEditViewController.h"
 #import "CTXDODarkTextField.h"
 #import "InfoViewController.h"
+#import "CTXDOTableViewRefreshController.h"
 
-@interface GroupsViewController : BaseTableViewController <UITextFieldDelegate> {
+@interface GroupsViewController : CTXDOTableViewRefreshController <UITextFieldDelegate> {
 
 }
 

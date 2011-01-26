@@ -311,6 +311,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+	[super scrollViewDidScroll:scrollView];
 	if (!scrollView.dragging || scrollView.decelerating) {
 		return;
 	}
@@ -640,6 +641,14 @@
 		[self addGroup];
 	}
 	return YES;
+}
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate 
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{	
+	[self refreshGroups];
 }
 
 #pragma mark -

@@ -61,13 +61,13 @@
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<int key="IBUIContentHorizontalAlignment">0</int>
 										<int key="IBUIContentVerticalAlignment">0</int>
-										<object class="NSFont" key="IBUIFont" id="827437383">
+										<object class="NSFont" key="IBUIFont" id="428239123">
 											<string key="NSName">Helvetica-Bold</string>
 											<double key="NSSize">15</double>
 											<int key="NSfFlags">16</int>
 										</object>
 										<string key="IBUINormalTitle">Logout</string>
-										<object class="NSColor" key="IBUIHighlightedTitleColor" id="1016996271">
+										<object class="NSColor" key="IBUIHighlightedTitleColor" id="101077747">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MQA</bytes>
 										</object>
@@ -75,28 +75,28 @@
 											<int key="NSColorSpace">1</int>
 											<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 										</object>
-										<object class="NSColor" key="IBUINormalTitleShadowColor" id="483949025">
+										<object class="NSColor" key="IBUINormalTitleShadowColor" id="901585398">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MC41AA</bytes>
 										</object>
 									</object>
-									<object class="IBUIButton" id="251286170">
+									<object class="IBUIButton" id="797871416">
 										<reference key="NSNextResponder" ref="926478284"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{25, 74}, {270, 45}}</string>
+										<string key="NSFrame">{{25, 79}, {270, 45}}</string>
 										<reference key="NSSuperview" ref="926478284"/>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<int key="IBUIContentHorizontalAlignment">0</int>
 										<int key="IBUIContentVerticalAlignment">0</int>
-										<reference key="IBUIFont" ref="827437383"/>
+										<reference key="IBUIFont" ref="428239123"/>
 										<string key="IBUINormalTitle">Facebook Connect</string>
-										<reference key="IBUIHighlightedTitleColor" ref="1016996271"/>
+										<reference key="IBUIHighlightedTitleColor" ref="101077747"/>
 										<object class="NSColor" key="IBUINormalTitleColor">
 											<int key="NSColorSpace">1</int>
 											<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 										</object>
-										<reference key="IBUINormalTitleShadowColor" ref="483949025"/>
+										<reference key="IBUINormalTitleShadowColor" ref="901585398"/>
 									</object>
 								</object>
 								<string key="NSFrame">{{0, 214}, {320, 202}}</string>
@@ -210,7 +210,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">shouldFacebookConnect</string>
-						<reference key="source" ref="251286170"/>
+						<reference key="source" ref="797871416"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -260,7 +260,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="object" ref="926478284"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="251286170"/>
+							<reference ref="797871416"/>
 							<reference ref="953907872"/>
 						</object>
 						<reference key="parent" ref="807105426"/>
@@ -272,7 +272,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">13</int>
-						<reference key="object" ref="251286170"/>
+						<reference key="object" ref="797871416"/>
 						<reference key="parent" ref="926478284"/>
 					</object>
 				</object>

@@ -24,6 +24,7 @@
 	
 	[self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 						   forBarStyle:UIBarStyleBlackOpaque];
+	self.searchBar.keyboardType = UIKeyboardAppearanceAlert;
 	
 	//[self.tableView setContentOffset:CGPointMake(0.0, self.searchBar.frame.size.height)];
 
@@ -172,6 +173,8 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+	[super scrollViewDidScroll:scrollView];
+	
 	if (!scrollView.dragging || scrollView.decelerating) {
 		return;
 	}
@@ -260,6 +263,14 @@
 	self.searchString = searchText;
 	
 	[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
+}
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate 
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{	
+	[self refreshTasks];
 }
 
 #pragma mark -

@@ -133,6 +133,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	[self enableGPS];
 	[[APIServices sharedAPIServices]refreshGroups];
+	[[APIServices sharedAPIServices]refreshTasksEdited];
 	
 	[[CTXDONotificationsServices sharedCTXDONotificationsServices]refreshTasksForLocalNotification];
 	// todo refres tasks

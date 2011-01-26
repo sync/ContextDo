@@ -1,9 +1,9 @@
 #import <UIKit/UIKit.h>
-#import "BaseTableViewController.h"
+#import "CTXDOTableViewRefreshController.h"
 #import "TasksDataSource.h"
 
 
-@interface TasksViewController : BaseTableViewController <UISearchBarDelegate> {
+@interface TasksViewController : CTXDOTableViewRefreshController <UISearchBarDelegate> {
 
 }
 

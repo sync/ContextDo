@@ -9,13 +9,15 @@
 - (void)showCurrentLocation;
 - (void)updateDirections;
 - (void)refreshTasks;
+- (void)cancelSearch;
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 
 @end
 
 @implementation TasksMapViewController
 
-@synthesize mapView, tasks, directions, customSearchBar, group, mainNavController;
-@synthesize routeLine, routeLineView, todayTasks;
+@synthesize mapView, tasks, directions, searchBar, group, mainNavController;
+@synthesize routeLine, routeLineView, todayTasks, tasksSave, searchString;
 
 #pragma mark -
 #pragma mark Setup
@@ -47,14 +49,18 @@
 {
     [super viewDidLoad];
 	
-	[self.customSearchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+	[self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 								 forBarStyle:UIBarStyleBlackOpaque];
+	self.searchBar.keyboardType = UIKeyboardAppearanceAlert;
 	
 	self.mapView.showsUserLocation = TRUE;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskDeleteNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksSearchDidLoadNotification object:nil];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	if (self.isTodayTasks) {
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueTodayDidLoadNotification object:nil];
@@ -74,13 +80,19 @@
 
 - (void)refreshTasks
 {
-	if (self.isTodayTasks) {
-		[[APIServices sharedAPIServices]refreshTasksDueToday];
-	} else if (self.isNearTasks) {
-		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:FALSE]; // TODO within user's pref
+	// little bit of a hax
+	if (!self.tasksSave) {
+		if (self.isTodayTasks) {
+			[[APIServices sharedAPIServices]refreshTasksDueToday];
+		} else if (self.isNearTasks) {
+			CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:FALSE]; // TODO within user's pref
+		} else {
+			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
+		}
 	} else {
-		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
+		// search mode
+		[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
 	}
 }
 
@@ -124,6 +136,7 @@
 			[self.mapView removeAnnotation:annotation];
 		}
 	}
+	[self.mapView removeOverlay:self.routeLine];
 	self.routeLineView = nil;
 	self.directions = [UICGDirections sharedDirections];
 	self.directions.delegate = self;
@@ -153,7 +166,7 @@
 	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
 	self.mapView = nil;
 	
-	self.customSearchBar = nil;
+	self.searchBar = nil;
 }
 
 - (void)updateDirections
@@ -173,8 +186,13 @@
 	UICGPolyline *polyline = [[aDirections routeAtIndex:0] overviewPolyline];
 	NSArray *routePoints = [polyline points];
 	
+	if (routePoints.count == 0) {
+		return;
+	}
+	
 	UICRouteOverlay *overlay = [UICRouteOverlay routeOverlayWithPoints:routePoints];
 	self.routeLine = overlay.polyline;
+	
 	[self.mapView addOverlay:self.routeLine];
 	[self.mapView setVisibleMapRect:overlay.mapRect];
 	
@@ -316,6 +334,18 @@
 	return overlayView;
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	if (!scrollView.dragging || scrollView.decelerating) {
+		return;
+	}
+	
+	[self.searchBar resignFirstResponder];
+	if ([self.searchBar respondsToSelector:@selector(cancelButton)]) {
+		[[self.searchBar valueForKey:@"cancelButton"] setEnabled:TRUE];
+	}
+}
+
 #pragma mark -
 #pragma mark Actions
 
@@ -336,6 +366,65 @@
 }
 
 #pragma mark -
+#pragma mark UISearchBarDelegate
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)aSearchBar
+{
+	if (!aSearchBar.showsCancelButton) {
+		self.tasksSave = self.tasks;
+		self.tasks = nil;
+	}
+	
+	[aSearchBar setShowsCancelButton:TRUE animated:TRUE];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)aSearchBar
+{
+	if (aSearchBar.text.length == 0) {
+		[self cancelSearch];
+	}
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)aSearchBar
+{
+	if ([aSearchBar.text isEqualToString:self.searchString]) {
+		return;
+	}
+	[self filterContentForSearchText:aSearchBar.text scope:nil];
+	
+	if ([self.searchBar respondsToSelector:@selector(cancelButton)]) {
+		[[self.searchBar valueForKey:@"cancelButton"] setEnabled:TRUE];
+	}
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
+{
+	[self cancelSearch];
+}
+
+- (void)cancelSearch
+{
+	[self.searchBar setShowsCancelButton:FALSE animated:TRUE];
+	[self.searchBar resignFirstResponder];
+	self.searchBar.text = nil;
+	self.searchString = nil;
+	self.tasks = self.tasksSave;
+	self.tasksSave = nil;
+	[self refreshTasks];
+}
+
+#pragma mark -
+#pragma mark Content Filtering
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+	[self.searchBar resignFirstResponder];
+	self.searchString = searchText;
+	
+	[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
+}
+
+#pragma mark -
 #pragma mark Dealloc
 
 - (void)dealloc
@@ -345,6 +434,7 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksWithinDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDueTodayDidLoadNotification];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	self.mapView.delegate = nil;
 	self.directions.delegate = nil;
@@ -352,11 +442,12 @@
 	[routeLine release];
 	[routeLineView release];
 	
-	[customSearchBar release];
+	[searchBar release];
 	
 	[group release];
 	
 	[todayTasks release];
+	[tasksSave release];
 	[tasks release];
 	[mapView release];
 	
