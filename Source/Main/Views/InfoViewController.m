@@ -11,7 +11,7 @@
 
 @implementation InfoViewController
 
-@synthesize tasksUpdatedDataSource, infoButton;
+@synthesize tasksUpdatedDataSource, infoButton, mainNavController;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -99,7 +99,7 @@
 	controller.hidesBottomBarWhenPushed = TRUE;
 	controller.task = task;
 	controller.tasks = self.tasksUpdatedDataSource.content;
-	[self.navigationController pushViewController:controller animated:TRUE];
+	[self.mainNavController pushViewController:controller animated:TRUE];
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }

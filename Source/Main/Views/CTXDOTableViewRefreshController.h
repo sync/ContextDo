@@ -4,6 +4,14 @@
 
 @interface CTXDOTableViewRefreshController : BaseTableViewRefreshController {
 	EGORefreshTableHeaderView *refreshHeaderView;
+	
+	id _delegate;
+	EGOPullRefreshState _state;
+	
+	UILabel *_lastUpdatedLabel;
+	UILabel *_statusLabel;
+	CALayer *_arrowImage;
+	UIActivityIndicatorView *_activityView;
 }
 
 @end

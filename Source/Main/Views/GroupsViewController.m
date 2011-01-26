@@ -102,6 +102,7 @@
 	[super setupDataSource];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldHidInfo) name:GroupShouldDismissInfo object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinBackgroundDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupEditNotification:) name:GroupEditNotification object:nil];
@@ -474,6 +475,7 @@
 {
 	if (!infoViewController) {
 		infoViewController = [[InfoViewController alloc]initWithNibName:@"InfoView" bundle:nil];
+		infoViewController.mainNavController = self.navigationController;
 		[self.view addSubview:infoViewController.view];
 		[self.view bringSubviewToFront:infoViewController.view];
 		[self.view bringSubviewToFront:self.groupsEditViewController.view];

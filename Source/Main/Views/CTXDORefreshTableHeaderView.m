@@ -189,4 +189,78 @@
 	}
 }
 
+#pragma mark -
+#pragma mark ScrollView Methods
+
+- (void)egoRefreshScrollViewDidScroll:(UIScrollView *)scrollView {	
+	
+	if (_state == EGOOPullRefreshLoading) {
+		
+		CGFloat offset = MAX(scrollView.contentOffset.y * -1, 0);
+		offset = MIN(offset, 60);
+		UIEdgeInsets contentInset = scrollView.contentInset;
+		contentInset.top = offset;
+		scrollView.contentInset = contentInset;
+		
+	} else if (scrollView.isDragging) {
+		
+		BOOL _loading = NO;
+		if ([_delegate respondsToSelector:@selector(egoRefreshTableHeaderDataSourceIsLoading:)]) {
+			_loading = [_delegate egoRefreshTableHeaderDataSourceIsLoading:self];
+		}
+		
+		if (_state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !_loading) {
+			[self setState:EGOOPullRefreshNormal];
+		} else if (_state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f && !_loading) {
+			[self setState:EGOOPullRefreshPulling];
+		}
+		
+		if (scrollView.contentInset.top != 0) {
+			UIEdgeInsets contentInset = scrollView.contentInset;
+			contentInset.top = 0.0;
+			scrollView.contentInset = contentInset;
+		}
+		
+	}
+	
+}
+
+- (void)egoRefreshScrollViewDidEndDragging:(UIScrollView *)scrollView {
+	
+	BOOL _loading = NO;
+	if ([_delegate respondsToSelector:@selector(egoRefreshTableHeaderDataSourceIsLoading:)]) {
+		_loading = [_delegate egoRefreshTableHeaderDataSourceIsLoading:self];
+	}
+	
+	if (scrollView.contentOffset.y <= - 65.0f && !_loading) {
+		
+		if ([_delegate respondsToSelector:@selector(egoRefreshTableHeaderDidTriggerRefresh:)]) {
+			[_delegate egoRefreshTableHeaderDidTriggerRefresh:self];
+		}
+		
+		[self setState:EGOOPullRefreshLoading];
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDuration:0.2];
+		UIEdgeInsets contentInset = scrollView.contentInset;
+		contentInset.top = 60.0;
+		scrollView.contentInset = contentInset;
+		[UIView commitAnimations];
+		
+	}
+	
+}
+
+- (void)egoRefreshScrollViewDataSourceDidFinishedLoading:(UIScrollView *)scrollView {	
+	
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:.3];
+	UIEdgeInsets contentInset = scrollView.contentInset;
+	contentInset.top = 0.0;
+	scrollView.contentInset = contentInset;
+	[UIView commitAnimations];
+	
+	[self setState:EGOOPullRefreshNormal];
+	
+}
+
 @end
