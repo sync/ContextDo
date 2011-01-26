@@ -57,6 +57,7 @@
 	self.tableView.dataSource = self.tasksCalendarDataSource;
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
 	self.tableView.delegate = self;
+	self.tableView.separatorColor = [UIColor whiteColor];
 	[self refreshTasks];
 }
 
@@ -129,10 +130,8 @@
 - (void) calendarMonthView:(TKCalendarMonthView*)monthView didSelectDate:(NSDate*)date{
 	
 	// CHANGE THE DATE TO YOUR TIMEZONE
-	TKDateInformation info = [date dateInformationWithTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-	NSDate *myTimeZoneDay = [NSDate dateFromDateInformation:info timeZone:[NSTimeZone systemTimeZone]];
-	
-	DLog(@"Date Selected: %@",myTimeZoneDay);
+//	TKDateInformation info = [date dateInformationWithTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+//	NSDate *myTimeZoneDay = [NSDate dateFromDateInformation:info timeZone:[NSTimeZone systemTimeZone]];
 	
 	[self.tasksCalendarDataSource resetContent];
 	
