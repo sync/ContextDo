@@ -132,8 +132,10 @@
 		} else if ([self hasTargetButton:indexPath]) {
 			UIButton *button = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];
 			
-			UIImage *image = [UIImage imageNamed:@"icon_locate.png"];
+			UIImage *image = [UIImage imageNamed:@"icon_locateTouch.png"];
 			[button setBackgroundImage:image forState:UIControlStateNormal];
+			UIImage *backGroundimage = [UIImage imageNamed:@"icon_locate.png"];
+			[button setBackgroundImage:backGroundimage forState:UIControlStateHighlighted];
 			
 			button.frame = CGRectMake(button.frame.origin.x, 
 									  button.frame.origin.y, 

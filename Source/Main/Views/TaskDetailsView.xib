@@ -120,11 +120,11 @@
 						<reference key="IBUINormalTitleShadowColor" ref="634667143"/>
 						<object class="NSCustomResource" key="IBUIHighlightedImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">icon_delete_touch.png</string>
+							<string key="NSResourceName">icon_delete_wht_touch.png</string>
 						</object>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">icon_delete.png</string>
+							<string key="NSResourceName">icon_delete_wht.png</string>
 						</object>
 					</object>
 					<object class="IBUIView" id="353953641">
@@ -677,8 +677,8 @@
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>divider_groupdetails.png</string>
-				<string>icon_delete.png</string>
-				<string>icon_delete_touch.png</string>
+				<string>icon_delete_wht.png</string>
+				<string>icon_delete_wht_touch.png</string>
 				<string>icon_edit_wht.png</string>
 				<string>icon_edit_whtTouch.png</string>
 				<string>icon_mail_wht.png</string>
@@ -688,7 +688,7 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{320, 12}</string>
 				<string>{32, 32}</string>
-				<string>{32, 32}</string>
+				<string>{16, 16}</string>
 				<string>{32, 32}</string>
 				<string>{32, 32}</string>
 				<string>{32, 32}</string>

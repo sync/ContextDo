@@ -78,6 +78,7 @@
 			[images addObject:[UIImage imageNamed:imageNamed]];
 		}
 		self.animView.animationImages = images;
+		self.animView.animationDuration = 0.5;
 		[self addSubview:self.animView];
 		
 		
