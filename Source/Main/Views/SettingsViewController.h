@@ -1,11 +1,13 @@
 #import <UIKit/UIKit.h>
 #import "BaseTableViewController.h"
-#import "ChoicesListDataSource.h"
+#import "SettingsDataSource.h"
 
 @interface SettingsViewController : BaseTableViewController {
 
 }
 
-@property (nonatomic, retain) ChoicesListDataSource *choicesListDataSource;
+@property (nonatomic, retain) SettingsDataSource *settingsDataSource;
+
+- (IBAction)shouldLogout;
 
 @end

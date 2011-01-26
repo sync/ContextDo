@@ -393,7 +393,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	}
 	
 	NSString *notificationName = TaskEditNotification;
-	NSString *path = @"editTask";
+	NSString *path = @"updateTask";
 	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
@@ -458,6 +458,51 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 }
 
 #pragma mark -
+#pragma mark User
+
+- (void)refreshUser
+{
+	NSString *notificationName = UserDidLoadNotification;
+	NSString *path = @"user";
+	
+	NSString *url = CTXDOURL(BASE_URL, USER_PATH);
+	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+}
+
+- (void)updateUser:(User *)user
+{
+	if (!user) {
+		return;
+	}
+	
+	NSString *notificationName = UserEditNotification;
+	NSString *path = @"updateUser";
+	
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  path, @"path",
+							  notificationName, @"notificationName",
+							  user, @"object",
+							  nil];
+	
+	NSString *url = CTXDOURL(BASE_URL, USER_PATH);
+	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
+	request.userInfo = userInfo;
+	request.delegate = self;
+	
+	[request addRequestHeader:@"Content-Type" value:@"application/json"];
+	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
+	[request setRequestMethod:@"PUT"];
+	
+	NSString *string = [user toJSON];
+	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	[self.networkQueue addOperation:request];
+	[self.networkQueue go];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
+}
+
+#pragma mark -
 #pragma mark Content Management
 
 - (void)downloadContentForUrl:(NSString *)url withObject:(id)object path:(NSString *)path notificationName:(NSString *)notificationName
@@ -515,9 +560,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 				   [path isEqualToString:@"deleteGroupWitId"]) {
 			[self parseGroup:request];
 		} else if ([path isEqualToString:@"addTask"]|| 
-				   [path isEqualToString:@"editTask"] ||
+				   [path isEqualToString:@"updateTask"] ||
 				   [path isEqualToString:@"deleteTaskWitId"]) {
-			[self parseTask:request];
+			[self parseUser:request];
+		} else if ([path isEqualToString:@"user"]|| 
+				   [path isEqualToString:@"updateUser"]) {
+			[self parseUser:request];
 		}
 	}
 	

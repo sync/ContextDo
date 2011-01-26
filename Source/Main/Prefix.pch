@@ -18,6 +18,7 @@
 	#import "CustomNavigationController.h"
 	#import "Group.h"
 	#import "Task.h"
+	#import "User.h"
 	#import "APIServices.h"
 	#import "AppDelegate.h"
 #endif

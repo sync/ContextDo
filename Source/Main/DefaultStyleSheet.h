@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-
+#import "CustomNavigationController.h"
 
 @interface DefaultStyleSheet : NSObject {
 
@@ -30,5 +30,7 @@
 
 @property (nonatomic, readonly) UIColor *blackedOutColor;
 @property (nonatomic, readonly) UIColor *taskDarkGrayColor;
+
+- (CustomNavigationController *)customNavigationControllerWithRoot:(UIViewController *)controller;
 
 @end

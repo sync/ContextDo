@@ -10,7 +10,6 @@
 - (void)enableGPS;
 - (void)locationDidFix;
 - (void)locationDidStop;
-- (void)logout:(BOOL)showingLogin animated:(BOOL)animated;
 - (void)handleLocalNotification:(NSDictionary *)launchOptions;
 
 @end
@@ -28,15 +27,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (UINavigationController *)loginNavigationController
 {
 	LoginViewController *controller = [[[LoginViewController alloc]initWithNibName:@"LoginView" bundle:nil]autorelease];
-	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
-	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-														  forBarStyle:UIBarStyleBlackOpaque];
-	[navController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
-													forBarStyle:UIBarStyleBlackOpaque];
-	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
-												forBarStyle:UIBarStyleBlackOpaque];
+	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
 	
 	return navController;
 }
@@ -47,7 +38,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
-    // Override point for customization after application launch.
+    
+	[[APIServices sharedAPIServices]refreshUser];
+	
+	// Override point for customization after application launch.
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 															 [NSNumber numberWithBool:FALSE], ShouldResetCredentialsAtStartup,
 															 nil]];
@@ -96,17 +90,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-	[[NSUserDefaults standardUserDefaults]synchronize];
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	if ([userDefaults boolForKey:ShouldResetCredentialsAtStartup]) {
-		// clear all request previous credentials
-		[self logout:FALSE animated:FALSE];
-		// set it back to it's default value
-		[userDefaults setBool:FALSE forKey:ShouldResetCredentialsAtStartup];
-		[[NSUserDefaults standardUserDefaults]synchronize];
-	}
-	
-	
 	NSString *apiToken = [APIServices sharedAPIServices].apiToken;
 	if (apiToken.length == 0) {
 		if ([APIServices sharedAPIServices].username.length > 0 && [APIServices sharedAPIServices].password.length > 0) {
@@ -346,15 +329,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	controller.task = task;
 	controller.tasks = [NSArray arrayWithObject:task];
 	controller.showCloseButton = TRUE;
-	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
-	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-											  forBarStyle:UIBarStyleBlackOpaque];
-	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	[navController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
-										forBarStyle:UIBarStyleBlackOpaque];
-	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
-									forBarStyle:UIBarStyleBlackOpaque];
+	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
 	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
 
@@ -369,15 +344,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	TasksContainerViewController *controller = [[[TasksContainerViewController alloc]initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
 	controller.group = nearGroup;
 	controller.showCloseButton = TRUE;
-	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
-	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-											  forBarStyle:UIBarStyleBlackOpaque];
-	navController.toolbar.barStyle = UIBarStyleBlackOpaque;
-	[navController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
-										forBarStyle:UIBarStyleBlackOpaque];
-	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
-									forBarStyle:UIBarStyleBlackOpaque];
+	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
 	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
 

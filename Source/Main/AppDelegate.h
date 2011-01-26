@@ -21,6 +21,7 @@
 
 - (void)hideLoginView:(BOOL)animated;
 - (void)showLoginView:(BOOL)animated;
+- (void)logout:(BOOL)showingLogin animated:(BOOL)animated;;
 
 - (void)showTask:(Task *)task animated:(BOOL)animated;
 - (void)showNearTasksAnimated:(BOOL)animated;

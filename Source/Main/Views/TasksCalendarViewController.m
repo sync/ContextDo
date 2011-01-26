@@ -57,7 +57,7 @@
 	self.tableView.dataSource = self.tasksCalendarDataSource;
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
 	self.tableView.delegate = self;
-	self.tableView.separatorColor = [UIColor whiteColor];
+	self.tableView.separatorColor = [UIColor clearColor];
 	[self refreshTasks];
 }
 

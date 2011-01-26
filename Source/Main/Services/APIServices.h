@@ -32,4 +32,7 @@
 - (void)updateTask:(Task *)task;
 - (void)deleteTask:(Task *)task;
 
+- (void)refreshUser;
+- (void)updateUser:(User *)user;
+
 @end

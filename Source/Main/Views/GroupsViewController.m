@@ -4,6 +4,7 @@
 #import "GroupsCell.h"
 #import "TasksContainerViewController.h"
 #import "TaskEditViewController.h"
+#import "SettingsViewController.h"
 
 @interface GroupsViewController (private)
 
@@ -354,21 +355,15 @@
 - (void)addTask
 {
 	TaskEditViewController *controller = [[[TaskEditViewController alloc]initWithNibName:@"TaskEditView" bundle:nil]autorelease];
-	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
-	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-											  forBarStyle:UIBarStyleBlackOpaque];
-	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	[navController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
-										forBarStyle:UIBarStyleBlackOpaque];
-	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
-									forBarStyle:UIBarStyleBlackOpaque];
+	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
 	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
 
 - (void)showSettings
 {
-	// todo
+	SettingsViewController *controller = [[[SettingsViewController alloc]initWithNibName:@"SettingsView" bundle:nil]autorelease];
+	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
+	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
 
 - (void)editButtonPressed

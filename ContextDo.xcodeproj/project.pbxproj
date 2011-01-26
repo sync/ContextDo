@@ -210,6 +210,14 @@
 		2448DDD712E9D1B4005EEEDA /* groupPanelsTouch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2448DDD312E9D1B4005EEEDA /* groupPanelsTouch.png */; };
 		2448DDD812E9D1B4005EEEDA /* groupPanelsTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2448DDD412E9D1B4005EEEDA /* groupPanelsTouch@2x.png */; };
 		2456726812EF50450004189D /* CTXDONotificationsServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456726712EF50450004189D /* CTXDONotificationsServices.m */; };
+		2456733212EFA58D0004189D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456733112EFA58D0004189D /* User.m */; };
+		245673C912EFB1EE0004189D /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 245673C812EFB1EE0004189D /* SettingsCell.m */; };
+		245673D812EFB4F20004189D /* SettingsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 245673D712EFB4F20004189D /* SettingsDataSource.m */; };
+		2456743C12EFB8BC0004189D /* btn_std_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456743812EFB8BC0004189D /* btn_std_off@2x.png */; };
+		2456743D12EFB8BC0004189D /* btn_std_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456743912EFB8BC0004189D /* btn_std_off.png */; };
+		2456743E12EFB8BC0004189D /* btn_std_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456743A12EFB8BC0004189D /* btn_std_touch.png */; };
+		2456743F12EFB8BC0004189D /* btn_std_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456743B12EFB8BC0004189D /* btn_std_touch@2x.png */; };
+		2456745E12EFBC570004189D /* CTXDOButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456745D12EFBC570004189D /* CTXDOButton.m */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -631,6 +639,18 @@
 		2448DDD412E9D1B4005EEEDA /* groupPanelsTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupPanelsTouch@2x.png"; sourceTree = "<group>"; };
 		2456726612EF50450004189D /* CTXDONotificationsServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDONotificationsServices.h; sourceTree = "<group>"; };
 		2456726712EF50450004189D /* CTXDONotificationsServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDONotificationsServices.m; sourceTree = "<group>"; };
+		2456733012EFA58D0004189D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		2456733112EFA58D0004189D /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		245673C712EFB1EE0004189D /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCell.h; sourceTree = "<group>"; };
+		245673C812EFB1EE0004189D /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCell.m; sourceTree = "<group>"; };
+		245673D612EFB4F20004189D /* SettingsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsDataSource.h; sourceTree = "<group>"; };
+		245673D712EFB4F20004189D /* SettingsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsDataSource.m; sourceTree = "<group>"; };
+		2456743812EFB8BC0004189D /* btn_std_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_std_off@2x.png"; sourceTree = "<group>"; };
+		2456743912EFB8BC0004189D /* btn_std_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_std_off.png; sourceTree = "<group>"; };
+		2456743A12EFB8BC0004189D /* btn_std_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_std_touch.png; sourceTree = "<group>"; };
+		2456743B12EFB8BC0004189D /* btn_std_touch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_std_touch@2x.png"; sourceTree = "<group>"; };
+		2456745C12EFBC570004189D /* CTXDOButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOButton.h; sourceTree = "<group>"; };
+		2456745D12EFBC570004189D /* CTXDOButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOButton.m; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -962,6 +982,8 @@
 		243A46B012E573D000A6D402 /* UIButtons */ = {
 			isa = PBXGroup;
 			children = (
+				2456745C12EFBC570004189D /* CTXDOButton.h */,
+				2456745D12EFBC570004189D /* CTXDOButton.m */,
 				243A46AD12E573C100A6D402 /* CTXDOLoginButton.h */,
 				243A46AE12E573C100A6D402 /* CTXDOLoginButton.m */,
 			);
@@ -1043,6 +1065,13 @@
 			name = Notifications;
 			sourceTree = "<group>";
 		};
+		2456745B12EFBC030004189D /* UISliders */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = UISliders;
+			sourceTree = "<group>";
+		};
 		248921C3128ED27000DC9712 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -1099,6 +1128,8 @@
 				2448D18F12E83B14005EEEDA /* TaskEditCell.m */,
 				24E44A1212EBB58500F08B7E /* TasksInfoCell.h */,
 				24E44A1312EBB58500F08B7E /* TasksInfoCell.m */,
+				245673C712EFB1EE0004189D /* SettingsCell.h */,
+				245673C812EFB1EE0004189D /* SettingsCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1761,6 +1792,8 @@
 		3A034D43125D629A00F49FA6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				245673D612EFB4F20004189D /* SettingsDataSource.h */,
+				245673D712EFB4F20004189D /* SettingsDataSource.m */,
 				3A034D49125D62DD00F49FA6 /* SettingsViewController.h */,
 				3A034D4A125D62DD00F49FA6 /* SettingsViewController.m */,
 				248921EC128EE27500DC9712 /* SettingsView.xib */,
@@ -1974,6 +2007,10 @@
 				249113C112EC4CB1009191BA /* btn_tbar_uparrow_off@2x.png */,
 				249113C212EC4CB1009191BA /* btn_tbar_uparrow_touch.png */,
 				249113C312EC4CB1009191BA /* btn_tbar_uparrow_touch@2x.png */,
+				2456743812EFB8BC0004189D /* btn_std_off@2x.png */,
+				2456743912EFB8BC0004189D /* btn_std_off.png */,
+				2456743A12EFB8BC0004189D /* btn_std_touch.png */,
+				2456743B12EFB8BC0004189D /* btn_std_touch@2x.png */,
 				2491271712EE62E7009191BA /* Temp */,
 			);
 			path = Images;
@@ -2020,6 +2057,8 @@
 				2489C9CC12BDEB1E00C1A58A /* Group.m */,
 				2489CA7412BDFCC500C1A58A /* Task.h */,
 				2489CA7512BDFCC500C1A58A /* Task.m */,
+				2456733012EFA58D0004189D /* User.h */,
+				2456733112EFA58D0004189D /* User.m */,
 				24E44FC912EC0E5700F08B7E /* Annotations */,
 			);
 			path = Models;
@@ -2037,6 +2076,7 @@
 		3A57FFA811FFB24F00248D1D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2456745B12EFBC030004189D /* UISliders */,
 				243A46B012E573D000A6D402 /* UIButtons */,
 				243A40F712E4B7D100A6D402 /* TextFields */,
 				243A3C1E12E450DC00A6D402 /* Table header */,
@@ -2351,6 +2391,10 @@
 				2491272912EE6319009191BA /* 18-envelope@2x.png in Resources */,
 				2491272B12EE631E009191BA /* 100-coffee@2x.png in Resources */,
 				2491279212EE6AD0009191BA /* shadow_separator_task_details.jpg in Resources */,
+				2456743C12EFB8BC0004189D /* btn_std_off@2x.png in Resources */,
+				2456743D12EFB8BC0004189D /* btn_std_off.png in Resources */,
+				2456743E12EFB8BC0004189D /* btn_std_touch.png in Resources */,
+				2456743F12EFB8BC0004189D /* btn_std_touch@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2482,6 +2526,10 @@
 				2491256312EE490D009191BA /* TasksCalendarDataSource.m in Sources */,
 				2491273A12EE647B009191BA /* TaskDetailsView.m in Sources */,
 				2456726812EF50450004189D /* CTXDONotificationsServices.m in Sources */,
+				2456733212EFA58D0004189D /* User.m in Sources */,
+				245673C912EFB1EE0004189D /* SettingsCell.m in Sources */,
+				245673D812EFB4F20004189D /* SettingsDataSource.m in Sources */,
+				2456745E12EFBC570004189D /* CTXDOButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,14 +1,14 @@
 #import "SettingsViewController.h"
+#import "SettingsCell.h"
+#import "CTXDOTableHeaderView.h"
 
 @interface SettingsViewController (private)
-
-- (void)shouldLogout;
 
 @end
 
 @implementation SettingsViewController
 
-@synthesize choicesListDataSource;
+@synthesize settingsDataSource;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -27,20 +27,61 @@
 {
 	[super setupDataSource];
 	
-	NSArray *section1 = [NSArray arrayWithObjects:@"Reset Password", nil];
-	NSArray *section2 = [NSArray arrayWithObjects:@"Logout", nil];
-	NSArray *choicesList = [NSArray arrayWithObjects:section1, section2, nil];
+	NSArray *section1 = [NSArray arrayWithObjects:@"", nil];
+	NSArray *choicesList = [NSArray arrayWithObjects:section1, nil];
 	
-	self.choicesListDataSource = [[[ChoicesListDataSource alloc]initWitChoicesList:choicesList]autorelease];
-	self.tableView.dataSource = self.choicesListDataSource;
+	self.settingsDataSource = [[[SettingsDataSource alloc]initWitChoicesList:choicesList]autorelease];
+	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
+	self.tableView.dataSource = self.settingsDataSource;
+}
+
+#pragma mark -
+#pragma mark Setup
+
+- (void)setupNavigationBar
+{
+	[super setupNavigationBar];
+	
+	self.navigationItem.rightBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Done"
+																												target:self
+																											  selector:@selector(doneTouched)];
+	
+	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 }
 
 #pragma mark -
 #pragma mark TableView Delegate
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ([self isIndexPathSingleRow:indexPath]) {
+		[(SettingsCell *)cell setCellPosition:CTXDOCellPositionSingle];
+	} else if (indexPath.row == 0) {
+		[(SettingsCell *)cell setCellPosition:CTXDOCellPositionTop];
+	} else if ([self isIndexPathLastRow:indexPath]) {
+		[(SettingsCell *)cell setCellPosition:CTXDOCellPositionBottom];
+	} else {
+		[(SettingsCell *)cell setCellPosition:CTXDOCellPositionMiddle];
+	}
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+	CTXDOTableHeaderView *view = [[[CTXDOTableHeaderView alloc]initWithFrame:CGRectZero]autorelease];
+	view.textLabel.font = [UIFont boldSystemFontOfSize:16.0];
+	view.textLabel.text = [self.settingsDataSource tableView:self.tableView
+								   titleForHeaderInSection:section];
+	return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+	return 40.0;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-	NSString *choice  = [self.choicesListDataSource choiceForIndexPath:indexPath];
+	NSString *choice  = [self.settingsDataSource choiceForIndexPath:indexPath];
 	
 	if ([choice isEqualToString:@"Reset Password"]) {
 		[[APIServices sharedAPIServices]resetPasswordWithUsername:[[NSUserDefaults standardUserDefaults]stringForKey:UsernameUserDefaults]];
@@ -54,19 +95,16 @@
 #pragma mark -
 #pragma mark Actions
 
-- (void)shouldLogout
+- (void)doneTouched
 {
-	// clear apiKey
-	[APIServices sharedAPIServices].apiToken = nil;
-	// clear username / password
-	[APIServices sharedAPIServices].username = nil;
-	[APIServices sharedAPIServices].password = nil;
-	// clear all sessions + cookies
-	[ASIHTTPRequest clearSession];
-	// go back to user login
-	[[AppDelegate sharedAppDelegate]showLoginView:FALSE];
-	// Reset all views
-	[self.navigationController popToRootViewControllerAnimated:FALSE];
+	// todo
+	[self dismissModalViewControllerAnimated:TRUE];
+}
+
+- (IBAction)shouldLogout
+{
+	[self dismissModalViewControllerAnimated:FALSE];
+	[[AppDelegate sharedAppDelegate]logout:TRUE animated:FALSE];
 }
 
 #pragma mark -
@@ -74,7 +112,7 @@
 
 - (void)dealloc
 {
-	[choicesListDataSource release];
+	[settingsDataSource release];
 	
 	[super dealloc];
 }

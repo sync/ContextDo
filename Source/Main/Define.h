@@ -37,6 +37,8 @@
 #define TASKSWITHINURL(base, path, latitude, longitude, within) [NSString stringWithFormat:@"%@?latitude=%f&longitude=%f&within=%f", CTXDOURL(base, path), latitude, longitude, within]
 #define TASKSSEARCHURL(base, path, query) [NSString stringWithFormat:@"%@?q=%@", CTXDOURL(base, path), query]
 #define TASKSUPDATEDSINCEURL(base, path, updatedSince) [NSString stringWithFormat:@"%@?updated_since=%@", CTXDOURL(base, path), updatedSince]
+// User
+#define USER_PATH @"/profile"
 
 // Task
 #define TASKURL(base, path, groupId, taskId) [NSString stringWithFormat:@"%@%@%@", GROUPURL(base, path, groupId), TASKS_PATH, ((taskId) ? [NSString stringWithFormat:@"/%@", taskId] : @"")]
@@ -60,6 +62,8 @@
 #define GroupAddNotification @"GroupAddNotification"
 #define GroupEditNotification @"GroupEditNotification"
 #define GroupDeleteNotification @"GroupDeleteNotification"
+#define UserDidLoadNotification @"UserDidLoadNotification"
+#define UserEditNotification @"UserDidLoadNotification"
 
 #define TodaysTasksPlacholder @"Todays tasks"
 #define NearTasksPlacholder @"Near tasks"

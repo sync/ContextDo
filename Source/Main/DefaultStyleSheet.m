@@ -1,5 +1,6 @@
 #import "DefaultStyleSheet.h"
-#import "CustomNavigationBar.h"
+#import "UINavigationController+Custom.h"
+
 
 @implementation DefaultStyleSheet
 
@@ -213,6 +214,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 - (UIColor *)taskDarkGrayColor
 {
 	return [UIColor colorWithHexString:@"7d7d81"];
+}
+
+- (CustomNavigationController *)customNavigationControllerWithRoot:(UIViewController *)controller
+{
+	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
+	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+											  forBarStyle:UIBarStyleBlackOpaque];
+	[navController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
+										forBarStyle:UIBarStyleBlackOpaque];
+	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
+									forBarStyle:UIBarStyleBlackOpaque];
+	
+	return navController;
 }
 
 @end

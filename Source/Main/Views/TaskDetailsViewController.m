@@ -61,15 +61,7 @@
 {
 	TaskEditViewController *controller = [[[TaskEditViewController alloc]initWithNibName:@"TaskEditView" bundle:nil]autorelease];
 	controller.task = self.task;
-	CustomNavigationController *navController = [[[CustomNavigationController alloc]initWithRootViewController:controller]autorelease];
-	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	[navController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-											  forBarStyle:UIBarStyleBlackOpaque];
-	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-	[navController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
-										forBarStyle:UIBarStyleBlackOpaque];
-	[navController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
-									forBarStyle:UIBarStyleBlackOpaque];
+	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
 	[self.mainNavController presentModalViewController:navController animated:TRUE];
 }
 
