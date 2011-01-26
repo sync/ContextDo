@@ -380,6 +380,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	request.shouldAttemptPersistentConnection = FALSE;
 	
+	
 	NSArray *excluding = [NSArray arrayWithObjects:
 						  @"groupName",
 						  @"taskId",
@@ -387,6 +388,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"updatedAt",
 						  @"createdAt",
 						  @"formattedContact",
+						  @"distance",
+						  @"isClose",
+						  @"expired",
+						  @"completed",
+						  @"dueToday",
+						  @"isFacebook",
 						  @"latLngString",
 						  nil];
 	NSString *string = [task toJSONExcluding:excluding];
@@ -431,6 +438,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"updatedAt",
 						  @"createdAt",
 						  @"formattedContact",
+						  @"distance",
+						  @"isClose",
+						  @"expired",
+						  @"completed",
+						  @"dueToday",
+						  @"isFacebook",
 						  @"latLngString",
 						  nil];
 	NSString *string = [task toJSONExcluding:excluding];

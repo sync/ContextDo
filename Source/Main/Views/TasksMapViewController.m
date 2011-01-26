@@ -15,7 +15,7 @@
 @implementation TasksMapViewController
 
 @synthesize mapView, tasks, directions, customSearchBar, group, mainNavController;
-@synthesize routeLine, routeLineView;
+@synthesize routeLine, routeLineView, todayTasks;
 
 #pragma mark -
 #pragma mark Setup
@@ -108,7 +108,9 @@
 		[tasksToAdd insertObject:currentLocation atIndex:0];
 	}
 	
-	self.tasks = [NSArray arrayWithArray:tasksToAdd];;
+	self.tasks = [NSArray arrayWithArray:tasksToAdd];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueAt == nil || dueToday == %@", [NSNumber numberWithBool:TRUE]];
+	self.todayTasks = [self.tasks filteredArrayUsingPredicate:predicate];
 	
 	[self refreshTasksDirection];
 }
@@ -129,6 +131,19 @@
 	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
 	options.travelMode = UICGTravelModeDriving;
 	
+	for (Task *task in self.tasks) {
+		if (![self.todayTasks containsObject:task]) {
+			CLLocation *location = [[[CLLocation alloc]initWithLatitude:task.latitude.doubleValue longitude:task.longitude.doubleValue]autorelease];
+			TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
+																			   title:task.name
+																			subtitle:task.location
+																	  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
+			
+			annotation.task = task;
+			[self.mapView addAnnotation:annotation];
+		}
+	}
+	
 	[self updateDirections];
 }
 
@@ -145,7 +160,7 @@
 {
 	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
 	options.travelMode = UICGTravelModeDriving;
-	[self.directions loadFromWaypoints:[self.tasks valueForKey:@"latLngString"] options:options];
+	[self.directions loadFromWaypoints:[self.todayTasks valueForKey:@"latLngString"] options:options];
 }
 
 #pragma mark -
@@ -169,12 +184,12 @@
 		UICGRoute *route = [self.directions routeAtIndex:0];
 		
 		NSArray *waypointOrder = route.waypointOrder;
-		NSMutableArray *organizedTasks = [NSMutableArray arrayWithArray:self.tasks];
+		NSMutableArray *organizedTasks = [NSMutableArray arrayWithArray:self.todayTasks];
 		if (waypointOrder.count > 1) {
 			NSInteger index = 1;
 			for (NSNumber *orderNum in waypointOrder) {
 				NSInteger order = orderNum.integerValue;
-				[organizedTasks replaceObjectAtIndex:index withObject:[self.tasks objectAtIndex:order+1]];
+				[organizedTasks replaceObjectAtIndex:index withObject:[self.todayTasks objectAtIndex:order+1]];
 				index++;
 			}
 		}
@@ -341,6 +356,7 @@
 	
 	[group release];
 	
+	[todayTasks release];
 	[tasks release];
 	[mapView release];
 	

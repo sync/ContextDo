@@ -52,6 +52,11 @@
 	return [self.sourceName isEqualToString:@"facebook"];
 }
 
+- (BOOL)dueToday
+{
+	return [self.dueAt isToday];
+}
+
 - (NSString *)formattedContact
 {
 	NSString *string = @"";

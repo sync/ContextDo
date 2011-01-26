@@ -333,9 +333,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
 	// todo here show alert
-	if (notification) {
-		[[CTXDONotificationsServices sharedCTXDONotificationsServices] parseNotification:notification];
-	}
+//	if (notification) {
+//		[[CTXDONotificationsServices sharedCTXDONotificationsServices] parseNotification:notification];
+//	}
+	// no need for this
 }
 
 #pragma mark -

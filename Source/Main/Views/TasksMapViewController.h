@@ -13,6 +13,7 @@
 
 @property (nonatomic, retain) Group *group;
 @property (nonatomic, retain) NSArray *tasks;
+@property (nonatomic, retain) NSArray *todayTasks;
 
 @property (nonatomic, readonly) BOOL isTodayTasks;
 @property (nonatomic, readonly) BOOL isNearTasks;
