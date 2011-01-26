@@ -125,6 +125,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
+	request.shouldAttemptPersistentConnection = FALSE;
+	
 	[request setPostValue:aUsername forKey:@"user[email]"];
 	[request setPostValue:aPassword forKey:@"user[password]"];
 	[request setPostValue:aPassword forKey:@"user[password_confirmation]"];
@@ -158,6 +160,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.delegate = self;
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
+	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setPostValue:aUsername forKey:@"user[email]"];
 	
@@ -201,6 +205,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
+	request.shouldAttemptPersistentConnection = FALSE;
+	
 	[request setPostValue:name forKey:@"group[name]"];
 	if (position) {
 		[request setPostValue:position forKey:@"group[position]"];
@@ -232,6 +238,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.delegate = self;
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
+	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setRequestMethod:@"PUT"];
 
@@ -266,6 +274,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.delegate = self;
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
+	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setRequestMethod:@"DELETE"];
 	
@@ -368,6 +378,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[request addRequestHeader:@"Content-Type" value:@"application/json"];
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
+	request.shouldAttemptPersistentConnection = FALSE;
+	
 	NSArray *excluding = [NSArray arrayWithObjects:
 						  @"groupName",
 						  @"taskId",
@@ -407,6 +419,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request addRequestHeader:@"Content-Type" value:@"application/json"];
 	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
+	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setRequestMethod:@"PUT"];
 	
@@ -449,6 +463,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
+	request.shouldAttemptPersistentConnection = FALSE;
+	
 	[request setRequestMethod:@"DELETE"];
 	
 	[self.networkQueue addOperation:request];
@@ -490,6 +506,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request addRequestHeader:@"Content-Type" value:@"application/json"];
 	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
+	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setRequestMethod:@"PUT"];
 	

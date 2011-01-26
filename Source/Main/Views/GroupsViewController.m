@@ -361,6 +361,8 @@
 
 - (void)showSettings
 {
+	[self hideInfoAnimated:TRUE];
+	
 	SettingsViewController *controller = [[[SettingsViewController alloc]initWithNibName:@"SettingsView" bundle:nil]autorelease];
 	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
 	[self.navigationController presentModalViewController:navController animated:TRUE];
