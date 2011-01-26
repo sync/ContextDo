@@ -10,6 +10,7 @@
 @property (nonatomic, retain) SettingsDataSource *settingsDataSource;
 
 - (IBAction)shouldLogout;
+- (IBAction)shouldFacebookConnect;
 
 @property (nonatomic) CGFloat lastSliderValue;
 @property (nonatomic, readonly) SettingsSliderView *settingsSliderView;

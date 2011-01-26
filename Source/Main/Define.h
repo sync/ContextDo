@@ -10,6 +10,8 @@
 #define DevServerIp @"DevServerIp"
 #define AlertsDistanceWithinDefaultValue 1.0
 
+#define FacebookApplicationId @"125665877503636"
+
 // Other
 #define GroupShouldDismissInfo @"GroupShouldDismissInfo"
 

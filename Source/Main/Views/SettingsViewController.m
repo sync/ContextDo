@@ -1,6 +1,7 @@
 #import "SettingsViewController.h"
 #import "SettingsCell.h"
 #import "CTXDOTableHeaderView.h"
+#import "FacebookServices.h"
 
 @interface SettingsViewController (private)
 
@@ -131,6 +132,29 @@
 }
 
 #pragma mark -
+#pragma mark SocialServices
+
+- (void)socialServicesFacebookNotification:(NSNotification *)notification
+{
+	DLog(@"socialServicesNotification: %@", [notification object]);
+	
+	[[NSNotificationCenter defaultCenter]removeObserver:self name:notification.name object:nil];
+	
+	NSDictionary *infoDict = [notification object];
+	BOOL success = [[infoDict valueForKey:@"success"]boolValue];
+	NSArray *permissions = [infoDict valueForKey:@"permissions"];
+	[[FacebookServices sharedFacebookServices]setFacebookAuthorizedForPemissions:permissions remove:!success];
+	if (success) {
+		NSDictionary *settings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.lastSliderValue]
+															 forKey:AlertsDistanceWithin];
+		
+		[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:self.lastSliderValue];
+		User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken]; // todo remember fb token and pass it there
+		[[APIServices sharedAPIServices]updateUser:user];
+	}
+}
+
+#pragma mark -
 #pragma mark Actions
 
 - (void)sliderDidChangeValue:(id)sender
@@ -161,7 +185,7 @@
 															 forKey:AlertsDistanceWithin];
 		
 		[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:self.lastSliderValue];
-		User *user = [User userWithSettings:settings facebookAccessToken:nil]; // todo remember fb token and pass it there
+		User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken]; // todo remember fb token and pass it there
 		[[APIServices sharedAPIServices]updateUser:user];
 	}
 	
@@ -172,6 +196,13 @@
 {
 	[self dismissModalViewControllerAnimated:FALSE];
 	[[AppDelegate sharedAppDelegate]logout:TRUE animated:FALSE];
+}
+
+- (IBAction)shouldFacebookConnect
+{
+	//friend_events
+	[[FacebookServices sharedFacebookServices]authorizeForPermissions:[NSArray arrayWithObjects:@"offline_access", @"user_events", nil]];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socialServicesFacebookNotification:) name:FacebookNotification object:nil];
 }
 
 #pragma mark -

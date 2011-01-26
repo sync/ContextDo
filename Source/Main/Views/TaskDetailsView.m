@@ -151,7 +151,7 @@
 		self.distanceLabel.textColor = [UIColor colorWithHexString:@"FFF"];
 		self.distanceLabel.shadowColor = [UIColor colorWithHexString:@"00000040"];
 	} else {
-		self.distanceLabel.font = [UIFont boldSystemFontOfSize:11.0];
+		self.distanceLabel.font = [UIFont systemFontOfSize:11.0];
 		self.distanceLabel.textColor = [UIColor colorWithHexString:@"181316"];
 		self.distanceLabel.shadowColor = [UIColor clearColor];
 	}
