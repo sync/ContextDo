@@ -12,7 +12,6 @@
 - (void)locationDidStop;
 - (void)logout:(BOOL)showingLogin animated:(BOOL)animated;
 - (void)handleLocalNotification:(NSDictionary *)launchOptions;
-- (void)refreshTasksForLocalNotifications;
 
 @end
 
@@ -133,7 +132,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	[self enableGPS];
 	[[APIServices sharedAPIServices]refreshGroups];
-	[self refreshTasksForLocalNotifications];
+	
+	[[CTXDONotificationsServices sharedCTXDONotificationsServices]refreshTasksForLocalNotification];
 	// todo refres tasks
 }
 
@@ -150,6 +150,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	if (showingLogin) {
 		[[AppDelegate sharedAppDelegate]showLoginView:animated];
 	}
+	[self.navigationController popToRootViewControllerAnimated:TRUE];
 }
 
 /**
@@ -268,7 +269,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 		
 		// todo get this value from the user's default
 		if (!self.lastCurrentLocation || [self.currentLocation distanceFromLocation:self.lastCurrentLocation] >= 1000) {
-			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0]; // TODO within user's pref
+			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0 inBackground:TRUE]; // TODO within user's pref
 		}
 			
 		if (reverseGeocoder) {
@@ -320,12 +321,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 #pragma mark -
 #pragma mark Notifications
 
-- (void)refreshTasksForLocalNotifications
-{
-	[[APIServices sharedAPIServices]refreshTasksEdited];
-	[[APIServices sharedAPIServices]refreshTasksDueToday];
-}
-
 - (void)handleLocalNotification:(NSDictionary *)launchOptions
 {
 	UILocalNotification *notification = [launchOptions valueForKey:UIApplicationLaunchOptionsLocalNotificationKey];
@@ -336,6 +331,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
+	// todo here show alert
 	if (notification) {
 		[[CTXDONotificationsServices sharedCTXDONotificationsServices] parseNotification:notification];
 	}

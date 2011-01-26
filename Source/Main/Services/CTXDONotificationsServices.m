@@ -4,7 +4,6 @@
 
 - (NSDictionary *)userInfoForTask:(Task *)task today:(BOOL)today;
 - (UILocalNotification *)hasLocalNotificationForTaskId:(NSNumber *)taskId today:(BOOL)today;
-- (void)refreshTasksForLocalNotification;
 - (Task *)taskForUserInfo:(NSDictionary *)userInfo;
 
 @end
@@ -14,8 +13,29 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 
+- (id) init
+{
+	self = [super init];
+	if (self != nil) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasksForLocalNotification) name:TaskDeleteNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasksForLocalNotification) name:TaskEditNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasksForLocalNotification) name:TaskAddNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckTodayTasks:) name:TasksDueTodayDidLoadNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinBackgroundDidLoadNotification object:nil];
+	}
+	return self;
+}
+
+
 #pragma mark -
 #pragma mark Main
+
+- (void)refreshTasksForLocalNotification
+{
+	[[APIServices sharedAPIServices]refreshTasksEdited];
+	[[APIServices sharedAPIServices]refreshTasksDueToday];
+}
+
 
 - (void)parseNotification:(UILocalNotification *)notification
 {

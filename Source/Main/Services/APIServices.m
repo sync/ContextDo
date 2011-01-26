@@ -312,9 +312,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
-- (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude within:(CGFloat)withinInKm
+- (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude
+					   longitude:(CLLocationDegrees)longitude
+						  within:(CGFloat)withinInKm 
+					inBackground:(BOOL)background
 {
-	NSString *notificationName = TasksWithinDidLoadNotification;
+	NSString *notificationName = (!background) ? TasksWithinDidLoadNotification : TasksWithinBackgroundDidLoadNotification;
 	NSString *path = @"tasksWithLatitude";
 	
 	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, withinInKm);
@@ -339,12 +342,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *notificationName = TasksUpdatedSinceDidLoadNotification;
 	NSString *path = @"editedTasks";
 	
-	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	// 2010-07-24
-	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
-	
-	NSString *updatedSince = [dateFormatter stringFromDate:[NSDate date]];
-	NSString *url = TASKSUPDATEDSINCEURL(BASE_URL, TASKS_PATH, updatedSince);
+	NSString *url = TASKSUPDATEDSINCEURL(BASE_URL, TASKS_PATH, [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"]);
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 

@@ -74,7 +74,7 @@
 		[[APIServices sharedAPIServices]refreshTasksDueToday];
 	} else if (self.isNearTasks) {
 		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0]; // TODO within user's pref
+		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0 inBackground:FALSE]; // TODO within user's pref
 	} else {
 		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
 	}

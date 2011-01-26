@@ -27,7 +27,7 @@
 @implementation GroupsViewController
 
 @synthesize groupsDataSource, groups, groupsEditViewController, addGroupTextField;
-@synthesize infoViewController, isShowingInfoView, blackedOutView;
+@synthesize infoViewController, isShowingInfoView, blackedOutView, lastCurrentLocation;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -217,12 +217,31 @@
 			Group *group = [self groupForId:task.groupId];
 			group.taskWithin = TRUE;
 			NSInteger row = (group) ? [self.groups indexOfObject:group] : NSNotFound;
-			if (group && row != NSNotFound && group.dueCount == 0) {
+			if (group && row != NSNotFound && group.dueCount.integerValue == 0) {
 				NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
 				[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 			}
 		}
 	}
+}
+
+#pragma mark -
+#pragma mark Core Location
+
+- (void)locationDidFix
+{
+	DLog(@"user got a fix with core location");
+	
+	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
+		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+		
+		// todo get this value from the user's default
+		if (!self.lastCurrentLocation || [[AppDelegate sharedAppDelegate].currentLocation distanceFromLocation:self.lastCurrentLocation] >= 1000) {
+			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude within:1.0 inBackground:FALSE]; // TODO within user's pref
+		}
+	}
+	
+	self.lastCurrentLocation = [AppDelegate sharedAppDelegate].currentLocation;
 }
 
 #pragma mark -
@@ -629,6 +648,7 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupsDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupAddNotification];
 	
+	[lastCurrentLocation release];
 	[infoViewController release];
 	[addGroupTextField release];
 	[groupsEditViewController release];

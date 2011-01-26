@@ -22,7 +22,10 @@
 - (void)refreshTasksWithGroupId:(NSNumber *)groupId;
 - (void)refreshTasksWithDue:(NSString *)due;
 - (void)refreshTasksDueToday;
-- (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude within:(CGFloat)withinInKm;
+- (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude
+					   longitude:(CLLocationDegrees)longitude
+						  within:(CGFloat)withinInKm 
+					inBackground:(BOOL)background;
 - (void)refreshTasksWithQuery:(NSString *)query;
 - (void)refreshTasksEdited;
 - (void)addTask:(Task *)task;

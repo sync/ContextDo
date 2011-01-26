@@ -98,9 +98,9 @@
 																									   target:self.navigationController
 																									 selector:@selector(customBackButtonTouched)];
 	} else {
-		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Close"
-																												   target:self
-																												 selector:@selector(closeButtonTouched)];
+		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Close"
+																											   target:self
+																											 selector:@selector(closeButtonTouched)];
 		
 	}
 	
