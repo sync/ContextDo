@@ -31,6 +31,8 @@
 - (void)hideBlackOutTopViewElementsAnimated:(BOOL)animated;
 @property (nonatomic, assign) UIView *blackedOutView;
 
+@property (nonatomic) BOOL backgrounding;
+
 + (AppDelegate *)sharedAppDelegate;
 
 @end

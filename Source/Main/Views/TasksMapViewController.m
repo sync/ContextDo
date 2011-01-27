@@ -179,7 +179,7 @@
 
 - (void)addAllAnnotationsTasks
 {
-	for (Task *task in self.tasks) {
+	for (Task *task in self.todayTasks) {
 		CLLocation *location = [[[CLLocation alloc]initWithLatitude:task.latitude.doubleValue longitude:task.longitude.doubleValue]autorelease];
 		TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
 																		   title:task.name
@@ -347,7 +347,14 @@
 			self.routeLineView = [[[MKPolylineView alloc] initWithPolyline:self.routeLine] autorelease];
 			self.routeLineView.strokeColor = [UIColor colorWithHexString:@"0000ff50"];
 			self.routeLineView.fillColor = [UIColor colorWithHexString:@"0000ff70"];
-			self.routeLineView.lineWidth = 4.0;
+			
+			CGFloat scale = 1.0;
+			#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
+				if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+					scale = [[UIScreen mainScreen] scale];
+				}
+			#endif
+			self.routeLineView.lineWidth = 5.0 * scale;
 		}
 		overlayView = self.routeLineView;
 	}

@@ -42,8 +42,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 
 - (void)parseNotification:(UILocalNotification *)notification
 {
-	[[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
-	
 	if (!notification && !notification.userInfo) {
 		return;
 	}

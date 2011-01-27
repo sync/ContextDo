@@ -21,6 +21,7 @@
 SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 @synthesize window, navigationController, placemark, reverseGeocoder, locationGetter, firstGPSFix, blackedOutView, lastCurrentLocation;
+@synthesize backgrounding;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -39,6 +40,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
+	self.backgrounding = FALSE;
+	
 	// Override point for customization after application launch.
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 															 [NSNumber numberWithFloat:AlertsDistanceWithinDefaultValue], AlertsDistanceWithin,
@@ -86,6 +89,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
 	[self.locationGetter stopUpdates];
+	self.backgrounding = TRUE;
 }
 
 
@@ -118,6 +122,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	} else {
 		[self refreshAllControllers];
 	}
+	self.backgrounding = FALSE;
 }
 
 - (void)enableGPS
@@ -325,6 +330,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)handleLocalNotification:(NSDictionary *)launchOptions
 {
+	[[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
 	UILocalNotification *notification = [launchOptions valueForKey:UIApplicationLaunchOptionsLocalNotificationKey];
 	if (notification) {
 		[[CTXDONotificationsServices sharedCTXDONotificationsServices] parseNotification:notification];
@@ -333,11 +339,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-	// todo here show alert
-//	if (notification) {
-//		[[CTXDONotificationsServices sharedCTXDONotificationsServices] parseNotification:notification];
-//	}
-	// no need for this
+	[[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
+	if (notification && self.backgrounding) {
+		[[CTXDONotificationsServices sharedCTXDONotificationsServices] parseNotification:notification];
+	}
 }
 
 #pragma mark -
