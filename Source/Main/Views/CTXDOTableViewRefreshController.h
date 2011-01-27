@@ -15,6 +15,6 @@
 	UIActivityIndicatorView *_activityView;
 }
 
-@property (nonatomic, readonly) TISwipeableTableView *swipeableTableView;
+//@property (nonatomic, readonly) TISwipeableTableView *swipeableTableView;
 
 @end

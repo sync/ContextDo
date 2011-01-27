@@ -8,4 +8,6 @@
 @property (nonatomic,  assign) UINavigationController *mainNavController;
 @property (nonatomic) BOOL userEdited;
 
+- (void)updateTask;
+
 @end

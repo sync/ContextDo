@@ -11,6 +11,7 @@
 - (void)refreshTasks;
 - (void)cancelSearch;
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
+- (void)addAllAnnotationsTasks;
 
 @end
 
@@ -51,7 +52,7 @@
 	
 	[self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 								 forBarStyle:UIBarStyleBlackOpaque];
-	self.searchBar.keyboardType = UIKeyboardAppearanceAlert;
+	self.searchBar.keyboardAppearance = UIKeyboardAppearanceAlert;
 	
 	self.mapView.showsUserLocation = TRUE;
 	
@@ -176,6 +177,22 @@
 	[self.directions loadFromWaypoints:[self.todayTasks valueForKey:@"latLngString"] options:options];
 }
 
+- (void)addAllAnnotationsTasks
+{
+	for (Task *task in self.tasks) {
+		CLLocation *location = [[[CLLocation alloc]initWithLatitude:task.latitude.doubleValue longitude:task.longitude.doubleValue]autorelease];
+		TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
+																		   title:task.name
+																		subtitle:task.location
+																  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
+		
+		annotation.task = task;
+		[self.mapView addAnnotation:annotation];
+		// zoom to current point
+		[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewLocationDefaultHightSpanInMeters, MapViewLocationDefaultHightSpanInMeters) animated:TRUE];
+	}
+}
+
 #pragma mark -
 #pragma mark UICGDirectionsDelegate
 
@@ -187,6 +204,7 @@
 	NSArray *routePoints = [polyline points];
 	
 	if (routePoints.count == 0) {
+		[self addAllAnnotationsTasks];
 		return;
 	}
 	
@@ -241,6 +259,8 @@
 		
 		endAnnotation.task = [organizedTasks lastObject];
 		[self.mapView addAnnotation:endAnnotation];
+	} else {
+		[self addAllAnnotationsTasks];
 	}
 }
 
@@ -326,7 +346,7 @@
 		if(nil == self.routeLineView) {
 			self.routeLineView = [[[MKPolylineView alloc] initWithPolyline:self.routeLine] autorelease];
 			self.routeLineView.strokeColor = [UIColor colorWithHexString:@"0000ff50"];
-			self.routeLineView.fillColor = [UIColor colorWithHexString:@"0000ff"];
+			self.routeLineView.fillColor = [UIColor colorWithHexString:@"0000ff70"];
 			self.routeLineView.lineWidth = 4.0;
 		}
 		overlayView = self.routeLineView;

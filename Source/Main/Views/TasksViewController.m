@@ -24,7 +24,7 @@
 	
 	[self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 						   forBarStyle:UIBarStyleBlackOpaque];
-	self.searchBar.keyboardType = UIKeyboardAppearanceAlert;
+	self.searchBar.keyboardAppearance = UIKeyboardAppearanceAlert;
 	
 	//[self.tableView setContentOffset:CGPointMake(0.0, self.searchBar.frame.size.height)];
 
@@ -76,7 +76,7 @@
 	self.tableView.dataSource = self.tasksDataSource;
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
 	self.tableView.rowHeight = 88.0;
-	[self.swipeableTableView setSwipeDelegate:self];
+	//[self.swipeableTableView setSwipeDelegate:self];
 	[self refreshTasks];
 }
 

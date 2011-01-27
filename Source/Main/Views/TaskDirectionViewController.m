@@ -92,24 +92,55 @@
 	UICGPolyline *polyline = [[aDirections routeAtIndex:0] overviewPolyline];
 	NSArray *routePoints = [polyline points];
 	
+	if (routePoints.count == 0) {
+		// add all tasks
+		CLLocation *location = [[[CLLocation alloc]initWithLatitude:self.task.latitude.doubleValue longitude:self.task.longitude.doubleValue]autorelease];
+		TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
+																		   title:self.task.name
+																		subtitle:self.task.location
+																  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
+		
+		annotation.task = self.task;
+		[self.mapView addAnnotation:annotation];
+		// zoom to current point
+		[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewLocationDefaultSpanInMeters, MapViewLocationDefaultSpanInMeters) animated:TRUE];
+
+		return;
+	}
+	
 	UICRouteOverlay *overlay = [UICRouteOverlay routeOverlayWithPoints:routePoints];
 	self.routeLine = overlay.polyline;
 	[self.mapView addOverlay:self.routeLine];
 	[self.mapView setVisibleMapRect:overlay.mapRect];
 	
-	UICGRoute *route = [aDirections routeAtIndex:0];
-	
-	// Add annotations
-	UICRouteAnnotation *startAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
-																					title:CURRENT_LOCATION_PLACEHOLDER
-																				 subtitle:[[route.legs objectAtIndex:0]startAddress]
-																		   annotationType:UICRouteAnnotationTypeStart] autorelease];
-	UICRouteAnnotation *endAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints lastObject] coordinate]
-																				  title:self.task.name
-																			   subtitle:[[route.legs objectAtIndex:0]endAddress]
-																		 annotationType:UICRouteAnnotationTypeEnd] autorelease];
-	
-	[self.mapView addAnnotations:[NSArray arrayWithObjects:startAnnotation, endAnnotation, nil]];
+	// here we can have multiple routes todo
+	NSInteger numberOfRoutes = [self.directions numberOfRoutes];
+	if (numberOfRoutes > 0) {
+		UICGRoute *route = [self.directions routeAtIndex:0];
+		
+		// Add annotations
+		UICRouteAnnotation *startAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
+																						title:CURRENT_LOCATION_PLACEHOLDER
+																					 subtitle:[[route.legs objectAtIndex:0]startAddress]
+																			   annotationType:UICRouteAnnotationTypeStart] autorelease];
+		UICRouteAnnotation *endAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints lastObject] coordinate]
+																					  title:self.task.name
+																				   subtitle:[[route.legs objectAtIndex:0]endAddress]
+																			 annotationType:UICRouteAnnotationTypeEnd] autorelease];
+		[self.mapView addAnnotations:[NSArray arrayWithObjects:startAnnotation, endAnnotation, nil]];
+	} else {
+		CLLocation *location = [[[CLLocation alloc]initWithLatitude:self.task.latitude.doubleValue longitude:self.task.longitude.doubleValue]autorelease];
+		TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
+																		   title:self.task.name
+																		subtitle:self.task.location
+																  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
+		
+		annotation.task = self.task;
+		[self.mapView addAnnotation:annotation];
+		// zoom to current point
+		[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewLocationDefaultSpanInMeters, MapViewLocationDefaultSpanInMeters) animated:TRUE];
+
+	}
 }
 
 - (void)directions:(UICGDirections *)directions didFailWithMessage:(NSString *)message {
@@ -175,7 +206,7 @@
 		if(nil == self.routeLineView) {
 			self.routeLineView = [[[MKPolylineView alloc] initWithPolyline:self.routeLine] autorelease];
 			self.routeLineView.strokeColor = [UIColor colorWithHexString:@"0000ff50"];
-			self.routeLineView.fillColor = [UIColor colorWithHexString:@"0000ff"];
+			self.routeLineView.fillColor = [UIColor colorWithHexString:@"0000ff70"];
 			self.routeLineView.lineWidth = 4.0;
 		}
 		overlayView = self.routeLineView;

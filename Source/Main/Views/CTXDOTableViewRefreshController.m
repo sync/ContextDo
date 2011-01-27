@@ -23,34 +23,34 @@
 	return refreshHeaderView;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView*)scrollView {
-	[super scrollViewDidScroll:scrollView];
-	
-	[(TISwipeableTableView*)self.tableView hideVisibleBackView:NO];
-}
-
-- (TISwipeableTableView *)swipeableTableView
-{
-	if ([self.tableView isKindOfClass:[TISwipeableTableView class]]) {
-		return (TISwipeableTableView *)self.tableView;
-	}
-	
-	return nil;
-}
-
-static void completionCallback(SystemSoundID soundID, void * clientData) {
-	AudioServicesRemoveSystemSoundCompletion(soundID);
-}
-
-- (void)tableView:(UITableView *)tableView didSwipeCellAtIndexPath:(NSIndexPath *)indexPath {
-	
-	NSString * path = [[NSBundle mainBundle] pathForResource:@"tick" ofType:@"wav"];
-	NSURL * fileURL = [NSURL fileURLWithPath:path isDirectory:NO];
-	
-	SystemSoundID soundID;
-	AudioServicesCreateSystemSoundID((CFURLRef)fileURL, &soundID);
-	AudioServicesPlaySystemSound(soundID);
-	AudioServicesAddSystemSoundCompletion (soundID, NULL, NULL, completionCallback, NULL);
-}
+//- (void)scrollViewDidScroll:(UIScrollView*)scrollView {
+//	[super scrollViewDidScroll:scrollView];
+//	
+//	[(TISwipeableTableView*)self.tableView hideVisibleBackView:NO];
+//}
+//
+//- (TISwipeableTableView *)swipeableTableView
+//{
+//	if ([self.tableView isKindOfClass:[TISwipeableTableView class]]) {
+//		return (TISwipeableTableView *)self.tableView;
+//	}
+//	
+//	return nil;
+//}
+//
+//static void completionCallback(SystemSoundID soundID, void * clientData) {
+//	AudioServicesRemoveSystemSoundCompletion(soundID);
+//}
+//
+//- (void)tableView:(UITableView *)tableView didSwipeCellAtIndexPath:(NSIndexPath *)indexPath {
+//	
+//	NSString * path = [[NSBundle mainBundle] pathForResource:@"tick" ofType:@"wav"];
+//	NSURL * fileURL = [NSURL fileURLWithPath:path isDirectory:NO];
+//	
+//	SystemSoundID soundID;
+//	AudioServicesCreateSystemSoundID((CFURLRef)fileURL, &soundID);
+//	AudioServicesPlaySystemSound(soundID);
+//	AudioServicesAddSystemSoundCompletion (soundID, NULL, NULL, completionCallback, NULL);
+//}
 
 @end

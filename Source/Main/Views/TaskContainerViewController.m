@@ -160,8 +160,10 @@
 	
 	if ([segCtl selectedSegmentIndex] == 0) {
 		[self showDetails];
+		[self.taskScheduleViewController updateTask];
 	} else if ([segCtl selectedSegmentIndex] == 1) {
 		[self showDirections];
+		[self.taskScheduleViewController updateTask];
 	} else {
 		[self showReschedule];
 	}

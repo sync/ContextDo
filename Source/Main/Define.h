@@ -22,6 +22,8 @@
 #define MapViewLocationDefaultSpanInMeters 2000.0
 // Update Region if more than 1000 meters
 #define RegionShouldUpdateThresholdInMeters 1000.0
+// High span
+#define MapViewLocationDefaultHightSpanInMeters 4000.0
 
 // URL
 #define BASE_URL ([[NSUserDefaults standardUserDefaults]boolForKey:ShouldUseDevServer]) ? [[NSUserDefaults standardUserDefaults]stringForKey:DevServerIp] : @"http://contextdo.heroku.com"

@@ -2,7 +2,7 @@
 
 @interface TaskScheduleViewController (private)
 
-- (void)updateTask;
+
 
 @end
 
@@ -14,7 +14,6 @@
 #pragma mark -
 #pragma mark Setup
 
-// todo
 - (void)updateTask
 {
 	if (self.userEdited ) {
@@ -65,6 +64,13 @@
 		self.task.dueAt = nil;
 	}
 	self.userEdited = TRUE;
+}
+
+- (void)dealloc
+{
+	[self updateTask];
+	
+	[super dealloc];
 }
 
 @end
