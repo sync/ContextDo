@@ -253,6 +253,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[request setRequestMethod:@"PUT"];
 	
 	NSArray *excluding = [NSArray arrayWithObjects:
+						  @"groupId",
 						  @"taskWithin",
 						  @"updatedAt",
 						  @"createdAt",
@@ -288,18 +289,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
-	[request addRequestHeader:@"Content-Type" value:@"application/json"];
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
 	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setRequestMethod:@"DELETE"];
-	
-	NSArray *excluding = [NSArray arrayWithObjects:
-						  @"taskWithin",
-						  nil];
-	NSString *string = [group toJSONExcluding:excluding];
-	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
