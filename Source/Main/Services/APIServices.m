@@ -182,9 +182,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
-- (void)addGroupWithName:(NSString *)name position:(NSNumber *)position
+- (void)addGroup:(Group *)group
 {
-	if (!name) {
+	if (!group) {
 		return;
 	}
 	
@@ -194,23 +194,24 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
 							  notificationName, @"notificationName",
-							  name, @"name",
-							  position, @"position",
+							  group, @"group",
 							  nil];
 	
-	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
+	NSString *url = GROUPURL(BASE_URL, GROUPS_PATH, group.groupId);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
+	[request addRequestHeader:@"Content-Type" value:@"application/json"];
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
 	request.shouldAttemptPersistentConnection = FALSE;
 	
-	[request setPostValue:name forKey:@"group[name]"];
-	if (position) {
-		[request setPostValue:position forKey:@"group[position]"];
-	}
+	NSArray *excluding = [NSArray arrayWithObjects:
+						  @"taskWithin",
+						  nil];
+	NSString *string = [group toJSONExcluding:excluding];
+	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
@@ -218,66 +219,76 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 }
 
 
-- (void)updateGroupWithId:(NSNumber *)groupId name:(NSString *)name position:(NSNumber *)position
+- (void)updateGroup:(Group *)group
 {
-	if (!name) {
+	if (!group) {
 		return;
 	}
 	
 	NSString *notificationName = GroupEditNotification;
-	NSString *path = @"editGroupWithId";
+	NSString *path = @"addGroupWithName";
 	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
 							  notificationName, @"notificationName",
+							  group, @"group",
 							  nil];
 	
-	NSString *url = GROUPURL(BASE_URL, GROUPS_PATH, groupId);
+	NSString *url = GROUPURL(BASE_URL, GROUPS_PATH, group.groupId);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
+	[request addRequestHeader:@"Content-Type" value:@"application/json"];
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
 	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setRequestMethod:@"PUT"];
-
-	[request setPostValue:name forKey:@"group[name]"];
-	if (position) {
-		[request setPostValue:position forKey:@"group[position]"];
-	}
+	
+	NSArray *excluding = [NSArray arrayWithObjects:
+						  @"taskWithin",
+						  nil];
+	NSString *string = [group toJSONExcluding:excluding];
+	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
-- (void)deleteGroupWitId:(NSNumber *)groupId
+- (void)deleteGroup:(Group *)group
 {
-	if (!groupId) {
+	if (!group) {
 		return;
 	}
 	
 	NSString *notificationName = GroupDeleteNotification;
-	NSString *path = @"deleteGroupWitId";
+	NSString *path = @"addGroupWithName";
 	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
 							  notificationName, @"notificationName",
-							  groupId, @"object",
+							  group, @"group",
 							  nil];
 	
-	NSString *url = GROUPURL(BASE_URL, GROUPS_PATH, groupId);
+	NSString *url = GROUPURL(BASE_URL, GROUPS_PATH, group.groupId);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
+	[request addRequestHeader:@"Content-Type" value:@"application/json"];
 	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
 	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setRequestMethod:@"DELETE"];
+	
+	NSArray *excluding = [NSArray arrayWithObjects:
+						  @"taskWithin",
+						  nil];
+	NSString *string = [group toJSONExcluding:excluding];
+	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];

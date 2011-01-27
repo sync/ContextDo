@@ -106,8 +106,7 @@
 		if (group) {
 			[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
 											 group, @"object",
-											 [info valueForKey:@"name"], @"name",
-											 [info valueForKey:@"position"], @"position",
+											 [info valueForKey:@"object"], @"group",
 											 nil
 											 ]];
 		} else {

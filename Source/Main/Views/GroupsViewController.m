@@ -151,7 +151,7 @@
 	NSDictionary *dict = [notification object];
 	Group *group = [dict valueForKey:@"object"];
 	if (group) {
-		NSString *groupName = [dict valueForKey:@"name"];
+		NSString *groupName = [dict valueForKeyPath:@"group.name"];
 		if ([groupName isEqualToString:self.addGroupTextField.text]) {
 			self.addGroupTextField.text = nil;
 		}
@@ -352,7 +352,8 @@
 - (void)addGroup
 {
 	[self.addGroupTextField resignFirstResponder];
-	[[APIServices sharedAPIServices]addGroupWithName:self.addGroupTextField.text position:[NSNumber numberWithInteger:1]];
+	Group *group = [Group groupWithId:nil name:self.addGroupTextField.text position:[NSNumber numberWithInteger:1]];
+	[[APIServices sharedAPIServices]addGroup:group];
 }
 
 - (void)addTask

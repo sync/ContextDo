@@ -20,4 +20,18 @@
 	return group;
 }
 
++ (Group *)groupWithId:(NSNumber *)aGroupId
+				  name:(NSString *)aName
+			  position:(NSNumber *)aPosition
+{
+	if (!aGroupId || !aName) {
+		return nil;
+	}
+	
+	Group *group = [Group groupWithId:aGroupId name:aName];
+	group.name = aName;
+	
+	return group;
+}
+
 @end

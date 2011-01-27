@@ -64,7 +64,7 @@
 		[self.groupsEditDataSource.content removeObjectAtIndex:indexPath.row];
 		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
 		
-		[[APIServices sharedAPIServices]deleteGroupWitId:group.groupId];
+		[[APIServices sharedAPIServices]deleteGroup:group];
 		self.editChangesMade = TRUE;
 	}
 }
@@ -78,8 +78,8 @@
 	GroupsEditCell *cell = (GroupsEditCell *)[self.tableView cellForRowAtIndexPath:fromIndexPath];
 	cell.textField.tag = [self.groupsEditDataSource tagForRow:toIndexPath.row];
 	
-	
-	[[APIServices sharedAPIServices]updateGroupWithId:group.groupId name:group.name position:[NSNumber numberWithInteger:toIndexPath.row]];
+	group.position = [NSNumber numberWithInteger:toIndexPath.row];
+	[[APIServices sharedAPIServices]updateGroup:group];
 	self.editChangesMade = TRUE;
 }
 

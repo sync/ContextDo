@@ -19,4 +19,8 @@
 + (Group *)groupWithId:(NSNumber *)aGroupId
 				  name:(NSString *)aName;
 
++ (Group *)groupWithId:(NSNumber *)aGroupId
+				  name:(NSString *)aName
+			  position:(NSNumber *)aPosition;
+
 @end

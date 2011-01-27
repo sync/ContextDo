@@ -15,9 +15,10 @@
 - (void)resetPasswordWithUsername:(NSString *)username;
 
 - (void)refreshGroups;
-- (void)addGroupWithName:(NSString *)name position:(NSNumber *)position;
-- (void)updateGroupWithId:(NSNumber *)groupId name:(NSString *)name position:(NSNumber *)position;
-- (void)deleteGroupWitId:(NSNumber *)groupId;
+- (void)refreshGroups;
+- (void)addGroup:(Group *)group;
+- (void)updateGroup:(Group *)group;
+- (void)deleteGroup:(Group *)group;
 
 - (void)refreshTasksWithGroupId:(NSNumber *)groupId;
 - (void)refreshTasksWithDue:(NSString *)due;
