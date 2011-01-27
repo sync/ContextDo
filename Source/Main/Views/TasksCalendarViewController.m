@@ -24,7 +24,6 @@
 	[super viewDidLoad];
 	
 	[self setupDataSource];
-	
 }
 
 - (void)viewDidUnload
