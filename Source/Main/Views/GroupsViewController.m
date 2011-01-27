@@ -102,7 +102,7 @@
 	[super setupDataSource];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldHidInfo) name:GroupShouldDismissInfo object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinBackgroundDidLoadNotification object:nil];
+	//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinBackgroundDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupEditNotification:) name:GroupEditNotification object:nil];
@@ -155,6 +155,7 @@
 		if ([groupName isEqualToString:self.addGroupTextField.text]) {
 			self.addGroupTextField.text = nil;
 		}
+		// todo not sure about this
 		if (!self.isShowingGroupsEdit) {
 			[self refreshGroups];
 		}

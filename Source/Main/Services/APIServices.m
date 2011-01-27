@@ -194,10 +194,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
 							  notificationName, @"notificationName",
-							  group, @"group",
+							  group, @"object",
 							  nil];
 	
-	NSString *url = GROUPURL(BASE_URL, GROUPS_PATH, group.groupId);
+	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
@@ -208,7 +208,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.shouldAttemptPersistentConnection = FALSE;
 	
 	NSArray *excluding = [NSArray arrayWithObjects:
+						  @"groupId",
 						  @"taskWithin",
+						  @"updatedAt",
+						  @"createdAt",
+						  @"dueCount",
+						  @"expiredCount",
+						  @"userId",
 						  nil];
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
@@ -231,7 +237,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
 							  notificationName, @"notificationName",
-							  group, @"group",
+							  group, @"object",
 							  nil];
 	
 	NSString *url = GROUPURL(BASE_URL, GROUPS_PATH, group.groupId);
@@ -248,6 +254,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	NSArray *excluding = [NSArray arrayWithObjects:
 						  @"taskWithin",
+						  @"updatedAt",
+						  @"createdAt",
+						  @"dueCount",
+						  @"expiredCount",
+						  @"userId",
 						  nil];
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
@@ -269,7 +280,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  path, @"path",
 							  notificationName, @"notificationName",
-							  group, @"group",
+							  group, @"object",
 							  nil];
 	
 	NSString *url = GROUPURL(BASE_URL, GROUPS_PATH, group.groupId);
