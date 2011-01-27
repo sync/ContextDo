@@ -352,7 +352,7 @@
 - (void)addGroup
 {
 	[self.addGroupTextField resignFirstResponder];
-	Group *group = [Group groupWithId:nil name:self.addGroupTextField.text position:[NSNumber numberWithInteger:1]];
+	Group *group = [Group groupWithName:self.addGroupTextField.text position:[NSNumber numberWithInteger:1]];
 	[[APIServices sharedAPIServices]addGroup:group];
 }
 

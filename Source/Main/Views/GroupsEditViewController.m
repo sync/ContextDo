@@ -178,7 +178,7 @@
 	Group *group =[self.groupsEditDataSource groupForIndexPath:indexPath];
 	group.name = textField.text;
 	
-	[[APIServices sharedAPIServices]updateGroupWithId:group.groupId name:group.name position:nil];
+	[[APIServices sharedAPIServices]updateGroup:group];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

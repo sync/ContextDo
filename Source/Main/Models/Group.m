@@ -20,16 +20,16 @@
 	return group;
 }
 
-+ (Group *)groupWithId:(NSNumber *)aGroupId
-				  name:(NSString *)aName
++ (Group *)groupWithName:(NSString *)aName
 			  position:(NSNumber *)aPosition
 {
-	if (!aGroupId || !aName) {
+	if (!aName || !aPosition) {
 		return nil;
 	}
 	
-	Group *group = [Group groupWithId:aGroupId name:aName];
+	Group *group = [[[Group alloc]init]autorelease];
 	group.name = aName;
+	group.position = aPosition;
 	
 	return group;
 }
