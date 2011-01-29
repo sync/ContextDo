@@ -8,6 +8,44 @@
 SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 #pragma mark -
+#pragma mark Request Constructors
+
+- (ASIHTTPRequest *)requestWithUrl:(NSString *)url
+{
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+	request.numberOfTimesToRetryOnTimeout = 1;
+	request.timeOutSeconds = RequestTimeOutSeconds;
+	
+	[request addRequestHeader:@"Content-Type" value:@"application/json"];
+	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
+	request.allowCompressedResponse = TRUE;
+	request.shouldAttemptPersistentConnection = FALSE;
+	
+	return request;
+}
+
+- (ASIFormDataRequest *)formRequestWithUrl:(NSString *)url
+{
+	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
+	request.numberOfTimesToRetryOnTimeout = 2;
+	request.timeOutSeconds = RequestTimeOutSeconds;
+	[request setRequestMethod:@"POST"];
+	
+	[request addRequestHeader:@"Content-Type" value:@"application/json"];
+	[request addRequestHeader:@"Accept" value:@"application/json"];
+	
+	request.allowCompressedResponse = TRUE;
+	request.shouldAttemptPersistentConnection = FALSE;
+	
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
+	[request setShouldContinueWhenAppEntersBackground:YES];
+#endif
+	
+	return request;
+}
+
+#pragma mark -
 #pragma mark Storage
 
 - (NSString *)apiToken
@@ -89,8 +127,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
-	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
 	[request setUsername:aUsername];
 	[request setPassword:aPassword];
 	
@@ -123,14 +159,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
-	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	request.shouldAttemptPersistentConnection = FALSE;
-	
 	[request setPostValue:aUsername forKey:@"user[email]"];
 	[request setPostValue:aPassword forKey:@"user[password]"];
 	[request setPostValue:aPassword forKey:@"user[password_confirmation]"];
 	
+	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
@@ -158,10 +191,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
-	
-	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setPostValue:aUsername forKey:@"user[email]"];
 	
@@ -202,11 +231,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
-	[request addRequestHeader:@"Content-Type" value:@"application/json"];
-	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	request.shouldAttemptPersistentConnection = FALSE;
-	
 	NSArray *excluding = [NSArray arrayWithObjects:
 						  @"groupId",
 						  @"taskWithin",
@@ -244,11 +268,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
-	
-	[request addRequestHeader:@"Content-Type" value:@"application/json"];
-	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setRequestMethod:@"PUT"];
 	
@@ -288,10 +307,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
-	
-	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setRequestMethod:@"DELETE"];
 	
@@ -391,12 +406,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
-	[request addRequestHeader:@"Content-Type" value:@"application/json"];
-	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	request.shouldAttemptPersistentConnection = FALSE;
-	
-	
 	NSArray *excluding = [NSArray arrayWithObjects:
 						  @"groupName",
 						  @"taskId",
@@ -439,11 +448,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
-	
-	[request addRequestHeader:@"Content-Type" value:@"application/json"];
-	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setRequestMethod:@"PUT"];
 	
@@ -490,10 +494,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
-	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	request.shouldAttemptPersistentConnection = FALSE;
-	
 	[request setRequestMethod:@"DELETE"];
 	
 	[self.networkQueue addOperation:request];
@@ -532,11 +532,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
-	
-	[request addRequestHeader:@"Content-Type" value:@"application/json"];
-	[request addRequestHeader:@"Accept" value:@"application/json"];
-	
-	request.shouldAttemptPersistentConnection = FALSE;
 	
 	[request setRequestMethod:@"PUT"];
 	
@@ -612,8 +607,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	ASIHTTPRequest *request = [self requestWithUrl:url];
 	request.userInfo = userInfo;
 	request.delegate = self;
-	
-	[request addRequestHeader:@"Accept" value:@"application/json"];
 	
 	request.username = self.username;
 	request.password = self.password;
