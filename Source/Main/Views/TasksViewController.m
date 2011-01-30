@@ -4,8 +4,6 @@
 
 @interface TasksViewController (private)
 
-- (void)reloadTasks:(NSArray *)newTasks;
-- (void)reloadSearchTasks:(NSArray *)newTasks;
 - (void)cancelSearch;
 
 @end
@@ -13,7 +11,7 @@
 
 @implementation TasksViewController
 
-@synthesize tasksDataSource, tasks, group, searchTasksDataSource, searchBar, tasksSave, mainNavController;
+@synthesize tasksDataSource, tasks, group, searchBar, tasksSave, mainNavController;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -25,9 +23,6 @@
 	[self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 						   forBarStyle:UIBarStyleBlackOpaque];
 	self.searchBar.keyboardAppearance = UIKeyboardAppearanceAlert;
-	
-	//[self.tableView setContentOffset:CGPointMake(0.0, self.searchBar.frame.size.height)];
-
 }
 
 - (void)viewDidUnload
@@ -54,21 +49,14 @@
 {
 	[super setupDataSource];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskDeleteNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
-	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksSearchDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	if (self.isTodayTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueTodayDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueTodayDidLoadNotification];
 	} else if (self.isNearTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksWithinDidLoadNotification];
 	} else {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
 	
@@ -76,7 +64,6 @@
 	self.tableView.dataSource = self.tasksDataSource;
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
 	self.tableView.rowHeight = 88.0;
-	//[self.swipeableTableView setSwipeDelegate:self];
 	[self refreshTasks];
 }
 
@@ -91,34 +78,13 @@
 	[self reloadTasks:newTasks];
 }
 
-- (NSMutableArray *)tasks
-{
-	if (!tasks) {
-		tasks = [[NSMutableArray alloc]init];
-	}
-	
-	return tasks;
-}
-
 - (void)reloadTasks:(NSArray *)newTasks
 {
 	[self.tasksDataSource resetContent];
 	
-	[self.tasks removeAllObjects];
-	if (newTasks.count) {
-		[self.tasks addObjectsFromArray:newTasks];
-	}
+	self.tasks = newTasks;
 	
 	[self.tasksDataSource.content addObjectsFromArray:self.tasks];
-	[self.tableView reloadData];
-}
-
-- (void)reloadSearchTasks:(NSArray *)newTasks
-{
-	[self.searchTasksDataSource resetContent];
-	
-	[self.searchTasksDataSource.content addObjectsFromArray:newTasks];
-	
 	[self.tableView reloadData];
 }
 
@@ -215,7 +181,7 @@
 {
 	if (!aSearchBar.showsCancelButton) {
 		self.tasksSave = self.tasks;
-		[self.tasks removeAllObjects];
+		self.tasks = nil;
 	}
 	
 	[aSearchBar setShowsCancelButton:TRUE animated:TRUE];
@@ -263,7 +229,7 @@
 	[self.searchBar resignFirstResponder];
 	self.searchString = searchText;
 	
-	[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
+	[self refreshTasks];
 }
 
 #pragma mark -
@@ -290,7 +256,6 @@
 	[group release];
 	[tasks release];
 	[tasksDataSource release];
-	[searchTasksDataSource release];
 	
 	[super dealloc];
 }

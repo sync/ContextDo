@@ -6,7 +6,8 @@
 
 @interface TasksCalendarViewController (private)
 
-- (NSArray *)filterdTasksForDate:(NSDate *)date;
+- (NSArray *)filteredTasksForDate:(NSDate *)date;
+- (void)reloadTasks:(NSArray *)newTasks;
 
 @end
 
@@ -49,7 +50,6 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskDeleteNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
-	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueDidLoadNotification];
 	
@@ -74,17 +74,24 @@
 	NSDictionary *dict = [notification object];
 	
 	NSArray *newTasks = [dict valueForKey:@"tasks"];
+	[self reloadTasks:newTasks];
+}
+
+- (void)reloadTasks:(NSArray *)newTasks
+{
+	[self.tasksCalendarDataSource resetContent];
+	
 	self.tasks = newTasks;
 	[self.monthView reload];
 	
-	NSArray *filteredTasks = [self filterdTasksForDate:[NSDate date]];
+	NSArray *filteredTasks = [self filteredTasksForDate:[NSDate date]];
 	if (filteredTasks.count > 0) {
 		[self.tasksCalendarDataSource.content addObject:filteredTasks];
 	}
 	[self.tableView reloadData];
 }
 
-- (NSArray *)filterdTasksForDate:(NSDate *)date
+- (NSArray *)filteredTasksForDate:(NSDate *)date
 {
 	NSMutableArray *filterdEventsForDate = [NSMutableArray array];
 	for (Task *task in self.tasks) {
@@ -129,14 +136,11 @@
 }
 - (void) calendarMonthView:(TKCalendarMonthView*)monthView didSelectDate:(NSDate*)date{
 	
-	// CHANGE THE DATE TO YOUR TIMEZONE
-//	TKDateInformation info = [date dateInformationWithTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-//	NSDate *myTimeZoneDay = [NSDate dateFromDateInformation:info timeZone:[NSTimeZone systemTimeZone]];
-	
 	[self.tasksCalendarDataSource resetContent];
 	
-	NSArray *filteredTasks = [self filterdTasksForDate:date];
+	NSArray *filteredTasks = [self filteredTasksForDate:date];
 	if (filteredTasks.count > 0) {
+		[self.tasksCalendarDataSource resetContent];
 		[self.tasksCalendarDataSource.content addObject:filteredTasks];
 	}
 	
@@ -148,7 +152,7 @@
 	[self.tasksCalendarDataSource resetContent];
 	[self.tableView reloadData];
 	
-	[[APIServices sharedAPIServices]refreshTasksWithDue:[d getUTCDateWithformat:@"yyyy-MM"]];
+	[self refreshTasks];
 }
 
 #pragma mark -
@@ -252,7 +256,6 @@
 		self.noResultsView = nil;
 	}
 }
-
 
 #pragma mark -
 #pragma mark Dealloc

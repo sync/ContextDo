@@ -16,6 +16,10 @@
 @property (nonatomic, readonly) TasksCalendarViewController *tasksCalendarViewController;
 
 @property (nonatomic, retain) Group *group;
+@property (nonatomic, retain) NSArray *tasks;
+
+@property (nonatomic, readonly) BOOL isTodayTasks;
+@property (nonatomic, readonly) BOOL isNearTasks;
 
 @property (nonatomic) BOOL showCloseButton;
 

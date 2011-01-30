@@ -19,7 +19,7 @@
 		return@"Groups";
 	}
 	
-	return @"All Tasks";
+	return @"Tasks";
 }
 
 // Customize the appearance of table view cells.

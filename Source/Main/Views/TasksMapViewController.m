@@ -9,6 +9,7 @@
 - (void)showCurrentLocation;
 - (void)updateDirections;
 - (void)refreshTasks;
+- (void)refreshTasksDirection;
 - (void)cancelSearch;
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 - (void)addAllAnnotationsTasks;
@@ -38,14 +39,6 @@
 	return [self.group.name isEqualToString:NearTasksPlacholder];
 }
 
-- (NSString *)nowDue
-{
-	NSDateFormatter* dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	// 2010-07-24
-	[dateFormatter setDateFormat:@"yyyy-MM-dd"];
-	return [dateFormatter stringFromDate:[NSDate date]];
-}
-
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
@@ -56,21 +49,14 @@
 	
 	self.mapView.showsUserLocation = TRUE;
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskDeleteNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
-	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksSearchDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	if (self.isTodayTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueTodayDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueTodayDidLoadNotification];
 	} else if (self.isNearTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksWithinDidLoadNotification];
 	} else {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
 	[self refreshTasks];
@@ -105,7 +91,11 @@
 	NSDictionary *dict = [notification object];
 	
 	NSArray *newTasks = [dict valueForKey:@"tasks"];
-	
+	[self reloadTasks:newTasks];
+}
+
+- (void)reloadTasks:(NSArray *)newTasks
+{
 	NSMutableArray *tasksToAdd = [NSMutableArray arrayWithArray:newTasks];
 	if (self.mapView.userLocation) {
 		CLLocation *startLocation = nil;
@@ -130,8 +120,6 @@
 
 - (void)refreshTasksDirection
 {
-	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStartForKey:) withObject:@"direction" waitUntilDone:FALSE];
-	
 	for (id<MKAnnotation> annotation in self.mapView.annotations) {
 		if ([annotation isKindOfClass:[UICRouteAnnotation class]]) {
 			[self.mapView removeAnnotation:annotation];
@@ -197,8 +185,6 @@
 #pragma mark UICGDirectionsDelegate
 
 - (void)directionsDidUpdateDirections:(UICGDirections *)aDirections {
-	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStopForKey:) withObject:@"direction" waitUntilDone:FALSE];
-	
 	// Overlay polylines
 	UICGPolyline *polyline = [[aDirections routeAtIndex:0] overviewPolyline];
 	NSArray *routePoints = [polyline points];
@@ -265,7 +251,6 @@
 }
 
 - (void)directions:(UICGDirections *)directions didFailWithMessage:(NSString *)message {
-	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStopForKey:) withObject:@"direction" waitUntilDone:FALSE];
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
 	[alertView show];
 	[alertView release];
@@ -435,9 +420,8 @@
 	[self.searchBar resignFirstResponder];
 	self.searchBar.text = nil;
 	self.searchString = nil;
-	self.tasks = self.tasksSave;
+	[self reloadTasks:self.tasksSave];
 	self.tasksSave = nil;
-	[self refreshTasks];
 }
 
 #pragma mark -
@@ -448,7 +432,7 @@
 	[self.searchBar resignFirstResponder];
 	self.searchString = searchText;
 	
-	[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
+	[self refreshTasks];
 }
 
 #pragma mark -

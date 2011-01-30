@@ -8,7 +8,7 @@
 
 @property (nonatomic, retain) ChooseGroupDataSource *chooseGroupDataSource;
 
-@property (nonatomic, readonly) NSMutableArray *groups;
+@property (nonatomic, retain) NSArray *groups;
 
 @property (nonatomic, retain) Task *task;
 

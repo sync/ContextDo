@@ -13,9 +13,9 @@
 
 - (void)viewDidLoad 
 {
-    self.title = @"Reset Password";
+    [super viewDidLoad];
 	
-	[super viewDidLoad];
+	self.title = @"Reset Password";
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:UserDidResetPasswordNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:UserDidResetPasswordNotification];

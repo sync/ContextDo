@@ -9,9 +9,9 @@
 
 - (void)viewDidLoad 
 {
-    self.title = @"Register";
-	
 	[super viewDidLoad];
+	
+	self.title = @"Register";
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:UserDidRegisterNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:UserDidRegisterNotification];

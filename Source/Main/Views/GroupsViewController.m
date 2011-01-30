@@ -35,9 +35,9 @@
 
 - (void)viewDidLoad 
 {
-    self.title = @"Groups";
+    [super viewDidLoad];
 	
-	[super viewDidLoad];
+	self.title = @"Groups";
 	
 	[self hideInfoAnimated:FALSE];
 }
@@ -169,25 +169,13 @@
 	}
 }
 
-- (NSMutableArray *)groups
-{
-	if (!groups) {
-		groups = [[NSMutableArray alloc]init];
-	}
-	
-	return groups;
-}
-
 - (void)reloadGroups:(NSArray *)newGroups
 {
 	[self.groupsDataSource resetContent];
 	
-	[self.groups removeAllObjects];
+	self.groups = newGroups;
+	[self.groupsDataSource.content addObject:self.groups];
 	
-	if (newGroups.count > 0) {
-		[self.groups addObjectsFromArray:newGroups];
-		[self.groupsDataSource.content addObject:self.groups];
-	}
 	Group *todayGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
 									  name:TodaysTasksPlacholder];
 	
@@ -237,11 +225,11 @@
 	DLog(@"user got a fix with core location");
 	
 	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
-		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+		//CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
 		
 		// todo get this value from the user's default
 		if (!self.lastCurrentLocation || [[AppDelegate sharedAppDelegate].currentLocation distanceFromLocation:self.lastCurrentLocation] >= 1000) {
-			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:FALSE]; // TODO within user's pref
+			//[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:FALSE]; // TODO within user's pref
 		}
 	}
 	
@@ -505,6 +493,7 @@
 	}
 	
 	CGSize boundsSize = self.view.bounds.size;
+	[self.infoViewController viewWillAppear:animated];
 	self.infoViewController.view.frame = CGRectMake(0.0, 
 													boundsSize.height - InfoShowingHeight, 
 													boundsSize.width, 

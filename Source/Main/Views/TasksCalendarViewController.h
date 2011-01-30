@@ -13,7 +13,6 @@
 @property (nonatomic, retain) MBProgressHUD *noResultsView;
 
 @property (nonatomic, retain) NSArray *tasks;
-
 @property (nonatomic, retain) Group *group;
 
 @property (nonatomic, readonly) BOOL isTodayTasks;

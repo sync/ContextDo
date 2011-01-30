@@ -32,10 +32,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 
 - (void)refreshTasksForLocalNotification
 {
-	[[APIServices sharedAPIServices]refreshTasksDueToday];
+	//[[APIServices sharedAPIServices]refreshTasksDueToday];
 	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
-		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:FALSE];
+		//CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+		//[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:FALSE];
 	}
 }
 

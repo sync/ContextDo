@@ -16,18 +16,10 @@
 #pragma mark -
 #pragma mark Initialisation
 
-- (void)viewDidLoad 
+- (void)viewWillAppear:(BOOL)animated
 {
-	[super viewDidLoad];
-	
-	//self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].blackedOutColor;
-}
-
-- (void)viewDidUnload
-{
-	[super viewDidUnload];
-	
-	
+	[super viewWillAppear:animated];
+	[self refreshTasks];
 }
 
 #pragma mark -
@@ -47,7 +39,6 @@
 	self.tasksUpdatedDataSource = [[[TasksUpdatedDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksUpdatedDataSource;
 	self.tableView.backgroundColor = [UIColor clearColor];
-	[self refreshTasks];
 }
 
 - (void)refreshTasks

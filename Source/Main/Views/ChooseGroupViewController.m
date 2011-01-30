@@ -16,10 +16,10 @@
 #pragma mark Initialisation
 
 - (void)viewDidLoad 
-{
-    self.title = @"Choose Group";
-	
+{	
 	[super viewDidLoad];
+	
+	 self.title = @"Choose Group";
 }
 
 - (void)viewDidUnload
@@ -66,25 +66,13 @@
 	[self reloadGroups:newGroups];
 }
 
-- (NSMutableArray *)groups
-{
-	if (!groups) {
-		groups = [[NSMutableArray alloc]init];
-	}
-	
-	return groups;
-}
-
 - (void)reloadGroups:(NSArray *)newGroups
 {
 	[self.chooseGroupDataSource resetContent];
 	
-	[self.groups removeAllObjects];
+	self.groups = newGroups;
+	[self.chooseGroupDataSource.content addObject:self.groups];
 	
-	if (newGroups.count > 0) {
-		[self.groups addObjectsFromArray:newGroups];
-		[self.chooseGroupDataSource.content addObject:self.groups];
-	}
 	[self.tableView reloadData];
 }
 

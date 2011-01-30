@@ -1,5 +1,5 @@
 // Timeout Request
-#define RequestTimeOutSeconds 30.0
+#define RequestTimeOutSeconds 35.0
 
 // User Defaults
 #define UsernameUserDefaults @"UsernameUserDefaults"

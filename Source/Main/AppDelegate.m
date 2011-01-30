@@ -6,7 +6,6 @@
 
 @interface AppDelegate (private)
 
-- (void)refreshAllControllers;
 - (void)enableGPS;
 - (void)locationDidFix;
 - (void)locationDidStop;
@@ -67,7 +66,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)checkUserSettings
 {
-	[[APIServices sharedAPIServices]refreshUser];
+	//[[APIServices sharedAPIServices]refreshUser];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserSettings:) name:UserDidLoadNotification object:nil];
 }
 
@@ -88,7 +87,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
-	[self.locationGetter stopUpdates];
 	self.backgrounding = TRUE;
 }
 
@@ -120,7 +118,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 			[self showLoginView:FALSE];
 		}
 	} else {
-		[self refreshAllControllers];
+		[self enableGPS];
+		[[CTXDONotificationsServices sharedCTXDONotificationsServices]refreshTasksForLocalNotification];
 	}
 	self.backgrounding = FALSE;
 }
@@ -132,16 +131,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidStop) name:GPSLocationDidStop object:nil];
 		[self.locationGetter startUpdates];
 	}
-}
-
-- (void)refreshAllControllers
-{
-	[self enableGPS];
-	[[APIServices sharedAPIServices]refreshGroups];
-	[[APIServices sharedAPIServices]refreshTasksEdited];
-	
-	[[CTXDONotificationsServices sharedCTXDONotificationsServices]refreshTasksForLocalNotification];
-	// todo refres tasks
 }
 
 - (void)logout:(BOOL)showingLogin animated:(BOOL)animated
@@ -173,7 +162,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (void)hideLoginView:(BOOL)animated
 {
 	[self.navigationController dismissModalViewControllerAnimated:animated];
-	[self refreshAllControllers];
+	// todo refresh here
 }
 
 - (void)showLoginView:(BOOL)animated
@@ -276,7 +265,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 		
 		// todo get this value from the user's default
 		if (!self.lastCurrentLocation || [self.currentLocation distanceFromLocation:self.lastCurrentLocation] >= 1000) {
-			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:TRUE]; // TODO within user's pref
+			//[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:TRUE]; // TODO within user's pref
 		}
 			
 		if (reverseGeocoder) {

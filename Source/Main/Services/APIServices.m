@@ -13,7 +13,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 - (ASIHTTPRequest *)requestWithUrl:(NSString *)url
 {
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
-	request.numberOfTimesToRetryOnTimeout = 1;
+	request.numberOfTimesToRetryOnTimeout = 0;
 	request.timeOutSeconds = RequestTimeOutSeconds;
 	
 	[request addRequestHeader:@"Content-Type" value:@"application/json"];
@@ -621,49 +621,43 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 - (void)fetchCompleted:(ASIHTTPRequest *)request
 {
-	NSError *error = request.error;
-	if (error) {
-		DLog(@"wserror: %@", error);
-		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:[error localizedDescription] forKey:[self notificationNameForRequest:request]];
-	} else {
-		NSDictionary *info = request.userInfo;
-		NSString *path = [info valueForKey:@"path"];
-		
-		if ([path isEqualToString:@"login"]) {
-			[self parseLogin:request];
-		} else if ([path isEqualToString:@"register"]) {
-			[self parseRegister:request];
-		} else if ([path isEqualToString:@"resetPasswordWithUsername"]) {
-			[self parseResetPassword:request];
-		} else if ([path isEqualToString:@"groups"]) {
-			[self parseGroups:request];
-		} else if ([path isEqualToString:@"tasksWithGroupId"]|| 
-				   [path isEqualToString:@"tasksWithDue"] ||
-				   [path isEqualToString:@"tasksWithLatitude"] ||
-				   [path isEqualToString:@"tasksWithQuery"] || 
-				   [path isEqualToString:@"editedTasks"] || 
-				   [path isEqualToString:@"tasksDueToday"]) {
-			[self parseTasks:request];
-		} else if ([path isEqualToString:@"addGroupWithName"]|| 
-				   [path isEqualToString:@"editGroupWithId"] ||
-				   [path isEqualToString:@"deleteGroupWitId"]) {
-			[self parseGroup:request];
-		} else if ([path isEqualToString:@"addTask"]|| 
-				   [path isEqualToString:@"updateTask"] ||
-				   [path isEqualToString:@"deleteTaskWitId"]) {
-			[self parseTask:request];
-		} else if ([path isEqualToString:@"user"]|| 
-				   [path isEqualToString:@"updateUser"]) {
-			[self parseUser:request];
-		}
+	NSDictionary *info = request.userInfo;
+	NSString *path = [info valueForKey:@"path"];
+	
+	if ([path isEqualToString:@"login"]) {
+		[self parseLogin:request];
+	} else if ([path isEqualToString:@"register"]) {
+		[self parseRegister:request];
+	} else if ([path isEqualToString:@"resetPasswordWithUsername"]) {
+		[self parseResetPassword:request];
+	} else if ([path isEqualToString:@"groups"]) {
+		[self parseGroups:request];
+	} else if ([path isEqualToString:@"tasksWithGroupId"]|| 
+			   [path isEqualToString:@"tasksWithDue"] ||
+			   [path isEqualToString:@"tasksWithLatitude"] ||
+			   [path isEqualToString:@"tasksWithQuery"] || 
+			   [path isEqualToString:@"editedTasks"] || 
+			   [path isEqualToString:@"tasksDueToday"]) {
+		[self parseTasks:request];
+	} else if ([path isEqualToString:@"addGroupWithName"]|| 
+			   [path isEqualToString:@"editGroupWithId"] ||
+			   [path isEqualToString:@"deleteGroupWitId"]) {
+		[self parseGroup:request];
+	} else if ([path isEqualToString:@"addTask"]|| 
+			   [path isEqualToString:@"updateTask"] ||
+			   [path isEqualToString:@"deleteTaskWitId"]) {
+		[self parseTask:request];
+	} else if ([path isEqualToString:@"user"]|| 
+			   [path isEqualToString:@"updateUser"]) {
+		[self parseUser:request];
 	}
 	
-	DLog(@"fetch completed for url: %@ error:%@", request.originalURL, [request.error localizedDescription]);
+	DLog(@"fetch completed for url:%@", request.originalURL);
 }
 
 - (void)fetchFailed:(ASIHTTPRequest *)request
 {
-	DLog(@"fetch failed for url: %@ error:%@", request.originalURL, [request.error localizedDescription]);
+	DLog(@"fetch failed for url:%@ error:%@", request.originalURL, [request.error localizedDescription]);
 	
 	if ([request responseStatusCode] == 401) {
 		if ([request.url.absoluteString hasSuffix:LOGIN_PATH]) {
@@ -671,6 +665,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		} else {
 			[[AppDelegate sharedAppDelegate]showLoginView:TRUE];
 		}
+		self.apiToken = nil;
 	} else {
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:[request.error localizedDescription] forKey:[self notificationNameForRequest:request]];
 	}

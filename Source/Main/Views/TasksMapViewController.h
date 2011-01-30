@@ -19,7 +19,6 @@
 
 @property (nonatomic, readonly) BOOL isTodayTasks;
 @property (nonatomic, readonly) BOOL isNearTasks;
-@property (nonatomic, readonly) NSString *nowDue;
 
 @property (nonatomic, retain) MKPolyline *routeLine;
 @property (nonatomic, retain) MKPolylineView* routeLineView;
@@ -27,7 +26,7 @@
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;
 
-- (void)refreshTasksDirection;
+- (void)reloadTasks:(NSArray *)newTasks;
 
 // Content Filtering
 @property (nonatomic, copy) NSString *searchString;

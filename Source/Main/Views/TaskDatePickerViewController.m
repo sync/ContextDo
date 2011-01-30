@@ -24,9 +24,9 @@
 
 - (void)viewDidLoad 
 {
-    self.title = @"Choose Time";
+    [super viewDidLoad];
 	
-	[super viewDidLoad];
+	self.title = @"Choose Time";
 	
 	[self refreshTask];
 }
