@@ -1,6 +1,7 @@
 #import "TasksContainerViewController.h"
 #import "TaskEditViewController.h"
 #import <TapkuLibrary/TapkuLibrary.h>
+#import "NSDate+Extensions.h"
 
 @interface TasksContainerViewController (private)
 
@@ -45,7 +46,20 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
 	
-	[self refreshTasks];
+	NSArray *archivedContent = nil;
+	if (self.isTodayTasks) {
+		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
+		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
+	} else if (self.isNearTasks) {
+		archivedContent = [APIServices sharedAPIServices].tasksWithin;
+	} else {
+		archivedContent = [[APIServices sharedAPIServices].tasksWithGroupIdDict 
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
+	}
+	if (archivedContent.count > 0) {
+		[self reloadTasks:archivedContent];
+	}
 	[self showList];
 }
 

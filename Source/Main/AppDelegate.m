@@ -175,13 +175,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (void)showLoginView:(BOOL)animated
 {
 	[self.navigationController presentModalViewController:self.loginNavigationController animated:animated];
-	
-//	[self saveTasksWithGroupId];
-//	[self saveTasksWithDue];
-//	[self saveTasksDueToday];
-//	[self saveTasksWithLatitude];
-//	[self saveTasksWithQuery];
-//	[self saveEditedTasks];
+	[[APIServices sharedAPIServices]clearPersistedData];
 }
 
 #pragma mark -

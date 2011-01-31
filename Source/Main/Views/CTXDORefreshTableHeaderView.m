@@ -64,12 +64,6 @@
 		
 		[[self layer] addSublayer:layer];
 		_arrowImage=layer;
-//		
-//		UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-//		view.frame = CGRectMake(25.0f, frame.size.height - 38.0f, 20.0f, 20.0f);
-//		[self addSubview:view];
-//		_activityView = view;
-//		[view release];
 		
 		self.animView = [[[UIImageView alloc]initWithFrame:CGRectMake(15.0f, frame.size.height - 50.0f, 40.0f, 40.0f)]autorelease];
 		NSMutableArray *images = [NSMutableArray array];;
@@ -112,7 +106,6 @@
 			}
 			
 			_statusLabel.text = NSLocalizedString(@"Pull down to refresh...", @"Pull down to refresh status");
-			//[_activityView stopAnimating];
 			[self.animView stopAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 
@@ -126,7 +119,6 @@
 		case EGOOPullRefreshLoading:
 			
 			_statusLabel.text = NSLocalizedString(@"Loading...", @"Loading Status");
-			//[_activityView startAnimating];
 			[self.animView startAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 
@@ -153,7 +145,7 @@
 	
 	
 	
-	CGSize boundsSize = self.bounds.size;
+	CGSize boundsSize = rect.size;
 	
 	CGFloat topHeight = 0.0;
 	

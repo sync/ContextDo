@@ -29,6 +29,6 @@
 - (void)reloadTasks:(NSArray *)newTasks;
 
 // Content Filtering
-@property (nonatomic, copy) NSString *searchString;
+@property (nonatomic, retain) NSString *searchString;
 
 @end

@@ -10,7 +10,6 @@
 - (void)showCurrentLocation;
 - (void)updateDirections;
 - (void)refreshTasks;
-- (void)refreshTasksDirection;
 - (void)cancelSearch;
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 - (void)addAllAnnotationsTasks;
@@ -60,24 +59,7 @@
 	} else {
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
-	
-	NSArray *archivedContent = nil;
-	if (self.isTodayTasks) {
-		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
-	} else if (self.isNearTasks) {
-		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-		NSString *latLngString = [NSString stringWithFormat:@"%f,%f", coordinate.latitude, coordinate.longitude];
-		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", latLngString]];
-	} else {
-		archivedContent = [[APIServices sharedAPIServices].tasksWithGroupIdDict 
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
-	}
-	if (archivedContent.count > 0) {
-		[self reloadTasks:archivedContent];
-	}
+	[self reloadTasks:self.tasks];
 }
 
 #pragma mark -
@@ -85,7 +67,7 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	if (self.tasks.count > 0) {
+	if (self.tasksSave.count == 0 && self.tasks.count > 0) {
 		return;
 	}
 	
@@ -135,44 +117,18 @@
 
 - (void)reloadTasks:(NSArray *)newTasks
 {
-	NSMutableArray *tasksToAdd = [NSMutableArray arrayWithArray:newTasks];
-	if (self.mapView.userLocation) {
-		CLLocation *startLocation = nil;
-		if (TARGET_IPHONE_SIMULATOR) {
-			startLocation = [AppDelegate sharedAppDelegate].currentLocation;
-		} else {
-			startLocation = self.mapView.userLocation.location;
-		}
-		Task *currentLocation = [Task taskWithId:[NSNumber numberWithInteger:NSNotFound]
-											name:CURRENT_LOCATION_PLACEHOLDER
-										latitude:startLocation.coordinate.latitude
-									   longitude:startLocation.coordinate.longitude];
-		[tasksToAdd insertObject:currentLocation atIndex:0];
-		// todo add first + last current location ??
-	}
+	self.tasks = newTasks;
 	
-	self.tasks = [NSArray arrayWithArray:tasksToAdd];
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueAt == nil || dueToday == %@", [NSNumber numberWithBool:TRUE]];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueAt == nil || dueToday == %@ || expired == %@", 
+							  [NSNumber numberWithBool:TRUE], 
+							  [NSNumber numberWithBool:TRUE]];
 	self.todayTasks = [self.tasks filteredArrayUsingPredicate:predicate];
 	
-	[self refreshTasksDirection];
-}
-
-- (void)refreshTasksDirection
-{
 	for (id<MKAnnotation> annotation in self.mapView.annotations) {
 		if ([annotation isKindOfClass:[UICRouteAnnotation class]]) {
 			[self.mapView removeAnnotation:annotation];
 		}
 	}
-	[self.mapView removeOverlay:self.routeLine];
-	self.routeLineView = nil;
-	self.directions = [UICGDirections sharedDirections];
-	self.directions.delegate = self;
-	
-	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
-	options.travelMode = UICGTravelModeDriving;
-	
 	for (Task *task in self.tasks) {
 		if (![self.todayTasks containsObject:task]) {
 			CLLocation *location = [[[CLLocation alloc]initWithLatitude:task.latitude.doubleValue longitude:task.longitude.doubleValue]autorelease];
@@ -185,6 +141,14 @@
 			[self.mapView addAnnotation:annotation];
 		}
 	}
+	
+	[self.mapView removeOverlay:self.routeLine];
+	self.routeLineView = nil;
+	self.directions = [UICGDirections sharedDirections];
+	self.directions.delegate = self;
+	
+	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
+	options.travelMode = UICGTravelModeDriving;
 	
 	[self updateDirections];
 }
@@ -200,9 +164,28 @@
 
 - (void)updateDirections
 {
+	if (self.todayTasks == 0) {
+		return;
+	}
+	
+	NSMutableArray *tasksToDirections = [NSMutableArray arrayWithArray:self.todayTasks];
+	if (self.mapView.userLocation) {
+		CLLocation *startLocation = nil;
+		if (TARGET_IPHONE_SIMULATOR) {
+			startLocation = [AppDelegate sharedAppDelegate].currentLocation;
+		} else {
+			startLocation = self.mapView.userLocation.location;
+		}
+		Task *currentLocation = [Task taskWithId:[NSNumber numberWithInteger:NSNotFound]
+											name:CURRENT_LOCATION_PLACEHOLDER
+										latitude:startLocation.coordinate.latitude
+									   longitude:startLocation.coordinate.longitude];
+		[tasksToDirections insertObject:currentLocation atIndex:0];
+	}
+	
 	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
 	options.travelMode = UICGTravelModeDriving;
-	[self.directions loadFromWaypoints:[self.todayTasks valueForKey:@"latLngString"] options:options];
+	[self.directions loadFromWaypoints:[tasksToDirections valueForKey:@"latLngString"] options:options];
 }
 
 - (void)addAllAnnotationsTasks

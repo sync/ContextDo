@@ -15,6 +15,8 @@
 	UIActivityIndicatorView *_activityView;
 }
 
+@property (nonatomic) CGFloat refreshHeaderOffset;
+
 //@property (nonatomic, readonly) TISwipeableTableView *swipeableTableView;
 
 @end

@@ -23,6 +23,18 @@
 	return refreshHeaderView;
 }
 
+- (CGFloat)refreshHeaderOffset
+{
+	return self.refreshHeaderView.frame.origin.y - 0.0f - self.tableView.bounds.size.height;
+}
+
+- (void)setRefreshHeaderOffset:(CGFloat)offset
+{
+	CGRect rect = self.refreshHeaderView.frame;
+	rect.origin.y = 0.0f - self.tableView.bounds.size.height + offset;
+	self.refreshHeaderView.frame = CGRectIntegral(rect);
+}
+
 //- (void)scrollViewDidScroll:(UIScrollView*)scrollView {
 //	[super scrollViewDidScroll:scrollView];
 //	

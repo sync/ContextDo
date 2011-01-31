@@ -1,7 +1,6 @@
 #import "TasksViewController.h"
 #import "TasksCell.h"
 #import "TaskContainerViewController.h"
-#import "NSDate+Extensions.h"
 
 @interface TasksViewController (private)
 
@@ -63,25 +62,10 @@
 	
 	self.tasksDataSource = [[[TasksDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksDataSource;
-	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
+	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
 	self.tableView.rowHeight = 88.0;
-	NSArray *archivedContent = nil;
-	if (self.isTodayTasks) {
-		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
-	} else if (self.isNearTasks) {
-		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-		NSString *latLngString = [NSString stringWithFormat:@"%f,%f", coordinate.latitude, coordinate.longitude];
-		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", latLngString]];
-	} else {
-		archivedContent = [[APIServices sharedAPIServices].tasksWithGroupIdDict 
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
-	}
-	if (archivedContent.count > 0) {
-		[self reloadTasks:archivedContent];
-	}
+	[self reloadTasks:self.tasks];
+	[self refreshTasks];
 }
 
 #pragma mark -
@@ -174,7 +158,7 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	if (self.tasks.count > 0) {
+	if (self.tasksSave.count == 0 && self.tasks.count > 0) {
 		return;
 	}
 	

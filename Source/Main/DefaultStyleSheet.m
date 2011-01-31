@@ -163,9 +163,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	return item;
 }
 
-- (UIImageView *)darkBackgroundTextureView
+- (UIColor *)darkBackgroundTexture
 {
-	return [[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bgtexture.png"]]autorelease];
+	return [UIColor colorWithPatternImage:[UIImage imageNamed:@"bgtexture.png"]];
 }
 
 - (UIColor *)backgroundTexture

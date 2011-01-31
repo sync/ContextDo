@@ -164,18 +164,17 @@
 			[self saveTasksWithDue];
 		} else if ([notificationName isEqualToString:TasksDueTodayDidLoadNotification]) {
 			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
+			[self.tasksDueTodayDict removeAllObjects];
 			[self.tasksDueTodayDict setValue:dict forKey:key];
 			[self saveTasksDueToday];
 		} else if ([notificationName isEqualToString:TasksWithinDidLoadNotification]) {
 			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
+			[self.tasksWithLatitudeDict removeAllObjects];
 			[self.tasksWithLatitudeDict setValue:dict forKey:key];
 			[self saveTasksWithLatitude];
-		} else if ([notificationName isEqualToString:TasksSearchDidLoadNotification]) {
+		} if ([notificationName isEqualToString:TasksUpdatedSinceDidLoadNotification]) {
 			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
-			[self.tasksWithQueryDict setValue:dict forKey:key];
-			[self saveTasksWithQuery];
-		} else if ([notificationName isEqualToString:TasksUpdatedSinceDidLoadNotification]) {
-			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
+			[self.editedTasksDict removeAllObjects];
 			[self.editedTasksDict setValue:dict forKey:key];
 			[self saveEditedTasks];
 		}

@@ -37,7 +37,7 @@
 	NSArray *choicesList = [NSArray arrayWithObjects:section1, nil];
 	
 	self.settingsDataSource = [[[SettingsDataSource alloc]initWitChoicesList:choicesList]autorelease];
-	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
+	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
 	self.tableView.dataSource = self.settingsDataSource;
 	[self.tableView reloadData];
 }

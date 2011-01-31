@@ -22,6 +22,7 @@
 - (void)hideInfoAnimated:(BOOL)animated;
 - (void)blackOutMainViewAnimated:(BOOL)animated;
 - (void)hideBlackOutMainViewAnimated:(BOOL)animated;
+- (void)shouldCheckWithinTasks:(NSArray *)tasks;
 @end
 
 
@@ -102,7 +103,7 @@
 	[super setupDataSource];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldHidInfo) name:GroupShouldDismissInfo object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupEditNotification:) name:GroupEditNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupAddNotification:) name:GroupAddNotification object:nil];
@@ -113,7 +114,7 @@
 	self.groupsDataSource = [[[GroupsDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.groupsDataSource;
 	self.tableView.allowsSelectionDuringEditing = TRUE;
-	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
+	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
 	self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0);
 	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, 10.0, 0.0);
 	NSArray *archivedContent = [[APIServices sharedAPIServices].groupsDict valueForKey:@"content"];
@@ -188,30 +189,11 @@
 	
 	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
 	
-	CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-	NSString *latLngString = [NSString stringWithFormat:@"%f,%f", coordinate.latitude, coordinate.longitude];
-	NSArray *tasksWithin = [[APIServices sharedAPIServices].tasksDueTodayDict
-							valueForKeyPath:[NSString stringWithFormat:@"%@.content", latLngString]];
-	
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskWithin == %@", [NSNumber numberWithBool:TRUE]];
-	NSMutableSet *previousNearGroups = [[[tasksWithin filteredArrayUsingPredicate:predicate]mutableCopy]autorelease];
-	
-	for (Task *task in tasksWithin) {
-		if (task.isClose) {
-			Group *group = [self groupForId:task.groupId];
-			if (!group.taskWithin) {
-				group.taskWithin = TRUE;
-			} else {
-				[previousNearGroups removeObject:previousNearGroups];
-			}
-		}
-	}
-	
-	for (Group *group in previousNearGroups) {
-		group.taskWithin = FALSE;
-	}
-	
 	[self.tableView reloadData];
+	NSArray *tasksWithin = [APIServices sharedAPIServices].tasksWithin;
+	if (tasksWithin.count > 0) {
+		[self shouldCheckWithinTasks:tasksWithin];
+	}
 }
 
 - (Group *)groupForId:(NSNumber *)groupId
@@ -222,13 +204,18 @@
 	return (foundGroups.count > 0) ? [foundGroups objectAtIndex:0] : nil;
 }
 
-- (void)shouldCheckWithinTasks:(NSNotification *)notification
+- (void)didGetWithinTasks:(NSNotification *)notification
+{
+	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
+	[self shouldCheckWithinTasks:newTasks];
+}
+
+- (void)shouldCheckWithinTasks:(NSArray *)tasks
 {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskWithin == %@", [NSNumber numberWithBool:TRUE]];
 	NSMutableSet *previousNearGroups = [[[self.groups filteredArrayUsingPredicate:predicate]mutableCopy]autorelease];
 	
-	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
-	for (Task *task in newTasks) {
+	for (Task *task in tasks) {
 		if (task.isClose) {
 			Group *group = [self groupForId:task.groupId];
 			if (!group.taskWithin) {
@@ -239,7 +226,7 @@
 					[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 				}
 			} else {
-				[previousNearGroups removeObject:previousNearGroups];
+				[previousNearGroups removeObject:group];
 			}
 		}
 	}

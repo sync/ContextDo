@@ -7,7 +7,7 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
-@synthesize groupsDict, tasksWithGroupIdDict, editedTasksDict, tasksWithQueryDict;
+@synthesize groupsDict, tasksWithGroupIdDict, editedTasksDict;
 @synthesize tasksWithLatitudeDict, tasksWithDueDict, tasksDueTodayDict;
 
 #pragma mark -
@@ -744,7 +744,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 - (NSMutableDictionary *)tasksWithDueDict
 {
 	if (!tasksWithDueDict) {
-		tasksWithGroupIdDict = [[NSDictionary savedDictForKey:TasksWithDueKey]mutableCopy]; 
+		tasksWithDueDict = [[NSDictionary savedDictForKey:TasksWithDueKey]mutableCopy]; 
 		if (!tasksWithDueDict) {
 			tasksWithDueDict = [[NSMutableDictionary alloc]init];
 		}
@@ -778,7 +778,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 - (NSMutableDictionary *)tasksWithLatitudeDict
 {
 	if (!tasksWithLatitudeDict) {
-		tasksWithLatitudeDict = [[NSDictionary savedDictForKey:TasksWithGroupIdKey]mutableCopy]; 
+		tasksWithLatitudeDict = [[NSDictionary savedDictForKey:TasksWithLatitudeKey]mutableCopy]; 
 		if (!tasksWithLatitudeDict) {
 			tasksWithLatitudeDict = [[NSMutableDictionary alloc]init];
 		}
@@ -787,26 +787,30 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	return tasksWithLatitudeDict;
 }
 
+- (NSArray *)tasksWithin
+{
+	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
+		NSArray *allKeys = [self.tasksWithLatitudeDict allKeys];
+		if (allKeys.count > 0) {
+			NSString *savedLatLngString = [allKeys objectAtIndex:0];
+			NSArray *coordinatesArray = [savedLatLngString componentsSeparatedByString:@","];
+			if (coordinatesArray.count == 2) {
+				CLLocation *location = [[[CLLocation alloc]initWithLatitude:[[coordinatesArray objectAtIndex:0]doubleValue]
+																  longitude:[[coordinatesArray objectAtIndex:1]doubleValue]]autorelease];
+				CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue * 1000;
+				if ([[AppDelegate sharedAppDelegate].currentLocation distanceFromLocation:location] < distance) {
+					NSDictionary *savedDict = [[APIServices sharedAPIServices].tasksWithLatitudeDict valueForKey:savedLatLngString];
+					return [savedDict valueForKey:@"content"];
+				}
+			}
+		}
+	}
+	return nil;
+}
+
 - (void)saveTasksWithLatitude
 {
 	[self.tasksWithLatitudeDict saveDictForKey:TasksWithLatitudeKey];
-}
-
-- (NSMutableDictionary *)tasksWithQueryDict
-{
-	if (!tasksWithQueryDict) {
-		tasksWithQueryDict = [[NSDictionary savedDictForKey:TasksWithQueryKey]mutableCopy]; 
-		if (!tasksWithQueryDict) {
-			tasksWithQueryDict = [[NSMutableDictionary alloc]init];
-		}
-	}
-	
-	return tasksWithQueryDict;
-}
-
-- (void)saveTasksWithQuery
-{
-	[self.tasksWithQueryDict saveDictForKey:TasksWithQueryKey];
 }
 
 - (NSMutableDictionary *)editedTasksDict
@@ -826,10 +830,36 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[self.editedTasksDict saveDictForKey:EditedTasksKey];
 }
 
+- (void)clearPersistedData
+{
+	[self.tasksWithGroupIdDict removeAllObjects];
+	[self saveTasksWithGroupId];
+	[tasksWithGroupIdDict release];
+	tasksWithGroupIdDict = nil;
+	[self.tasksWithDueDict removeAllObjects];
+	[self saveTasksWithDue];
+	[tasksWithDueDict release];
+	tasksWithDueDict = nil;
+	[self.tasksDueTodayDict removeAllObjects];
+	[self saveTasksDueToday];
+	[tasksDueTodayDict release];
+	tasksDueTodayDict = nil;
+	[self.tasksWithLatitudeDict removeAllObjects];
+	[self saveTasksWithLatitude];
+	[tasksWithLatitudeDict release];
+	tasksWithLatitudeDict = nil;
+	[self.editedTasksDict removeAllObjects];
+	[self saveEditedTasks];
+	[editedTasksDict release];
+	editedTasksDict = nil;
+}
+
+#pragma mark -
+#pragma mark Dealloc
+
 - (void)dealloc
 {
 	[editedTasksDict release];
-	[tasksWithQueryDict release];
 	[tasksWithLatitudeDict release];
 	[tasksWithDueDict release];
 	[tasksDueTodayDict release];

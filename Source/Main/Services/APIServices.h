@@ -47,10 +47,10 @@
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithDueDict;
 - (void)saveTasksWithDue;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithLatitudeDict;
+@property (nonatomic, readonly) NSArray *tasksWithin;
 - (void)saveTasksWithLatitude;
-@property (nonatomic, readonly) NSMutableDictionary *tasksWithQueryDict;
-- (void)saveTasksWithQuery;
 @property (nonatomic, readonly) NSMutableDictionary *editedTasksDict;
 - (void)saveEditedTasks;
+- (void)clearPersistedData;
 
 @end

@@ -35,7 +35,7 @@
 - (BOOL)isClose
 {
 	CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue * 1000;
-	return (self.distance < distance);
+	return (!self.completed && self.distance < distance);
 }
 
 - (BOOL)expired
@@ -55,7 +55,7 @@
 
 - (BOOL)dueToday
 {
-	return [self.dueAt isToday];
+	return (!self.completed && [self.dueAt isToday]);
 }
 
 - (NSString *)formattedContact
