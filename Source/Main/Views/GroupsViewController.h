@@ -12,7 +12,7 @@
 
 @property (nonatomic, retain) GroupsDataSource *groupsDataSource;
 
-@property (nonatomic, readonly) NSMutableArray *groups;
+@property (nonatomic, retain) NSArray *groups;
 
 @property (nonatomic, readonly) GroupsEditViewController *groupsEditViewController;
 @property (nonatomic, readonly) BOOL isShowingGroupsEdit;
@@ -22,6 +22,7 @@
 
 @property (nonatomic, retain) IBOutlet CTXDODarkTextField *addGroupTextField;
 
-@property (nonatomic, retain) CLLocation *lastCurrentLocation;
+@property (nonatomic, retain) IBOutlet UIButton *infoButton;
+- (IBAction)infoButtonPressed;
 
 @end

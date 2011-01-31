@@ -223,7 +223,7 @@
 				NSInteger row = (group) ? [self.groups indexOfObject:group] : NSNotFound;
 				if (group && row != NSNotFound && group.dueCount.integerValue == 0) {
 					NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-					[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+					[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
 				}
 			} else {
 				[previousNearGroups removeObject:group];

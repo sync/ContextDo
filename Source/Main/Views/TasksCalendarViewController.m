@@ -139,12 +139,18 @@
 	return dataArray;
 	
 }
-- (void) calendarMonthView:(TKCalendarMonthView*)monthView didSelectDate:(NSDate*)date{
+- (void)calendarMonthView:(TKCalendarMonthView*)monthView didSelectDate:(NSDate*)date{
 	
-	[self reloadTasks:self.tasks];
+	[self.tasksCalendarDataSource resetContent];
+	
+	NSArray *filteredTasks = [self filteredTasksForDate:date];
+	if (filteredTasks.count > 0) {
+		[self.tasksCalendarDataSource.content addObject:filteredTasks];
+	}
+	[self.tableView reloadData];
 }
 
-- (void) calendarMonthView:(TKCalendarMonthView*)mv monthDidChange:(NSDate*)d{
+- (void)calendarMonthView:(TKCalendarMonthView*)mv monthDidChange:(NSDate*)d{
 	[super calendarMonthView:mv monthDidChange:d];
 	
 	[self refreshTasks];
