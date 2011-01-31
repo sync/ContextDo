@@ -63,6 +63,11 @@
 
 - (void)refreshTasks
 {
+	NSArray *archivedContent = [[APIServices sharedAPIServices].tasksWithDueDict 
+								valueForKeyPath:[NSString stringWithFormat:@"%@.content", [self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]]];
+	if (archivedContent.count > 0) {
+		[self reloadTasks:archivedContent];
+	}
 	[[APIServices sharedAPIServices]refreshTasksWithDue:[self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]];
 }
 
@@ -136,21 +141,11 @@
 }
 - (void) calendarMonthView:(TKCalendarMonthView*)monthView didSelectDate:(NSDate*)date{
 	
-	[self.tasksCalendarDataSource resetContent];
-	
-	NSArray *filteredTasks = [self filteredTasksForDate:date];
-	if (filteredTasks.count > 0) {
-		[self.tasksCalendarDataSource resetContent];
-		[self.tasksCalendarDataSource.content addObject:filteredTasks];
-	}
-	
-	[self.tableView reloadData];
+	[self reloadTasks:self.tasks];
 }
+
 - (void) calendarMonthView:(TKCalendarMonthView*)mv monthDidChange:(NSDate*)d{
 	[super calendarMonthView:mv monthDidChange:d];
-	
-	[self.tasksCalendarDataSource resetContent];
-	[self.tableView reloadData];
 	
 	[self refreshTasks];
 }

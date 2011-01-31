@@ -1,6 +1,7 @@
 #import "TasksViewController.h"
 #import "TasksCell.h"
 #import "TaskContainerViewController.h"
+#import "NSDate+Extensions.h"
 
 @interface TasksViewController (private)
 
@@ -64,7 +65,23 @@
 	self.tableView.dataSource = self.tasksDataSource;
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
 	self.tableView.rowHeight = 88.0;
-	[self refreshTasks];
+	NSArray *archivedContent = nil;
+	if (self.isTodayTasks) {
+		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
+		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
+	} else if (self.isNearTasks) {
+		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+		NSString *latLngString = [NSString stringWithFormat:@"%f,%f", coordinate.latitude, coordinate.longitude];
+		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", latLngString]];
+	} else {
+		archivedContent = [[APIServices sharedAPIServices].tasksWithGroupIdDict 
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
+	}
+	if (archivedContent.count > 0) {
+		[self reloadTasks:archivedContent];
+	}
 }
 
 #pragma mark -
@@ -153,6 +170,27 @@
 }
 
 #pragma mark -
+#pragma mark BaseLoadingViewCenter Delegate
+
+- (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
+{
+	if (self.tasks.count > 0) {
+		return;
+	}
+	
+	[self.noResultsView hide:FALSE];
+	
+	if (!self.loadingView) {
+		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
+		self.loadingView.delegate = self;
+		[self.view addSubview:self.loadingView];
+		[self.view bringSubviewToFront:self.loadingView];
+		[self.loadingView show:TRUE];
+	}
+	self.loadingView.labelText = @"Loading";
+}
+
+#pragma mark -
 #pragma mark Actions
 
 - (void)refreshTasks
@@ -163,7 +201,7 @@
 			[[APIServices sharedAPIServices]refreshTasksDueToday];
 		} else if (self.isNearTasks) {
 			CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:FALSE]; // TODO within user's pref
+			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 		} else {
 			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
 		}

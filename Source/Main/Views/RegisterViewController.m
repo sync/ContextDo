@@ -49,8 +49,8 @@
 {
 	[self endEditing];
 	
-	[[APIServices sharedAPIServices]registerWithUsername:self.usernameTextField.text
-												password:self.passwordTextField.text];
+	[[APIServices sharedAPIServices] registerWithUsername:self.usernameTextField.text
+												 password:self.passwordTextField.text];
 }
 
 #pragma mark -

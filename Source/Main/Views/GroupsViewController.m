@@ -28,7 +28,7 @@
 @implementation GroupsViewController
 
 @synthesize groupsDataSource, groups, groupsEditViewController, addGroupTextField;
-@synthesize infoViewController, isShowingInfoView, blackedOutView, lastCurrentLocation;
+@synthesize infoViewController, isShowingInfoView, blackedOutView;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -102,7 +102,6 @@
 	[super setupDataSource];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldHidInfo) name:GroupShouldDismissInfo object:nil];
-	//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinBackgroundDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupEditNotification:) name:GroupEditNotification object:nil];
@@ -117,12 +116,16 @@
 	self.tableView.backgroundView = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTextureView;
 	self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0);
 	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, 10.0, 0.0);
+	NSArray *archivedContent = [[APIServices sharedAPIServices].groupsDict valueForKey:@"content"];
+	if (archivedContent.count > 0) {
+		[self reloadGroups:archivedContent];
+	}
 	[self refreshGroups];
 	self.addGroupTextField.rightView = [[DefaultStyleSheet sharedDefaultStyleSheet]inputTextFieldButtonWithText:@"Add" 
 																										 target:self 
 																									   selector:@selector(addGroup)];
 
-	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
+	self.tableView.tableHeaderView.hidden = (self.groups.count == 0);
 }
 
 #pragma mark -
@@ -186,6 +189,29 @@
 	
 	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
 	
+	CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+	NSString *latLngString = [NSString stringWithFormat:@"%f,%f", coordinate.latitude, coordinate.longitude];
+	NSArray *tasksWithin = [[APIServices sharedAPIServices].tasksDueTodayDict
+							valueForKeyPath:[NSString stringWithFormat:@"%@.content", latLngString]];
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskWithin == %@", [NSNumber numberWithBool:TRUE]];
+	NSMutableSet *previousNearGroups = [[[tasksWithin filteredArrayUsingPredicate:predicate]mutableCopy]autorelease];
+	
+	for (Task *task in tasksWithin) {
+		if (task.isClose) {
+			Group *group = [self groupForId:task.groupId];
+			if (!group.taskWithin) {
+				group.taskWithin = TRUE;
+			} else {
+				[previousNearGroups removeObject:previousNearGroups];
+			}
+		}
+	}
+	
+	for (Group *group in previousNearGroups) {
+		group.taskWithin = FALSE;
+	}
+	
 	[self.tableView reloadData];
 }
 
@@ -199,21 +225,28 @@
 
 - (void)shouldCheckWithinTasks:(NSNotification *)notification
 {
-	for (Group *group in self.groups) {
-		group.taskWithin = FALSE;
-	}
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskWithin == %@", [NSNumber numberWithBool:TRUE]];
+	NSMutableSet *previousNearGroups = [[[self.groups filteredArrayUsingPredicate:predicate]mutableCopy]autorelease];
 	
 	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
 	for (Task *task in newTasks) {
 		if (task.isClose) {
 			Group *group = [self groupForId:task.groupId];
-			group.taskWithin = TRUE;
-			NSInteger row = (group) ? [self.groups indexOfObject:group] : NSNotFound;
-			if (group && row != NSNotFound && group.dueCount.integerValue == 0) {
-				NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-				[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+			if (!group.taskWithin) {
+				group.taskWithin = TRUE;
+				NSInteger row = (group) ? [self.groups indexOfObject:group] : NSNotFound;
+				if (group && row != NSNotFound && group.dueCount.integerValue == 0) {
+					NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+					[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+				}
+			} else {
+				[previousNearGroups removeObject:previousNearGroups];
 			}
 		}
+	}
+	
+	for (Group *group in previousNearGroups) {
+		group.taskWithin = FALSE;
 	}
 }
 
@@ -222,18 +255,7 @@
 
 - (void)locationDidFix
 {
-	DLog(@"user got a fix with core location");
-	
-	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
-		//CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-		
-		// todo get this value from the user's default
-		if (!self.lastCurrentLocation || [[AppDelegate sharedAppDelegate].currentLocation distanceFromLocation:self.lastCurrentLocation] >= 1000) {
-			//[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:FALSE]; // TODO within user's pref
-		}
-	}
-	
-	self.lastCurrentLocation = [AppDelegate sharedAppDelegate].currentLocation;
+	// todo check closed groups
 }
 
 #pragma mark -
@@ -314,6 +336,10 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
+	if (self.groups.count > 0) {
+		return;
+	}
+	
 	if (self.isShowingGroupsEdit) {
 		return;
 	}
@@ -653,7 +679,6 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupsDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupAddNotification];
 	
-	[lastCurrentLocation release];
 	[infoViewController release];
 	[addGroupTextField release];
 	[groupsEditViewController release];

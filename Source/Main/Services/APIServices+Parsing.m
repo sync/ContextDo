@@ -73,7 +73,9 @@
 		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		NSArray *content = [NSArray fromJSONData:request.responseData];
-
+		NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
+		[self.groupsDict addEntriesFromDictionary:dict];
+		[self saveGroupsDict];
 		
 		[self notifyDone:request object:content];
 	}
@@ -145,10 +147,40 @@
 		//		group_name: Shopping
 		//	}
 		
+		NSDictionary *info = request.userInfo;
+		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		NSArray *content = [NSArray fromJSONData:request.responseData];
+
+		NSString *key = [info valueForKey:@"object"];
+		NSString *notificationName = [self notificationNameForRequest:request];
+		if ([notificationName isEqualToString:TasksDidLoadNotification]) {
+			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
+			[self.tasksWithGroupIdDict setValue:dict forKey:key];
+			[self saveTasksWithGroupId];
+		} else if ([notificationName isEqualToString:TasksDueDidLoadNotification]) {
+			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
+			[self.tasksWithDueDict setValue:dict forKey:key];
+			[self saveTasksWithDue];
+		} else if ([notificationName isEqualToString:TasksDueTodayDidLoadNotification]) {
+			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
+			[self.tasksDueTodayDict setValue:dict forKey:key];
+			[self saveTasksDueToday];
+		} else if ([notificationName isEqualToString:TasksWithinDidLoadNotification]) {
+			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
+			[self.tasksWithLatitudeDict setValue:dict forKey:key];
+			[self saveTasksWithLatitude];
+		} else if ([notificationName isEqualToString:TasksSearchDidLoadNotification]) {
+			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
+			[self.tasksWithQueryDict setValue:dict forKey:key];
+			[self saveTasksWithQuery];
+		} else if ([notificationName isEqualToString:TasksUpdatedSinceDidLoadNotification]) {
+			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
+			[self.editedTasksDict setValue:dict forKey:key];
+			[self saveEditedTasks];
+		}
 		
-		NSDictionary *info = request.userInfo;
+		
 		[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
 										 content, @"tasks",
 										 [info valueForKey:@"object"], @"object",

@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "BaseASIServices.h"
+#import "NSDictionary+Persistence.h"
 
 @interface APIServices : BaseASIServices {
 
@@ -24,8 +25,7 @@
 - (void)refreshTasksWithDue:(NSString *)due;
 - (void)refreshTasksDueToday;
 - (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude
-					   longitude:(CLLocationDegrees)longitude
-					inBackground:(BOOL)background;
+					   longitude:(CLLocationDegrees)longitude;
 - (void)refreshTasksWithQuery:(NSString *)query;
 - (void)refreshTasksEdited;
 - (void)addTask:(Task *)task;
@@ -37,5 +37,20 @@
 @property (nonatomic, assign) NSNumber *alertsDistanceWithin;
 - (CGFloat)alertsDistancKmToSliderValue:(CGFloat)value;
 - (CGFloat)sliderValueToAlertsDistancKm:(CGFloat)value;
+
+@property (nonatomic, readonly) NSMutableDictionary *groupsDict;
+- (void)saveGroupsDict;
+@property (nonatomic, readonly) NSMutableDictionary *tasksWithGroupIdDict;
+- (void)saveTasksWithGroupId;
+@property (nonatomic, readonly) NSMutableDictionary *tasksDueTodayDict;
+- (void)saveTasksDueToday;
+@property (nonatomic, readonly) NSMutableDictionary *tasksWithDueDict;
+- (void)saveTasksWithDue;
+@property (nonatomic, readonly) NSMutableDictionary *tasksWithLatitudeDict;
+- (void)saveTasksWithLatitude;
+@property (nonatomic, readonly) NSMutableDictionary *tasksWithQueryDict;
+- (void)saveTasksWithQuery;
+@property (nonatomic, readonly) NSMutableDictionary *editedTasksDict;
+- (void)saveEditedTasks;
 
 @end

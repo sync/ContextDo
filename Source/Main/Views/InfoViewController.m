@@ -1,10 +1,12 @@
 #import "InfoViewController.h"
 #import "TasksInfoCell.h"
 #import "TaskContainerViewController.h"
+#import "NSDate+Extensions.h"
 
 @interface InfoViewController (private)
 
 - (void)refreshTasks;
+- (void)reloadTasks:(NSArray *)newTasks;
 
 @end
 
@@ -39,6 +41,12 @@
 	self.tasksUpdatedDataSource = [[[TasksUpdatedDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksUpdatedDataSource;
 	self.tableView.backgroundColor = [UIColor clearColor];
+	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
+	NSArray *archivedContent = [[APIServices sharedAPIServices].editedTasksDict
+								valueForKeyPath:[NSString stringWithFormat:@"%@.content", editedAt]];
+	if (archivedContent.count > 0) {
+		[self reloadTasks:archivedContent];
+	}
 }
 
 - (void)refreshTasks
@@ -53,13 +61,16 @@
 {
 	NSDictionary *dict = [notification object];
 	
-	[self.tasksUpdatedDataSource resetContent];
-	
 	NSArray *newTasks = [dict valueForKey:@"tasks"];
+	[self reloadTasks:newTasks];
+}
+
+- (void)reloadTasks:(NSArray *)newTasks
+{
+	[self.tasksUpdatedDataSource resetContent];
 	if (newTasks.count) {
 		[self.tasksUpdatedDataSource.content addObjectsFromArray:newTasks];
 	}
-	
 	
 	[self.tableView reloadData];
 }
@@ -95,6 +106,27 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 	
 	[[NSNotificationCenter defaultCenter]postNotificationName:GroupShouldDismissInfo object:nil];
+}
+
+#pragma mark -
+#pragma mark BaseLoadingViewCenter Delegate
+
+- (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
+{
+	if (self.tasksUpdatedDataSource.content.count > 0) {
+		return;
+	}
+	
+	[self.noResultsView hide:FALSE];
+	
+	if (!self.loadingView) {
+		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
+		self.loadingView.delegate = self;
+		[self.view addSubview:self.loadingView];
+		[self.view bringSubviewToFront:self.loadingView];
+		[self.loadingView show:TRUE];
+	}
+	self.loadingView.labelText = @"Loading";
 }
 
 #pragma mark -

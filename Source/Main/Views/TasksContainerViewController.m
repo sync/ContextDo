@@ -8,6 +8,8 @@
 - (void)showMap;
 - (void)showCalendar;
 - (void)addTask;
+- (void)reloadTasks:(NSArray *)newTasks;
+- (void)refreshTasks;
 
 @end
 
@@ -43,6 +45,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
 	
+	[self refreshTasks];
 	[self showList];
 }
 
@@ -160,11 +163,23 @@
 	NSDictionary *dict = [notification object];
 	
 	NSArray *newTasks = [dict valueForKey:@"tasks"];
+	[self reloadTasks:newTasks];
+}
+
+- (void)reloadTasks:(NSArray *)newTasks
+{
 	self.tasks = newTasks;
 	
-	// todo careful with search
-	[self.tasksViewController reloadTasks:self.tasks];
-	[self.tasksMapViewController reloadTasks:self.tasks];
+	if (self.tasksViewController.tasksSave == 0) {
+		[self.tasksViewController reloadTasks:self.tasks];
+	} else {
+		self.tasksViewController.tasksSave = self.tasks;
+	}
+	if (self.tasksMapViewController.tasksSave == 0) {
+		[self.tasksMapViewController reloadTasks:self.tasks];
+	} else {
+		self.tasksMapViewController.tasksSave = self.tasks;
+	}
 }
 
 #pragma mark -
@@ -177,7 +192,7 @@
 		[[APIServices sharedAPIServices]refreshTasksDueToday];
 	} else if (self.isNearTasks) {
 		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:FALSE]; // TODO within user's pref
+		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 	} else {
 		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
 	}

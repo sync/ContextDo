@@ -3,6 +3,7 @@
 #import "UICRouteOverlay.h"
 #import "TaskAnnotation.h"
 #import "TaskContainerViewController.h"
+#import "NSDate+Extensions.h"
 
 @interface TasksMapViewController (private)
 
@@ -59,7 +60,45 @@
 	} else {
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
-	[self refreshTasks];
+	// get it from cached todo
+	NSArray *archivedContent = nil;
+	if (self.isTodayTasks) {
+		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
+		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
+	} else if (self.isNearTasks) {
+		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+		NSString *latLngString = [NSString stringWithFormat:@"%f,%f", coordinate.latitude, coordinate.longitude];
+		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", latLngString]];
+	} else {
+		archivedContent = [[APIServices sharedAPIServices].tasksWithGroupIdDict 
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
+	}
+	if (archivedContent.count > 0) {
+		[self reloadTasks:archivedContent];
+	}
+}
+
+#pragma mark -
+#pragma mark BaseLoadingViewCenter Delegate
+
+- (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
+{
+	if (self.tasks.count > 0) {
+		return;
+	}
+	
+	[self.noResultsView hide:FALSE];
+	
+	if (!self.loadingView) {
+		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
+		self.loadingView.delegate = self;
+		[self.view addSubview:self.loadingView];
+		[self.view bringSubviewToFront:self.loadingView];
+		[self.loadingView show:TRUE];
+	}
+	self.loadingView.labelText = @"Loading";
 }
 
 #pragma mark -
@@ -73,7 +112,7 @@
 			[[APIServices sharedAPIServices]refreshTasksDueToday];
 		} else if (self.isNearTasks) {
 			CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:FALSE]; // TODO within user's pref
+			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 		} else {
 			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
 		}
@@ -109,6 +148,7 @@
 										latitude:startLocation.coordinate.latitude
 									   longitude:startLocation.coordinate.longitude];
 		[tasksToAdd insertObject:currentLocation atIndex:0];
+		// todo add first + last current location ??
 	}
 	
 	self.tasks = [NSArray arrayWithArray:tasksToAdd];

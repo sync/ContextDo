@@ -54,6 +54,10 @@
 	self.tableView.dataSource = self.chooseGroupDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	[self.tableView reloadData];
+	NSArray *archivedContent = [[APIServices sharedAPIServices].groupsDict valueForKey:@"content"];
+	if (archivedContent.count > 0) {
+		[self reloadGroups:archivedContent];
+	}
 	[[APIServices sharedAPIServices]refreshGroups];
 }
 
@@ -108,6 +112,27 @@
 	[self.navigationController popViewControllerAnimated:TRUE];
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+}
+
+#pragma mark -
+#pragma mark BaseLoadingViewCenter Delegate
+
+- (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
+{
+	if (self.groups.count > 0) {
+		return;
+	}
+	
+	[self.noResultsView hide:FALSE];
+	
+	if (!self.loadingView) {
+		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
+		self.loadingView.delegate = self;
+		[self.view addSubview:self.loadingView];
+		[self.view bringSubviewToFront:self.loadingView];
+		[self.loadingView show:TRUE];
+	}
+	self.loadingView.labelText = @"Loading";
 }
 
 #pragma mark -

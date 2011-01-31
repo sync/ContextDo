@@ -61,7 +61,6 @@
 #define TasksDueDidLoadNotification @"TasksDueDidLoadNotification"
 #define TasksDueTodayDidLoadNotification @"TasksDueTodayDidLoadNotification"
 #define TasksWithinDidLoadNotification @"TasksWithinDidLoadNotification"
-#define TasksWithinBackgroundDidLoadNotification @"TasksWithinBackgroundDidLoadNotification"
 #define TasksUpdatedSinceDidLoadNotification @"TasksUpdatedSinceDidLoadNotification"
 #define TasksSearchDidLoadNotification @"TasksSearchDidLoadNotification"
 #define TaskAddNotification @"TaskAddNotification"

@@ -22,6 +22,4 @@
 
 @property (nonatomic, retain) IBOutlet CTXDODarkTextField *addGroupTextField;
 
-@property (nonatomic, retain) CLLocation *lastCurrentLocation;
-
 @end

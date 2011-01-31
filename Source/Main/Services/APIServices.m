@@ -7,6 +7,9 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
+@synthesize groupsDict, tasksWithGroupIdDict, editedTasksDict, tasksWithQueryDict;
+@synthesize tasksWithLatitudeDict, tasksWithDueDict, tasksDueTodayDict;
+
 #pragma mark -
 #pragma mark Request Constructors
 
@@ -200,12 +203,24 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 }
 
 #pragma mark -
+#pragma mark Content Management
+
+- (void)applicationWillResignActive
+{
+	[super applicationWillResignActive];
+	
+	[self saveGroupsDict];
+}
+
+#pragma mark -
 #pragma mark Groups
+
+#define GroupsKey @"groups"
 
 - (void)refreshGroups
 {
 	NSString *notificationName = GroupsDidLoadNotification;
-	NSString *path = @"groups";
+	NSString *path = GroupsKey;
 	
 	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
 	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
@@ -318,6 +333,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 #pragma mark -
 #pragma mark Tasks
 
+#define TasksWithGroupIdKey @"tasksWithGroupId"
+
 - (void)refreshTasksWithGroupId:(NSNumber *)groupId
 {
 	if (!groupId) {
@@ -325,11 +342,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	}
 	
 	NSString *notificationName = TasksDidLoadNotification;
-	NSString *path = @"tasksWithGroupId";
+	NSString *path = TasksWithGroupIdKey;
 	
 	NSString *url = TASKSURL(BASE_URL, TASKS_PATH, groupId);
-	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+	[self downloadContentForUrl:url withObject:[groupId stringValue] path:path notificationName:notificationName];
 }
+
+#define TasksWithDueKey @"tasksWithDue"
 
 - (void)refreshTasksWithDue:(NSString *)due
 {
@@ -338,31 +357,40 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	}
 	
 	NSString *notificationName = TasksDueDidLoadNotification;
-	NSString *path = @"tasksWithDue";
+	NSString *path = TasksWithDueKey;
 	
 	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due);
-	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+	[self downloadContentForUrl:url withObject:due path:path notificationName:notificationName];
 }
+
+#define TasksDueTodaydKey @"tasksDueToday"
 
 - (void)refreshTasksDueToday
 {
 	NSString *notificationName = TasksDueTodayDidLoadNotification;
-	NSString *path = @"tasksDueToday";
+	NSString *path = TasksDueTodaydKey;
 	
-	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"]);
-	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+	NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
+	
+	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due);
+	[self downloadContentForUrl:url withObject:due path:path notificationName:notificationName];
 }
 
+#define TasksWithLatitudeKey @"tasksWithLatitude"
+
 - (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude
-					   longitude:(CLLocationDegrees)longitude 
-					inBackground:(BOOL)background
+					   longitude:(CLLocationDegrees)longitude
 {
-	NSString *notificationName = (!background) ? TasksWithinDidLoadNotification : TasksWithinBackgroundDidLoadNotification;
-	NSString *path = @"tasksWithLatitude";
+	NSString *notificationName = TasksWithinDidLoadNotification;
+	NSString *path = TasksWithLatitudeKey;
+	
+	NSString *latLngString = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
 	
 	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, self.alertsDistanceWithin.floatValue);
-	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+	[self downloadContentForUrl:url withObject:latLngString path:path notificationName:notificationName];
 }
+
+#define TasksWithQueryKey @"tasksWithQuery"
 
 - (void)refreshTasksWithQuery:(NSString *)query;
 {
@@ -371,19 +399,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	}
 	
 	NSString *notificationName = TasksSearchDidLoadNotification;
-	NSString *path = @"tasksWithQuery";
+	NSString *path = TasksWithQueryKey;
 	
 	NSString *url = TASKSSEARCHURL(BASE_URL, TASKS_PATH, query);
-	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+	[self downloadContentForUrl:url withObject:query path:path notificationName:notificationName];
 }
+
+#define EditedTasksKey @"editedTasks"
 
 - (void)refreshTasksEdited
 {
 	NSString *notificationName = TasksUpdatedSinceDidLoadNotification;
-	NSString *path = @"editedTasks";
+	NSString *path = EditedTasksKey;
+	
+	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
 	
 	NSString *url = TASKSUPDATEDSINCEURL(BASE_URL, TASKS_PATH, [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"]);
-	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+	[self downloadContentForUrl:url withObject:editedAt path:path notificationName:notificationName];
 }
 
 - (void)addTask:(Task *)task
@@ -630,14 +662,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		[self parseRegister:request];
 	} else if ([path isEqualToString:@"resetPasswordWithUsername"]) {
 		[self parseResetPassword:request];
-	} else if ([path isEqualToString:@"groups"]) {
+	} else if ([path isEqualToString:GroupsKey]) {
 		[self parseGroups:request];
-	} else if ([path isEqualToString:@"tasksWithGroupId"]|| 
-			   [path isEqualToString:@"tasksWithDue"] ||
-			   [path isEqualToString:@"tasksWithLatitude"] ||
-			   [path isEqualToString:@"tasksWithQuery"] || 
-			   [path isEqualToString:@"editedTasks"] || 
-			   [path isEqualToString:@"tasksDueToday"]) {
+	} else if ([path isEqualToString:TasksWithGroupIdKey]|| 
+			   [path isEqualToString:TasksWithDueKey] ||
+			   [path isEqualToString:TasksWithLatitudeKey] ||
+			   [path isEqualToString:TasksWithQueryKey] || 
+			   [path isEqualToString:EditedTasksKey] || 
+			   [path isEqualToString:TasksDueTodaydKey]) {
 		[self parseTasks:request];
 	} else if ([path isEqualToString:@"addGroupWithName"]|| 
 			   [path isEqualToString:@"editGroupWithId"] ||
@@ -670,6 +702,141 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:[request.error localizedDescription] forKey:[self notificationNameForRequest:request]];
 	}
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStopLoadingForKey:[self notificationNameForRequest:request]];
+}
+
+#pragma mark -
+#pragma mark Storage
+
+- (NSMutableDictionary *)groupsDict
+{
+	if (!groupsDict) {
+		groupsDict = [[NSDictionary savedDictForKey:GroupsKey]mutableCopy]; 
+		if (!groupsDict) {
+			groupsDict = [[NSMutableDictionary alloc]init];
+		}
+	}
+	
+	return groupsDict;
+}
+
+- (void)saveGroupsDict
+{
+	[self.groupsDict saveDictForKey:GroupsKey];
+}
+
+- (NSMutableDictionary *)tasksWithGroupIdDict
+{
+	if (!tasksWithGroupIdDict) {
+		tasksWithGroupIdDict = [[NSDictionary savedDictForKey:TasksWithGroupIdKey]mutableCopy]; 
+		if (!tasksWithGroupIdDict) {
+			tasksWithGroupIdDict = [[NSMutableDictionary alloc]init];
+		}
+	}
+	
+	return tasksWithGroupIdDict;
+}
+
+- (void)saveTasksWithGroupId
+{
+	[self.tasksWithGroupIdDict saveDictForKey:TasksWithGroupIdKey];
+}
+
+- (NSMutableDictionary *)tasksWithDueDict
+{
+	if (!tasksWithDueDict) {
+		tasksWithGroupIdDict = [[NSDictionary savedDictForKey:TasksWithDueKey]mutableCopy]; 
+		if (!tasksWithDueDict) {
+			tasksWithDueDict = [[NSMutableDictionary alloc]init];
+		}
+	}
+	
+	return tasksWithDueDict;
+}
+
+- (void)saveTasksWithDue
+{
+	[self.tasksWithDueDict saveDictForKey:TasksWithDueKey];
+}
+
+- (NSMutableDictionary *)tasksDueTodayDict
+{
+	if (!tasksDueTodayDict) {
+		tasksDueTodayDict = [[NSDictionary savedDictForKey:TasksDueTodaydKey]mutableCopy]; 
+		if (!tasksDueTodayDict) {
+			tasksDueTodayDict = [[NSMutableDictionary alloc]init];
+		}
+	}
+	
+	return tasksDueTodayDict;
+}
+
+- (void)saveTasksDueToday
+{
+	[self.tasksDueTodayDict saveDictForKey:TasksDueTodaydKey];
+}
+
+- (NSMutableDictionary *)tasksWithLatitudeDict
+{
+	if (!tasksWithLatitudeDict) {
+		tasksWithLatitudeDict = [[NSDictionary savedDictForKey:TasksWithGroupIdKey]mutableCopy]; 
+		if (!tasksWithLatitudeDict) {
+			tasksWithLatitudeDict = [[NSMutableDictionary alloc]init];
+		}
+	}
+	
+	return tasksWithLatitudeDict;
+}
+
+- (void)saveTasksWithLatitude
+{
+	[self.tasksWithLatitudeDict saveDictForKey:TasksWithLatitudeKey];
+}
+
+- (NSMutableDictionary *)tasksWithQueryDict
+{
+	if (!tasksWithQueryDict) {
+		tasksWithQueryDict = [[NSDictionary savedDictForKey:TasksWithQueryKey]mutableCopy]; 
+		if (!tasksWithQueryDict) {
+			tasksWithQueryDict = [[NSMutableDictionary alloc]init];
+		}
+	}
+	
+	return tasksWithQueryDict;
+}
+
+- (void)saveTasksWithQuery
+{
+	[self.tasksWithQueryDict saveDictForKey:TasksWithQueryKey];
+}
+
+- (NSMutableDictionary *)editedTasksDict
+{
+	if (!editedTasksDict) {
+		editedTasksDict = [[NSDictionary savedDictForKey:EditedTasksKey]mutableCopy]; 
+		if (!editedTasksDict) {
+			editedTasksDict = [[NSMutableDictionary alloc]init];
+		}
+	}
+	
+	return editedTasksDict;
+}
+
+- (void)saveEditedTasks
+{
+	[self.editedTasksDict saveDictForKey:EditedTasksKey];
+}
+
+- (void)dealloc
+{
+	[editedTasksDict release];
+	[tasksWithQueryDict release];
+	[tasksWithLatitudeDict release];
+	[tasksWithDueDict release];
+	[tasksDueTodayDict release];
+	[tasksWithGroupIdDict release];
+	[groupsDict release];
+	
+	[super dealloc];
 }
 
 @end

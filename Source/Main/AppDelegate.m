@@ -66,7 +66,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)checkUserSettings
 {
-	//[[APIServices sharedAPIServices]refreshUser];
+	[[APIServices sharedAPIServices]refreshUser];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserSettings:) name:UserDidLoadNotification object:nil];
 }
 
@@ -264,8 +264,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 		CLLocationCoordinate2D coordinate = self.currentLocation.coordinate;
 		
 		// todo get this value from the user's default
-		if (!self.lastCurrentLocation || [self.currentLocation distanceFromLocation:self.lastCurrentLocation] >= 1000) {
-			//[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude inBackground:TRUE]; // TODO within user's pref
+		CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
+		if (!self.lastCurrentLocation || [self.currentLocation distanceFromLocation:self.lastCurrentLocation] >= distance) {
+			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 		}
 			
 		if (reverseGeocoder) {
