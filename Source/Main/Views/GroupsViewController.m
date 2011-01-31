@@ -28,7 +28,7 @@
 @implementation GroupsViewController
 
 @synthesize groupsDataSource, groups, groupsEditViewController, addGroupTextField;
-@synthesize infoViewController, isShowingInfoView, blackedOutView;
+@synthesize infoViewController, isShowingInfoView, blackedOutView, infoButton;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -158,7 +158,6 @@
 		if ([groupName isEqualToString:self.addGroupTextField.text]) {
 			self.addGroupTextField.text = nil;
 		}
-		// todo not sure about this
 		if (!self.isShowingGroupsEdit) {
 			[self refreshGroups];
 		}
@@ -248,14 +247,6 @@
 	for (Group *group in previousNearGroups) {
 		group.taskWithin = FALSE;
 	}
-}
-
-#pragma mark -
-#pragma mark Core Location
-
-- (void)locationDidFix
-{
-	// todo check closed groups
 }
 
 #pragma mark -
@@ -397,7 +388,7 @@
 	}
 }
 
-- (void)infoButtonPressed
+- (IBAction)infoButtonPressed
 {
 	if (!self.isShowingInfoView) {
 		[self showInfoAnimated:TRUE];
@@ -468,6 +459,7 @@
 	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] editBarButtonItemEditing:FALSE
 																										   target:self
 																										 selector:@selector(editButtonPressed)];
+	
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.4];
@@ -491,11 +483,12 @@
 {
 	if (!infoViewController) {
 		infoViewController = [[InfoViewController alloc]initWithNibName:@"InfoView" bundle:nil];
+		infoViewController.view.userInteractionEnabled = FALSE;
 		infoViewController.mainNavController = self.navigationController;
 		[self.view addSubview:infoViewController.view];
 		[self.view bringSubviewToFront:infoViewController.view];
+		[self.view bringSubviewToFront:self.infoButton];
 		[self.view bringSubviewToFront:self.groupsEditViewController.view];
-		[self.infoViewController.infoButton addTarget:self action:@selector(infoButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 	}
 	
 	return infoViewController;
@@ -513,6 +506,8 @@
 		return;
 	}
 	
+	self.infoViewController.view.userInteractionEnabled = TRUE;
+	
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:0.4];
@@ -528,6 +523,9 @@
 	[[AppDelegate sharedAppDelegate]blackOutTopViewElementsAnimated:animated];
 	[self blackOutMainViewAnimated:animated];
 	
+	self.infoButton.frame = CGRectMake(0.0, self.infoViewController.view.frame.origin.y, self.infoButton.frame.size.width, self.infoButton.frame.size.height);
+	
+	
 	if (animated) {
 		[UIView commitAnimations];
 	}
@@ -538,6 +536,8 @@
 	if (!self.isShowingInfoView) {
 		return;
 	}
+	
+	self.infoViewController.view.userInteractionEnabled = FALSE;
 		
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
@@ -552,6 +552,8 @@
 	
 	[[AppDelegate sharedAppDelegate]hideBlackOutTopViewElementsAnimated:animated];
 	[self hideBlackOutMainViewAnimated:TRUE];
+	
+	self.infoButton.frame = CGRectMake(0.0, self.infoViewController.view.frame.origin.y, self.infoButton.frame.size.width, self.infoButton.frame.size.height);
 	
 	if (animated) {
 		[UIView commitAnimations];
@@ -679,6 +681,7 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupsDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupAddNotification];
 	
+	[infoButton release];
 	[infoViewController release];
 	[addGroupTextField release];
 	[groupsEditViewController release];

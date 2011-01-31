@@ -235,7 +235,7 @@
 {
 	if ([request.responseData length] != 0)  {
 		
-		// check fixe from bo todo, got empty dict back
+		// check fix from bo todo, got empty dict back
 		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		User *user = [User fromJSONData:request.responseData];

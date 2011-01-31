@@ -34,7 +34,8 @@
 
 - (BOOL)isClose
 {
-	return (self.distance < 1000); // todo get this value from the user's default
+	CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue * 1000;
+	return (self.distance < distance);
 }
 
 - (BOOL)expired

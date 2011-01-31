@@ -13,7 +13,7 @@
 
 @implementation InfoViewController
 
-@synthesize tasksUpdatedDataSource, infoButton, mainNavController;
+@synthesize tasksUpdatedDataSource, mainNavController;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -137,7 +137,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksUpdatedSinceDidLoadNotification];
 	
-	[infoButton release];
 	[tasksUpdatedDataSource release];
 	
 	[super dealloc];

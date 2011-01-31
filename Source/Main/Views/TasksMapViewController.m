@@ -60,7 +60,7 @@
 	} else {
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
-	// get it from cached todo
+	
 	NSArray *archivedContent = nil;
 	if (self.isTodayTasks) {
 		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];

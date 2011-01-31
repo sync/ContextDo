@@ -57,9 +57,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	[self.navigationController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
 												forBarStyle:UIBarStyleBlackOpaque];
 	
-	[self handleLocalNotification:launchOptions];
-	
-	[self checkUserSettings];
+	NSString *apiToken = [APIServices sharedAPIServices].apiToken;
+	if (apiToken.length == 0) {
+		[self handleLocalNotification:launchOptions];
+	}
 	
     return YES;
 }
@@ -118,6 +119,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 			[self showLoginView:FALSE];
 		}
 	} else {
+		[self checkUserSettings];
 		[self enableGPS];
 		[[CTXDONotificationsServices sharedCTXDONotificationsServices]refreshTasksForLocalNotification];
 	}
@@ -162,12 +164,24 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (void)hideLoginView:(BOOL)animated
 {
 	[self.navigationController dismissModalViewControllerAnimated:animated];
-	// todo refresh here
+	
+	[self checkUserSettings];
+	[self enableGPS];
+	[[CTXDONotificationsServices sharedCTXDONotificationsServices]refreshTasksForLocalNotification];
+	[[APIServices sharedAPIServices]refreshGroups];
+	
 }
 
 - (void)showLoginView:(BOOL)animated
 {
 	[self.navigationController presentModalViewController:self.loginNavigationController animated:animated];
+	
+//	[self saveTasksWithGroupId];
+//	[self saveTasksWithDue];
+//	[self saveTasksDueToday];
+//	[self saveTasksWithLatitude];
+//	[self saveTasksWithQuery];
+//	[self saveEditedTasks];
 }
 
 #pragma mark -
@@ -263,8 +277,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	if (self.hasValidCurrentLocation) {
 		CLLocationCoordinate2D coordinate = self.currentLocation.coordinate;
 		
-		// todo get this value from the user's default
-		CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
+		CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue * 1000;
 		if (!self.lastCurrentLocation || [self.currentLocation distanceFromLocation:self.lastCurrentLocation] >= distance) {
 			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 		}

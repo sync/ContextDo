@@ -22,4 +22,7 @@
 
 @property (nonatomic, retain) IBOutlet CTXDODarkTextField *addGroupTextField;
 
+@property (nonatomic, retain) IBOutlet UIButton *infoButton;
+- (IBAction)infoButtonPressed;
+
 @end

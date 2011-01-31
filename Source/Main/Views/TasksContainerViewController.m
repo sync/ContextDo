@@ -142,7 +142,7 @@
 					  flexItem,
 					  addItem,
 					  nil];
-	[self setToolbarItems:items animated:FALSE];
+	[self setToolbarItems:items animated:TRUE];
 }
 
 #pragma mark -

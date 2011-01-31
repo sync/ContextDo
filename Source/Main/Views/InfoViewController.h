@@ -6,8 +6,6 @@
 
 }
 
-@property (nonatomic, retain) IBOutlet UIButton *infoButton;
-
 @property (nonatomic, retain) TasksUpdatedDataSource *tasksUpdatedDataSource;
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;
