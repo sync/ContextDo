@@ -302,13 +302,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		[self saveGroupsDict];
 	}
 	
-	if  (self.groupOperationsUserSerialQueue) {
-		[self.serialNetworkQueue addOperation:request];
-		[self.serialNetworkQueue go];
-	} else {
-		[self.networkQueue addOperation:request];
-		[self.networkQueue go];
-	}
+	[self.serialNetworkQueue addOperation:request];
+	[self.serialNetworkQueue go];
 	
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
@@ -364,13 +359,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[self saveGroupsDict];
 	
 	
-	if  (self.groupOperationsUserSerialQueue) {
-		[self.serialNetworkQueue addOperation:request];
-		[self.serialNetworkQueue go];
-	} else {
-		[self.networkQueue addOperation:request];
-		[self.networkQueue go];
-	}
+	[self.serialNetworkQueue addOperation:request];
+	[self.serialNetworkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
@@ -411,13 +401,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		}
 	}
 	
-	if  (self.groupOperationsUserSerialQueue) {
-		[self.serialNetworkQueue addOperation:request];
-		[self.serialNetworkQueue go];
-	} else {
-		[self.networkQueue addOperation:request];
-		[self.networkQueue go];
-	}
+	[self.serialNetworkQueue addOperation:request];
+	[self.serialNetworkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
@@ -834,9 +819,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		}
 		self.apiToken = nil;
 	} else {
-		if (request.error.code != ASIConnectionFailureErrorType) {
-			[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:[request.error localizedDescription] forKey:[self notificationNameForRequest:request]];
-		}
+		//[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:[request.error localizedDescription] forKey:[self notificationNameForRequest:request]];
 	}
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStopLoadingForKey:[self notificationNameForRequest:request]];
 }
