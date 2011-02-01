@@ -121,12 +121,18 @@
 	self.arrowsControl.canGoBack = (index > 0);
 	self.arrowsControl.canGoNext = (index < self.tasks.count - 1);
 	
-	self.taskDetailsViewController.task = self.task;
-	[self.taskDetailsViewController refreshTask];
-	self.taskDirectionsViewController.task = self.task;
-	[self.taskDirectionsViewController refreshTask];
-	self.taskScheduleViewController.task = self.task;
-	[self.taskScheduleViewController refreshTask];
+	if (taskDetailsViewController) {
+		self.taskDetailsViewController.task = self.task;
+		[self.taskDetailsViewController refreshTask];
+	}
+	if (taskDirectionsViewController) {
+		self.taskDirectionsViewController.task = self.task;
+		[self.taskDirectionsViewController refreshTask];
+	}
+	if (taskScheduleViewController) {
+		self.taskScheduleViewController.task = self.task;
+		[self.taskScheduleViewController refreshTask];
+	}
 }
 
 #pragma mark -

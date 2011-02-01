@@ -34,10 +34,6 @@
 
 - (void)refreshTask
 {
-	if (!self.view) {
-		return;
-	}
-	
 	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStartForKey:) withObject:@"direction" waitUntilDone:FALSE];
 	
 	for (id<MKAnnotation> annotation in self.mapView.annotations) {

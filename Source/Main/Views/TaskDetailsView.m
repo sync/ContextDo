@@ -322,7 +322,6 @@
 																totalHeight + FacebookIconTopDiff, 
 																facbookSize.width,
 																facbookSize.height));
-		totalHeight = self.facebookIconView.frame.origin.y + self.facebookIconView.frame.size.height;
 	}
 }
 

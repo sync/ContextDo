@@ -139,7 +139,7 @@
 {
 	[super drawRect:rect];
 	
-	NSString *topImageNamed = topImageNamed = @"refresh_bg_top.png";
+	NSString *topImageNamed = @"refresh_bg_top.png";
 	NSString *middleImageNamed = @"refresh_bg_middle.png";
 	NSString *bottomImageNamed = @"refresh_bg_bottom.png";
 	

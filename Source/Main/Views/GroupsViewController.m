@@ -22,7 +22,7 @@
 - (void)hideInfoAnimated:(BOOL)animated;
 - (void)blackOutMainViewAnimated:(BOOL)animated;
 - (void)hideBlackOutMainViewAnimated:(BOOL)animated;
-- (void)shouldCheckWithinTasks:(NSArray *)tasks;
+- (void)shouldCheckWithinTasks:(NSArray *)tasks updateCell:(BOOL)updateCell;
 @end
 
 
@@ -144,9 +144,7 @@
 	
 	Group *group = [dict valueForKey:@"object"];
 	if (group) {
-		if (!self.isShowingGroupsEdit) {
-			[self refreshGroups];
-		}
+		[self refreshGroups];
 	}
 }
 
@@ -189,11 +187,12 @@
 	
 	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
 	
-	[self.tableView reloadData];
 	NSArray *tasksWithin = [APIServices sharedAPIServices].tasksWithin;
 	if (tasksWithin.count > 0) {
-		[self shouldCheckWithinTasks:tasksWithin];
+		[self shouldCheckWithinTasks:tasksWithin updateCell:FALSE];
 	}
+	
+	[self.tableView reloadData];
 }
 
 - (Group *)groupForId:(NSNumber *)groupId
@@ -207,10 +206,10 @@
 - (void)didGetWithinTasks:(NSNotification *)notification
 {
 	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
-	[self shouldCheckWithinTasks:newTasks];
+	[self shouldCheckWithinTasks:newTasks updateCell:TRUE];
 }
 
-- (void)shouldCheckWithinTasks:(NSArray *)tasks
+- (void)shouldCheckWithinTasks:(NSArray *)tasks updateCell:(BOOL)updateCell
 {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskWithin == %@", [NSNumber numberWithBool:TRUE]];
 	NSMutableSet *previousNearGroups = [[[self.groups filteredArrayUsingPredicate:predicate]mutableCopy]autorelease];
@@ -221,7 +220,7 @@
 			if (!group.taskWithin) {
 				group.taskWithin = TRUE;
 				NSInteger row = (group) ? [self.groups indexOfObject:group] : NSNotFound;
-				if (group && row != NSNotFound && group.dueCount.integerValue == 0) {
+				if (updateCell && group && row != NSNotFound && group.dueCount.integerValue == 0) {
 					NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
 					[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
 				}

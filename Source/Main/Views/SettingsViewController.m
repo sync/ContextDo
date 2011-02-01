@@ -161,7 +161,7 @@
 {
 	CTXDoSlider *slider = (CTXDoSlider *)sender;
 	CGFloat value = slider.value;
-	CGFloat sliderValue = value;
+	CGFloat sliderValue = 0.0;
 	if (value < 0.5) {
 		sliderValue = 0.0;
 	} else if (value < 1.5) {
