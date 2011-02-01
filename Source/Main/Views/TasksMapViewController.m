@@ -67,19 +67,6 @@
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
-	NSArray *archivedContent = nil;
-	if (self.isTodayTasks) {
-		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
-	} else if (self.isNearTasks) {
-		archivedContent = [APIServices sharedAPIServices].tasksWithin;
-	} else {
-		archivedContent = [[APIServices sharedAPIServices].tasksWithGroupIdDict 
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
-	}
-	self.hasCachedData = (archivedContent != nil);
-	[self reloadTasks:archivedContent];
 	[self refreshTasks];
 }
 
@@ -110,12 +97,28 @@
 - (void)refreshTasks
 {
 	if (!self.tasksSave) {
+		NSArray *archivedContent = nil;
 		if (self.isTodayTasks) {
+			NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
+			archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
+							   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
+			self.hasCachedData = (archivedContent != nil);
+			[self reloadTasks:archivedContent];
+			
 			[[APIServices sharedAPIServices]refreshTasksDueToday];
 		} else if (self.isNearTasks) {
+			archivedContent = [APIServices sharedAPIServices].tasksWithin;
+			self.hasCachedData = (archivedContent != nil);
+			[self reloadTasks:archivedContent];
+			
 			CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
 			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 		} else {
+			archivedContent = [[APIServices sharedAPIServices].tasksWithGroupIdDict 
+							   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
+			self.hasCachedData = (archivedContent != nil);
+			[self reloadTasks:archivedContent];
+			
 			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
 		}
 	} else {

@@ -67,6 +67,7 @@
 								valueForKeyPath:[NSString stringWithFormat:@"%@.content", [self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]]];
 	self.hasCachedData = (archivedContent != nil);
 	[self reloadTasks:archivedContent];
+	
 	[[APIServices sharedAPIServices]refreshTasksWithDue:[self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]];
 }
 

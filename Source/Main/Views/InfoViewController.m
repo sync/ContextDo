@@ -41,15 +41,16 @@
 	self.tasksUpdatedDataSource = [[[TasksUpdatedDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksUpdatedDataSource;
 	self.tableView.backgroundColor = [UIColor clearColor];
+}
+
+- (void)refreshTasks
+{
 	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
 	NSArray *archivedContent = [[APIServices sharedAPIServices].editedTasksDict
 								valueForKeyPath:[NSString stringWithFormat:@"%@.content", editedAt]];
 	self.hasCachedData = (archivedContent != nil);
 	[self reloadTasks:archivedContent];
-}
-
-- (void)refreshTasks
-{
+	
 	[[APIServices sharedAPIServices]refreshTasksEdited];
 }
 

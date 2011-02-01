@@ -117,9 +117,6 @@
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
 	self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0);
 	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, 10.0, 0.0);
-	NSArray *archivedContent = [[APIServices sharedAPIServices].groupsDict valueForKey:@"content"];
-	self.hasCachedData = (archivedContent != nil);
-	[self reloadGroups:archivedContent];
 	[self refreshGroups];
 	self.addGroupTextField.rightView = [[DefaultStyleSheet sharedDefaultStyleSheet]inputTextFieldButtonWithText:@"Add" 
 																										 target:self 
@@ -341,6 +338,10 @@
 
 - (void)refreshGroups
 {
+	NSArray *archivedContent = [[APIServices sharedAPIServices].groupsDict valueForKey:@"content"];
+	self.hasCachedData = (archivedContent != nil);
+	[self reloadGroups:archivedContent];
+	
 	[[APIServices sharedAPIServices]refreshGroups];
 }
 

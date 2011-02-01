@@ -4,6 +4,7 @@
 @interface ChooseGroupViewController (private)
 
 - (void)reloadGroups:(NSArray *)newGroups;
+- (void)refreshGroups;
 
 @end
 
@@ -54,10 +55,8 @@
 	self.tableView.dataSource = self.chooseGroupDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	[self.tableView reloadData];
-	NSArray *archivedContent = [[APIServices sharedAPIServices].groupsDict valueForKey:@"content"];
-	self.hasCachedData = (archivedContent != nil);
-	[self reloadGroups:archivedContent];
-	[[APIServices sharedAPIServices]refreshGroups];
+	
+	[self refreshGroups];
 }
 
 #pragma mark -
@@ -115,6 +114,18 @@
 	[self.navigationController popViewControllerAnimated:TRUE];
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+}
+
+#pragma mark -
+#pragma mark Actions
+
+- (void)refreshGroups
+{
+	NSArray *archivedContent = [[APIServices sharedAPIServices].groupsDict valueForKey:@"content"];
+	self.hasCachedData = (archivedContent != nil);
+	[self reloadGroups:archivedContent];
+	
+	[[APIServices sharedAPIServices]refreshGroups];
 }
 
 #pragma mark -
