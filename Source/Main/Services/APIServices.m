@@ -10,7 +10,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 @synthesize groupsDict, tasksWithGroupIdDict, editedTasksDict;
 @synthesize tasksWithLatitudeDict, tasksWithDueDict, tasksDueTodayDict, groupsOutOfSyncDict;
-@synthesize groupOperationsUserSerialQueue, serialNetworkQueue;
+@synthesize groupOperationsShouldUseSerialQueue, serialNetworkQueue;
 
 #pragma mark -
 #pragma mark Serial Queue
@@ -258,7 +258,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 #define GroupsKey @"groups"
 
-- (BOOL)groupOperationsUserSerialQueue
+- (BOOL)groupOperationsShouldUseSerialQueue
 {
 	return ([[self.groupsOutOfSyncDict valueForKey:AddedKey]count] > 0 ||
 			[[self.groupsOutOfSyncDict valueForKey:UpdatedKey]count] > 0 ||
@@ -271,7 +271,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *path = GroupsKey;
 	
 	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
-	if (self.groupOperationsUserSerialQueue) {
+	if (self.groupOperationsShouldUseSerialQueue) {
 		[self syncGroups];
 		[self downloadSeriallyContentForUrl:url withObject:nil path:path notificationName:notificationName];
 	} else {
@@ -317,12 +317,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	Group *previousGroup = [self groupForId:group.groupId];
-	if (!previousGroup || ![previousGroup isEqual:group]) {
-		NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
-		[(NSMutableArray *)cachedGroups insertObject:group atIndex:group.position.integerValue];
-		[self saveGroupsDict];
-	}
+	[self addCachedGroup:group syncId:nil];
 	
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
@@ -370,15 +365,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
-	Group *previousGroup = [self groupForId:group.groupId];
-	if (![previousGroup isEqual:group]) {
-		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
-		if (idx != NSNotFound) {
-			[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
-		}
-	}
-	[self saveGroupsDict];
+	[self updateCachedGroup:group syncId:nil];
 	
 	
 	[self.serialNetworkQueue addOperation:request];
@@ -413,15 +400,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request setRequestMethod:@"DELETE"];
 	
-	Group *previousGroup = [self groupForId:group.groupId];
-	if (previousGroup) {
-		NSArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
-		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
-		if (idx != NSNotFound) {
-			[(NSMutableArray *)cachedGroups removeObjectAtIndex:idx];
-			[self saveGroupsDict];
-		}
-	}
+	[self deleteCachedGroup:group syncId:nil];
 	
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
@@ -852,6 +831,42 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 #pragma mark -
 #pragma mark Storage
+
+- (void)addCachedGroup:(Group *)group syncId:(NSNumber *)syncId
+{
+	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self groupForSyncId:syncId] : [self groupForId:group.groupId];
+	if (!previousGroup || ![previousGroup isEqual:group]) {
+		NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
+		[(NSMutableArray *)cachedGroups insertObject:group atIndex:group.position.integerValue];
+		[self saveGroupsDict];
+	}
+}
+
+- (void)updateCachedGroup:(Group *)group syncId:(NSNumber *)syncId
+{
+	NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
+	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self groupForSyncId:syncId] : [self groupForId:group.groupId];
+	if (![previousGroup isEqual:group]) {
+		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
+		if (idx != NSNotFound) {
+			[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
+		}
+	}
+	[self saveGroupsDict];
+}
+
+- (void)deleteCachedGroup:(Group *)group syncId:(NSNumber *)syncId
+{
+	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self groupForSyncId:syncId] : [self groupForId:group.groupId];
+	if (previousGroup) {
+		NSArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
+		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
+		if (idx != NSNotFound) {
+			[(NSMutableArray *)cachedGroups removeObjectAtIndex:idx];
+			[self saveGroupsDict];
+		}
+	}	
+}
 
 - (Group *)groupForId:(NSNumber *)groupId
 {

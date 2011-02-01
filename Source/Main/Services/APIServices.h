@@ -13,7 +13,7 @@
 + (APIServices *)sharedAPIServices;
 
 @property (nonatomic, retain) ASINetworkQueue *serialNetworkQueue;
-@property (nonatomic) BOOL groupOperationsUserSerialQueue;
+@property (nonatomic) BOOL groupOperationsShouldUseSerialQueue;
 - (void)downloadSeriallyContentForUrl:(NSString *)url withObject:(id)object path:(NSString *)path notificationName:(NSString *)notificationName;
 
 @property (nonatomic, assign) NSString *apiToken;
@@ -48,6 +48,9 @@
 - (CGFloat)alertsDistancKmToSliderValue:(CGFloat)value;
 - (CGFloat)sliderValueToAlertsDistancKm:(CGFloat)value;
 
+- (void)addCachedGroup:(Group *)group syncId:(NSNumber *)syncId;
+- (void)updateCachedGroup:(Group *)group syncId:(NSNumber *)syncId;
+- (void)deleteCachedGroup:(Group *)group syncId:(NSNumber *)syncId;
 - (Group *)groupForId:(NSNumber *)groupId;
 @property (nonatomic, readonly) NSMutableDictionary *groupsDict;
 - (void)saveGroupsDict;

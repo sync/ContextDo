@@ -67,7 +67,7 @@
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
-	[self refreshTasks];
+	//[self refreshTasks];
 }
 
 #pragma mark -
@@ -190,9 +190,6 @@
 	self.routeLineView = nil;
 	self.directions = [UICGDirections sharedDirections];
 	self.directions.delegate = self;
-	
-	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
-	options.travelMode = UICGTravelModeDriving;
 	
 	[self updateDirections];
 }

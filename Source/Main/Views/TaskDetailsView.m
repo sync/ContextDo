@@ -94,7 +94,7 @@
 		nameLabel.shadowOffset = CGSizeMake(0,-1);
 		nameLabel.backgroundColor = [UIColor clearColor];
 		nameLabel.numberOfLines = 0;
-		nameLabel.lineBreakMode = UILineBreakModeCharacterWrap;
+		nameLabel.lineBreakMode = UILineBreakModeWordWrap;
 		
 		[self addSubview:nameLabel];
 	}

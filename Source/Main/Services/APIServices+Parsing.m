@@ -117,25 +117,13 @@
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		Group *group = [Group fromJSONData:request.responseData];
 		if (group) {
-			Group *previousGroup = [self groupForSyncId:nonSyncedGroup.syncId];
-			if (![previousGroup isEqual:group]) {
-				NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
-				NSInteger idx = [cachedGroups indexOfObject:previousGroup];
-				if (idx != NSNotFound) {
-					if ([notificationName isEqualToString:GroupEditNotification]) {
-						[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
-					} else if ([notificationName isEqualToString:GroupDeleteNotification]) {
-						[(NSMutableArray *)cachedGroups removeObjectAtIndex:idx];
-					}
-				} else {
-					if ([notificationName isEqualToString:GroupAddNotification]) {
-						[(NSMutableArray *)cachedGroups insertObject:group atIndex:group.position.integerValue];
-					}
-				}
-				nonSyncedGroup.syncId = nil;
-				[self saveGroupsDict];
+			if ([notificationName isEqualToString:GroupAddNotification]) {
+				[self addCachedGroup:group syncId:nonSyncedGroup.syncId];
+			} else if ([notificationName isEqualToString:GroupEditNotification]) {
+				[self updateCachedGroup:group syncId:nonSyncedGroup.syncId];
+			} else if ([notificationName isEqualToString:GroupDeleteNotification]) {
+				[self deleteCachedGroup:group syncId:nonSyncedGroup.syncId];
 			}
-			
 			[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
 											 group, @"object",
 											 [info valueForKey:@"object"], @"group",
