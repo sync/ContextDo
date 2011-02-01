@@ -50,18 +50,21 @@
 	
 	self.mapView.showsUserLocation = TRUE;
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskDeleteNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAllTasks) name:TaskDeleteNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAllTasks) name:TaskEditNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAllTasks) name:TaskAddNotification object:nil];	
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksSearchDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	if (self.isTodayTasks) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueTodayDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueTodayDidLoadNotification];
 	} else if (self.isNearTasks) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksWithinDidLoadNotification];
 	} else {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
 	NSArray *archivedContent = nil;
@@ -85,7 +88,7 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	if (self.tasksSave.count == 0 && self.hasCachedData) {
+	if (!self.tasksSave && self.hasCachedData) {
 		return;
 	}
 	
@@ -121,6 +124,23 @@
 	}
 }
 
+- (void)refreshAllTasks
+{
+	if (self.isTodayTasks) {
+		[[APIServices sharedAPIServices]refreshTasksDueToday];
+	} else if (self.isNearTasks) {
+		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+	} else {
+		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
+	}
+	
+	if (self.tasksSave) {
+		// search mode
+		[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
+	}
+}
+
 #pragma mark -
 #pragma mark Content reloading
 
@@ -128,7 +148,11 @@
 {
 	NSDictionary *dict = [notification object];
 	
-	NSArray *newTasks = [dict valueForKey:@"tasks"];
+	NSArray *newTasks = [dict valueForKey:@"tasks"];	
+	if (![notification.name isEqualToString:TasksSearchDidLoadNotification] && self.tasksSave) {
+		self.tasksSave = newTasks;
+		return;
+	}
 	[self reloadTasks:newTasks];
 }
 
@@ -181,7 +205,7 @@
 
 - (void)updateDirections
 {
-	if (self.todayTasks == 0) {
+	if (self.todayTasks.count == 0) {
 		return;
 	}
 	
@@ -199,25 +223,28 @@
 									   longitude:startLocation.coordinate.longitude];
 		[tasksToDirections insertObject:currentLocation atIndex:0];
 	}
+	self.todayTasks = [NSArray arrayWithArray:tasksToDirections];
 	
 	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
 	options.travelMode = UICGTravelModeDriving;
-	[self.directions loadFromWaypoints:[tasksToDirections valueForKey:@"latLngString"] options:options];
+	[self.directions loadFromWaypoints:[self.todayTasks valueForKey:@"latLngString"] options:options];
 }
 
 - (void)addAllAnnotationsTasks
 {
 	for (Task *task in self.todayTasks) {
-		CLLocation *location = [[[CLLocation alloc]initWithLatitude:task.latitude.doubleValue longitude:task.longitude.doubleValue]autorelease];
-		TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
-																		   title:task.name
-																		subtitle:task.location
-																  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
-		
-		annotation.task = task;
-		[self.mapView addAnnotation:annotation];
-		// zoom to current point
-		[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewLocationDefaultHightSpanInMeters, MapViewLocationDefaultHightSpanInMeters) animated:TRUE];
+		if (task.taskId.integerValue != NSNotFound) {
+			CLLocation *location = [[[CLLocation alloc]initWithLatitude:task.latitude.doubleValue longitude:task.longitude.doubleValue]autorelease];
+			TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
+																			   title:task.name
+																			subtitle:task.location
+																	  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
+			
+			annotation.task = task;
+			[self.mapView addAnnotation:annotation];
+			// zoom to current point
+			[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewLocationDefaultHightSpanInMeters, MapViewLocationDefaultHightSpanInMeters) animated:TRUE];			
+		}
 	}
 }
 
@@ -379,7 +406,7 @@
 					scale = [[UIScreen mainScreen] scale];
 				}
 			#endif
-			self.routeLineView.lineWidth = 5.0 * scale;
+			self.routeLineView.lineWidth = 4.0 * scale;
 		}
 		overlayView = self.routeLineView;
 	}
