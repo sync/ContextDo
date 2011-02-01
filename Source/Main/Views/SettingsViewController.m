@@ -18,10 +18,10 @@
 #pragma mark Initialisation
 
 - (void)viewDidLoad 
-{
-	self.title = @"Settings";
-	
+{	
     [super viewDidLoad];
+	
+	self.title = @"Settings";
 	
 	self.lastSliderValue = -1.0;
 	

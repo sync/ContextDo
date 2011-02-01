@@ -18,9 +18,9 @@
 
 - (void)viewDidLoad 
 {
-	self.title = @"Edit";
-	
     [super viewDidLoad];
+	
+	self.title = @"Edit";
 }
 
 - (void)viewDidUnload

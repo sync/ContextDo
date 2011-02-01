@@ -233,6 +233,15 @@
 			return;
 		}
 		
+		NSString *notificationName = [self notificationNameForRequest:request]; 
+		if ([notificationName isEqualToString:TaskAddNotification]) {
+			
+		} else if ([notificationName isEqualToString:TaskEditNotification]) {
+			
+		} else if ([notificationName isEqualToString:TaskDeleteNotification]) {
+			
+		}
+		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		Task *task = [Task fromJSONData:request.responseData];
 		if (task) {

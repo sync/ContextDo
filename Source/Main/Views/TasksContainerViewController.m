@@ -22,10 +22,10 @@
 #pragma mark Setup
 
 - (void)viewDidLoad
-{
-	self.title = self.group.name;
-	
+{	
 	[super viewDidLoad];
+	
+	self.title = self.group.name;
 	
 	self.containerNavController.navigationBarHidden = TRUE;
 	self.containerNavController.toolbarHidden = TRUE;

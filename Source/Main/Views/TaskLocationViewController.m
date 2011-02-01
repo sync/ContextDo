@@ -22,9 +22,9 @@
 
 - (void)viewDidLoad 
 {
-	self.title = @"Edit Location";
+	[super viewDidLoad];
 	
-    [super viewDidLoad];
+	self.title = @"Edit Location";
 	
 	CALayer *layer = [self.mapView layer];
 	layer.masksToBounds = YES;

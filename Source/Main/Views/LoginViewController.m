@@ -18,9 +18,9 @@
 
 - (void)viewDidLoad 
 {
-    self.title = @"Sign In";
+    [super viewDidLoad];
 	
-	[super viewDidLoad];
+	self.title = @"Sign In";
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:UserDidLoginNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:UserDidLoginNotification];

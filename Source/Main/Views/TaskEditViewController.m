@@ -30,13 +30,13 @@
 
 - (void)viewDidLoad 
 {
+	[super viewDidLoad];
+	
 	if (!self.task) {
 		self.title = @"New Task";
 	} else {
 		self.title = @"Edit Task";
 	}
-	
-    [super viewDidLoad];
 }
 
 - (void)viewDidUnload

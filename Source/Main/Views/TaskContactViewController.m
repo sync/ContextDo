@@ -13,14 +13,9 @@
 
 - (void)viewDidLoad 
 {
-	self.title = @"Edit Contact";
-	
     [super viewDidLoad];
-}
-
-- (void)viewDidUnload
-{
-	[super viewDidUnload];
+	
+	self.title = @"Edit Contact";
 }
 
 #pragma mark -
@@ -29,12 +24,10 @@
 - (void)setupNavigationBar
 {
 	[super setupNavigationBar];
-	
 	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:@"Back"
 																								   target:self.navigationController
 																								 selector:@selector(customBackButtonTouched)];
 	
-	self.title = @"Edit Contact";
 	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 	
 	self.navigationItem.rightBarButtonItem = nil;
