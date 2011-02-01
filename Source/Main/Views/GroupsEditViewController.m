@@ -102,7 +102,6 @@
 		cell.textField.tag = [self.groupsEditDataSource tagForRow:row];
 		Group *group = [self.groupsEditDataSource groupForIndexPath:indexPath];
 		group.position = [NSNumber numberWithInteger:row];
-		DLog(@"name:%@ position:%@", group.name, group.position);
 	}	
 	DLog(@"\n\n");
 }

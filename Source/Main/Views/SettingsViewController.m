@@ -5,11 +5,14 @@
 
 @interface SettingsViewController (private)
 
+- (void)setupFBButton;
+- (User *)buildUser;
+
 @end
 
 @implementation SettingsViewController
 
-@synthesize settingsDataSource, lastSliderValue, settingsSliderView;
+@synthesize settingsDataSource, lastSliderValue, settingsSliderView, fbButton;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -21,6 +24,13 @@
     [super viewDidLoad];
 	
 	self.lastSliderValue = -1.0;
+	
+	[self setupFBButton];
+}
+
+- (void)viewDidUnload
+{
+	self.fbButton = nil;
 }
 
 #pragma mark -
@@ -42,9 +52,25 @@
 	[self.tableView reloadData];
 }
 
+- (BOOL)isFacebookConnected
+{
+	return ([APIServices sharedAPIServices].user.hasFacebookAccessToken.boolValue);
+}
+
+- (void)setupFBButton
+{
+	if (self.isFacebookConnected) {
+		[self.fbButton setTitle:@"Logout Facebook" forState:UIControlStateNormal];
+	} else {
+		[self.fbButton setTitle:@"Facebook Connect" forState:UIControlStateNormal];
+	}
+	
+}
+
 - (void)refresh
 {
-	
+	// todo
+	[self setupFBButton];
 }
 
 #pragma mark -
@@ -144,14 +170,8 @@
 	BOOL success = [[infoDict valueForKey:@"success"]boolValue];
 	NSArray *permissions = [infoDict valueForKey:@"permissions"];
 	[[FacebookServices sharedFacebookServices]setFacebookAuthorizedForPemissions:permissions remove:!success];
-	if (success) {
-		NSDictionary *settings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.lastSliderValue]
-															 forKey:AlertsDistanceWithin];
-		
-		[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:self.settingsSliderView.slider.value];
-		User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken]; // todo remember fb token and pass it there
-		[[APIServices sharedAPIServices]updateUser:user];
-	}
+	[[APIServices sharedAPIServices]updateUser:[self buildUser]];
+	[self setupFBButton];
 }
 
 #pragma mark -
@@ -178,15 +198,20 @@
 	self.lastSliderValue = value;
 }
 
+- (User *)buildUser
+{
+	NSDictionary *settings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.lastSliderValue]
+														 forKey:AlertsDistanceWithin];
+	[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:self.lastSliderValue];
+	User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken]; // todo remember fb token and pass it there
+	[[APIServices sharedAPIServices]updateUser:user];
+	return user;
+}
+
 - (void)doneTouched
 {
 	if (self.lastSliderValue != -1.0) {
-		NSDictionary *settings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.lastSliderValue]
-															 forKey:AlertsDistanceWithin];
-		
-		[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:self.lastSliderValue];
-		User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken]; // todo remember fb token and pass it there
-		[[APIServices sharedAPIServices]updateUser:user];
+		[[APIServices sharedAPIServices]updateUser:[self buildUser]];
 	}
 	
 	[self dismissModalViewControllerAnimated:TRUE];
@@ -200,9 +225,13 @@
 
 - (IBAction)shouldFacebookConnect
 {
-	//friend_events
-	[[FacebookServices sharedFacebookServices]authorizeForPermissions:[NSArray arrayWithObjects:@"offline_access", @"user_events", nil]];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socialServicesFacebookNotification:) name:FacebookNotification object:nil];
+	if (!self.isFacebookConnected) {
+		[[FacebookServices sharedFacebookServices]authorizeForPermissions:[NSArray arrayWithObjects:@"offline_access", @"user_events", nil]];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socialServicesFacebookNotification:) name:FacebookNotification object:nil];
+	} else {
+		[[FacebookServices sharedFacebookServices].facebook logout:[FacebookServices sharedFacebookServices]];
+		[[APIServices sharedAPIServices]updateUser:[self buildUser]];
+	}
 }
 
 #pragma mark -
@@ -210,6 +239,7 @@
 
 - (void)dealloc
 {
+	[fbButton release];
 	[settingsSliderView release];
 	[settingsDataSource release];
 	
