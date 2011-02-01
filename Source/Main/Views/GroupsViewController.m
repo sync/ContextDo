@@ -158,7 +158,7 @@
 	
 	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
 	
-	NSArray *tasksWithin = [APIServices sharedAPIServices].tasksWithin;
+	NSArray *tasksWithin = [CacheServices sharedCacheServices].tasksWithin;
 	if (tasksWithin.count > 0) {
 		[self shouldCheckWithinTasks:tasksWithin updateCell:FALSE];
 	}
@@ -309,7 +309,7 @@
 
 - (void)refreshGroups
 {
-	NSArray *archivedContent = [[APIServices sharedAPIServices].groupsDict valueForKey:@"content"];
+	NSArray *archivedContent = [[CacheServices sharedCacheServices].groupsDict valueForKey:@"content"];
 	self.hasCachedData = (archivedContent != nil);
 	[self reloadGroups:archivedContent];
 	

@@ -198,21 +198,21 @@
 		NSArray *archivedContent = nil;
 		if (self.isTodayTasks) {
 			NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-			archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
+			archivedContent = [[CacheServices sharedCacheServices].tasksDueTodayDict
 							   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
 			self.hasCachedData = (archivedContent != nil);
 			[self reloadTasks:archivedContent];
 			
 			[[APIServices sharedAPIServices]refreshTasksDueToday];
 		} else if (self.isNearTasks) {
-			archivedContent = [APIServices sharedAPIServices].tasksWithin;
+			archivedContent = [CacheServices sharedCacheServices].tasksWithin;
 			self.hasCachedData = (archivedContent != nil);
 			[self reloadTasks:archivedContent];
 			
 			CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
 			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 		} else {
-			archivedContent = [[APIServices sharedAPIServices].tasksWithGroupIdDict 
+			archivedContent = [[CacheServices sharedCacheServices].tasksWithGroupIdDict 
 							   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
 			self.hasCachedData = (archivedContent != nil);
 			[self reloadTasks:archivedContent];

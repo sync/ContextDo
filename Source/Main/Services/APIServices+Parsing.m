@@ -74,8 +74,8 @@
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		NSArray *content = [NSArray fromJSONData:request.responseData];
 		NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
-		[self.groupsDict addEntriesFromDictionary:dict];
-		[self saveGroupsDict];
+		[[CacheServices sharedCacheServices].groupsDict addEntriesFromDictionary:dict];
+		[[CacheServices sharedCacheServices] saveGroupsDict];
 		
 		[self notifyDone:request object:content];
 	}
@@ -106,11 +106,11 @@
 		Group *nonSyncedGroup = [info valueForKey:@"object"];
 		NSString *notificationName = [self notificationNameForRequest:request]; 
 		if ([notificationName isEqualToString:GroupAddNotification]) {
-			[self.groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:AddedKey];
+			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:AddedKey];
 		} else if ([notificationName isEqualToString:GroupEditNotification]) {
-			[self.groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:UpdatedKey];
+			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:UpdatedKey];
 		} else if ([notificationName isEqualToString:GroupDeleteNotification]) {
-			[self.groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:DeletedKey];
+			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:DeletedKey];
 		}
 		
 		
@@ -118,11 +118,11 @@
 		Group *group = [Group fromJSONData:request.responseData];
 		if (group) {
 			if ([notificationName isEqualToString:GroupAddNotification]) {
-				[self addCachedGroup:group syncId:nonSyncedGroup.syncId];
+				[[CacheServices sharedCacheServices] addCachedGroup:group syncId:nonSyncedGroup.syncId];
 			} else if ([notificationName isEqualToString:GroupEditNotification]) {
-				[self updateCachedGroup:group syncId:nonSyncedGroup.syncId];
+				[[CacheServices sharedCacheServices] updateCachedGroup:group syncId:nonSyncedGroup.syncId];
 			} else if ([notificationName isEqualToString:GroupDeleteNotification]) {
-				[self deleteCachedGroup:group syncId:nonSyncedGroup.syncId];
+				[[CacheServices sharedCacheServices] deleteCachedGroup:group syncId:nonSyncedGroup.syncId];
 			}
 			[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
 											 group, @"object",
@@ -174,27 +174,27 @@
 		NSString *notificationName = [self notificationNameForRequest:request];
 		if ([notificationName isEqualToString:TasksDidLoadNotification]) {
 			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
-			[self.tasksWithGroupIdDict setValue:dict forKey:key];
-			[self saveTasksWithGroupId];
+			[[CacheServices sharedCacheServices].tasksWithGroupIdDict setValue:dict forKey:key];
+			[[CacheServices sharedCacheServices] saveTasksWithGroupId];
 		} else if ([notificationName isEqualToString:TasksDueDidLoadNotification]) {
 			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
-			[self.tasksWithDueDict setValue:dict forKey:key];
-			[self saveTasksWithDue];
+			[[CacheServices sharedCacheServices].tasksWithDueDict setValue:dict forKey:key];
+			[[CacheServices sharedCacheServices] saveTasksWithDue];
 		} else if ([notificationName isEqualToString:TasksDueTodayDidLoadNotification]) {
 			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
-			[self.tasksDueTodayDict removeAllObjects];
-			[self.tasksDueTodayDict setValue:dict forKey:key];
-			[self saveTasksDueToday];
+			[[CacheServices sharedCacheServices].tasksDueTodayDict removeAllObjects];
+			[[CacheServices sharedCacheServices].tasksDueTodayDict setValue:dict forKey:key];
+			[[CacheServices sharedCacheServices] saveTasksDueToday];
 		} else if ([notificationName isEqualToString:TasksWithinDidLoadNotification]) {
 			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
-			[self.tasksWithLatitudeDict removeAllObjects];
-			[self.tasksWithLatitudeDict setValue:dict forKey:key];
-			[self saveTasksWithLatitude];
+			[[CacheServices sharedCacheServices].tasksWithLatitudeDict removeAllObjects];
+			[[CacheServices sharedCacheServices].tasksWithLatitudeDict setValue:dict forKey:key];
+			[[CacheServices sharedCacheServices] saveTasksWithLatitude];
 		} if ([notificationName isEqualToString:TasksUpdatedSinceDidLoadNotification]) {
 			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
-			[self.editedTasksDict removeAllObjects];
-			[self.editedTasksDict setValue:dict forKey:key];
-			[self saveEditedTasks];
+			[[CacheServices sharedCacheServices].editedTasksDict removeAllObjects];
+			[[CacheServices sharedCacheServices].editedTasksDict setValue:dict forKey:key];
+			[[CacheServices sharedCacheServices] saveEditedTasks];
 		}
 		
 		
@@ -257,7 +257,7 @@
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		User *user = [User fromJSONData:request.responseData];
 		if (![user.userId isEqual:self.user.userId]) {
-			[self clearPersistedData];
+			[[CacheServices sharedCacheServices] clearCachedData];
 		}
 		self.user = user;
 		if (user) {

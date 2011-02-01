@@ -46,7 +46,7 @@
 - (void)refreshTasks
 {
 	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-	NSArray *archivedContent = [[APIServices sharedAPIServices].editedTasksDict
+	NSArray *archivedContent = [[CacheServices sharedCacheServices].editedTasksDict
 								valueForKeyPath:[NSString stringWithFormat:@"%@.content", editedAt]];
 	self.hasCachedData = (archivedContent != nil);
 	[self reloadTasks:archivedContent];

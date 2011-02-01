@@ -10,6 +10,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		24268C3612F647EB00969CBB /* NSDictionary+Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 24268C3512F647EB00969CBB /* NSDictionary+Persistence.m */; };
+		24269EC812F846F300969CBB /* CacheServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 24269EC712F846F300969CBB /* CacheServices.m */; };
 		2434D66F12B59F32007B8A13 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2434D66E12B59F32007B8A13 /* ResetPasswordViewController.m */; };
 		2434D67112B59F56007B8A13 /* ResetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2434D67012B59F56007B8A13 /* ResetPasswordView.xib */; };
 		243A35D012E3DC4300A6D402 /* DefaultStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A35CE12E3DC4300A6D402 /* DefaultStyleSheet.m */; };
@@ -483,6 +484,8 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		24268C3412F647EB00969CBB /* NSDictionary+Persistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Persistence.h"; sourceTree = "<group>"; };
 		24268C3512F647EB00969CBB /* NSDictionary+Persistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Persistence.m"; sourceTree = "<group>"; };
+		24269EC612F846F300969CBB /* CacheServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheServices.h; sourceTree = "<group>"; };
+		24269EC712F846F300969CBB /* CacheServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheServices.m; sourceTree = "<group>"; };
 		2434D66D12B59F32007B8A13 /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
 		2434D66E12B59F32007B8A13 /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordViewController.m; sourceTree = "<group>"; };
 		2434D67012B59F56007B8A13 /* ResetPasswordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetPasswordView.xib; sourceTree = "<group>"; };
@@ -1114,6 +1117,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		24269EC512F846CC00969CBB /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				24269EC612F846F300969CBB /* CacheServices.h */,
+				24269EC712F846F300969CBB /* CacheServices.m */,
+			);
+			name = Cache;
+			sourceTree = "<group>";
+		};
 		2434D66512B59EAC007B8A13 /* Reset */ = {
 			isa = PBXGroup;
 			children = (
@@ -1289,6 +1301,7 @@
 				248921C5128ED28700DC9712 /* APIServices.m */,
 				248921C9128EDE0200DC9712 /* APIServices+Parsing.h */,
 				248921CA128EDE0200DC9712 /* APIServices+Parsing.m */,
+				24269EC512F846CC00969CBB /* Cache */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -2878,6 +2891,7 @@
 				245680A912F06F720004189D /* TISwipeableTableView.m in Sources */,
 				245680FF12F072730004189D /* TasksCalendarCell.m in Sources */,
 				24268C3612F647EB00969CBB /* NSDictionary+Persistence.m in Sources */,
+				24269EC812F846F300969CBB /* CacheServices.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

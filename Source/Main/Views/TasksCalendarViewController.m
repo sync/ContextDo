@@ -63,7 +63,7 @@
 
 - (void)refreshTasks
 {
-	NSArray *archivedContent = [[APIServices sharedAPIServices].tasksWithDueDict 
+	NSArray *archivedContent = [[CacheServices sharedCacheServices].tasksWithDueDict 
 								valueForKeyPath:[NSString stringWithFormat:@"%@.content", [self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]]];
 	self.hasCachedData = (archivedContent != nil);
 	[self reloadTasks:archivedContent];

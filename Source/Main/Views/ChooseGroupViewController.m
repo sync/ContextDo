@@ -120,7 +120,7 @@
 
 - (void)refreshGroups
 {
-	NSArray *archivedContent = [[APIServices sharedAPIServices].groupsDict valueForKey:@"content"];
+	NSArray *archivedContent = [[CacheServices sharedCacheServices].groupsDict valueForKey:@"content"];
 	self.hasCachedData = (archivedContent != nil);
 	[self reloadGroups:archivedContent];
 	
