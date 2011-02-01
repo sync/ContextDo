@@ -34,8 +34,6 @@
 
 - (void)refreshTask
 {
-	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStartForKey:) withObject:@"direction" waitUntilDone:FALSE];
-	
 	for (id<MKAnnotation> annotation in self.mapView.annotations) {
 		if ([annotation isKindOfClass:[UICRouteAnnotation class]]) {
 			[self.mapView removeAnnotation:annotation];
@@ -82,8 +80,6 @@
 #pragma mark UICGDirectionsDelegate
 
 - (void)directionsDidUpdateDirections:(UICGDirections *)aDirections {
-	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStopForKey:) withObject:@"direction" waitUntilDone:FALSE];
-	
 	// Overlay polylines
 	UICGPolyline *polyline = [[aDirections routeAtIndex:0] overviewPolyline];
 	NSArray *routePoints = [polyline points];
@@ -140,7 +136,6 @@
 }
 
 - (void)directions:(UICGDirections *)directions didFailWithMessage:(NSString *)message {
-	[self performSelectorOnMainThread:@selector(baseLoadingViewCenterDidStopForKey:) withObject:@"direction" waitUntilDone:FALSE];
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
 	[alertView show];
 	[alertView release];

@@ -18,11 +18,19 @@
 {
 	if (self.userEdited ) {
 		[[APIServices sharedAPIServices]updateTask:self.task];
-	} else if (![self.task.dueAt isEqual:self.datePicker.date]) {
-		if (self.onOffSwitch.on) {
+		self.userEdited = FALSE;
+	} else if (self.datePicker) {
+		BOOL shouldRefresh = FALSE;
+		if (self.onOffSwitch.on && ![self.task.dueAt isEqual:self.datePicker.date]) {
 			self.task.dueAt = self.datePicker.date;
+			shouldRefresh = TRUE;
+		} else if (!self.onOffSwitch.on && self.task.dueAt) {
+			self.task.dueAt = nil;
+			shouldRefresh = TRUE;
 		}
-		[[APIServices sharedAPIServices]updateTask:self.task];
+		if (shouldRefresh) {
+			[[APIServices sharedAPIServices]updateTask:self.task];
+		}
 	}
 }
 

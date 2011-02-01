@@ -83,6 +83,10 @@
 
 - (void)reloadTasks:(NSArray *)newTasks
 {
+	if ([newTasks isEqualToArray:self.tasks]) {
+		return;
+	}
+	
 	[self.tasksCalendarDataSource resetContent];
 	
 	self.tasks = newTasks;

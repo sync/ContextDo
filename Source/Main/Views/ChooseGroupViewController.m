@@ -71,6 +71,10 @@
 
 - (void)reloadGroups:(NSArray *)newGroups
 {
+	if ([newGroups isEqualToArray:self.groups]) {
+		return;
+	}
+	
 	[self.chooseGroupDataSource resetContent];
 	
 	self.groups = newGroups;

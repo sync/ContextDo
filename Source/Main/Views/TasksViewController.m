@@ -107,6 +107,10 @@
 
 - (void)reloadTasks:(NSArray *)newTasks
 {
+	if ([newTasks isEqualToArray:self.tasks]) {
+		return;
+	}
+	
 	[self.tasksDataSource resetContent];
 	
 	self.tasks = newTasks;

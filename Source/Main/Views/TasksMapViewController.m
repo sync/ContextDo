@@ -158,6 +158,10 @@
 
 - (void)reloadTasks:(NSArray *)newTasks
 {
+	if ([newTasks isEqualToArray:self.tasks]) {
+		return;
+	}
+	
 	self.tasks = newTasks;
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueAt == nil || dueToday == %@ || expired == %@", 
