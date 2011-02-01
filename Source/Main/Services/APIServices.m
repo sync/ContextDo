@@ -232,6 +232,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		return;
 	}
 	
+	group.syncId = [NSNumber numberWithInteger:[[[UIDevice currentDevice]uniqueIdentifier]hash]];
+	
 	NSString *notificationName = GroupAddNotification;
 	NSString *path = @"addGroupWithName";
 	
@@ -254,9 +256,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"dueCount",
 						  @"expiredCount",
 						  @"userId",
+						  @"syncId",
 						  nil];
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
+	[(NSMutableArray *)cachedGroups insertObject:group atIndex:0];
+	NSInteger position = 0;
+	for (Group *previousGroup in cachedGroups) {
+		previousGroup.position = [NSNumber numberWithInteger:position];
+		position++;
+	}
+	[self saveGroupsDict];
+	[[NSNotificationCenter defaultCenter]postNotificationName:GroupsDidChangeNotification object:nil];
+	
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
@@ -269,6 +283,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	if (!group) {
 		return;
 	}
+	
+	group.syncId = [NSNumber numberWithInteger:[[[UIDevice currentDevice]uniqueIdentifier]hash]];
 	
 	NSString *notificationName = GroupEditNotification;
 	NSString *path = @"addGroupWithName";
@@ -294,9 +310,26 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"dueCount",
 						  @"expiredCount",
 						  @"userId",
+						  @"syncId",
 						  nil];
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	Group *previousGroup = [self groupForId:group.groupId];
+	if (![previousGroup isEqual:group]) {
+		NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
+		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
+		if (idx != NSNotFound) {
+			[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
+			NSInteger position = 0;
+			for (Group *previousGroup in cachedGroups) {
+				previousGroup.position = [NSNumber numberWithInteger:position];
+				position++;
+			}
+			[self saveGroupsDict];
+			[[NSNotificationCenter defaultCenter]postNotificationName:GroupsDidChangeNotification object:nil];
+		}
+	}
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
@@ -324,6 +357,22 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.delegate = self;
 	
 	[request setRequestMethod:@"DELETE"];
+	
+	Group *previousGroup = [self groupForId:group.groupId];
+	if (previousGroup) {
+		NSArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
+		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
+		if (idx != NSNotFound) {
+			[(NSMutableArray *)cachedGroups removeObjectAtIndex:idx];
+			NSInteger position = 0;
+			for (Group *previousGroup in cachedGroups) {
+				previousGroup.position = [NSNumber numberWithInteger:position];
+				position++;
+			}
+			[self saveGroupsDict];
+			[[NSNotificationCenter defaultCenter]postNotificationName:GroupsDidChangeNotification object:nil];
+		}
+	}
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
@@ -706,6 +755,22 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 #pragma mark -
 #pragma mark Storage
+
+- (Group *)groupForId:(NSNumber *)groupId
+{
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"groupId == %@", groupId];
+	NSArray *foundGroups = [[self.groupsDict valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundGroups.count > 0) ? [foundGroups objectAtIndex:0] : nil;
+}
+
+- (Group *)groupForSyncId:(NSNumber *)syncId
+{
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
+	NSArray *foundGroups = [[self.groupsDict valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundGroups.count > 0) ? [foundGroups objectAtIndex:0] : nil;
+}
 
 - (NSMutableDictionary *)groupsDict
 {

@@ -103,9 +103,29 @@
 			return;
 		}
 		
+		Group *nonSyncedGroup = [info valueForKey:@"object"];
+		
+		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		Group *group = [Group fromJSONData:request.responseData];
 		if (group) {
+			Group *previousGroup = [self groupForSyncId:nonSyncedGroup.syncId];
+			if (![previousGroup isEqual:group]) {
+				NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
+				NSInteger idx = [cachedGroups indexOfObject:previousGroup];
+				if (idx != NSNotFound) {
+					[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
+					nonSyncedGroup.syncId = nil;
+					NSInteger position = 0;
+					for (Group *previousGroup in cachedGroups) {
+						previousGroup.position = [NSNumber numberWithInteger:position];
+						position++;
+					}
+					[self saveGroupsDict];
+					[[NSNotificationCenter defaultCenter]postNotificationName:GroupsDidChangeNotification object:nil];
+				}
+			}
+			
 			[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
 											 group, @"object",
 											 [info valueForKey:@"object"], @"group",

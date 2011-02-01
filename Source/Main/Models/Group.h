@@ -14,6 +14,8 @@
 @property (nonatomic, copy) NSNumber *dueCount;
 @property (nonatomic, copy) NSNumber *userId;
 
+@property (nonatomic, copy) NSNumber *syncId;
+
 @property (nonatomic) BOOL taskWithin;
 
 + (Group *)groupWithId:(NSNumber *)aGroupId

@@ -102,12 +102,10 @@
 {
 	[super setupDataSource];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupsDidChange:) name:GroupsDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldHidInfo) name:GroupShouldDismissInfo object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupEditNotification:) name:GroupEditNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupAddNotification:) name:GroupAddNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupDeletedNotification:) name:GroupDeleteNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupAddNotification];
 	
@@ -146,24 +144,17 @@
 
 - (void)groupAddNotification:(NSNotification *)notification
 {
-	NSDictionary *dict = [notification object];
-	Group *group = [dict valueForKey:@"object"];
-	if (group) {
-		NSString *groupName = [dict valueForKeyPath:@"group.name"];
-		if ([groupName isEqualToString:self.addGroupTextField.text]) {
-			self.addGroupTextField.text = nil;
-		}
-		if (!self.isShowingGroupsEdit) {
-			[self refreshGroups];
-		}
-	}
+	[self refreshGroups];
 }
 
 - (void)groupDeletedNotification:(NSNotification *)notification
 {
-	if (!self.isShowingGroupsEdit) {
-		[self refreshGroups];
-	}
+	[self refreshGroups];
+}
+
+- (void)groupsDidChange:(NSNotification *)notification
+{
+	[self.tableView reloadData];
 }
 
 - (void)reloadGroups:(NSArray *)newGroups
@@ -349,6 +340,7 @@
 {
 	[self.addGroupTextField resignFirstResponder];
 	Group *group = [Group groupWithName:self.addGroupTextField.text position:[NSNumber numberWithInteger:1]];
+	self.addGroupTextField.text = nil;
 	[[APIServices sharedAPIServices]addGroup:group];
 }
 

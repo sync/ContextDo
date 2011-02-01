@@ -38,6 +38,8 @@
 - (CGFloat)alertsDistancKmToSliderValue:(CGFloat)value;
 - (CGFloat)sliderValueToAlertsDistancKm:(CGFloat)value;
 
+- (Group *)groupForId:(NSNumber *)groupId;
+- (Group *)groupForSyncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *groupsDict;
 - (void)saveGroupsDict;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithGroupIdDict;
