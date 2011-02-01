@@ -90,7 +90,7 @@
 	[self.monthView reload];
 	
 	NSArray *filteredTasks = [self filteredTasksForDate:[NSDate date]];
-	if (filteredTasks) {
+	if (filteredTasks.count > 0) {
 		[self.tasksCalendarDataSource.content addObject:filteredTasks];
 	}
 	[self.tableView reloadData];
@@ -141,7 +141,7 @@
 	[self.tasksCalendarDataSource resetContent];
 	
 	NSArray *filteredTasks = [self filteredTasksForDate:date];
-	if (filteredTasks) {
+	if (filteredTasks.count > 0) {
 		[self.tasksCalendarDataSource.content addObject:filteredTasks];
 	}
 	[self.tableView reloadData];

@@ -98,7 +98,7 @@
 	
 	self.tasks = newTasks;
 	
-	if (self.tasks) {
+	if (self.tasks.count > 0) {
 		[self.tasksDataSource.content addObjectsFromArray:self.tasks];
 	}
 	[self.tableView reloadData];

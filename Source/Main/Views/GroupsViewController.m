@@ -65,6 +65,8 @@
 {
 	[super setupNavigationBar];
 	
+	self.navigationItem.leftBarButtonItem = self.editButtonItem;
+	
 	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 }
 
@@ -139,16 +141,10 @@
 
 - (void)reloadGroups:(NSArray *)newGroups
 {
-	if (newGroups.count == 0) {
-		[self.navigationItem setLeftBarButtonItem:nil animated:TRUE];
-	} else {
-		[self.navigationItem setLeftBarButtonItem:self.editButtonItem animated:TRUE];
-	}
-	
 	[self.groupsDataSource resetContent];
 	
 	self.groups = newGroups;
-	if (self.groups) {
+	if (self.groups.count > 0) {
 		[self.groupsDataSource.content addObject:self.groups];
 	}
 	

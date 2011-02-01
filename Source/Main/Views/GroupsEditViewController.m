@@ -110,7 +110,7 @@
 - (void)refreshDataSourceForGroups:(NSArray *)groups
 {
 	[self.groupsEditDataSource.content removeAllObjects];
-	if (groups) {
+	if (groups.count > 0) {
 		[self.groupsEditDataSource.content addObjectsFromArray:groups];
 	}
 	[self.tableView reloadData];

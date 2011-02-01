@@ -73,7 +73,7 @@
 	[self.chooseGroupDataSource resetContent];
 	
 	self.groups = newGroups;
-	if (self.groups) {
+	if (self.groups.count > 0) {
 		[self.chooseGroupDataSource.content addObjectsFromArray:self.groups];
 	}
 	
