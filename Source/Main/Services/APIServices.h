@@ -2,11 +2,19 @@
 #import "BaseASIServices.h"
 #import "NSDictionary+Persistence.h"
 
+#define AddedKey @"added"
+#define UpdatedKey @"updated"
+#define DeletedKey @"deleted"
+
 @interface APIServices : BaseASIServices {
 
 }
 
 + (APIServices *)sharedAPIServices;
+
+@property (nonatomic, retain) ASINetworkQueue *serialNetworkQueue;
+@property (nonatomic) BOOL groupOperationsUserSerialQueue;
+- (void)downloadSeriallyContentForUrl:(NSString *)url withObject:(id)object path:(NSString *)path notificationName:(NSString *)notificationName;
 
 @property (nonatomic, assign) NSString *apiToken;
 @property (nonatomic, assign) NSString *username;
@@ -20,6 +28,7 @@
 - (void)addGroup:(Group *)group;
 - (void)updateGroup:(Group *)group;
 - (void)deleteGroup:(Group *)group;
+- (void)syncGroups;
 
 - (void)refreshTasksWithGroupId:(NSNumber *)groupId;
 - (void)refreshTasksWithDue:(NSString *)due;
@@ -39,7 +48,6 @@
 - (CGFloat)sliderValueToAlertsDistancKm:(CGFloat)value;
 
 - (Group *)groupForId:(NSNumber *)groupId;
-- (Group *)groupForSyncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *groupsDict;
 - (void)saveGroupsDict;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithGroupIdDict;
@@ -53,6 +61,12 @@
 - (void)saveTasksWithLatitude;
 @property (nonatomic, readonly) NSMutableDictionary *editedTasksDict;
 - (void)saveEditedTasks;
+
+- (Group *)groupForSyncId:(NSNumber *)syncId;
+@property (nonatomic, readonly) NSMutableDictionary *groupsOutOfSyncDict;
+
 - (void)clearPersistedData;
+
+
 
 @end

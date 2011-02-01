@@ -5,6 +5,7 @@
 
 @interface GroupsEditViewController (private)
 
+- (void)syncGroups;
 
 @end
 
@@ -60,9 +61,12 @@
 		   forRowAtIndexPath:(NSIndexPath *)indexPath;
 {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		Group *group  = [self.groupsEditDataSource groupForIndexPath:indexPath];
+		Group *group = [[[self.groupsEditDataSource groupForIndexPath:indexPath]copy]autorelease];
+		
 		[self.groupsEditDataSource.content removeObjectAtIndex:indexPath.row];
 		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+		
+		[self syncGroups];
 		
 		[[APIServices sharedAPIServices]deleteGroup:group];
 		self.editChangesMade = TRUE;
@@ -73,14 +77,34 @@
 		  moveRowAtIndexPath:(NSIndexPath *)fromIndexPath 
 				 toIndexPath:(NSIndexPath *)toIndexPath
 {
-	Group *group  = [self.groupsEditDataSource groupForIndexPath:fromIndexPath];
-	[self.groupsEditDataSource.content exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
-	GroupsEditCell *cell = (GroupsEditCell *)[self.tableView cellForRowAtIndexPath:fromIndexPath];
-	cell.textField.tag = [self.groupsEditDataSource tagForRow:toIndexPath.row];
+	if ([fromIndexPath isEqual:toIndexPath]) {
+		return;
+	}
 	
-	group.position = [NSNumber numberWithInteger:toIndexPath.row];
+	Group *group = [[[self.groupsEditDataSource groupForIndexPath:fromIndexPath]copy]autorelease];
+	[self.groupsEditDataSource.content removeObjectAtIndex:fromIndexPath.row];
+	[self.groupsEditDataSource.content insertObject:group atIndex:toIndexPath.row];
+	
+	
+	[self syncGroups];
+	
+	group = [[[self.groupsEditDataSource groupForIndexPath:toIndexPath]copy]autorelease];
 	[[APIServices sharedAPIServices]updateGroup:group];
+	
 	self.editChangesMade = TRUE;
+}
+
+- (void)syncGroups
+{
+	for (NSInteger row = 0; row < [self.tableView numberOfRowsInSection:0]; row++) {
+		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+		GroupsEditCell *cell = (GroupsEditCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+		cell.textField.tag = [self.groupsEditDataSource tagForRow:row];
+		Group *group = [self.groupsEditDataSource groupForIndexPath:indexPath];
+		group.position = [NSNumber numberWithInteger:row];
+		DLog(@"name:%@ position:%@", group.name, group.position);
+	}	
+	DLog(@"\n\n");
 }
 
 - (void)refreshDataSourceForGroups:(NSArray *)groups
@@ -175,8 +199,10 @@
 	}
 	
 	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.groupsEditDataSource rowForTag:textField.tag] inSection:0];
-	Group *group =[self.groupsEditDataSource groupForIndexPath:indexPath];
+	Group *group = [[[self.groupsEditDataSource groupForIndexPath:indexPath]copy]autorelease];
 	group.name = textField.text;
+	
+	[self syncGroups];
 	
 	[[APIServices sharedAPIServices]updateGroup:group];
 }

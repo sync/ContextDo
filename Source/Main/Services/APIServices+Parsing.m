@@ -104,6 +104,14 @@
 		}
 		
 		Group *nonSyncedGroup = [info valueForKey:@"object"];
+		NSString *notificationName = [self notificationNameForRequest:request]; 
+		if ([notificationName isEqualToString:GroupAddNotification]) {
+			[self.groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:AddedKey];
+		} else if ([notificationName isEqualToString:GroupEditNotification]) {
+			[self.groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:UpdatedKey];
+		} else if ([notificationName isEqualToString:GroupDeleteNotification]) {
+			[self.groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:DeletedKey];
+		}
 		
 		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
@@ -114,16 +122,18 @@
 				NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
 				NSInteger idx = [cachedGroups indexOfObject:previousGroup];
 				if (idx != NSNotFound) {
-					[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
-					nonSyncedGroup.syncId = nil;
-					NSInteger position = 0;
-					for (Group *previousGroup in cachedGroups) {
-						previousGroup.position = [NSNumber numberWithInteger:position];
-						position++;
+					if ([notificationName isEqualToString:GroupEditNotification]) {
+						[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
+					} else if ([notificationName isEqualToString:GroupDeleteNotification]) {
+						[(NSMutableArray *)cachedGroups removeObjectAtIndex:idx];
 					}
-					[self saveGroupsDict];
-					[[NSNotificationCenter defaultCenter]postNotificationName:GroupsDidChangeNotification object:nil];
+				} else {
+					if ([notificationName isEqualToString:GroupAddNotification]) {
+						[(NSMutableArray *)cachedGroups insertObject:group atIndex:group.position.integerValue];
+					}
 				}
+				nonSyncedGroup.syncId = nil;
+				[self saveGroupsDict];
 			}
 			
 			[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:

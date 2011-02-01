@@ -132,36 +132,17 @@
 	[self reloadGroups:newGroups];
 }
 
-- (void)groupEditNotification:(NSNotification *)notification
-{
-	NSDictionary *dict = [notification object];
-	
-	Group *group = [dict valueForKey:@"object"];
-	if (group) {
-		[self refreshGroups];
-	}
-}
-
-- (void)groupAddNotification:(NSNotification *)notification
-{
-	[self refreshGroups];
-}
-
-- (void)groupDeletedNotification:(NSNotification *)notification
-{
-	[self refreshGroups];
-}
-
 - (void)groupsDidChange:(NSNotification *)notification
 {
-	[self.tableView reloadData];
+	NSArray *newGroups = [notification object];
+	[self reloadGroups:newGroups];
 }
 
 - (void)reloadGroups:(NSArray *)newGroups
 {
-	if ([newGroups isEqualToArray:self.groups]) {
-		return;
-	}
+//	if ([newGroups isEqualToArray:self.groups]) {
+//		return;
+//	}
 	
 	[self.groupsDataSource resetContent];
 	
@@ -339,8 +320,8 @@
 - (void)addGroup
 {
 	[self.addGroupTextField resignFirstResponder];
-	Group *group = [Group groupWithName:self.addGroupTextField.text position:[NSNumber numberWithInteger:1]];
-	self.addGroupTextField.text = nil;
+	Group *group = [Group groupWithName:self.addGroupTextField.text position:[NSNumber numberWithInteger:0]];
+	[self.addGroupTextField performSelector:@selector(setText:) withObject:nil afterDelay:0.5];
 	[[APIServices sharedAPIServices]addGroup:group];
 }
 
@@ -432,9 +413,9 @@
 		return;
 	}
 	
-	if ([self.groupsEditViewController endEditing]) {
-		[self refreshGroups];
-	}
+//	if ([self.groupsEditViewController endEditing]) {
+//		[self refreshGroups];
+//	}
 	
 	self.navigationItem.leftBarButtonItem = nil;
 	

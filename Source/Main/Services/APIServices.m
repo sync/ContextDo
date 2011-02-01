@@ -2,13 +2,42 @@
 #import "BaseASIServices+Utils.h"
 #import "APIServices+Parsing.h"
 #import "NSDate+Extensions.h"
+#import "Reachability.h"
 
 @implementation APIServices
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 @synthesize groupsDict, tasksWithGroupIdDict, editedTasksDict;
-@synthesize tasksWithLatitudeDict, tasksWithDueDict, tasksDueTodayDict;
+@synthesize tasksWithLatitudeDict, tasksWithDueDict, tasksDueTodayDict, groupsOutOfSyncDict;
+@synthesize groupOperationsUserSerialQueue, serialNetworkQueue;
+
+#pragma mark -
+#pragma mark Serial Queue
+
+- (ASINetworkQueue *)serialNetworkQueue
+{
+	if (!serialNetworkQueue) {
+		serialNetworkQueue = [[ASINetworkQueue alloc] init];
+		[serialNetworkQueue setMaxConcurrentOperationCount:1];
+		if ([self respondsToSelector:@selector(fetchStarted:)]) {
+			[serialNetworkQueue setRequestDidStartSelector:@selector(fetchStarted:)];
+		}
+		if ([self respondsToSelector:@selector(fetchCompleted:)]) {
+			[serialNetworkQueue setRequestDidFinishSelector:@selector(fetchCompleted:)];
+		}
+		if ([self respondsToSelector:@selector(fetchFailed:)]) {
+			[serialNetworkQueue setRequestDidFailSelector:@selector(fetchFailed:)];
+		}
+		if ([self respondsToSelector:@selector(queueFinished:)]) {
+			[serialNetworkQueue setQueueDidFinishSelector:@selector(queueFinished:)];
+		}
+		
+		[serialNetworkQueue setDelegate:self];
+	}
+	
+	return serialNetworkQueue;
+}
 
 #pragma mark -
 #pragma mark Request Constructors
@@ -203,19 +232,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 }
 
 #pragma mark -
-#pragma mark Content Management
-
-- (void)applicationWillResignActive
-{
-	[super applicationWillResignActive];
-	
-	[self saveGroupsDict];
-}
-
-#pragma mark -
 #pragma mark Groups
 
 #define GroupsKey @"groups"
+
+- (BOOL)groupOperationsUserSerialQueue
+{
+	return ([[self.groupsOutOfSyncDict valueForKey:AddedKey]count] > 0 ||
+			[[self.groupsOutOfSyncDict valueForKey:UpdatedKey]count] > 0 ||
+			[[self.groupsOutOfSyncDict valueForKey:DeletedKey]count] > 0);
+}
 
 - (void)refreshGroups
 {
@@ -223,7 +249,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *path = GroupsKey;
 	
 	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
-	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+	if (self.groupOperationsUserSerialQueue) {
+		[self syncGroups];
+		[self downloadSeriallyContentForUrl:url withObject:nil path:path notificationName:notificationName];
+	} else {
+		[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
+	}
 }
 
 - (void)addGroup:(Group *)group
@@ -232,7 +263,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		return;
 	}
 	
-	group.syncId = [NSNumber numberWithInteger:[[[UIDevice currentDevice]uniqueIdentifier]hash]];
+	if (!group.syncId) {
+		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
+		[self.groupsOutOfSyncDict setObjectUnderArray:group forKey:AddedKey];
+	}
 	
 	NSString *notificationName = GroupAddNotification;
 	NSString *path = @"addGroupWithName";
@@ -261,22 +295,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
-	[(NSMutableArray *)cachedGroups insertObject:group atIndex:0];
-	NSInteger position = 0;
-	for (Group *previousGroup in cachedGroups) {
-		previousGroup.position = [NSNumber numberWithInteger:position];
-		position++;
+	Group *previousGroup = [self groupForId:group.groupId];
+	if (!previousGroup || ![previousGroup isEqual:group]) {
+		NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
+		[(NSMutableArray *)cachedGroups insertObject:group atIndex:group.position.integerValue];
+		[self saveGroupsDict];
 	}
-	[self saveGroupsDict];
-	[[NSNotificationCenter defaultCenter]postNotificationName:GroupsDidChangeNotification object:nil];
 	
+	if  (self.groupOperationsUserSerialQueue) {
+		[self.serialNetworkQueue addOperation:request];
+		[self.serialNetworkQueue go];
+	} else {
+		[self.networkQueue addOperation:request];
+		[self.networkQueue go];
+	}
 	
-	[self.networkQueue addOperation:request];
-	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
-
 
 - (void)updateGroup:(Group *)group
 {
@@ -284,7 +319,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		return;
 	}
 	
-	group.syncId = [NSNumber numberWithInteger:[[[UIDevice currentDevice]uniqueIdentifier]hash]];
+	if (!group.syncId) {
+		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
+		[self.groupsOutOfSyncDict setObjectUnderArray:group forKey:UpdatedKey];
+	}
 	
 	NSString *notificationName = GroupEditNotification;
 	NSString *path = @"addGroupWithName";
@@ -315,24 +353,24 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
+	NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
 	Group *previousGroup = [self groupForId:group.groupId];
 	if (![previousGroup isEqual:group]) {
-		NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
 		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
 		if (idx != NSNotFound) {
 			[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
-			NSInteger position = 0;
-			for (Group *previousGroup in cachedGroups) {
-				previousGroup.position = [NSNumber numberWithInteger:position];
-				position++;
-			}
-			[self saveGroupsDict];
-			[[NSNotificationCenter defaultCenter]postNotificationName:GroupsDidChangeNotification object:nil];
 		}
 	}
+	[self saveGroupsDict];
 	
-	[self.networkQueue addOperation:request];
-	[self.networkQueue go];
+	
+	if  (self.groupOperationsUserSerialQueue) {
+		[self.serialNetworkQueue addOperation:request];
+		[self.serialNetworkQueue go];
+	} else {
+		[self.networkQueue addOperation:request];
+		[self.networkQueue go];
+	}
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
@@ -340,6 +378,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 {
 	if (!group) {
 		return;
+	}
+	
+	if (!group.syncId) {
+		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
+		[self.groupsOutOfSyncDict setObjectUnderArray:group forKey:DeletedKey];
 	}
 	
 	NSString *notificationName = GroupDeleteNotification;
@@ -364,19 +407,42 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
 		if (idx != NSNotFound) {
 			[(NSMutableArray *)cachedGroups removeObjectAtIndex:idx];
-			NSInteger position = 0;
-			for (Group *previousGroup in cachedGroups) {
-				previousGroup.position = [NSNumber numberWithInteger:position];
-				position++;
-			}
 			[self saveGroupsDict];
-			[[NSNotificationCenter defaultCenter]postNotificationName:GroupsDidChangeNotification object:nil];
 		}
 	}
 	
-	[self.networkQueue addOperation:request];
-	[self.networkQueue go];
+	if  (self.groupOperationsUserSerialQueue) {
+		[self.serialNetworkQueue addOperation:request];
+		[self.serialNetworkQueue go];
+	} else {
+		[self.networkQueue addOperation:request];
+		[self.networkQueue go];
+	}
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
+}
+
+- (void)syncGroups
+{
+	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != kNotReachable) {
+		NSArray *addedGroups = [[[self.groupsOutOfSyncDict valueForKey:AddedKey]copy]autorelease];
+		for (Group *group in addedGroups) {
+			Group *mostUpToDate = [self groupForSyncId:group.syncId];
+			if (mostUpToDate) {
+				[self addGroup:mostUpToDate];
+			}
+		}
+		NSArray *updatedGroups = [[[self.groupsOutOfSyncDict valueForKey:UpdatedKey]copy]autorelease];
+		for (Group *group in updatedGroups) {
+			Group *mostUpToDate = [self groupForSyncId:group.syncId];
+			if (mostUpToDate) {
+				[self updateGroup:mostUpToDate];
+			}
+		}
+		NSArray *deletedGroups = [[[self.groupsOutOfSyncDict valueForKey:DeletedKey]copy]autorelease];
+		for (Group *group in deletedGroups) {
+			[self deleteGroup:group];
+		}
+	}
 }
 
 #pragma mark -
@@ -697,6 +763,26 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
+- (void)downloadSeriallyContentForUrl:(NSString *)url withObject:(id)object path:(NSString *)path notificationName:(NSString *)notificationName
+{
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  path, @"path",
+							  notificationName, @"notificationName",
+							  object, @"object",
+							  nil];
+	
+	ASIHTTPRequest *request = [self requestWithUrl:url];
+	request.userInfo = userInfo;
+	request.delegate = self;
+	
+	request.username = self.username;
+	request.password = self.password;
+	
+	[self.serialNetworkQueue addOperation:request];
+	[self.serialNetworkQueue go];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
+}
+
 #pragma mark -
 #pragma mark ASIHTTPRequest delegate
 
@@ -766,14 +852,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	return (foundGroups.count > 0) ? [foundGroups objectAtIndex:0] : nil;
 }
 
-- (Group *)groupForSyncId:(NSNumber *)syncId
-{
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
-	NSArray *foundGroups = [[self.groupsDict valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
-	
-	return (foundGroups.count > 0) ? [foundGroups objectAtIndex:0] : nil;
-}
-
 - (NSMutableDictionary *)groupsDict
 {
 	if (!groupsDict) {
@@ -788,7 +866,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 - (void)saveGroupsDict
 {
+	NSSortDescriptor *order = [[[NSSortDescriptor alloc]initWithKey:@"position" ascending:TRUE]autorelease];
+	NSArray *sortDescriptors = [NSArray arrayWithObject:order];
+	NSArray *content = [self.groupsDict valueForKey:@"content"];
+	[(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
 	[self.groupsDict saveDictForKey:GroupsKey];
+	[[NSNotificationCenter defaultCenter]postNotificationName:GroupsDidChangeNotification object:content];
 }
 
 - (NSMutableDictionary *)tasksWithGroupIdDict
@@ -897,8 +980,42 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[self.editedTasksDict saveDictForKey:EditedTasksKey];
 }
 
+#pragma mark -
+#pragma mark Syncing
+
+#define GroupsOutOfSyncKey @"GroupsOutOfSyncKey"
+
+- (Group *)groupForSyncId:(NSNumber *)syncId
+{
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
+	NSArray *foundGroups = [[self.groupsDict valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundGroups.count > 0) ? [foundGroups objectAtIndex:0] : nil;
+}
+
+- (NSMutableDictionary *)groupsOutOfSyncDict
+{
+	if (!groupsOutOfSyncDict) {
+		groupsOutOfSyncDict = [[NSDictionary savedDictForKey:GroupsOutOfSyncKey]mutableCopy]; 
+		if (!groupsOutOfSyncDict) {
+			groupsOutOfSyncDict = [[NSMutableDictionary alloc]init];
+		}
+	}
+	
+	return groupsOutOfSyncDict;
+}
+
+- (void)savegroupsOutOfSync
+{
+	[self.groupsOutOfSyncDict saveDictForKey:GroupsOutOfSyncKey];
+}
+
 - (void)clearPersistedData
 {
+	[self.groupsOutOfSyncDict removeAllObjects];
+	[self savegroupsOutOfSync];
+	[groupsOutOfSyncDict release];
+	groupsOutOfSyncDict = nil;
 	[self.tasksWithGroupIdDict removeAllObjects];
 	[self saveTasksWithGroupId];
 	[tasksWithGroupIdDict release];
@@ -926,6 +1043,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 - (void)dealloc
 {
+	[serialNetworkQueue release];
+	[groupsOutOfSyncDict release];
 	[editedTasksDict release];
 	[tasksWithLatitudeDict release];
 	[tasksWithDueDict release];
