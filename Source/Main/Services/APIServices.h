@@ -41,6 +41,7 @@
 - (void)updateTask:(Task *)task;
 - (void)deleteTask:(Task *)task;
 
+@property (nonatomic, assign) User *user;
 - (void)refreshUser;
 - (void)updateUser:(User *)user;
 @property (nonatomic, assign) NSNumber *alertsDistanceWithin;

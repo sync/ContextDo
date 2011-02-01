@@ -268,6 +268,10 @@
 		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		User *user = [User fromJSONData:request.responseData];
+		if (![user.userId isEqual:self.user.userId]) {
+			[self clearPersistedData];
+		}
+		self.user = user;
 		if (user) {
 			[self notifyDone:request object:user];
 		} else {

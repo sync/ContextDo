@@ -94,15 +94,13 @@
 
 - (void)reloadTasks:(NSArray *)newTasks
 {
-	if ([newTasks isEqualToArray:self.tasks]) {
-		return;
-	}
-	
 	[self.tasksDataSource resetContent];
 	
 	self.tasks = newTasks;
 	
-	[self.tasksDataSource.content addObjectsFromArray:self.tasks];
+	if (self.tasks) {
+		[self.tasksDataSource.content addObjectsFromArray:self.tasks];
+	}
 	[self.tableView reloadData];
 }
 

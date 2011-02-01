@@ -67,10 +67,6 @@
 
 - (void)reloadTasks:(NSArray *)newTasks
 {
-	if ([newTasks isEqualToArray:self.tasksUpdatedDataSource.content]) {
-		return;
-	}
-	
 	[self.tasksUpdatedDataSource resetContent];
 	if (newTasks.count) {
 		[self.tasksUpdatedDataSource.content addObjectsFromArray:newTasks];

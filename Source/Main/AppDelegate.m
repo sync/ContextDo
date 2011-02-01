@@ -169,13 +169,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	[self enableGPS];
 	[[CTXDONotificationsServices sharedCTXDONotificationsServices]refreshTasksForLocalNotification];
 	[[APIServices sharedAPIServices]refreshGroups];
-	
 }
 
 - (void)showLoginView:(BOOL)animated
 {
 	[self.navigationController presentModalViewController:self.loginNavigationController animated:animated];
-	[[APIServices sharedAPIServices]clearPersistedData];
 }
 
 #pragma mark -

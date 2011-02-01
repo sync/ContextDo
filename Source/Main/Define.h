@@ -9,6 +9,7 @@
 #define ShouldUseDevServer @"ShouldUseDevServer"
 #define DevServerIp @"DevServerIp"
 #define AlertsDistanceWithinDefaultValue 1.0
+#define UserUserDefaults @"UserUserDefaults"
 
 #define FacebookApplicationId @"125665877503636"
 

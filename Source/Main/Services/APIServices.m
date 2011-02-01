@@ -45,7 +45,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 - (ASIHTTPRequest *)requestWithUrl:(NSString *)url
 {
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
-	request.numberOfTimesToRetryOnTimeout = 0;
+	request.numberOfTimesToRetryOnTimeout = 1;
 	request.timeOutSeconds = RequestTimeOutSeconds;
 	
 	[request addRequestHeader:@"Content-Type" value:@"application/json"];
@@ -129,6 +129,28 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		[[NSUserDefaults standardUserDefaults]removeObjectForKey:PasswordUserDefaults];
 	} else {
 		[[NSUserDefaults standardUserDefaults]setValue:password forKey:PasswordUserDefaults];
+	}
+	
+	[[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+- (User *)user
+{
+	NSData *data = [[NSUserDefaults standardUserDefaults]objectForKey:UserUserDefaults];
+	if(data.length == 0) {
+		return nil; 
+	}
+	
+	return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
+
+- (void)setUser:(User *)user
+{
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
+	if(data.length > 0) {
+		[[NSUserDefaults standardUserDefaults]setObject:data forKey:UserUserDefaults];
+	} else {
+		[[NSUserDefaults standardUserDefaults]removeObjectForKey:UserUserDefaults];
 	}
 	
 	[[NSUserDefaults standardUserDefaults]synchronize];
@@ -667,7 +689,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request setRequestMethod:@"PUT"];
 	
-	NSString *string = [user toJSON];
+	
+	NSArray *excluding = [NSArray arrayWithObjects:
+						  @"userId",
+						  nil];
+	NSString *string = [user toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
 	[self.networkQueue addOperation:request];
@@ -992,6 +1018,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 {
 	[self.groupsOutOfSyncDict saveDictForKey:GroupsOutOfSyncKey];
 }
+
+#pragma mark -
+#pragma mark Sessions Clearing
 
 - (void)clearPersistedData
 {

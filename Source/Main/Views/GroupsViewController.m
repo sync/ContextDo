@@ -65,8 +65,6 @@
 {
 	[super setupNavigationBar];
 	
-	self.navigationItem.leftBarButtonItem = self.editButtonItem;
-	
 	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 }
 
@@ -121,6 +119,7 @@
 																									   selector:@selector(addGroup)];
 
 	self.tableView.tableHeaderView.hidden = (self.groups.count == 0);
+	[self refreshGroups];
 }
 
 #pragma mark -
@@ -140,14 +139,18 @@
 
 - (void)reloadGroups:(NSArray *)newGroups
 {
-//	if ([newGroups isEqualToArray:self.groups]) {
-//		return;
-//	}
+	if (newGroups.count == 0) {
+		[self.navigationItem setLeftBarButtonItem:nil animated:TRUE];
+	} else {
+		[self.navigationItem setLeftBarButtonItem:self.editButtonItem animated:TRUE];
+	}
 	
 	[self.groupsDataSource resetContent];
 	
 	self.groups = newGroups;
-	[self.groupsDataSource.content addObject:self.groups];
+	if (self.groups) {
+		[self.groupsDataSource.content addObject:self.groups];
+	}
 	
 	Group *todayGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
 									  name:TodaysTasksPlacholder];
@@ -412,10 +415,6 @@
 	if (!self.isShowingGroupsEdit) {
 		return;
 	}
-	
-//	if ([self.groupsEditViewController endEditing]) {
-//		[self refreshGroups];
-//	}
 	
 	self.navigationItem.leftBarButtonItem = nil;
 	

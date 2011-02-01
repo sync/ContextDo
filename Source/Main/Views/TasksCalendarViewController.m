@@ -84,17 +84,13 @@
 
 - (void)reloadTasks:(NSArray *)newTasks
 {
-	if ([newTasks isEqualToArray:self.tasks]) {
-		return;
-	}
-	
 	[self.tasksCalendarDataSource resetContent];
 	
 	self.tasks = newTasks;
 	[self.monthView reload];
 	
 	NSArray *filteredTasks = [self filteredTasksForDate:[NSDate date]];
-	if (filteredTasks.count > 0) {
+	if (filteredTasks) {
 		[self.tasksCalendarDataSource.content addObject:filteredTasks];
 	}
 	[self.tableView reloadData];
@@ -145,7 +141,7 @@
 	[self.tasksCalendarDataSource resetContent];
 	
 	NSArray *filteredTasks = [self filteredTasksForDate:date];
-	if (filteredTasks.count > 0) {
+	if (filteredTasks) {
 		[self.tasksCalendarDataSource.content addObject:filteredTasks];
 	}
 	[self.tableView reloadData];

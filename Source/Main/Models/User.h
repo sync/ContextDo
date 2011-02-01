@@ -5,6 +5,7 @@
 
 }
 
+@property (nonatomic, retain) NSNumber *userId;
 @property (nonatomic, retain) NSDictionary *settings;
 @property (nonatomic, retain) NSString *facebookAccessToken;
 @property (nonatomic, retain) NSString *hasFacebookAccessToken;

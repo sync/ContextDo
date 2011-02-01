@@ -70,14 +70,12 @@
 
 - (void)reloadGroups:(NSArray *)newGroups
 {
-	if ([newGroups isEqualToArray:self.groups]) {
-		return;
-	}
-	
 	[self.chooseGroupDataSource resetContent];
 	
 	self.groups = newGroups;
-	[self.chooseGroupDataSource.content addObject:self.groups];
+	if (self.groups) {
+		[self.chooseGroupDataSource.content addObjectsFromArray:self.groups];
+	}
 	
 	[self.tableView reloadData];
 }

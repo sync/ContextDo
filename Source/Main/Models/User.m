@@ -3,7 +3,7 @@
 
 @implementation User
 
-@synthesize settings, facebookAccessToken, hasFacebookAccessToken;
+@synthesize settings, facebookAccessToken, hasFacebookAccessToken, userId;
 
 + (User *)userWithSettings:(NSDictionary *)aSettings
 	   facebookAccessToken:(NSString *)aFacebookAccessToken
