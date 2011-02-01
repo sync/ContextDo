@@ -67,7 +67,7 @@
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
-	//[self refreshTasks];
+	[self refreshTasks];
 }
 
 #pragma mark -
@@ -232,6 +232,10 @@
 
 - (void)addAllAnnotationsTasks
 {
+	CLLocationDegrees maxLat = -90.0f;
+	CLLocationDegrees maxLon = -180.0f;
+	CLLocationDegrees minLat = 90.0f;
+	CLLocationDegrees minLon = 180.0f;
 	for (Task *task in self.todayTasks) {
 		if (task.taskId.integerValue != NSNotFound) {
 			CLLocation *location = [[[CLLocation alloc]initWithLatitude:task.latitude.doubleValue longitude:task.longitude.doubleValue]autorelease];
@@ -242,10 +246,28 @@
 			
 			annotation.task = task;
 			[self.mapView addAnnotation:annotation];
-			// zoom to current point
-			[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewLocationDefaultHightSpanInMeters, MapViewLocationDefaultHightSpanInMeters) animated:TRUE];			
+			
+			if(location.coordinate.latitude > maxLat) {
+				maxLat = location.coordinate.latitude;
+			}
+			if(location.coordinate.latitude < minLat) {
+				minLat = location.coordinate.latitude;
+			}
+			if(location.coordinate.longitude > maxLon) {
+				maxLon = location.coordinate.longitude;
+			}
+			if(location.coordinate.longitude < minLon) {
+				minLon = location.coordinate.longitude;
+			}
 		}
 	}
+	MKCoordinateRegion region;
+	region.center.latitude     = (maxLat + minLat) / 2;
+	region.center.longitude    = (maxLon + minLon) / 2;
+	region.span.latitudeDelta  = maxLat - minLat;
+	region.span.longitudeDelta = maxLon - minLon;
+	
+	[self.mapView setRegion:region animated:YES];
 }
 
 #pragma mark -
