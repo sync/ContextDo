@@ -15,7 +15,7 @@
 @implementation TasksCalendarViewController
 
 @synthesize tasks, group, mainNavController;
-@synthesize loadingView, noResultsView, tasksCalendarDataSource;
+@synthesize loadingView, noResultsView, tasksCalendarDataSource, hasCachedData;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -65,9 +65,8 @@
 {
 	NSArray *archivedContent = [[APIServices sharedAPIServices].tasksWithDueDict 
 								valueForKeyPath:[NSString stringWithFormat:@"%@.content", [self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]]];
-	if (archivedContent.count > 0) {
-		[self reloadTasks:archivedContent];
-	}
+	self.hasCachedData = (archivedContent != nil);
+	[self reloadTasks:archivedContent];
 	[[APIServices sharedAPIServices]refreshTasksWithDue:[self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]];
 }
 
@@ -107,9 +106,6 @@
 	
 	return (filterdEventsForDate.count > 0) ? [NSArray arrayWithArray:filterdEventsForDate] : nil;
 }
-
-#pragma mark -
-#pragma mark Actions
 
 #pragma mark -
 #pragma mark Calendar View
@@ -187,6 +183,10 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
+	if (self.hasCachedData) {
+		return;
+	}
+	
 	[self.noResultsView hide:FALSE];
 	
 	if (!self.loadingView) {

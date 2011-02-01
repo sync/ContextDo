@@ -9,8 +9,6 @@
 - (void)showMap;
 - (void)showCalendar;
 - (void)addTask;
-- (void)reloadTasks:(NSArray *)newTasks;
-- (void)refreshTasks;
 
 @end
 
@@ -18,7 +16,7 @@
 @implementation TasksContainerViewController
 
 @synthesize containerNavController, tasksViewController, group, containerView, tasksMapViewController;
-@synthesize tasksCalendarViewController, showCloseButton, tasks;
+@synthesize tasksCalendarViewController, showCloseButton;
 
 #pragma mark -
 #pragma mark Setup
@@ -34,32 +32,6 @@
 	[self.containerView addSubview:self.containerNavController.view];
 	self.containerNavController.view.frame = self.containerView.bounds;
 	
-	if (self.isTodayTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueTodayDidLoadNotification object:nil];
-	} else if (self.isNearTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
-	} else {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
-	}
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskDeleteNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];
-	
-	NSArray *archivedContent = nil;
-	if (self.isTodayTasks) {
-		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
-	} else if (self.isNearTasks) {
-		archivedContent = [APIServices sharedAPIServices].tasksWithin;
-	} else {
-		archivedContent = [[APIServices sharedAPIServices].tasksWithGroupIdDict 
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
-	}
-	if (archivedContent.count > 0) {
-		[self reloadTasks:archivedContent];
-	}
 	[self showList];
 }
 
@@ -160,57 +132,7 @@
 }
 
 #pragma mark -
-#pragma mark Content reloading
-
-- (BOOL)isTodayTasks
-{
-	return [self.group.name isEqualToString:TodaysTasksPlacholder];
-}
-
-- (BOOL)isNearTasks
-{
-	return [self.group.name isEqualToString:NearTasksPlacholder];
-}
-
-- (void)shouldReloadContent:(NSNotification *)notification
-{
-	NSDictionary *dict = [notification object];
-	
-	NSArray *newTasks = [dict valueForKey:@"tasks"];
-	[self reloadTasks:newTasks];
-}
-
-- (void)reloadTasks:(NSArray *)newTasks
-{
-	self.tasks = newTasks;
-	
-	if (self.tasksViewController.tasksSave == 0) {
-		[self.tasksViewController reloadTasks:self.tasks];
-	} else {
-		self.tasksViewController.tasksSave = self.tasks;
-	}
-	if (self.tasksMapViewController.tasksSave == 0) {
-		[self.tasksMapViewController reloadTasks:self.tasks];
-	} else {
-		self.tasksMapViewController.tasksSave = self.tasks;
-	}
-}
-
-#pragma mark -
 #pragma mark Actions
-
-- (void)refreshTasks
-{
-	// little bit of a hax
-	if (self.isTodayTasks) {
-		[[APIServices sharedAPIServices]refreshTasksDueToday];
-	} else if (self.isNearTasks) {
-		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-	} else {
-		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
-	}
-}
 
 - (void)segementControlChanged:(id)sender
 {

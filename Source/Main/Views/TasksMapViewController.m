@@ -19,7 +19,7 @@
 @implementation TasksMapViewController
 
 @synthesize mapView, tasks, directions, searchBar, group, mainNavController;
-@synthesize routeLine, routeLineView, todayTasks, tasksSave, searchString;
+@synthesize routeLine, routeLineView, todayTasks, tasksSave, searchString, hasCachedData;
 
 #pragma mark -
 #pragma mark Setup
@@ -49,6 +49,10 @@
 	
 	self.mapView.showsUserLocation = TRUE;
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskDeleteNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];	
+	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksSearchDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
@@ -59,7 +63,20 @@
 	} else {
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
-	[self reloadTasks:self.tasks];
+	NSArray *archivedContent = nil;
+	if (self.isTodayTasks) {
+		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
+		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
+	} else if (self.isNearTasks) {
+		archivedContent = [APIServices sharedAPIServices].tasksWithin;
+	} else {
+		archivedContent = [[APIServices sharedAPIServices].tasksWithGroupIdDict 
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
+	}
+	self.hasCachedData = (archivedContent != nil);
+	[self reloadTasks:archivedContent];
+	[self refreshTasks];
 }
 
 #pragma mark -
@@ -67,7 +84,7 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	if (self.tasksSave.count == 0 && self.tasks.count > 0) {
+	if (self.tasksSave.count == 0 && self.hasCachedData) {
 		return;
 	}
 	

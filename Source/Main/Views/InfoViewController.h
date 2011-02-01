@@ -10,4 +10,6 @@
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;
 
+@property (nonatomic) BOOL hasCachedData;
+
 @end

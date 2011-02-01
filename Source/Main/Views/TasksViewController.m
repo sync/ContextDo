@@ -1,6 +1,7 @@
 #import "TasksViewController.h"
 #import "TasksCell.h"
 #import "TaskContainerViewController.h"
+#import "NSDate+Extensions.h"
 
 @interface TasksViewController (private)
 
@@ -11,7 +12,7 @@
 
 @implementation TasksViewController
 
-@synthesize tasksDataSource, tasks, group, searchBar, tasksSave, mainNavController;
+@synthesize tasksDataSource, tasks, group, searchBar, tasksSave, mainNavController, hasCachedData;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -49,6 +50,10 @@
 {
 	[super setupDataSource];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskDeleteNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];	
+	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksSearchDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
@@ -64,7 +69,19 @@
 	self.tableView.dataSource = self.tasksDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
 	self.tableView.rowHeight = 88.0;
-	[self reloadTasks:self.tasks];
+	NSArray *archivedContent = nil;
+	if (self.isTodayTasks) {
+		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
+		archivedContent = [[APIServices sharedAPIServices].tasksDueTodayDict
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
+	} else if (self.isNearTasks) {
+		archivedContent = [APIServices sharedAPIServices].tasksWithin;
+	} else {
+		archivedContent = [[APIServices sharedAPIServices].tasksWithGroupIdDict 
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
+	}
+	self.hasCachedData = (archivedContent != nil);
+	[self reloadTasks:archivedContent];
 	[self refreshTasks];
 }
 
@@ -158,7 +175,7 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	if (self.tasksSave.count == 0 && self.tasks.count > 0) {
+	if (self.tasksSave.count == 0 && self.hasCachedData) {
 		return;
 	}
 	

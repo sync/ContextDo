@@ -31,4 +31,6 @@
 // Content Filtering
 @property (nonatomic, retain) NSString *searchString;
 
+@property (nonatomic) BOOL hasCachedData;
+
 @end

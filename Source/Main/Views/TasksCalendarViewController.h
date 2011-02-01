@@ -26,4 +26,6 @@
 
 - (void)refreshTasks;
 
+@property (nonatomic) BOOL hasCachedData;
+
 @end

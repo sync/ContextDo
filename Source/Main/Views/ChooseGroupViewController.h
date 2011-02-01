@@ -12,4 +12,6 @@
 
 @property (nonatomic, retain) Task *task;
 
+@property (nonatomic) BOOL hasCachedData;
+
 @end

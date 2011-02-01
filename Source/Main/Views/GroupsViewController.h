@@ -25,4 +25,6 @@
 @property (nonatomic, retain) IBOutlet UIButton *infoButton;
 - (IBAction)infoButtonPressed;
 
+@property (nonatomic) BOOL hasCachedData;
+
 @end

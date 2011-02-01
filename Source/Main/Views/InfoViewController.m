@@ -13,7 +13,7 @@
 
 @implementation InfoViewController
 
-@synthesize tasksUpdatedDataSource, mainNavController;
+@synthesize tasksUpdatedDataSource, mainNavController, hasCachedData;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -44,9 +44,8 @@
 	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
 	NSArray *archivedContent = [[APIServices sharedAPIServices].editedTasksDict
 								valueForKeyPath:[NSString stringWithFormat:@"%@.content", editedAt]];
-	if (archivedContent.count > 0) {
-		[self reloadTasks:archivedContent];
-	}
+	self.hasCachedData = (archivedContent != nil);
+	[self reloadTasks:archivedContent];
 }
 
 - (void)refreshTasks
@@ -113,7 +112,7 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	if (self.tasksUpdatedDataSource.content.count > 0) {
+	if (self.hasCachedData) {
 		return;
 	}
 	

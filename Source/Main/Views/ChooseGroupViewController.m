@@ -10,7 +10,7 @@
 
 @implementation ChooseGroupViewController
 
-@synthesize chooseGroupDataSource, groups, task;
+@synthesize chooseGroupDataSource, groups, task, hasCachedData;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -55,9 +55,8 @@
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	[self.tableView reloadData];
 	NSArray *archivedContent = [[APIServices sharedAPIServices].groupsDict valueForKey:@"content"];
-	if (archivedContent.count > 0) {
-		[self reloadGroups:archivedContent];
-	}
+	self.hasCachedData = (archivedContent != nil);
+	[self reloadGroups:archivedContent];
 	[[APIServices sharedAPIServices]refreshGroups];
 }
 
@@ -119,7 +118,7 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	if (self.groups.count > 0) {
+	if (self.hasCachedData) {
 		return;
 	}
 	
