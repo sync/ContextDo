@@ -748,7 +748,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		}
 		self.apiToken = nil;
 	} else {
-		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:[request.error localizedDescription] forKey:[self notificationNameForRequest:request]];
+		if (request.error.code != ASIConnectionFailureErrorType) {
+			[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:[request.error localizedDescription] forKey:[self notificationNameForRequest:request]];
+		}
 	}
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStopLoadingForKey:[self notificationNameForRequest:request]];
 }
