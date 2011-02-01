@@ -20,9 +20,6 @@
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;
 
-- (void)refreshTasks;
-- (void)reloadTasks:(NSArray *)newTasks;
-
 @property (nonatomic) BOOL hasCachedData;
 
 @end

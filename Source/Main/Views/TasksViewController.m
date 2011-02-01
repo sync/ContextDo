@@ -6,6 +6,8 @@
 @interface TasksViewController (private)
 
 - (void)cancelSearch;
+- (void)refreshTasks;
+- (void)reloadTasks:(NSArray *)newTasks;
 
 @end
 
@@ -50,18 +52,21 @@
 {
 	[super setupDataSource];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskDeleteNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskEditNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasks) name:TaskAddNotification object:nil];	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAllTasks) name:TaskDeleteNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAllTasks) name:TaskEditNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAllTasks) name:TaskAddNotification object:nil];	
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksSearchDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	if (self.isTodayTasks) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueTodayDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueTodayDidLoadNotification];
 	} else if (self.isNearTasks) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksWithinDidLoadNotification];
 	} else {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
 	
@@ -92,7 +97,11 @@
 {
 	NSDictionary *dict = [notification object];
 	
-	NSArray *newTasks = [dict valueForKey:@"tasks"];
+	NSArray *newTasks = [dict valueForKey:@"tasks"];	
+	if (![notification.name isEqualToString:TasksSearchDidLoadNotification] && self.tasksSave) {
+		self.tasksSave = newTasks;
+		return;
+	}
 	[self reloadTasks:newTasks];
 }
 
@@ -175,7 +184,7 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	if (self.tasksSave.count == 0 && self.hasCachedData) {
+	if (!self.tasksSave && self.hasCachedData) {
 		return;
 	}
 	
@@ -196,7 +205,6 @@
 
 - (void)refreshTasks
 {
-	// little bit of a hax
 	if (!self.tasksSave) {
 		if (self.isTodayTasks) {
 			[[APIServices sharedAPIServices]refreshTasksDueToday];
@@ -210,7 +218,23 @@
 		// search mode
 		[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
 	}
+}
+
+- (void)refreshAllTasks
+{
+	if (self.isTodayTasks) {
+		[[APIServices sharedAPIServices]refreshTasksDueToday];
+	} else if (self.isNearTasks) {
+		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+	} else {
+		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
+	}
 	
+	if (self.tasksSave) {
+		// search mode
+		[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
+	}
 }
 
 #pragma mark -

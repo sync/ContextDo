@@ -13,6 +13,7 @@
 - (void)cancelSearch;
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 - (void)addAllAnnotationsTasks;
+- (void)reloadTasks:(NSArray *)newTasks;
 
 @end
 
@@ -105,7 +106,6 @@
 
 - (void)refreshTasks
 {
-	// little bit of a hax
 	if (!self.tasksSave) {
 		if (self.isTodayTasks) {
 			[[APIServices sharedAPIServices]refreshTasksDueToday];

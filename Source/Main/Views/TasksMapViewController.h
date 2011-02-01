@@ -26,8 +26,6 @@
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;
 
-- (void)reloadTasks:(NSArray *)newTasks;
-
 // Content Filtering
 @property (nonatomic, retain) NSString *searchString;
 

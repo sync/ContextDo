@@ -401,7 +401,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *notificationName = TasksSearchDidLoadNotification;
 	NSString *path = TasksWithQueryKey;
 	
-	NSString *url = TASKSSEARCHURL(BASE_URL, TASKS_PATH, query);
+	NSString *url = TASKSSEARCHURL(BASE_URL, TASKS_PATH, [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
 	[self downloadContentForUrl:url withObject:query path:path notificationName:notificationName];
 }
 
