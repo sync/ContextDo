@@ -22,13 +22,20 @@
 - (void)addCachedGroup:(Group *)group syncId:(NSNumber *)syncId;
 - (void)updateCachedGroup:(Group *)group syncId:(NSNumber *)syncId;
 - (void)deleteCachedGroup:(Group *)group syncId:(NSNumber *)syncId;
-- (Group *)groupForId:(NSNumber *)groupId;
+- (Group *)cachedGroupForId:(NSNumber *)groupId;
+- (Group *)cachedGroupForSyncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *groupsDict;
 - (void)saveGroups;
 
+- (Task *)cachedTask:(Task *)task;
 - (void)addCachedTask:(Task *)task syncId:(NSNumber *)syncId;
-- (void)updateTask:(Task *)task syncId:(NSNumber *)syncId;
+- (void)updateCachedTask:(Task *)task syncId:(NSNumber *)syncId;
 - (void)deleteCachedTask:(Task *)task syncId:(NSNumber *)syncId;
+- (Task *)cachedTaskForGroupId:(NSNumber *)groupId taskId:(NSNumber *)taskId;
+- (Task *)cachedTaskForGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId;
+- (void)addCachedTask:(Task *)task forGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId;
+- (void)updateCachedTask:(Task *)task forGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId;
+- (void)deleteCachedTask:(Task *)task forGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithGroupIdDict;
 - (void)saveTasksWithGroupId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksDueTodayDict;
@@ -42,12 +49,10 @@
 - (void)saveEditedTasks;
 
 @property (nonatomic) BOOL groupOperationsShouldUseSerialQueue;
-- (Group *)groupForSyncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *groupsOutOfSyncDict;
 - (void)saveGroupsOutOfSync;
 
 @property (nonatomic) BOOL taskOperationsShouldUseSerialQueue;
-- (Task *)taskForSyncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksOutOfSyncDict;
 - (void)saveTasksOutOfSync;
 

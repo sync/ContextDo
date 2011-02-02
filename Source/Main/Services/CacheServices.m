@@ -14,7 +14,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 - (void)addCachedGroup:(Group *)group syncId:(NSNumber *)syncId
 {
-	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self groupForSyncId:syncId] : [self groupForId:group.groupId];
+	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self cachedGroupForSyncId:syncId] : [self cachedGroupForId:group.groupId];
 	if (!previousGroup) {
 		NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
 		[(NSMutableArray *)cachedGroups insertObject:group atIndex:group.position.integerValue];
@@ -25,7 +25,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (void)updateCachedGroup:(Group *)group syncId:(NSNumber *)syncId
 {
 	NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
-	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self groupForSyncId:syncId] : [self groupForId:group.groupId];
+	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self cachedGroupForSyncId:syncId] : [self cachedGroupForId:group.groupId];
 	if (![previousGroup isEqual:group]) {
 		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
 		if (idx != NSNotFound) {
@@ -37,7 +37,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 - (void)deleteCachedGroup:(Group *)group syncId:(NSNumber *)syncId
 {
-	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self groupForSyncId:syncId] : [self groupForId:group.groupId];
+	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self cachedGroupForSyncId:syncId] : [self cachedGroupForId:group.groupId];
 	if (previousGroup) {
 		NSArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
 		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
@@ -48,9 +48,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	}	
 }
 
-- (Group *)groupForId:(NSNumber *)groupId
+- (Group *)cachedGroupForId:(NSNumber *)groupId
 {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"groupId == %@", groupId];
+	NSArray *foundGroups = [[self.groupsDict valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundGroups.count > 0) ? [foundGroups objectAtIndex:0] : nil;
+}
+
+- (Group *)cachedGroupForSyncId:(NSNumber *)syncId
+{
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
 	NSArray *foundGroups = [[self.groupsDict valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
 	
 	return (foundGroups.count > 0) ? [foundGroups objectAtIndex:0] : nil;
@@ -81,58 +89,115 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 #pragma mark -
 #pragma mark Tasks Storage
 
-- (void)addCachedTask:(Task *)task syncId:(NSNumber *)syncId
+- (Task *)cachedTask:(Task *)task
 {
 	// iteration trough each tasks dicts
-	//		tasksWithGroupIdDict
+	//		tasksWithGroupIdDict ==> done
 	//		tasksDueTodayDict
 	//		tasksWithDueDict
 	//		tasksWithLatitudeDict
 	//		editedTasksDict
 	
+	Task *previousTask = [self cachedTaskForGroupId:task.groupId syncId:task.syncId];
 	
+	// find most up to date
+	return previousTask;
 	
-//	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self groupForSyncId:syncId] : [self groupForId:group.groupId];
-//	if (!previousTask) {
-//		NSMutableArray *cachedTasks = [self.tasksWithGroupIdDict valueForKey:@"content"];
-//		[(NSMutableArray *)cachedTasks insertObject:task atIndex:group.position.integerValue];
-//		[self saveGroups];
-//	}
 }
 
-- (void)updateTask:(Task *)task syncId:(NSNumber *)syncId
+- (void)addCachedTask:(Task *)task syncId:(NSNumber *)syncId
 {
-//	NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
-//	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self groupForSyncId:syncId] : [self groupForId:group.groupId];
-//	if (![previousGroup isEqual:group]) {
-//		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
-//		if (idx != NSNotFound) {
-//			[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
-//			[self saveGroups];
-//		}
-//	}
+	// iteration trough each tasks dicts
+	//		tasksWithGroupIdDict ==> done
+	//		tasksDueTodayDict
+	//		tasksWithDueDict
+	//		tasksWithLatitudeDict
+	//		editedTasksDict
+	[self addCachedTask:task forGroupId:task.groupId syncId:syncId];
+}
+
+- (void)updateCachedTask:(Task *)task syncId:(NSNumber *)syncId
+{
+	[self updateCachedTask:task forGroupId:task.groupId syncId:syncId];
 }
 
 - (void)deleteCachedTask:(Task *)task syncId:(NSNumber *)syncId
 {
-//	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self groupForSyncId:syncId] : [self groupForId:group.groupId];
-//	if (previousGroup) {
-//		NSArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
-//		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
-//		if (idx != NSNotFound) {
-//			[(NSMutableArray *)cachedGroups removeObjectAtIndex:idx];
-//			[self saveGroups];
-//		}
-//	}	
+	[self deleteCachedTask:task forGroupId:task.groupId syncId:syncId];
 }
 
-//- (Group *)groupForId:(NSNumber *)groupId
-//{
-//	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"groupId == %@", groupId];
-//	NSArray *foundGroups = [[self.groupsDict valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
-//	
-//	return (foundGroups.count > 0) ? [foundGroups objectAtIndex:0] : nil;
-//}
+- (Task *)cachedTaskForGroupId:(NSNumber *)groupId taskId:(NSNumber *)taskId
+{
+	NSString *key = [groupId stringValue];
+	NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
+	if (!dictionary) {
+		return nil;
+	}
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskId == %@", taskId];
+	NSArray *foundTasks = [[dictionary valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
+}
+
+- (Task *)cachedTaskForGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId
+{
+	NSString *key = [groupId stringValue];
+	NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
+	if (!dictionary) {
+		return nil;
+	}
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
+	NSArray *foundTasks = [[dictionary valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
+}
+
+- (void)addCachedTask:(Task *)task forGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId
+{
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForGroupId:groupId taskId:task.taskId] : [self cachedTaskForGroupId:groupId syncId:task.syncId];
+	if (!previousTask) {
+		NSString *key = [groupId stringValue];
+		NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
+		if (dictionary) {
+			NSArray *content = [dictionary valueForKey:@"content"];
+			[(NSMutableArray *)content addObject:task];
+		}
+		[self saveTasksWithGroupId];
+	}
+}
+
+- (void)updateCachedTask:(Task *)task forGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId
+{
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForGroupId:groupId taskId:task.taskId] : [self cachedTaskForGroupId:groupId syncId:task.syncId];
+	if (![previousTask isEqual:task]) {
+		NSString *key = [groupId stringValue];
+		NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
+		if (dictionary) {
+			NSArray *content = [dictionary valueForKey:@"content"];
+			NSInteger idx = [content indexOfObject:task];
+			if (idx != NSNotFound) {
+				[(NSMutableArray *)content replaceObjectAtIndex:idx withObject:task];
+				[self saveTasksWithGroupId];
+			}
+		}
+	}
+}
+
+- (void)deleteCachedTask:(Task *)task forGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId
+{
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForGroupId:groupId taskId:task.taskId] : [self cachedTaskForGroupId:groupId syncId:task.syncId];
+	if (previousTask) {
+		NSString *key = [groupId stringValue];
+		NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
+		if (dictionary) {
+			NSArray *content = [dictionary valueForKey:@"content"];
+			[(NSMutableArray *)content addObject:task];
+		}
+		[self saveTasksWithGroupId];
+	}
+}
 
 - (NSMutableDictionary *)tasksWithGroupIdDict
 {
@@ -252,14 +317,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 #define GroupsOutOfSyncKey @"GroupsOutOfSync"
 
-- (Group *)groupForSyncId:(NSNumber *)syncId
-{
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
-	NSArray *foundGroups = [[self.groupsDict valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
-	
-	return (foundGroups.count > 0) ? [foundGroups objectAtIndex:0] : nil;
-}
-
 - (NSMutableDictionary *)groupsOutOfSyncDict
 {
 	if (!groupsOutOfSyncDict) {
@@ -285,20 +342,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 }
 
 #define TasksOutOfSyncKey @"TasksOutOfSync"
-
-- (Task *)taskForSyncId:(NSNumber *)syncId
-{
-//	tasksWithGroupIdDict
-//	tasksDueTodayDict
-//	tasksWithDueDict
-//	tasksWithLatitudeDict
-//	editedTasksDict
-	
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
-	NSArray *foundTasks = [[self.tasksWithGroupIdDict valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
-	
-	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
-}
 
 - (NSMutableDictionary *)tasksOutOfSyncDict
 {

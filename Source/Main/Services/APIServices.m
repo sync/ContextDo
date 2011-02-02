@@ -408,14 +408,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		}
 		NSArray *addedGroups = [[[[CacheServices sharedCacheServices].groupsOutOfSyncDict valueForKey:AddedKey]copy]autorelease];
 		for (Group *group in addedGroups) {
-			Group *mostUpToDate = [[CacheServices sharedCacheServices] groupForSyncId:group.syncId];
+			Group *mostUpToDate = [[CacheServices sharedCacheServices] cachedGroupForSyncId:group.syncId];
 			if (mostUpToDate) {
 				[self addGroup:mostUpToDate];
 			}
 		}
 		NSArray *updatedGroups = [[[[CacheServices sharedCacheServices].groupsOutOfSyncDict valueForKey:UpdatedKey]copy]autorelease];
 		for (Group *group in updatedGroups) {
-			Group *mostUpToDate = [[CacheServices sharedCacheServices] groupForSyncId:group.syncId];
+			Group *mostUpToDate = [[CacheServices sharedCacheServices] cachedGroupForSyncId:group.syncId];
 			if (mostUpToDate) {
 				[self updateGroup:mostUpToDate];
 			}
@@ -548,6 +548,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
+	[[CacheServices sharedCacheServices] addCachedTask:task syncId:nil];
+	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
@@ -600,6 +602,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
+	[[CacheServices sharedCacheServices] updateCachedTask:task syncId:nil];
+	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
@@ -633,6 +637,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request setRequestMethod:@"DELETE"];
 	
+	[[CacheServices sharedCacheServices] deleteCachedTask:task syncId:nil];
+	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
@@ -647,14 +653,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		}
 		NSArray *addedTasks = [[[[CacheServices sharedCacheServices].tasksOutOfSyncDict valueForKey:AddedKey]copy]autorelease];
 		for (Task *task in addedTasks) {
-			Task *mostUpToDate = [[CacheServices sharedCacheServices] taskForSyncId:task.syncId];
+			Task *mostUpToDate = [[CacheServices sharedCacheServices]cachedTask:task];
 			if (mostUpToDate) {
 				[self addTask:mostUpToDate];
 			}
 		}
 		NSArray *updatedTasks = [[[[CacheServices sharedCacheServices].tasksOutOfSyncDict valueForKey:UpdatedKey]copy]autorelease];
 		for (Task *task in updatedTasks) {
-			Task *mostUpToDate = [[CacheServices sharedCacheServices] taskForSyncId:task.syncId];
+			Task *mostUpToDate = [[CacheServices sharedCacheServices]cachedTask:task];
 			if (mostUpToDate) {
 				[self updateTask:mostUpToDate];
 			}
