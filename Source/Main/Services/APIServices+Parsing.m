@@ -75,7 +75,7 @@
 		NSArray *content = [NSArray fromJSONData:request.responseData];
 		NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
 		[[CacheServices sharedCacheServices].groupsDict addEntriesFromDictionary:dict];
-		[[CacheServices sharedCacheServices] saveGroupsDict];
+		[[CacheServices sharedCacheServices]saveGroups];
 		
 		[self notifyDone:request object:content];
 	}
@@ -102,6 +102,8 @@
 		if ([[self notificationNameForRequest:request]isEqualToString:GroupDeleteNotification]) {
 			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:DeletedKey];
 			[[CacheServices sharedCacheServices] deleteCachedGroup:nonSyncedGroup syncId:nonSyncedGroup.syncId];
+			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
+			[[CacheServices sharedCacheServices]saveGroups];
 			[self notifyDone:request object:nil];
 			return;
 		}
@@ -121,6 +123,7 @@
 			} else if ([notificationName isEqualToString:GroupEditNotification]) {
 				[[CacheServices sharedCacheServices] updateCachedGroup:group syncId:nonSyncedGroup.syncId];
 			}
+			[[CacheServices sharedCacheServices]saveGroups];
 			[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
 											 group, @"object",
 											 [info valueForKey:@"object"], @"group",

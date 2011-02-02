@@ -6,6 +6,8 @@
 
 @interface TaskEditViewController (private)
 
+- (void)updateLocationWithDict:(NSString *)text;
+
 @end
 
 
@@ -110,20 +112,7 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	[self.noResultsView hide:FALSE];
-	
-	if (!self.loadingView) {
-		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
-		self.loadingView.delegate = self;
-		[self.view addSubview:self.loadingView];
-		[self.view bringSubviewToFront:self.loadingView];
-		[self.loadingView show:TRUE];
-	}
-	if (!self.task) {
-		self.loadingView.labelText = @"Creating";
-	} else {
-		self.loadingView.labelText = @"Updating";
-	}
+	// nothing
 }
 
 #pragma mark -
@@ -202,8 +191,14 @@
 	
 	MKPlacemark *placemark = [AppDelegate sharedAppDelegate].placemark;
 	
+	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
+		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
+		self.taskEditDataSource.tempTask.latitude = [NSNumber numberWithDouble:coordinate.latitude];
+		self.taskEditDataSource.tempTask.longitude = [NSNumber numberWithDouble:coordinate.longitude];
+	}
+	
+	NSString *formattedAddress = @"";
 	if (placemark.addressDictionary) {
-		NSString *formattedAddress = @"";
 		NSArray *keys = [NSArray arrayWithObjects:
 						 @"subThoroughfare", 
 						 @"thoroughfare", 
@@ -219,9 +214,31 @@
 				formattedAddress = [formattedAddress stringByAppendingFormat:@"%@%@", (formattedAddress.length == 0) ? @"" : (([key isEqualToString:@"thoroughfare"] || [key isEqualToString:@"postalCode"]) ? @" " : @", "), [placemark valueForKey:key]];
 			}
 		}
-		[self.taskEditDataSource setValue:formattedAddress forIndexPath:index];
-		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:index] withRowAnimation:UITableViewRowAnimationNone];
 	}
+	if (formattedAddress.length > 0) {
+		[self updateLocationWithDict:[NSDictionary dictionaryWithObjectsAndKeys:
+									  index, @"index",
+									  @"Unknown Location!", @"text",
+									  nil]];
+	} else {
+		[self updateLocationWithDict:[NSDictionary dictionaryWithObjectsAndKeys:
+									  index, @"index",
+									  @"Unknown Location!", @"text",
+									  nil]];
+		[self performSelector:@selector(updateLocationWithDict:)
+				   withObject:[NSDictionary dictionaryWithObjectsAndKeys:
+							   index, @"index",
+							   nil]
+				   afterDelay:0.4];
+	}
+}
+
+- (void)updateLocationWithDict:(NSDictionary *)dictionary
+{
+	NSIndexPath *index = [dictionary valueForKey:@"index"];
+	NSString *text = [dictionary valueForKey:@"text"];
+	[self.taskEditDataSource setValue:text forIndexPath:index];
+	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:index] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -24,7 +24,7 @@
 - (void)deleteCachedGroup:(Group *)group syncId:(NSNumber *)syncId;
 - (Group *)groupForId:(NSNumber *)groupId;
 @property (nonatomic, readonly) NSMutableDictionary *groupsDict;
-- (void)saveGroupsDict;
+- (void)saveGroups;
 
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithGroupIdDict;
 - (void)saveTasksWithGroupId;

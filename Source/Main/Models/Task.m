@@ -54,7 +54,7 @@
 - (BOOL)isClose
 {
 	CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue * 1000;
-	return (!self.completed && self.distance < distance);
+	return ((!self.completed || self.completedWithin24hours) && self.distance < distance);
 }
 
 - (BOOL)expired

@@ -509,6 +509,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		return;
 	}
 	
+	if (!task.syncId) {
+		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
+		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forKey:AddedKey];
+		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
+	}
+	
 	NSString *notificationName = TaskAddNotification;
 	NSString *path = @"addTask";
 	
@@ -551,6 +557,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 {
 	if (!task) {
 		return;
+	}
+	
+	if (!task.syncId) {
+		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
+		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forKey:AddedKey];
+		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
 	}
 	
 	NSString *notificationName = TaskEditNotification;
@@ -599,6 +611,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		return;
 	}
 	
+	if (!task.syncId) {
+		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
+		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forKey:AddedKey];
+		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
+	}
+	
 	NSString *notificationName = TaskDeleteNotification;
 	NSString *path = @"deleteTaskWitId";
 	
@@ -618,6 +636,34 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
+}
+
+- (void)syncTasks
+{
+	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != kNotReachable) {
+		if (self.serialNetworkQueue.requestsCount > 0 && ![CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
+			[self performSelector:@selector(syncTasks) withObject:nil afterDelay:0.5];
+			return;
+		}
+		NSArray *addedTasks = [[[[CacheServices sharedCacheServices].tasksOutOfSyncDict valueForKey:AddedKey]copy]autorelease];
+		for (Task *task in addedTasks) {
+			Task *mostUpToDate = [[CacheServices sharedCacheServices] taskForSyncId:task.syncId];
+			if (mostUpToDate) {
+				[self addTask:mostUpToDate];
+			}
+		}
+		NSArray *updatedTasks = [[[[CacheServices sharedCacheServices].tasksOutOfSyncDict valueForKey:UpdatedKey]copy]autorelease];
+		for (Task *task in updatedTasks) {
+			Task *mostUpToDate = [[CacheServices sharedCacheServices] taskForSyncId:task.syncId];
+			if (mostUpToDate) {
+				[self updateTask:mostUpToDate];
+			}
+		}
+		NSArray *deletedTasks = [[[[CacheServices sharedCacheServices].tasksOutOfSyncDict valueForKey:DeletedKey]copy]autorelease];
+		for (Task *task in deletedTasks) {
+			[self deleteTask:task];
+		}
+	}
 }
 
 #pragma mark -

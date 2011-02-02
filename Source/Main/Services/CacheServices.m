@@ -18,7 +18,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	if (!previousGroup) {
 		NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
 		[(NSMutableArray *)cachedGroups insertObject:group atIndex:group.position.integerValue];
-		[self saveGroupsDict];
+		[self saveGroups];
 	}
 }
 
@@ -32,7 +32,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 			[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
 		}
 	}
-	[self saveGroupsDict];
+	[self saveGroups];
 }
 
 - (void)deleteCachedGroup:(Group *)group syncId:(NSNumber *)syncId
@@ -43,7 +43,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
 		if (idx != NSNotFound) {
 			[(NSMutableArray *)cachedGroups removeObjectAtIndex:idx];
-			[self saveGroupsDict];
+			[self saveGroups];
 		}
 	}	
 }
@@ -68,7 +68,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	return groupsDict;
 }
 
-- (void)saveGroupsDict
+- (void)saveGroups
 {
 	NSSortDescriptor *order = [[[NSSortDescriptor alloc]initWithKey:@"position" ascending:TRUE]autorelease];
 	NSArray *sortDescriptors = [NSArray arrayWithObject:order];
@@ -273,8 +273,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	[self saveTasksOutOfSync];
 	[self.groupsOutOfSyncDict removeAllObjects];
 	[self saveGroupsOutOfSync];
-	[groupsOutOfSyncDict release];
-	groupsOutOfSyncDict = nil;
+	[self.groupsDict removeAllObjects];
+	[self saveGroups];
 	[self.tasksWithGroupIdDict removeAllObjects];
 	[self saveTasksWithGroupId];
 	[self.tasksWithDueDict removeAllObjects];

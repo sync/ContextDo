@@ -313,7 +313,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error 
 {
-    [placemark release];
+    DLog(@"reverseGeocoder failed with error:%@", [error localizedDescription]);
+	[placemark release];
 	placemark = nil;
 	reverseGeocoder.delegate = nil;
 	[reverseGeocoder release];
