@@ -112,7 +112,15 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	// nothing
+	[self.noResultsView hide:FALSE];
+	
+	if (!self.loadingView) {
+		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
+		self.loadingView.delegate = self;
+		[self.view addSubview:self.loadingView];
+		[self.view bringSubviewToFront:self.loadingView];
+		[self.loadingView show:TRUE];
+	}
 }
 
 #pragma mark -

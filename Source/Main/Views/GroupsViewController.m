@@ -102,7 +102,6 @@
 {
 	[super setupDataSource];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupsDidChange:) name:GroupsDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldHidInfo) name:GroupShouldDismissInfo object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
@@ -115,7 +114,6 @@
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
 	self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0);
 	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, 10.0, 0.0);
-	[self refreshGroups];
 	self.addGroupTextField.rightView = [[DefaultStyleSheet sharedDefaultStyleSheet]inputTextFieldButtonWithText:@"Add" 
 																										 target:self 
 																									   selector:@selector(addGroup)];
@@ -128,12 +126,6 @@
 #pragma mark Content reloading
 
 - (void)shouldReloadContent:(NSNotification *)notification
-{
-	NSArray *newGroups = [notification object];
-	[self reloadGroups:newGroups];
-}
-
-- (void)groupsDidChange:(NSNotification *)notification
 {
 	NSArray *newGroups = [notification object];
 	[self reloadGroups:newGroups];

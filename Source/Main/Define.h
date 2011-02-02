@@ -72,7 +72,6 @@
 #define GroupDeleteNotification @"GroupDeleteNotification"
 #define UserDidLoadNotification @"UserDidLoadNotification"
 #define UserEditNotification @"UserDidLoadNotification"
-#define GroupsDidChangeNotification @"GroupsDidChangeNotification"
 
 #define TodaysTasksPlacholder @"Todays tasks"
 #define NearTasksPlacholder @"Near tasks"

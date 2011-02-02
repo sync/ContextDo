@@ -544,6 +544,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"isFacebook",
 						  @"latLngString",
 						  @"syncId",
+						  @"editedToday",
+						  @"completedWithin24hours",
 						  nil];
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
@@ -598,6 +600,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"isFacebook",
 						  @"latLngString",
 						  @"syncId",
+						  @"editedToday",
+						  @"completedWithin24hours",
 						  nil];
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
