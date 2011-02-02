@@ -38,13 +38,25 @@
 - (void)deleteCachedTask:(Task *)task forGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithGroupIdDict;
 - (void)saveTasksWithGroupId;
-@property (nonatomic, readonly) NSMutableDictionary *tasksDueTodayDict;
-- (void)saveTasksDueToday;
+
+- (Task *)cachedTaskForDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt taskId:(NSNumber *)taskId;
+- (Task *)cachedTaskForDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithDueDict;
 - (void)saveTasksWithDue;
+
+- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt taskId:(NSNumber *)taskId;
+- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt syncId:(NSNumber *)syncId;
+@property (nonatomic, readonly) NSMutableDictionary *tasksDueTodayDict;
+- (void)saveTasksDueToday;
+
+- (Task *)cachedTaskForLatLngString:(NSString *)latLngString taskId:(NSNumber *)taskId;
+- (Task *)cachedTaskForLatLngString:(NSString *)latLngString syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithLatitudeDict;
 @property (nonatomic, readonly) NSArray *tasksWithin;
 - (void)saveTasksWithLatitude;
+
+- (Task *)cachedTaskForUpdatedAt:(NSDate *)updatedAt taskId:(NSNumber *)taskId;
+- (Task *)cachedTaskForUpdatedAt:(NSDate *)updatedAt syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *editedTasksDict;
 - (void)saveEditedTasks;
 

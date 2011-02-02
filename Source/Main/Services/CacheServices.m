@@ -1,5 +1,5 @@
 #import "CacheServices.h"
-
+#import "NSDate+Extensions.h"
 
 @implementation CacheServices
 
@@ -126,8 +126,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	[self deleteCachedTask:task forGroupId:task.groupId syncId:syncId];
 }
 
+#pragma mark -- by Group
+
 - (Task *)cachedTaskForGroupId:(NSNumber *)groupId taskId:(NSNumber *)taskId
 {
+	if (!groupId || !taskId) {
+		return nil;
+	}
+	
 	NSString *key = [groupId stringValue];
 	NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
 	if (!dictionary) {
@@ -142,6 +148,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 - (Task *)cachedTaskForGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId
 {
+	if (!groupId || !syncId) {
+		return nil;
+	}
+	
 	NSString *key = [groupId stringValue];
 	NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
 	if (!dictionary) {
@@ -216,6 +226,48 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	[self.tasksWithGroupIdDict saveDictForKey:TasksWithGroupIdKey];
 }
 
+#pragma mark -- by Due
+
+- (Task *)cachedTaskForDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt taskId:(NSNumber *)taskId
+{
+	if (!dueAt || completedAt || !taskId) {
+		return nil;
+	}
+	
+	// todo completedAt
+	
+	NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
+	NSDictionary *dictionary = [self.tasksWithDueDict valueForKey:key];
+	if (!dictionary) {
+		return nil;
+	}
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskId == %@", taskId];
+	NSArray *foundTasks = [[dictionary valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
+}
+
+- (Task *)cachedTaskForDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt syncId:(NSNumber *)syncId
+{
+	if (!dueAt || completedAt || !syncId) {
+		return nil;
+	}
+	
+	// todo completedAt
+	
+	NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
+	NSDictionary *dictionary = [self.tasksWithDueDict valueForKey:key];
+	if (!dictionary) {
+		return nil;
+	}
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
+	NSArray *foundTasks = [[dictionary valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
+}
+
 - (NSMutableDictionary *)tasksWithDueDict
 {
 	if (!tasksWithDueDict) {
@@ -233,6 +285,48 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	[self.tasksWithDueDict saveDictForKey:TasksWithDueKey];
 }
 
+#pragma mark -- Today
+
+- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt taskId:(NSNumber *)taskId
+{
+	if (!dueAt || completedAt || !taskId) {
+		return nil;
+	}
+	
+	// todo completedAt
+	
+	NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
+	NSDictionary *dictionary = [self.tasksDueTodayDict valueForKey:key];
+	if (!dictionary) {
+		return nil;
+	}
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskId == %@", taskId];
+	NSArray *foundTasks = [[dictionary valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
+}
+
+- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt syncId:(NSNumber *)syncId
+{
+	if (!dueAt || completedAt || !syncId) {
+		return nil;
+	}
+	
+	// todo completedAt
+	
+	NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
+	NSDictionary *dictionary = [self.tasksDueTodayDict valueForKey:key];
+	if (!dictionary) {
+		return nil;
+	}
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
+	NSArray *foundTasks = [[dictionary valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
+}
+
 - (NSMutableDictionary *)tasksDueTodayDict
 {
 	if (!tasksDueTodayDict) {
@@ -248,6 +342,44 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (void)saveTasksDueToday
 {
 	[self.tasksDueTodayDict saveDictForKey:TasksDueTodaydKey];
+}
+
+#pragma mark -- by Lat/Lng
+
+- (Task *)cachedTaskForLatLngString:(NSString *)latLngString taskId:(NSNumber *)taskId
+{
+	if (!latLngString || !taskId) {
+		return nil;
+	}
+	
+	NSString *key = latLngString;
+	NSDictionary *dictionary = [self.tasksWithLatitudeDict valueForKey:key];
+	if (!dictionary) {
+		return nil;
+	}
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskId == %@", taskId];
+	NSArray *foundTasks = [[dictionary valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
+}
+
+- (Task *)cachedTaskForLatLngString:(NSString *)latLngString syncId:(NSNumber *)syncId
+{
+	if (!latLngString || !syncId) {
+		return nil;
+	}
+	
+	NSString *key = latLngString;
+	NSDictionary *dictionary = [self.tasksWithLatitudeDict valueForKey:key];
+	if (!dictionary) {
+		return nil;
+	}
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
+	NSArray *foundTasks = [[dictionary valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
 }
 
 - (NSMutableDictionary *)tasksWithLatitudeDict
@@ -286,6 +418,44 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (void)saveTasksWithLatitude
 {
 	[self.tasksWithLatitudeDict saveDictForKey:TasksWithLatitudeKey];
+}
+
+#pragma mark -- Edited Today
+
+- (Task *)cachedTaskForUpdatedAt:(NSDate *)updatedAt taskId:(NSNumber *)taskId
+{
+	if (!updatedAt || !taskId) {
+		return nil;
+	}
+	
+	NSString *key = [updatedAt getUTCDateWithformat:@"yyyy-MM-dd"];
+	NSDictionary *dictionary = [self.editedTasksDict valueForKey:key];
+	if (!dictionary) {
+		return nil;
+	}
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskId == %@", taskId];
+	NSArray *foundTasks = [[dictionary valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
+}
+
+- (Task *)cachedTaskForUpdatedAt:(NSDate *)updatedAt syncId:(NSNumber *)syncId
+{
+	if (!updatedAt || !syncId) {
+		return nil;
+	}
+	
+	NSString *key = [updatedAt getUTCDateWithformat:@"yyyy-MM-dd"];
+	NSDictionary *dictionary = [self.editedTasksDict valueForKey:key];
+	if (!dictionary) {
+		return nil;
+	}
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
+	NSArray *foundTasks = [[dictionary valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
 }
 
 - (NSMutableDictionary *)editedTasksDict
