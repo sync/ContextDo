@@ -399,6 +399,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 - (void)syncGroups
 {
 	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != kNotReachable) {
+		if (self.serialNetworkQueue.requestsCount > 0) {
+			[self performSelector:@selector(syncGroups) withObject:nil afterDelay:0.5];
+			return;
+		}
 		NSArray *addedGroups = [[[[CacheServices sharedCacheServices].groupsOutOfSyncDict valueForKey:AddedKey]copy]autorelease];
 		for (Group *group in addedGroups) {
 			Group *mostUpToDate = [[CacheServices sharedCacheServices] groupForSyncId:group.syncId];
