@@ -182,7 +182,6 @@
 			[[CacheServices sharedCacheServices] saveTasksWithDue];
 		} else if ([notificationName isEqualToString:TasksDueTodayDidLoadNotification]) {
 			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
-			[[CacheServices sharedCacheServices].tasksDueTodayDict removeAllObjects];
 			[[CacheServices sharedCacheServices].tasksDueTodayDict setValue:dict forKey:key];
 			[[CacheServices sharedCacheServices] saveTasksDueToday];
 		} else if ([notificationName isEqualToString:TasksWithinDidLoadNotification]) {
@@ -192,7 +191,6 @@
 			[[CacheServices sharedCacheServices] saveTasksWithLatitude];
 		} if ([notificationName isEqualToString:TasksUpdatedSinceDidLoadNotification]) {
 			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
-			[[CacheServices sharedCacheServices].editedTasksDict removeAllObjects];
 			[[CacheServices sharedCacheServices].editedTasksDict setValue:dict forKey:key];
 			[[CacheServices sharedCacheServices] saveEditedTasks];
 		}

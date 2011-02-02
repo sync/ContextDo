@@ -40,22 +40,34 @@
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithGroupIdDict;
 - (void)saveTasksWithGroupId;
 
+- (void)addCachedTask:(Task *)task forDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId;
+- (void)updateCachedTask:(Task *)task forDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId;
+- (void)deleteCachedTask:(Task *)task forDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId;
 - (Task *)cachedTaskForDueAt:(NSDate *)dueAt taskId:(NSNumber *)taskId;
 - (Task *)cachedTaskForDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithDueDict;
 - (void)saveTasksWithDue;
 
+- (void)addCachedTask:(Task *)task forTodayDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId;
+- (void)updateCachedTask:(Task *)task forTodayDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId;
+- (void)deleteCachedTask:(Task *)task forTodayDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId;
 - (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt taskId:(NSNumber *)taskId;
 - (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksDueTodayDict;
 - (void)saveTasksDueToday;
 
+- (void)addCachedTask:(Task *)task forLatLngString:(NSString *)latLngString syncId:(NSNumber *)syncId;
+- (void)updateCachedTask:(Task *)task forLatLngString:(NSString *)latLngString syncId:(NSNumber *)syncId;
+- (void)deleteCachedTask:(Task *)task forLatLngString:(NSString *)latLngString syncId:(NSNumber *)syncId;
 - (Task *)cachedTaskForLatLngString:(NSString *)latLngString taskId:(NSNumber *)taskId;
 - (Task *)cachedTaskForLatLngString:(NSString *)latLngString syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithLatitudeDict;
 @property (nonatomic, readonly) NSArray *tasksWithin;
 - (void)saveTasksWithLatitude;
 
+- (void)addCachedTask:(Task *)task forUpdatedAt:(NSDate *)updatedAt syncId:(NSNumber *)syncId;
+- (void)updateCachedTask:(Task *)task forUpdatedAt:(NSDate *)updatedAt syncId:(NSNumber *)syncId;
+- (void)deleteCachedTask:(Task *)task forUpdatedAt:(NSDate *)updatedAt syncId:(NSNumber *)syncId;
 - (Task *)cachedTaskForUpdatedAt:(NSDate *)updatedAt taskId:(NSNumber *)taskId;
 - (Task *)cachedTaskForUpdatedAt:(NSDate *)updatedAt syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *editedTasksDict;
