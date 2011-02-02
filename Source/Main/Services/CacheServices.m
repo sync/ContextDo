@@ -93,9 +93,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 {
 	// iteration trough each tasks dicts
 	//		tasksWithGroupIdDict ==> done
-	//		tasksDueTodayDict
-	//		tasksWithDueDict
-	//		tasksWithLatitudeDict
+	//		tasksDueTodayDict (if completed save today and the day after)
+	//		tasksWithDueDict  (if completed save today and the day after)
+	//		tasksWithLatitudeDict (only if has key lat/lng save)
 	//		editedTasksDict
 	
 	Task *previousTask = [self cachedTaskForGroupId:task.groupId syncId:task.syncId];
@@ -109,9 +109,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 {
 	// iteration trough each tasks dicts
 	//		tasksWithGroupIdDict ==> done
-	//		tasksDueTodayDict
-	//		tasksWithDueDict
-	//		tasksWithLatitudeDict
+	//		tasksDueTodayDict (if completed save today and the day after)
+	//		tasksWithDueDict  (if completed save today and the day after)
+	//		tasksWithLatitudeDict (only if has key lat/lng save)
 	//		editedTasksDict
 	[self addCachedTask:task forGroupId:task.groupId syncId:syncId];
 }
@@ -228,13 +228,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 #pragma mark -- by Due
 
-- (Task *)cachedTaskForDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt taskId:(NSNumber *)taskId
+- (Task *)cachedTaskForDueAt:(NSDate *)dueAt taskId:(NSNumber *)taskId
 {
-	if (!dueAt || completedAt || !taskId) {
+	if (!dueAt || !taskId) {
 		return nil;
 	}
-	
-	// todo completedAt
 	
 	NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 	NSDictionary *dictionary = [self.tasksWithDueDict valueForKey:key];
@@ -248,13 +246,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
 }
 
-- (Task *)cachedTaskForDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt syncId:(NSNumber *)syncId
+- (Task *)cachedTaskForDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId
 {
-	if (!dueAt || completedAt || !syncId) {
+	if (!dueAt || !syncId) {
 		return nil;
 	}
-	
-	// todo completedAt
 	
 	NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 	NSDictionary *dictionary = [self.tasksWithDueDict valueForKey:key];
@@ -287,13 +283,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 #pragma mark -- Today
 
-- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt taskId:(NSNumber *)taskId
+- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt taskId:(NSNumber *)taskId
 {
-	if (!dueAt || completedAt || !taskId) {
+	if (!dueAt || !taskId) {
 		return nil;
 	}
-	
-	// todo completedAt
 	
 	NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 	NSDictionary *dictionary = [self.tasksDueTodayDict valueForKey:key];
@@ -307,13 +301,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
 }
 
-- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt syncId:(NSNumber *)syncId
+- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId
 {
-	if (!dueAt || completedAt || !syncId) {
+	if (!dueAt || !syncId) {
 		return nil;
 	}
-	
-	// todo completedAt
 	
 	NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 	NSDictionary *dictionary = [self.tasksDueTodayDict valueForKey:key];

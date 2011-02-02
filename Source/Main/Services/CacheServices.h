@@ -31,21 +31,22 @@
 - (void)addCachedTask:(Task *)task syncId:(NSNumber *)syncId;
 - (void)updateCachedTask:(Task *)task syncId:(NSNumber *)syncId;
 - (void)deleteCachedTask:(Task *)task syncId:(NSNumber *)syncId;
-- (Task *)cachedTaskForGroupId:(NSNumber *)groupId taskId:(NSNumber *)taskId;
-- (Task *)cachedTaskForGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId;
+
 - (void)addCachedTask:(Task *)task forGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId;
 - (void)updateCachedTask:(Task *)task forGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId;
 - (void)deleteCachedTask:(Task *)task forGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId;
+- (Task *)cachedTaskForGroupId:(NSNumber *)groupId taskId:(NSNumber *)taskId;
+- (Task *)cachedTaskForGroupId:(NSNumber *)groupId syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithGroupIdDict;
 - (void)saveTasksWithGroupId;
 
-- (Task *)cachedTaskForDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt taskId:(NSNumber *)taskId;
-- (Task *)cachedTaskForDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt syncId:(NSNumber *)syncId;
+- (Task *)cachedTaskForDueAt:(NSDate *)dueAt taskId:(NSNumber *)taskId;
+- (Task *)cachedTaskForDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithDueDict;
 - (void)saveTasksWithDue;
 
-- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt taskId:(NSNumber *)taskId;
-- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt completedAt:(NSDate *)completedAt syncId:(NSNumber *)syncId;
+- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt taskId:(NSNumber *)taskId;
+- (Task *)cachedTaskForTodayDueAt:(NSDate *)dueAt syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksDueTodayDict;
 - (void)saveTasksDueToday;
 
