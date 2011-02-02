@@ -524,7 +524,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 							  task, @"object",
 							  nil];
 	
-	NSString *url = TASKURL(BASE_URL, GROUPS_PATH, task.groupId, task.taskId);
+	NSString *url = TASKURL(BASE_URL, GROUPS_PATH, task.groupId, nil);
 	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
 	request.userInfo = userInfo;
 	request.delegate = self;
