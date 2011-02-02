@@ -26,6 +26,9 @@
 @property (nonatomic, readonly) NSMutableDictionary *groupsDict;
 - (void)saveGroups;
 
+- (void)addCachedTask:(Task *)task syncId:(NSNumber *)syncId;
+- (void)updateTask:(Task *)task syncId:(NSNumber *)syncId;
+- (void)deleteCachedTask:(Task *)task syncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksWithGroupIdDict;
 - (void)saveTasksWithGroupId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksDueTodayDict;

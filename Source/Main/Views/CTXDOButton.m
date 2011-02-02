@@ -42,8 +42,8 @@
 	[self setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
 	
 	self.titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
-	[self setTitleColor:[UIColor colorWithHexString:@"929092"] forState:UIControlStateNormal];
-	[self setTitleColor:[UIColor colorWithHexString:@"929092"] forState:UIControlStateHighlighted];
+	[self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	[self setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 	self.titleLabel.shadowOffset = CGSizeMake(0,-1);
 	[self setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateNormal];
 	[self setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateHighlighted];

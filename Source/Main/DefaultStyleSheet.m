@@ -64,8 +64,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	[button setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
 	
 	button.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-	[button setTitleColor:[UIColor colorWithHexString:@"7e7e83"] forState:UIControlStateNormal];
-	[button setTitleColor:[UIColor colorWithHexString:@"7e7e83"] forState:UIControlStateHighlighted];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 	button.titleLabel.shadowOffset = CGSizeMake(0,-1);
 	[button setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateNormal];
 	[button setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateHighlighted];
@@ -98,8 +98,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	[button setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
 	
 	button.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-	[button setTitleColor:[UIColor colorWithHexString:@"c3d4f5"] forState:UIControlStateNormal];
-	[button setTitleColor:[UIColor colorWithHexString:@"c3d4f5"] forState:UIControlStateHighlighted];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 	button.titleLabel.shadowOffset = CGSizeMake(0,-1);
 	[button setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateNormal];
 	[button setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateHighlighted];
@@ -187,8 +187,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	[button setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
 	
 	button.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-	[button setTitleColor:[UIColor colorWithHexString:@"7e7e83"] forState:UIControlStateNormal];
-	[button setTitleColor:[UIColor colorWithHexString:@"7e7e83"] forState:UIControlStateHighlighted];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 	button.titleLabel.shadowOffset = CGSizeMake(0,-1);
 	[button setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateNormal];
 	[button setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateHighlighted];

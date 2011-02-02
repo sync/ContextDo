@@ -11,6 +11,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		24268C3612F647EB00969CBB /* NSDictionary+Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 24268C3512F647EB00969CBB /* NSDictionary+Persistence.m */; };
 		24269EC812F846F300969CBB /* CacheServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 24269EC712F846F300969CBB /* CacheServices.m */; };
+		2426AC3712F9A1CF00969CBB /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 2426AC3612F9A1CF00969CBB /* iTunesArtwork */; };
 		2434D66F12B59F32007B8A13 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2434D66E12B59F32007B8A13 /* ResetPasswordViewController.m */; };
 		2434D67112B59F56007B8A13 /* ResetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2434D67012B59F56007B8A13 /* ResetPasswordView.xib */; };
 		243A35D012E3DC4300A6D402 /* DefaultStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A35CE12E3DC4300A6D402 /* DefaultStyleSheet.m */; };
@@ -295,7 +296,6 @@
 		2456800612F06AAA0004189D /* icon_locateTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456800412F06AAA0004189D /* icon_locateTouch@2x.png */; };
 		245680A912F06F720004189D /* TISwipeableTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456808712F06F720004189D /* TISwipeableTableView.m */; };
 		245680B412F06FBC0004189D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B112F06FBC0004189D /* Icon@2x.png */; };
-		245680B512F06FBC0004189D /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 245680B212F06FBC0004189D /* iTunesArtwork */; };
 		245680B612F06FBC0004189D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B312F06FBC0004189D /* Icon.png */; };
 		245680FF12F072730004189D /* TasksCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 245680FE12F072730004189D /* TasksCalendarCell.m */; };
 		2456815D12F078D30004189D /* tick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2456815C12F078D30004189D /* tick.wav */; };
@@ -486,6 +486,7 @@
 		24268C3512F647EB00969CBB /* NSDictionary+Persistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Persistence.m"; sourceTree = "<group>"; };
 		24269EC612F846F300969CBB /* CacheServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheServices.h; sourceTree = "<group>"; };
 		24269EC712F846F300969CBB /* CacheServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheServices.m; sourceTree = "<group>"; };
+		2426AC3612F9A1CF00969CBB /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		2434D66D12B59F32007B8A13 /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
 		2434D66E12B59F32007B8A13 /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordViewController.m; sourceTree = "<group>"; };
 		2434D67012B59F56007B8A13 /* ResetPasswordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetPasswordView.xib; sourceTree = "<group>"; };
@@ -817,7 +818,6 @@
 		2456808612F06F720004189D /* TISwipeableTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TISwipeableTableView.h; sourceTree = "<group>"; };
 		2456808712F06F720004189D /* TISwipeableTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISwipeableTableView.m; sourceTree = "<group>"; };
 		245680B112F06FBC0004189D /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		245680B212F06FBC0004189D /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		245680B312F06FBC0004189D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		245680FD12F072730004189D /* TasksCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksCalendarCell.h; sourceTree = "<group>"; };
 		245680FE12F072730004189D /* TasksCalendarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksCalendarCell.m; sourceTree = "<group>"; };
@@ -2048,7 +2048,7 @@
 			children = (
 				245680B312F06FBC0004189D /* Icon.png */,
 				245680B112F06FBC0004189D /* Icon@2x.png */,
-				245680B212F06FBC0004189D /* iTunesArtwork */,
+				2426AC3612F9A1CF00969CBB /* iTunesArtwork */,
 				2490FD9112E34D2300F56B39 /* titlebar.png */,
 				2490FD9212E34D2300F56B39 /* titlebar@2x.png */,
 				2490FE5612E3572D00F56B39 /* btn_backarrow_off.png */,
@@ -2738,11 +2738,11 @@
 				2456800512F06AAA0004189D /* icon_locateTouch.png in Resources */,
 				2456800612F06AAA0004189D /* icon_locateTouch@2x.png in Resources */,
 				245680B412F06FBC0004189D /* Icon@2x.png in Resources */,
-				245680B512F06FBC0004189D /* iTunesArtwork in Resources */,
 				245680B612F06FBC0004189D /* Icon.png in Resources */,
 				2456815D12F078D30004189D /* tick.wav in Resources */,
 				245681B712F07C1C0004189D /* panel_swipe.png in Resources */,
 				245681B812F07C1C0004189D /* panel_swipe@2x.png in Resources */,
+				2426AC3712F9A1CF00969CBB /* iTunesArtwork in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
