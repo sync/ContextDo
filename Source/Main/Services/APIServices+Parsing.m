@@ -196,11 +196,7 @@
 		}
 		
 		
-		[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
-										 content, @"tasks",
-										 [info valueForKey:@"object"], @"object",
-										 nil
-										 ]];
+		[self notifyDone:request object:content];
 	}
 }
 

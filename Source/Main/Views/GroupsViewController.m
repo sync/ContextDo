@@ -168,7 +168,7 @@
 
 - (void)didGetWithinTasks:(NSNotification *)notification
 {
-	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
+	NSArray *newTasks = [notification object];
 	[self shouldCheckWithinTasks:newTasks updateCell:TRUE];
 }
 

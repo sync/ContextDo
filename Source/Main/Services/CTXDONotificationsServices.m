@@ -97,7 +97,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 		}
 	}
 	
-	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
+	NSArray *newTasks = [notification object];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isClose == %@", [NSNumber numberWithBool:TRUE]];
 	NSArray *closeTasks = [newTasks filteredArrayUsingPredicate:predicate];
@@ -148,7 +148,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 		}
 	}
 	
-	NSArray *newTasks = [[notification object] valueForKey:@"tasks"];
+	NSArray *newTasks =[notification object];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueAt != nil && expired == %@", [NSNumber numberWithBool:FALSE]];
 	NSArray *dueTasks = [newTasks filteredArrayUsingPredicate:predicate];

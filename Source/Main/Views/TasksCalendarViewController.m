@@ -73,9 +73,7 @@
 
 - (void)shouldReloadContent:(NSNotification *)notification
 {
-	NSDictionary *dict = [notification object];
-	
-	NSArray *newTasks = [dict valueForKey:@"tasks"];
+	NSArray *newTasks = [notification object];
 	[self reloadTasks:newTasks];
 }
 

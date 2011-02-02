@@ -199,7 +199,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 			[self.tasksWithGroupIdDict setValue:dict forKey:key];
 		} else {
 			NSArray *content = [dictionary valueForKey:@"content"];
-			if (!content) {
+			if (content) {
 				[(NSMutableArray *)content addObject:task];
 			}
 		}
@@ -318,7 +318,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 			[self.tasksWithDueDict setValue:dict forKey:key];
 		} else {
 			NSArray *content = [dictionary valueForKey:@"content"];
-			if (!content) {
+			if (content) {
 				[(NSMutableArray *)content addObject:task];
 			}
 		}
@@ -437,7 +437,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 			[self.tasksDueTodayDict setValue:dict forKey:key];
 		} else {
 			NSArray *content = [dictionary valueForKey:@"content"];
-			if (!content) {
+			if (content) {
 				[(NSMutableArray *)content addObject:task];
 			}
 		}
@@ -553,7 +553,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSDictionary *dictionary = [self.tasksWithLatitudeDict valueForKey:key];
 		if (dictionary) {
 			NSArray *content = [dictionary valueForKey:@"content"];
-			if (!content) {
+			if (content) {
 				[(NSMutableArray *)content addObject:task];
 			}
 		}
@@ -693,7 +693,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 			[self.editedTasksDict setValue:dict forKey:key];
 		} else {
 			NSArray *content = [dictionary valueForKey:@"content"];
-			if (!content) {
+			if (content) {
 				[(NSMutableArray *)content addObject:task];
 			}
 		}
