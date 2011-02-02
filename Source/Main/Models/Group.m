@@ -6,6 +6,17 @@
 @synthesize groupId, name, createdAt, updatedAt, position, expiredCount, dueCount, userId;
 @synthesize taskWithin, syncId;
 
+- (id)init
+{
+	self = [super init];
+	if (self != nil) {
+		NSDate *now = [NSDate date];
+		self.createdAt = now;
+		self.updatedAt = now;
+	}
+	return self;
+}
+
 + (Group *)groupWithId:(NSNumber *)aGroupId
 				  name:(NSString *)aName
 {

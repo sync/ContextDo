@@ -98,31 +98,28 @@
 		
 		NSDictionary *info = request.userInfo;
 		
+		Group *nonSyncedGroup = [info valueForKey:@"object"];
 		if ([[self notificationNameForRequest:request]isEqualToString:GroupDeleteNotification]) {
+			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:DeletedKey];
+			[[CacheServices sharedCacheServices] deleteCachedGroup:nonSyncedGroup syncId:nonSyncedGroup.syncId];
 			[self notifyDone:request object:nil];
 			return;
 		}
 		
-		Group *nonSyncedGroup = [info valueForKey:@"object"];
-		NSString *notificationName = [self notificationNameForRequest:request]; 
-		if ([notificationName isEqualToString:GroupAddNotification]) {
-			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:AddedKey];
-		} else if ([notificationName isEqualToString:GroupEditNotification]) {
-			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:UpdatedKey];
-		} else if ([notificationName isEqualToString:GroupDeleteNotification]) {
-			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:DeletedKey];
-		}
-		
-		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		Group *group = [Group fromJSONData:request.responseData];
 		if (group) {
+			NSString *notificationName = [self notificationNameForRequest:request]; 
+			if ([notificationName isEqualToString:GroupAddNotification]) {
+				[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:AddedKey];
+			} else if ([notificationName isEqualToString:GroupEditNotification]) {
+				[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:UpdatedKey];
+			}
+			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
 			if ([notificationName isEqualToString:GroupAddNotification]) {
 				[[CacheServices sharedCacheServices] addCachedGroup:group syncId:nonSyncedGroup.syncId];
 			} else if ([notificationName isEqualToString:GroupEditNotification]) {
 				[[CacheServices sharedCacheServices] updateCachedGroup:group syncId:nonSyncedGroup.syncId];
-			} else if ([notificationName isEqualToString:GroupDeleteNotification]) {
-				[[CacheServices sharedCacheServices] deleteCachedGroup:group syncId:nonSyncedGroup.syncId];
 			}
 			[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
 											 group, @"object",

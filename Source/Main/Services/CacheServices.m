@@ -7,7 +7,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 @synthesize groupsDict, tasksWithGroupIdDict, editedTasksDict;
 @synthesize tasksWithLatitudeDict, tasksWithDueDict, tasksDueTodayDict, groupsOutOfSyncDict;
-@synthesize groupOperationsShouldUseSerialQueue;
+@synthesize groupOperationsShouldUseSerialQueue, tasksOutOfSyncDict, taskOperationsShouldUseSerialQueue;
 
 #pragma mark -
 #pragma mark Groups Storage
@@ -197,7 +197,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 			[[self.groupsOutOfSyncDict valueForKey:DeletedKey]count] > 0);
 }
 
-#define GroupsOutOfSyncKey @"GroupsOutOfSyncKey"
+#define GroupsOutOfSyncKey @"GroupsOutOfSync"
 
 - (Group *)groupForSyncId:(NSNumber *)syncId
 {
@@ -219,9 +219,49 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	return groupsOutOfSyncDict;
 }
 
-- (void)savegroupsOutOfSync
+- (void)saveGroupsOutOfSync
 {
 	[self.groupsOutOfSyncDict saveDictForKey:GroupsOutOfSyncKey];
+}
+
+- (BOOL)taskOperationsShouldUseSerialQueue
+{
+	return ([[self.tasksOutOfSyncDict valueForKey:AddedKey]count] > 0 ||
+			[[self.tasksOutOfSyncDict valueForKey:UpdatedKey]count] > 0 ||
+			[[self.tasksOutOfSyncDict valueForKey:DeletedKey]count] > 0);
+}
+
+#define TasksOutOfSyncKey @"TasksOutOfSync"
+
+- (Task *)taskForSyncId:(NSNumber *)syncId
+{
+//	tasksWithGroupIdDict
+//	tasksDueTodayDict
+//	tasksWithDueDict
+//	tasksWithLatitudeDict
+//	editedTasksDict
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncId == %@", syncId];
+	NSArray *foundTasks = [[self.tasksWithGroupIdDict valueForKey:@"content"] filteredArrayUsingPredicate:predicate];
+	
+	return (foundTasks.count > 0) ? [foundTasks objectAtIndex:0] : nil;
+}
+
+- (NSMutableDictionary *)tasksOutOfSyncDict
+{
+	if (!tasksOutOfSyncDict) {
+		tasksOutOfSyncDict = [[NSDictionary savedDictForKey:TasksOutOfSyncKey]mutableCopy]; 
+		if (!tasksOutOfSyncDict) {
+			tasksOutOfSyncDict = [[NSMutableDictionary alloc]init];
+		}
+	}
+	
+	return tasksOutOfSyncDict;
+}
+
+- (void)saveTasksOutOfSync
+{
+	[self.tasksOutOfSyncDict saveDictForKey:TasksOutOfSyncKey];
 }
 
 #pragma mark -
@@ -229,30 +269,22 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 - (void)clearCachedData
 {
+	[self.tasksOutOfSyncDict removeAllObjects];
+	[self saveTasksOutOfSync];
 	[self.groupsOutOfSyncDict removeAllObjects];
-	[self savegroupsOutOfSync];
+	[self saveGroupsOutOfSync];
 	[groupsOutOfSyncDict release];
 	groupsOutOfSyncDict = nil;
 	[self.tasksWithGroupIdDict removeAllObjects];
 	[self saveTasksWithGroupId];
-	[tasksWithGroupIdDict release];
-	tasksWithGroupIdDict = nil;
 	[self.tasksWithDueDict removeAllObjects];
 	[self saveTasksWithDue];
-	[tasksWithDueDict release];
-	tasksWithDueDict = nil;
 	[self.tasksDueTodayDict removeAllObjects];
 	[self saveTasksDueToday];
-	[tasksDueTodayDict release];
-	tasksDueTodayDict = nil;
 	[self.tasksWithLatitudeDict removeAllObjects];
 	[self saveTasksWithLatitude];
-	[tasksWithLatitudeDict release];
-	tasksWithLatitudeDict = nil;
 	[self.editedTasksDict removeAllObjects];
 	[self saveEditedTasks];
-	[editedTasksDict release];
-	editedTasksDict = nil;
 }
 
 #pragma mark -
@@ -260,6 +292,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 - (void)dealloc
 {
+	[tasksOutOfSyncDict release];
 	[groupsOutOfSyncDict release];
 	[editedTasksDict release];
 	[tasksWithLatitudeDict release];

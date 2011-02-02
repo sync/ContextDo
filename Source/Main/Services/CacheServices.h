@@ -25,8 +25,8 @@
 - (Group *)groupForId:(NSNumber *)groupId;
 @property (nonatomic, readonly) NSMutableDictionary *groupsDict;
 - (void)saveGroupsDict;
-@property (nonatomic, readonly) NSMutableDictionary *tasksWithGroupIdDict;
 
+@property (nonatomic, readonly) NSMutableDictionary *tasksWithGroupIdDict;
 - (void)saveTasksWithGroupId;
 @property (nonatomic, readonly) NSMutableDictionary *tasksDueTodayDict;
 - (void)saveTasksDueToday;
@@ -41,6 +41,12 @@
 @property (nonatomic) BOOL groupOperationsShouldUseSerialQueue;
 - (Group *)groupForSyncId:(NSNumber *)syncId;
 @property (nonatomic, readonly) NSMutableDictionary *groupsOutOfSyncDict;
+- (void)saveGroupsOutOfSync;
+
+@property (nonatomic) BOOL taskOperationsShouldUseSerialQueue;
+- (Task *)taskForSyncId:(NSNumber *)syncId;
+@property (nonatomic, readonly) NSMutableDictionary *tasksOutOfSyncDict;
+- (void)saveTasksOutOfSync;
 
 - (void)clearCachedData;
 

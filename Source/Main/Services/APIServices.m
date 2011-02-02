@@ -277,6 +277,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	if (!group.syncId) {
 		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
 		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forKey:AddedKey];
+		[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
 	}
 	
 	NSString *notificationName = GroupAddNotification;
@@ -323,6 +324,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	if (!group.syncId) {
 		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
 		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forKey:UpdatedKey];
+		[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
 	}
 	
 	NSString *notificationName = GroupEditNotification;
@@ -371,6 +373,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	if (!group.syncId) {
 		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
 		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forKey:DeletedKey];
+		[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
 	}
 	
 	NSString *notificationName = GroupDeleteNotification;
@@ -534,6 +537,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"dueToday",
 						  @"isFacebook",
 						  @"latLngString",
+						  @"syncId",
 						  nil];
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
@@ -579,6 +583,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"dueToday",
 						  @"isFacebook",
 						  @"latLngString",
+						  @"syncId",
 						  nil];
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];

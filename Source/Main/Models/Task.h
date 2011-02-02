@@ -23,15 +23,18 @@
 @property (nonatomic, copy) NSString *sourceName;
 @property (nonatomic, copy) NSNumber *sourceId;
 
+@property (nonatomic, copy) NSNumber *syncId;
 
 @property (nonatomic, readonly) CLLocationDistance distance;
 @property (nonatomic, readonly) BOOL isClose;
 @property (nonatomic, readonly) BOOL expired;
 @property (nonatomic, readonly) BOOL completed;
+@property (nonatomic, readonly) BOOL completedWithin24hours;
 @property (nonatomic, readonly) BOOL dueToday;
 @property (nonatomic, readonly) NSString *formattedContact;
 @property (nonatomic, readonly) NSString *latLngString;
 @property (nonatomic, readonly) BOOL isFacebook;
+@property (nonatomic, readonly) BOOL editedToday;
 
 + (Task *)taskWithId:(NSNumber *)aTaskId
 				name:(NSString *)aName
