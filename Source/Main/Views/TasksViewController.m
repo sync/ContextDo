@@ -78,7 +78,15 @@
 
 - (void)shouldReloadContent:(NSNotification *)notification
 {
-	NSArray *newTasks = [notification object];	
+	// recognise when entire graph or not
+	NSArray *newTasks = nil;
+	id object = [notification object];
+	if ([object isKindOfClass:[NSDictionary class]]) {
+		NSDictionary *dict = [object valueForKey:[self.group.groupId stringValue]];
+		newTasks = [dict valueForKey:@"content"];
+	} else {
+		newTasks = [notification object];
+	}
 	if (![notification.name isEqualToString:TasksSearchDidLoadNotification] && self.tasksSave) {
 		self.tasksSave = newTasks;
 		return;

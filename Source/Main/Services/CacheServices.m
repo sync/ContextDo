@@ -195,12 +195,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [groupId stringValue];
 		NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
 		if (!dictionary) {
-			NSDictionary *dict = [NSDictionary dictionaryWithContent:[NSArray arrayWithObject:task] date:[NSDate date]];
+			NSDictionary *dict = [NSDictionary dictionaryWithContent:[NSMutableArray arrayWithObject:task] date:[NSDate date]];
 			[self.tasksWithGroupIdDict setValue:dict forKey:key];
 		} else {
-			NSArray *content = [dictionary valueForKey:@"content"];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
 			if (content) {
-				[(NSMutableArray *)content addObject:task];
+				[content addObject:task];
 			}
 		}
 		[self saveTasksWithGroupId];
@@ -218,10 +218,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [groupId stringValue];
 		NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
 		if (dictionary) {
-			NSArray *content = [dictionary valueForKey:@"content"];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
 			NSInteger idx = [content indexOfObject:task];
 			if (idx != NSNotFound) {
-				[(NSMutableArray *)content replaceObjectAtIndex:idx withObject:task];
+				[content replaceObjectAtIndex:idx withObject:task];
 				[self saveTasksWithGroupId];
 			}
 		}
@@ -239,8 +239,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [groupId stringValue];
 		NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
 		if (dictionary) {
-			NSArray *content = [dictionary valueForKey:@"content"];
-			[(NSMutableArray *)content removeObject:task];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
+			[content removeObject:task];
 			[self saveTasksWithGroupId];
 		}
 	}
@@ -298,7 +298,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 {
 	[self.tasksWithGroupIdDict saveDictForKey:TasksWithGroupIdKey];
 	[[NSNotificationCenter defaultCenter]postNotificationName:TasksDidLoadNotification 
-													   object:[self.tasksWithGroupIdDict valueForKey:@"content"]];
+													   object:self.tasksWithGroupIdDict];
 }
 
 #pragma mark -- by Due
@@ -314,12 +314,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.tasksWithDueDict valueForKey:key];
 		if (!dictionary) {
-			NSDictionary *dict = [NSDictionary dictionaryWithContent:[NSArray arrayWithObject:task] date:[NSDate date]];
+			NSDictionary *dict = [NSDictionary dictionaryWithContent:[NSMutableArray arrayWithObject:task] date:[NSDate date]];
 			[self.tasksWithDueDict setValue:dict forKey:key];
 		} else {
-			NSArray *content = [dictionary valueForKey:@"content"];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
 			if (content) {
-				[(NSMutableArray *)content addObject:task];
+				[content addObject:task];
 			}
 		}
 		[self saveTasksWithDue];
@@ -337,10 +337,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.tasksWithDueDict valueForKey:key];
 		if (dictionary) {
-			NSArray *content = [dictionary valueForKey:@"content"];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
 			NSInteger idx = [content indexOfObject:task];
 			if (idx != NSNotFound) {
-				[(NSMutableArray *)content replaceObjectAtIndex:idx withObject:task];
+				[content replaceObjectAtIndex:idx withObject:task];
 				[self saveTasksWithDue];
 			}
 		}
@@ -358,8 +358,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.tasksWithDueDict valueForKey:key];
 		if (dictionary) {
-			NSArray *content = [dictionary valueForKey:@"content"];
-			[(NSMutableArray *)content removeObject:task];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
+			[content removeObject:task];
 			[self saveTasksWithDue];
 		}
 	}
@@ -433,12 +433,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.tasksDueTodayDict valueForKey:key];
 		if (!dictionary) {
-			NSDictionary *dict = [NSDictionary dictionaryWithContent:[NSArray arrayWithObject:task] date:[NSDate date]];
+			NSDictionary *dict = [NSDictionary dictionaryWithContent:[NSMutableArray arrayWithObject:task] date:[NSDate date]];
 			[self.tasksDueTodayDict setValue:dict forKey:key];
 		} else {
-			NSArray *content = [dictionary valueForKey:@"content"];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
 			if (content) {
-				[(NSMutableArray *)content addObject:task];
+				[content addObject:task];
 			}
 		}
 		[self saveTasksDueToday];
@@ -456,10 +456,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.tasksDueTodayDict valueForKey:key];
 		if (dictionary) {
-			NSArray *content = [dictionary valueForKey:@"content"];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
 			NSInteger idx = [content indexOfObject:task];
 			if (idx != NSNotFound) {
-				[(NSMutableArray *)content replaceObjectAtIndex:idx withObject:task];
+				[content replaceObjectAtIndex:idx withObject:task];
 				[self saveTasksDueToday];
 			}
 		}
@@ -477,8 +477,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.tasksDueTodayDict valueForKey:key];
 		if (dictionary) {
-			NSArray *content = [dictionary valueForKey:@"content"];
-			[(NSMutableArray *)content removeObject:task];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
+			[content removeObject:task];
 			[self saveTasksDueToday];
 		}
 	}
@@ -552,9 +552,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = latLngString;
 		NSDictionary *dictionary = [self.tasksWithLatitudeDict valueForKey:key];
 		if (dictionary) {
-			NSArray *content = [dictionary valueForKey:@"content"];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
 			if (content) {
-				[(NSMutableArray *)content addObject:task];
+				[content addObject:task];
 			}
 		}
 		[self saveTasksWithLatitude];
@@ -572,10 +572,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = latLngString;
 		NSDictionary *dictionary = [self.tasksWithLatitudeDict valueForKey:key];
 		if (dictionary) {
-			NSArray *content = [dictionary valueForKey:@"content"];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
 			NSInteger idx = [content indexOfObject:task];
 			if (idx != NSNotFound) {
-				[(NSMutableArray *)content replaceObjectAtIndex:idx withObject:task];
+				[content replaceObjectAtIndex:idx withObject:task];
 				[self saveTasksWithLatitude];
 			}
 		}
@@ -593,8 +593,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = latLngString;
 		NSDictionary *dictionary = [self.tasksWithLatitudeDict valueForKey:key];
 		if (dictionary) {
-			NSArray *content = [dictionary valueForKey:@"content"];
-			[(NSMutableArray *)content removeObject:task];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
+			[content removeObject:task];
 			[self saveTasksWithLatitude];
 		}
 	}
@@ -689,12 +689,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [updatedAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.editedTasksDict valueForKey:key];
 		if (!dictionary) {
-			NSDictionary *dict = [NSDictionary dictionaryWithContent:[NSArray arrayWithObject:task] date:[NSDate date]];
+			NSDictionary *dict = [NSDictionary dictionaryWithContent:[NSMutableArray arrayWithObject:task] date:[NSDate date]];
 			[self.editedTasksDict setValue:dict forKey:key];
 		} else {
-			NSArray *content = [dictionary valueForKey:@"content"];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
 			if (content) {
-				[(NSMutableArray *)content addObject:task];
+				[content addObject:task];
 			}
 		}
 		[self saveEditedTasks];
@@ -712,10 +712,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [updatedAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.editedTasksDict valueForKey:key];
 		if (dictionary) {
-			NSArray *content = [dictionary valueForKey:@"content"];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
 			NSInteger idx = [content indexOfObject:task];
 			if (idx != NSNotFound) {
-				[(NSMutableArray *)content replaceObjectAtIndex:idx withObject:task];
+				[content replaceObjectAtIndex:idx withObject:task];
 				[self saveEditedTasks];
 			}
 		}
@@ -733,8 +733,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		NSString *key = [updatedAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.editedTasksDict valueForKey:key];
 		if (dictionary) {
-			NSArray *content = [dictionary valueForKey:@"content"];
-			[(NSMutableArray *)content removeObject:task];
+			NSMutableArray *content = [dictionary valueForKey:@"content"];
+			[content removeObject:task];
 			[self saveEditedTasks];
 		}
 	}
