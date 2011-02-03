@@ -39,12 +39,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	
 	NSMutableArray *cachedGroups = [self.groupsDict valueForKey:@"content"];
 	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self cachedGroupForSyncId:syncId] : [self cachedGroupForId:group.groupId];
-	if (![previousGroup isEqual:group]) {
-		NSInteger idx = [cachedGroups indexOfObject:previousGroup];
-		if (idx != NSNotFound) {
-			[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
-			[self saveGroups];
-		}
+	NSInteger idx = [cachedGroups indexOfObject:previousGroup];
+	if (idx != NSNotFound) {
+		[(NSMutableArray *)cachedGroups replaceObjectAtIndex:idx withObject:group];
+		[self saveGroups];
 	}
 }
 

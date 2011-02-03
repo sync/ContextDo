@@ -307,7 +307,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	[[CacheServices sharedCacheServices] addCachedGroup:group syncId:nil];
+	[[CacheServices sharedCacheServices] addCachedGroup:group syncId:(!group.groupId) ? group.syncId : nil];
 	
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
@@ -330,6 +330,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 			[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forPathToId:@"syncId" forKey:AddedKey];
 			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:UpdatedKey];
 			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
+			[[CacheServices sharedCacheServices]updateCachedGroup:group syncId:group.syncId];
 			return;
 		}
 	}
@@ -363,7 +364,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	[[CacheServices sharedCacheServices] updateCachedGroup:group syncId:nil];
+	[[CacheServices sharedCacheServices] updateCachedGroup:group syncId:(!group.groupId) ? group.syncId : nil];
 	
 	
 	[self.serialNetworkQueue addOperation:request];
@@ -389,6 +390,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:AddedKey];
 			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:DeletedKey];
 			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
+			[[CacheServices sharedCacheServices] deleteCachedGroup:group syncId:group.syncId];
 			return;
 		}
 	}
@@ -409,7 +411,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request setRequestMethod:@"DELETE"];
 	
-	[[CacheServices sharedCacheServices] deleteCachedGroup:group syncId:nil];
+	[[CacheServices sharedCacheServices] deleteCachedGroup:group syncId:(!group.groupId) ? group.syncId : nil];
 	
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
@@ -563,7 +565,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	[[CacheServices sharedCacheServices] addCachedTask:task syncId:nil];
+	[[CacheServices sharedCacheServices] addCachedTask:task syncId:(!task.taskId) ? task.syncId : nil];
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
@@ -621,7 +623,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	[[CacheServices sharedCacheServices] updateCachedTask:task syncId:nil];
+	[[CacheServices sharedCacheServices] updateCachedTask:task syncId:(!task.taskId) ? task.syncId : nil];
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
@@ -658,7 +660,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request setRequestMethod:@"DELETE"];
 	
-	[[CacheServices sharedCacheServices] deleteCachedTask:task syncId:nil];
+	[[CacheServices sharedCacheServices] deleteCachedTask:task syncId:(!task.taskId) ? task.syncId : nil];
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
