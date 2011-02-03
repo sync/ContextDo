@@ -3,6 +3,7 @@
 #import "APIServices+Parsing.h"
 #import "NSDate+Extensions.h"
 #import "Reachability.h"
+#import "SFHFKeychainUtils.h"
 
 @implementation APIServices
 
@@ -113,23 +114,25 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[[NSUserDefaults standardUserDefaults]synchronize];
 }
 
+#define CTXDOService @"CTXDOService"
+#define OfflineService @"OfflineService"
+
 - (NSString *)password
 {
 	if (self.apiToken && APITokenEabled) {
 		return @"X";
 	}
-	return [[NSUserDefaults standardUserDefaults]stringForKey:PasswordUserDefaults];
+	return [SFHFKeychainUtils getPasswordForUsername:self.username andServiceName:CTXDOService error:nil];
 }
 
 - (void)setPassword:(NSString *)password
 {
 	if (!password) {
-		[[NSUserDefaults standardUserDefaults]removeObjectForKey:PasswordUserDefaults];
+		[SFHFKeychainUtils deleteItemForUsername:self.username andServiceName:CTXDOService error:nil];
 	} else {
-		[[NSUserDefaults standardUserDefaults]setValue:password forKey:PasswordUserDefaults];
+		[SFHFKeychainUtils storeUsername:self.username andPassword:password forServiceName:CTXDOService updateExisting:1 error:nil];
+		[SFHFKeychainUtils storeUsername:OfflineService andPassword:[NSString stringWithFormat:@"%@|-|--_/_/_/--|-|%@", self.username, password] forServiceName:OfflineService updateExisting:1 error:nil];
 	}
-	
-	[[NSUserDefaults standardUserDefaults]synchronize];
 }
 
 - (User *)user
@@ -163,6 +166,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		return;
 	}
 	
+	self.username = nil;
+	self.password = nil;
+	
 	NSString *notificationName = UserDidLoginNotification;
 	NSString *path = @"login";
 	
@@ -180,16 +186,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[request setPassword:aPassword];
 	
 	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == kNotReachable) {
-		if (self.username && self.password &&
-			[aUsername isEqualToString:self.username] &&
-			[aPassword isEqualToString:self.password]) {
+		NSString *offlineUserPassword = [SFHFKeychainUtils getPasswordForUsername:OfflineService andServiceName:OfflineService error:nil];
+		NSArray *components = [offlineUserPassword componentsSeparatedByString:@"|-|--_/_/_/--|-|"];
+		if (components.count == 2 &&
+			aUsername && 
+			aPassword &&
+			[aUsername isEqualToString:[components objectAtIndex:0]] &&
+			[aPassword isEqualToString:[components objectAtIndex:1]]) {
 			[self notifyDone:request object:nil];
 			return;
 		}
 	}
-	
-	self.username = nil;
-	self.password = nil;
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
@@ -288,6 +295,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forPathToId:@"syncId" forKey:AddedKey];
 		[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
 	}
+	
+//	if ([[CacheServices sharedCacheServices]hasCachedGroup:group syncId:group.syncId]) {
+//		[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:AddedKey];
+//		[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
+//		return;
+//	}
 	
 	NSString *notificationName = GroupAddNotification;
 	NSString *path = @"addGroupWithName";
@@ -566,6 +579,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
 		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
 	}
+	
+//	if ([[CacheServices sharedCacheServices]hasCachedTask:task syncId:task.syncId]) {
+//		[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
+//		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
+//		return;
+//	}
 	
 	NSString *notificationName = TaskAddNotification;
 	NSString *path = @"addTask";

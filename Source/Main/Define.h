@@ -3,7 +3,6 @@
 
 // User Defaults
 #define UsernameUserDefaults @"UsernameUserDefaults"
-#define PasswordUserDefaults @"PasswordUserDefaults"
 #define APITokenUserDefaults @"APITokenUserDefaults"
 #define AlertsDistanceWithin @"AlertsDistanceWithin"
 #define ShouldUseDevServer @"ShouldUseDevServer"

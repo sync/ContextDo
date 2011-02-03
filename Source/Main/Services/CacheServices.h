@@ -19,6 +19,7 @@
 
 + (CacheServices *)sharedCacheServices;
 
+- (BOOL)hasCachedGroup:(Group *)group syncId:(NSNumber *)syncId;
 - (void)addCachedGroup:(Group *)group syncId:(NSNumber *)syncId;
 - (void)updateCachedGroup:(Group *)group syncId:(NSNumber *)syncId;
 - (void)deleteCachedGroup:(Group *)group syncId:(NSNumber *)syncId;
@@ -27,6 +28,7 @@
 @property (nonatomic, readonly) NSMutableDictionary *groupsDict;
 - (void)saveGroups;
 
+- (BOOL)hasCachedTask:(Task *)task syncId:(NSNumber *)syncId;
 - (void)addCachedTask:(Task *)task syncId:(NSNumber *)syncId;
 - (void)updateCachedTask:(Task *)task syncId:(NSNumber *)syncId;
 - (void)deleteCachedTask:(Task *)task syncId:(NSNumber *)syncId;

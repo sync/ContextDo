@@ -13,6 +13,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 #pragma mark -
 #pragma mark Groups Storage
 
+- (BOOL)hasCachedGroup:(Group *)group syncId:(NSNumber *)syncId
+{
+	Group *previousGroup = (syncId && syncId.integerValue != 0) ? [self cachedGroupForSyncId:syncId] : [self cachedGroupForId:group.groupId];
+	return (previousGroup != nil);
+}
+
 - (void)addCachedGroup:(Group *)group syncId:(NSNumber *)syncId
 {
 	if (!group) {
@@ -111,6 +117,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 #pragma mark -
 #pragma mark Tasks Storage
+
+- (BOOL)hasCachedTask:(Task *)task syncId:(NSNumber *)syncId
+{
+	Task *previousTask1 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForGroupId:task.groupId taskId:task.taskId] : [self cachedTaskForGroupId:task.groupId syncId:task.syncId];
+	Task *previousTask2 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:task.dueAt taskId:task.taskId] : [self cachedTaskForDueAt:task.dueAt syncId:task.syncId];
+	Task *previousTask3 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:task.dueAt taskId:task.taskId] : [self cachedTaskForDueAt:task.dueAt syncId:task.syncId];
+	Task *previousTask4 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForLatLngString:task.latLngString taskId:task.taskId] : [self cachedTaskForLatLngString:task.latLngString syncId:task.syncId];
+	Task *previousTask5 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForUpdatedAt:task.updatedAt taskId:task.taskId] : [self cachedTaskForUpdatedAt:task.updatedAt syncId:task.syncId];
+	
+	return (previousTask1 || previousTask2 || previousTask3 || previousTask4 || previousTask5);
+}
 
 - (void)addCachedTask:(Task *)task syncId:(NSNumber *)syncId
 {

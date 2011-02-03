@@ -13,6 +13,7 @@
 		24269EC812F846F300969CBB /* CacheServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 24269EC712F846F300969CBB /* CacheServices.m */; };
 		2426AC3712F9A1CF00969CBB /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 2426AC3612F9A1CF00969CBB /* iTunesArtwork */; };
 		2426B07212FACB7200969CBB /* NSArray+Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 2426B07012FACB7200969CBB /* NSArray+Persistence.m */; };
+		2426B0EB12FAD95100969CBB /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2426B0EA12FAD95100969CBB /* SFHFKeychainUtils.m */; };
 		2434D66F12B59F32007B8A13 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2434D66E12B59F32007B8A13 /* ResetPasswordViewController.m */; };
 		2434D67112B59F56007B8A13 /* ResetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2434D67012B59F56007B8A13 /* ResetPasswordView.xib */; };
 		243A35D012E3DC4300A6D402 /* DefaultStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A35CE12E3DC4300A6D402 /* DefaultStyleSheet.m */; };
@@ -490,6 +491,8 @@
 		2426AC3612F9A1CF00969CBB /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		2426B07012FACB7200969CBB /* NSArray+Persistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Persistence.m"; sourceTree = "<group>"; };
 		2426B07112FACB7200969CBB /* NSArray+Persistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Persistence.h"; sourceTree = "<group>"; };
+		2426B0E912FAD95100969CBB /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
+		2426B0EA12FAD95100969CBB /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
 		2434D66D12B59F32007B8A13 /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
 		2434D66E12B59F32007B8A13 /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordViewController.m; sourceTree = "<group>"; };
 		2434D67012B59F56007B8A13 /* ResetPasswordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetPasswordView.xib; sourceTree = "<group>"; };
@@ -1132,8 +1135,18 @@
 		2426B0E712FAD91500969CBB /* scifihifi-iphone */ = {
 			isa = PBXGroup;
 			children = (
+				2426B0E812FAD95100969CBB /* security */,
 			);
 			path = "scifihifi-iphone";
+			sourceTree = "<group>";
+		};
+		2426B0E812FAD95100969CBB /* security */ = {
+			isa = PBXGroup;
+			children = (
+				2426B0E912FAD95100969CBB /* SFHFKeychainUtils.h */,
+				2426B0EA12FAD95100969CBB /* SFHFKeychainUtils.m */,
+			);
+			path = security;
 			sourceTree = "<group>";
 		};
 		2434D66512B59EAC007B8A13 /* Reset */ = {
@@ -2906,6 +2919,7 @@
 				24268C3612F647EB00969CBB /* NSDictionary+Persistence.m in Sources */,
 				24269EC812F846F300969CBB /* CacheServices.m in Sources */,
 				2426B07212FACB7200969CBB /* NSArray+Persistence.m in Sources */,
+				2426B0EB12FAD95100969CBB /* SFHFKeychainUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
