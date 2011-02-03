@@ -23,6 +23,8 @@
 - (void)blackOutMainViewAnimated:(BOOL)animated;
 - (void)hideBlackOutMainViewAnimated:(BOOL)animated;
 - (void)shouldCheckWithinTasks:(NSArray *)tasks updateCell:(BOOL)updateCell;
+- (void)restoreFromCached;
+
 @end
 
 
@@ -105,6 +107,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldHidInfo) name:GroupShouldDismissInfo object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasksGraph:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:GroupsGraphDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupAddNotification];
@@ -130,6 +133,11 @@
 {
 	NSArray *newGroups = [notification object];
 	[self reloadGroups:newGroups];
+}
+
+- (void)restoreFromCached
+{
+	
 }
 
 - (void)reloadGroups:(NSArray *)newGroups
@@ -307,9 +315,7 @@
 
 - (void)refreshGroups
 {
-	NSArray *archivedContent = [[CacheServices sharedCacheServices].groupsDict valueForKey:@"content"];
-	self.hasCachedData = (archivedContent != nil);
-	[self reloadGroups:archivedContent];
+	[self restoreFromCached];
 	
 	[[APIServices sharedAPIServices]refreshGroups];
 }

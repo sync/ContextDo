@@ -108,7 +108,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	NSArray *content = [self.groupsDict valueForKey:@"content"];
 	[(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
 	[self.groupsDict saveDictForKey:GroupsKey];
-	[[NSNotificationCenter defaultCenter]postNotificationName:GroupsDidLoadNotification object:content];
+	[[NSNotificationCenter defaultCenter]postNotificationName:GroupsGraphDidLoadNotification object:self.groupsDict];
 }
 
 #pragma mark -
