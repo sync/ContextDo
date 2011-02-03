@@ -27,7 +27,6 @@
 @property (nonatomic, readonly) NSMutableDictionary *groupsDict;
 - (void)saveGroups;
 
-- (Task *)cachedTask:(Task *)task;
 - (void)addCachedTask:(Task *)task syncId:(NSNumber *)syncId;
 - (void)updateCachedTask:(Task *)task syncId:(NSNumber *)syncId;
 - (void)deleteCachedTask:(Task *)task syncId:(NSNumber *)syncId;

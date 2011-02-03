@@ -408,17 +408,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		}
 		NSArray *addedGroups = [[[[CacheServices sharedCacheServices].groupsOutOfSyncDict valueForKey:AddedKey]copy]autorelease];
 		for (Group *group in addedGroups) {
-			Group *mostUpToDate = [[CacheServices sharedCacheServices] cachedGroupForSyncId:group.syncId];
-			if (mostUpToDate) {
-				[self addGroup:mostUpToDate];
-			}
+			[self addGroup:group];
 		}
 		NSArray *updatedGroups = [[[[CacheServices sharedCacheServices].groupsOutOfSyncDict valueForKey:UpdatedKey]copy]autorelease];
 		for (Group *group in updatedGroups) {
-			Group *mostUpToDate = [[CacheServices sharedCacheServices] cachedGroupForSyncId:group.syncId];
-			if (mostUpToDate) {
-				[self updateGroup:mostUpToDate];
-			}
+			[self updateGroup:group];
 		}
 		NSArray *deletedGroups = [[[[CacheServices sharedCacheServices].groupsOutOfSyncDict valueForKey:DeletedKey]copy]autorelease];
 		for (Group *group in deletedGroups) {
@@ -657,17 +651,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		}
 		NSArray *addedTasks = [[[[CacheServices sharedCacheServices].tasksOutOfSyncDict valueForKey:AddedKey]copy]autorelease];
 		for (Task *task in addedTasks) {
-			Task *mostUpToDate = [[CacheServices sharedCacheServices]cachedTask:task];
-			if (mostUpToDate) {
-				[self addTask:mostUpToDate];
-			}
+			[self addTask:task];
 		}
 		NSArray *updatedTasks = [[[[CacheServices sharedCacheServices].tasksOutOfSyncDict valueForKey:UpdatedKey]copy]autorelease];
 		for (Task *task in updatedTasks) {
-			Task *mostUpToDate = [[CacheServices sharedCacheServices]cachedTask:task];
-			if (mostUpToDate) {
-				[self updateTask:mostUpToDate];
-			}
+			[self updateTask:task];
 		}
 		NSArray *deletedTasks = [[[[CacheServices sharedCacheServices].tasksOutOfSyncDict valueForKey:DeletedKey]copy]autorelease];
 		for (Task *task in deletedTasks) {

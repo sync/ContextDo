@@ -114,29 +114,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 #pragma mark -
 #pragma mark Tasks Storage
 
-- (Task *)cachedTask:(Task *)task
-{
-	if (!task) {
-		return nil;
-	}
-	
-	// iteration trough each tasks dicts
-	//		tasksWithGroupIdDict ==> done
-	//		tasksDueTodayDict (if completed save today and the day after)
-	//		tasksWithDueDict  (if completed save today and the day after)
-	//		tasksWithLatitudeDict (only if has key lat/lng save)
-	//		editedTasksDict
-	
-	Task *previousTask = [self cachedTaskForGroupId:task.groupId syncId:task.syncId];
-	
-	// TODO
-	// TODO when syncing group never synced change group id
-	
-	// find most up to date
-	return previousTask;
-	
-}
-
 - (void)addCachedTask:(Task *)task syncId:(NSNumber *)syncId
 {
 	if (!task) {
