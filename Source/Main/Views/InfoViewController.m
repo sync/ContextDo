@@ -7,6 +7,7 @@
 
 - (void)refreshTasks;
 - (void)reloadTasks:(NSArray *)newTasks;
+- (void)restoreFromCached;
 
 @end
 
@@ -32,7 +33,7 @@
 {
 	[super setupDataSource];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadGraphContent:) name:TasksUpdatedSinceDidLoadNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksUpdatedSinceDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksUpdatedSinceDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksUpdatedSinceDidLoadNotification];
 	
@@ -43,12 +44,7 @@
 
 - (void)refreshTasks
 {
-	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-	NSArray *archivedContent = [[CacheServices sharedCacheServices].editedTasksDict
-								valueForKeyPath:[NSString stringWithFormat:@"%@.content", editedAt]];
-	self.hasCachedData = (archivedContent != nil);
-	[self reloadTasks:archivedContent];
-	
+	[self restoreFromCached];
 	[[APIServices sharedAPIServices]refreshTasksEdited];
 }
 
@@ -61,13 +57,13 @@
 	[self reloadTasks:newTasks];
 }
 
-- (void)shouldReloadGraphContent:(NSNotification *)notification
+- (void)restoreFromCached
 {
-	NSDictionary *graphDictionary = [notification object];
 	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-	NSArray *newTasks = [graphDictionary
+	NSArray *archivedContent = [[CacheServices sharedCacheServices].editedTasksDict
 								valueForKeyPath:[NSString stringWithFormat:@"%@.content", editedAt]];
-	[self reloadTasks:newTasks];
+	self.hasCachedData = (archivedContent != nil);
+	[self reloadTasks:archivedContent];
 }
 
 

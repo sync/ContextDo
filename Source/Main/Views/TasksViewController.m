@@ -8,6 +8,7 @@
 - (void)cancelSearch;
 - (void)refreshTasks;
 - (void)reloadTasks:(NSArray *)newTasks;
+- (void)restoreFromCached;
 
 @end
 
@@ -56,15 +57,15 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	if (self.isTodayTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadGraphContent:) name:TasksGraphDueTodayDidLoadNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphDueTodayDidLoadNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueTodayDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueTodayDidLoadNotification];
 	} else if (self.isNearTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadGraphContent:) name:TasksGraphWithinDidLoadNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphWithinDidLoadNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksWithinDidLoadNotification];
 	} else {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadGraphContent:) name:TasksGraphDidLoadNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphDidLoadNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
@@ -90,26 +91,25 @@
 	[self reloadTasks:newTasks];
 }
 
-- (void)shouldReloadGraphContent:(NSNotification *)notification
+- (void)restoreFromCached
 {
-	NSDictionary *newTasksGraphDict = [notification object];	
-	NSArray *newTasks = nil;
+	NSArray *archivedContent = nil;
 	if (self.isTodayTasks) {
 		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-		newTasks = [newTasksGraphDict
-					valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
-		
+		archivedContent = [[CacheServices sharedCacheServices].tasksDueTodayDict
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
+		self.hasCachedData = (archivedContent != nil);
+		[self reloadTasks:archivedContent];
 	} else if (self.isNearTasks) {
-		newTasks = [CacheServices sharedCacheServices].tasksWithin;
+		archivedContent = [CacheServices sharedCacheServices].tasksWithin;
+		self.hasCachedData = (archivedContent != nil);
+		[self reloadTasks:archivedContent];
 	} else {
-		newTasks = [newTasksGraphDict 
-					valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
+		archivedContent = [[CacheServices sharedCacheServices].tasksWithGroupIdDict 
+						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
+		self.hasCachedData = (archivedContent != nil);
+		[self reloadTasks:archivedContent];
 	}
-	if (![notification.name isEqualToString:TasksSearchDidLoadNotification] && self.tasksSave) {
-		self.tasksSave = newTasks;
-		return;
-	}
-	[self reloadTasks:newTasks];
 }
 
 - (void)reloadTasks:(NSArray *)newTasks
@@ -215,27 +215,17 @@
 - (void)refreshTasks
 {
 	if (!self.tasksSave) {
-		NSArray *archivedContent = nil;
 		if (self.isTodayTasks) {
-			NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-			archivedContent = [[CacheServices sharedCacheServices].tasksDueTodayDict
-							   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
-			self.hasCachedData = (archivedContent != nil);
-			[self reloadTasks:archivedContent];
+			[self restoreFromCached];
 			
 			[[APIServices sharedAPIServices]refreshTasksDueToday];
 		} else if (self.isNearTasks) {
-			archivedContent = [CacheServices sharedCacheServices].tasksWithin;
-			self.hasCachedData = (archivedContent != nil);
-			[self reloadTasks:archivedContent];
+			[self restoreFromCached];
 			
 			CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
 			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 		} else {
-			archivedContent = [[CacheServices sharedCacheServices].tasksWithGroupIdDict 
-							   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
-			self.hasCachedData = (archivedContent != nil);
-			[self reloadTasks:archivedContent];
+			[self restoreFromCached];
 			
 			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
 		}
