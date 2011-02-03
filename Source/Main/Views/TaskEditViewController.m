@@ -98,15 +98,6 @@
 	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:GroupPlaceholder]];
 	[self.tableView reloadData];
 }
-
-#pragma mark -
-#pragma mark Content reloading
-
-//- (void)shouldReloadContent:(NSNotification *)notification
-//{
-//	[self dismissModalViewControllerAnimated:TRUE];
-//}
-
 #pragma mark -
 #pragma mark BaseLoadingViewCenter Delegate
 

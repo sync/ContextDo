@@ -453,7 +453,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *path = TasksWithGroupIdKey;
 	
 	NSString *url = TASKSURL(BASE_URL, TASKS_PATH, groupId);
-	[self downloadContentForUrl:url withObject:[groupId stringValue] path:path notificationName:notificationName];
+	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
+		[self syncTasks];
+		[self downloadSeriallyContentForUrl:url withObject:[groupId stringValue] path:path notificationName:notificationName];
+	} else {
+		[self downloadContentForUrl:url withObject:[groupId stringValue] path:path notificationName:notificationName];
+	}
 }
 
 - (void)refreshTasksWithDue:(NSString *)due
@@ -466,7 +471,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *path = TasksWithDueKey;
 	
 	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due);
-	[self downloadContentForUrl:url withObject:due path:path notificationName:notificationName];
+	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
+		[self syncTasks];
+		[self downloadSeriallyContentForUrl:url withObject:due path:path notificationName:notificationName];
+	} else {
+		[self downloadContentForUrl:url withObject:due path:path notificationName:notificationName];
+	}
 }
 
 - (void)refreshTasksDueToday
@@ -477,7 +487,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
 	
 	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due);
-	[self downloadContentForUrl:url withObject:due path:path notificationName:notificationName];
+	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
+		[self syncTasks];
+		[self downloadSeriallyContentForUrl:url withObject:due path:path notificationName:notificationName];
+	} else {
+		[self downloadContentForUrl:url withObject:due path:path notificationName:notificationName];
+	}
 }
 
 - (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude
@@ -489,7 +504,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *latLngString = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
 	
 	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, self.alertsDistanceWithin.floatValue);
-	[self downloadContentForUrl:url withObject:latLngString path:path notificationName:notificationName];
+	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
+		[self syncTasks];
+		[self downloadSeriallyContentForUrl:url withObject:latLngString path:path notificationName:notificationName];
+	} else {
+		[self downloadContentForUrl:url withObject:latLngString path:path notificationName:notificationName];
+	}
 }
 
 - (void)refreshTasksWithQuery:(NSString *)query;
@@ -502,7 +522,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *path = TasksWithQueryKey;
 	
 	NSString *url = TASKSSEARCHURL(BASE_URL, TASKS_PATH, [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
-	[self downloadContentForUrl:url withObject:query path:path notificationName:notificationName];
+	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
+		[self syncTasks];
+		[self downloadSeriallyContentForUrl:url withObject:query path:path notificationName:notificationName];
+	} else {
+		[self downloadContentForUrl:url withObject:query path:path notificationName:notificationName];
+	}
 }
 
 - (void)refreshTasksEdited
@@ -513,7 +538,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
 	
 	NSString *url = TASKSUPDATEDSINCEURL(BASE_URL, TASKS_PATH, [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"]);
-	[self downloadContentForUrl:url withObject:editedAt path:path notificationName:notificationName];
+	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
+		[self syncTasks];
+		[self downloadSeriallyContentForUrl:url withObject:editedAt path:path notificationName:notificationName];
+	} else {
+		[self downloadContentForUrl:url withObject:editedAt path:path notificationName:notificationName];
+	}
 }
 
 - (void)addTask:(Task *)task
@@ -565,8 +595,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[[CacheServices sharedCacheServices] addCachedTask:task syncId:(!task.taskId) ? task.syncId : nil];
 	
-	[self.networkQueue addOperation:request];
-	[self.networkQueue go];
+	[self.serialNetworkQueue addOperation:request];
+	[self.serialNetworkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
@@ -629,8 +659,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[[CacheServices sharedCacheServices] updateCachedTask:task syncId:(!task.taskId) ? task.syncId : nil];
 	
-	[self.networkQueue addOperation:request];
-	[self.networkQueue go];
+	[self.serialNetworkQueue addOperation:request];
+	[self.serialNetworkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
@@ -676,15 +706,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[[CacheServices sharedCacheServices] deleteCachedTask:task syncId:(!task.taskId) ? task.syncId : nil];
 	
-	[self.networkQueue addOperation:request];
-	[self.networkQueue go];
+	[self.serialNetworkQueue addOperation:request];
+	[self.serialNetworkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
 - (void)syncTasks
 {
 	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != kNotReachable) {
-		if (self.serialNetworkQueue.requestsCount > 0 && ![CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
+		if (self.serialNetworkQueue.requestsCount > 0 && ![CacheServices sharedCacheServices].groupOperationsShouldUseSerialQueue) {
 			[self performSelector:@selector(syncTasks) withObject:nil afterDelay:0.5];
 			return;
 		}

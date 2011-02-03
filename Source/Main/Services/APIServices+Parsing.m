@@ -115,6 +115,12 @@
 			if ([notificationName isEqualToString:GroupAddNotification]) {
 				[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forPathToId:@"syncId" forKey:AddedKey];
 				[[CacheServices sharedCacheServices] addCachedGroup:group syncId:nonSyncedGroup.syncId];
+				for (NSString *key in [NSArray arrayWithObjects:AddedKey, UpdatedKey, DeletedKey, nil]) { 
+					NSMutableArray *tasks = [[CacheServices sharedCacheServices].tasksOutOfSyncDict filteredObjectsUnderArray:nonSyncedGroup.groupId forPath:@"groupId" forKey:key];
+					for (Task *task in tasks) {
+						task.groupId = group.groupId;
+					}
+				}
 			} else if ([notificationName isEqualToString:GroupEditNotification]) {
 				[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forPathToId:@"syncId" forKey:UpdatedKey];
 				[[CacheServices sharedCacheServices] updateCachedGroup:group syncId:nonSyncedGroup.syncId];
