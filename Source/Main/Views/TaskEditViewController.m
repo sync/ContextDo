@@ -83,7 +83,7 @@
 	self.tableView.dataSource = self.taskEditDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.taskEditDataSource.tempTask = (self.task) ? [[self.task copy]autorelease] : [[[Task alloc]init]autorelease];
-	if (self.group && self.group.groupId.integerValue != NSNotFound) {
+	if (self.group.groupId && self.group.groupId.integerValue != NSNotFound) {
 		self.taskEditDataSource.tempTask.groupId = self.group.groupId;
 		self.taskEditDataSource.tempTask.groupName = self.group.name;
 	}

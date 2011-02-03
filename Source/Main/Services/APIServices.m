@@ -526,8 +526,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
 		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
 		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
-	} else {
-		// TODO iterate trough all out of sync dict find task and update
 	}
 	
 	NSString *notificationName = TaskAddNotification;
@@ -580,10 +578,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!task.syncId) {
 		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
+		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:UpdatedKey];
 		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
 	} else {
-		// TODO iterate trough all out of sync dict find task and update
+		if ([[CacheServices sharedCacheServices].tasksOutOfSyncDict objectUnderArray:task forPathToId:@"syncId" forKey:AddedKey]) {
+			[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
+			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:task forPathToId:@"syncId" forKey:UpdatedKey];
+			[[CacheServices sharedCacheServices]saveTasksOutOfSync];
+			[[CacheServices sharedCacheServices]updateCachedTask:task syncId:task.syncId];
+			return;
+		}
 	}
 	
 	NSString *notificationName = TaskEditNotification;
@@ -638,10 +642,20 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!task.syncId) {
 		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
+		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:DeletedKey];
 		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
 	} else {
-		// TODO iterate trough all out of sync dict find task and update
+		if ([[CacheServices sharedCacheServices].tasksOutOfSyncDict objectUnderArray:task forPathToId:@"syncId" forKey:UpdatedKey]) {
+			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:task forPathToId:@"syncId" forKey:UpdatedKey];
+			[[CacheServices sharedCacheServices]saveTasksOutOfSync];
+		}
+		if ([[CacheServices sharedCacheServices].tasksOutOfSyncDict objectUnderArray:task forPathToId:@"syncId" forKey:AddedKey]) {
+			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
+			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:task forPathToId:@"syncId" forKey:DeletedKey];
+			[[CacheServices sharedCacheServices]saveTasksOutOfSync];
+			[[CacheServices sharedCacheServices] deleteCachedTask:task syncId:task.syncId];
+			return;
+		}
 	}
 	
 	NSString *notificationName = TaskDeleteNotification;

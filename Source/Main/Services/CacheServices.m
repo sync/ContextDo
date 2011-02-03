@@ -626,20 +626,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (NSArray *)tasksWithin
 {
 	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
-		NSArray *allKeys = [self.tasksWithLatitudeDict allKeys];
-		if (allKeys.count > 0) {
-			NSString *savedLatLngString = [allKeys objectAtIndex:0];
-			NSArray *coordinatesArray = [savedLatLngString componentsSeparatedByString:@","];
+		NSMutableSet *tasksWithin = [NSMutableSet set];
+		for (NSString *latLngString in self.tasksWithLatitudeDict.allKeys) {
+			NSArray *coordinatesArray = [latLngString componentsSeparatedByString:@","];
 			if (coordinatesArray.count == 2) {
 				CLLocation *location = [[[CLLocation alloc]initWithLatitude:[[coordinatesArray objectAtIndex:0]doubleValue]
 																  longitude:[[coordinatesArray objectAtIndex:1]doubleValue]]autorelease];
 				CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue * 1000;
 				if ([[AppDelegate sharedAppDelegate].currentLocation distanceFromLocation:location] < distance) {
-					NSDictionary *savedDict = [self.tasksWithLatitudeDict valueForKey:savedLatLngString];
-					return [savedDict valueForKey:@"content"];
+					NSDictionary *savedDict = [self.tasksWithLatitudeDict valueForKey:latLngString];
+					[tasksWithin addObjectsFromArray:[savedDict valueForKey:@"content"]];
 				}
 			}
 		}
+		// todo hash could be different but might the the same id task
+		return tasksWithin.allObjects;
 	}
 	return nil;
 }
