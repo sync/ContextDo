@@ -1129,6 +1129,13 @@
 			name = Cache;
 			sourceTree = "<group>";
 		};
+		2426B0E712FAD91500969CBB /* scifihifi-iphone */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "scifihifi-iphone";
+			sourceTree = "<group>";
+		};
 		2434D66512B59EAC007B8A13 /* Reset */ = {
 			isa = PBXGroup;
 			children = (
@@ -1564,6 +1571,7 @@
 		24F8788D12D16A6F00370A5F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				2426B0E712FAD91500969CBB /* scifihifi-iphone */,
 				2456804C12F06F720004189D /* TISwipeableTableView.git */,
 				24567AE912F01C2E0004189D /* facebook-ios-sdk */,
 				2491229612EE4018009191BA /* tapkulibrary */,

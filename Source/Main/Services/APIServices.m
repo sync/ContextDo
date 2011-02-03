@@ -163,9 +163,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		return;
 	}
 	
-	self.username = nil;
-	self.password = nil;
-	
 	NSString *notificationName = UserDidLoginNotification;
 	NSString *path = @"login";
 	
@@ -181,6 +178,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request setUsername:aUsername];
 	[request setPassword:aPassword];
+	
+	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == kNotReachable) {
+		if (self.username && self.password &&
+			[aUsername isEqualToString:self.username] &&
+			[aPassword isEqualToString:self.password]) {
+			[self notifyDone:request object:nil];
+			return;
+		}
+	}
+	
+	self.username = nil;
+	self.password = nil;
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];

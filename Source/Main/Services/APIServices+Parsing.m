@@ -121,6 +121,7 @@
 						task.groupId = group.groupId;
 					}
 				}
+				[[CacheServices sharedCacheServices]saveTasksOutOfSync];
 			} else if ([notificationName isEqualToString:GroupEditNotification]) {
 				[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forPathToId:@"syncId" forKey:UpdatedKey];
 				[[CacheServices sharedCacheServices] updateCachedGroup:group syncId:nonSyncedGroup.syncId];
