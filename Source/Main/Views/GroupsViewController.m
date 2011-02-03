@@ -137,7 +137,9 @@
 
 - (void)restoreFromCached
 {
-	
+	NSArray *archivedContent = [[CacheServices sharedCacheServices].groupsDict valueForKey:@"content"];
+	self.hasCachedData = (archivedContent != nil);
+	[self reloadGroups:archivedContent];
 }
 
 - (void)reloadGroups:(NSArray *)newGroups
@@ -316,7 +318,6 @@
 - (void)refreshGroups
 {
 	[self restoreFromCached];
-	
 	[[APIServices sharedAPIServices]refreshGroups];
 }
 

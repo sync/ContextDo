@@ -77,7 +77,7 @@
 #define TasksGraphDueTodayDidLoadNotification @"TasksGraphDueTodayDidLoadNotification"
 #define TasksGraphWithinDidLoadNotification @"TasksGraphWithinDidLoadNotification"
 #define TasksGraphUpdatedSinceDidLoadNotification @"TasksGraphUpdatedSinceDidLoadNotification"
-#define GroupsGraphDidLoadNotification @"GroupsDidLoadNotification"
+#define GroupsGraphDidLoadNotification @"GroupsGraphDidLoadNotification"
 
 #define TodaysTasksPlacholder @"Todays tasks"
 #define NearTasksPlacholder @"Near tasks"
