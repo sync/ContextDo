@@ -297,7 +297,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (void)saveTasksWithGroupId
 {
 	[self.tasksWithGroupIdDict saveDictForKey:TasksWithGroupIdKey];
-	[[NSNotificationCenter defaultCenter]postNotificationName:TasksDidLoadNotification 
+	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphDidLoadNotification 
 													   object:self.tasksWithGroupIdDict];
 }
 
@@ -416,7 +416,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (void)saveTasksWithDue
 {
 	[self.tasksWithDueDict saveDictForKey:TasksWithDueKey];
-	[[NSNotificationCenter defaultCenter]postNotificationName:TasksDueDidLoadNotification 
+	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphDueDidLoadNotification 
 													   object:[self.tasksWithDueDict valueForKey:@"content"]];
 }
 
@@ -535,7 +535,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (void)saveTasksDueToday
 {
 	[self.tasksDueTodayDict saveDictForKey:TasksDueTodaydKey];
-	[[NSNotificationCenter defaultCenter]postNotificationName:TasksDueTodayDidLoadNotification 
+	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphDueTodayDidLoadNotification 
 													   object:[self.tasksDueTodayDict valueForKey:@"content"]];
 }
 
@@ -672,7 +672,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (void)saveTasksWithLatitude
 {
 	[self.tasksWithLatitudeDict saveDictForKey:TasksWithLatitudeKey];
-	[[NSNotificationCenter defaultCenter]postNotificationName:TasksWithinDidLoadNotification 
+	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphWithinDidLoadNotification 
 													   object:[self.tasksWithLatitudeDict valueForKey:@"content"]];
 }
 
@@ -791,7 +791,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (void)saveEditedTasks
 {
 	[self.editedTasksDict saveDictForKey:EditedTasksKey];
-	[[NSNotificationCenter defaultCenter]postNotificationName:TasksUpdatedSinceDidLoadNotification 
+	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphUpdatedSinceDidLoadNotification 
 													   object:[self.editedTasksDict valueForKey:@"content"]];
 }
 

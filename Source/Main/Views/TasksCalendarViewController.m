@@ -47,6 +47,7 @@
 
 - (void)setupDataSource
 {
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadGraphContent:) name:TasksGraphDueDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueDidLoadNotification];
 	
@@ -73,6 +74,13 @@
 
 - (void)shouldReloadContent:(NSNotification *)notification
 {
+	NSArray *newTasks = [notification object];
+	[self reloadTasks:newTasks];
+}
+
+- (void)shouldReloadGraphContent:(NSNotification *)notification
+{
+#warning TODO
 	NSArray *newTasks = [notification object];
 	[self reloadTasks:newTasks];
 }

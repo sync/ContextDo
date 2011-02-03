@@ -56,12 +56,15 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	if (self.isTodayTasks) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadGraphContent:) name:TasksGraphDueTodayDidLoadNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueTodayDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueTodayDidLoadNotification];
 	} else if (self.isNearTasks) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadGraphContent:) name:TasksGraphWithinDidLoadNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksWithinDidLoadNotification];
 	} else {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadGraphContent:) name:TasksGraphDidLoadNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
@@ -79,13 +82,28 @@
 - (void)shouldReloadContent:(NSNotification *)notification
 {
 	// recognise when entire graph or not
+	NSArray *newTasks = [notification object];
+	if (![notification.name isEqualToString:TasksSearchDidLoadNotification] && self.tasksSave) {
+		self.tasksSave = newTasks;
+		return;
+	}
+	[self reloadTasks:newTasks];
+}
+
+- (void)shouldReloadGraphContent:(NSNotification *)notification
+{
+	NSDictionary *newTasksGraphDict = [notification object];	
 	NSArray *newTasks = nil;
-	id object = [notification object];
-	if ([object isKindOfClass:[NSDictionary class]]) {
-		NSDictionary *dict = [object valueForKey:[self.group.groupId stringValue]];
-		newTasks = [dict valueForKey:@"content"];
+	if (self.isTodayTasks) {
+		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
+		newTasks = [newTasksGraphDict
+					valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
+		
+	} else if (self.isNearTasks) {
+		newTasks = [CacheServices sharedCacheServices].tasksWithin;
 	} else {
-		newTasks = [notification object];
+		newTasks = [newTasksGraphDict 
+					valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
 	}
 	if (![notification.name isEqualToString:TasksSearchDidLoadNotification] && self.tasksSave) {
 		self.tasksSave = newTasks;

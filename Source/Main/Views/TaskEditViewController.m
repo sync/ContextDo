@@ -102,25 +102,17 @@
 #pragma mark -
 #pragma mark Content reloading
 
-- (void)shouldReloadContent:(NSNotification *)notification
-{
-	[self dismissModalViewControllerAnimated:TRUE];
-}
+//- (void)shouldReloadContent:(NSNotification *)notification
+//{
+//	[self dismissModalViewControllerAnimated:TRUE];
+//}
 
 #pragma mark -
 #pragma mark BaseLoadingViewCenter Delegate
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	[self.noResultsView hide:FALSE];
-	
-	if (!self.loadingView) {
-		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
-		self.loadingView.delegate = self;
-		[self.view addSubview:self.loadingView];
-		[self.view bringSubviewToFront:self.loadingView];
-		[self.loadingView show:TRUE];
-	}
+
 }
 
 #pragma mark -
@@ -468,6 +460,7 @@
 	} else {
 		[[APIServices sharedAPIServices]addTask:self.taskEditDataSource.tempTask];
 	}
+	[self dismissModalViewControllerAnimated:TRUE];
 }
 
 - (void)startEditing

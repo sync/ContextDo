@@ -103,6 +103,7 @@
 	[super setupDataSource];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldHidInfo) name:GroupShouldDismissInfo object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasksGraph:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
@@ -168,6 +169,13 @@
 
 - (void)didGetWithinTasks:(NSNotification *)notification
 {
+	NSArray *newTasks = [notification object];
+	[self shouldCheckWithinTasks:newTasks updateCell:TRUE];
+}
+
+- (void)didGetWithinTasksGraph:(NSNotification *)notification
+{
+#warning TODO
 	NSArray *newTasks = [notification object];
 	[self shouldCheckWithinTasks:newTasks updateCell:TRUE];
 }

@@ -186,7 +186,6 @@
 			[[CacheServices sharedCacheServices] saveTasksDueToday];
 		} else if ([notificationName isEqualToString:TasksWithinDidLoadNotification]) {
 			NSDictionary *dict = [NSDictionary dictionaryWithContent:content date:[NSDate date]];
-			[[CacheServices sharedCacheServices].tasksWithLatitudeDict removeAllObjects];
 			[[CacheServices sharedCacheServices].tasksWithLatitudeDict setValue:dict forKey:key];
 			[[CacheServices sharedCacheServices] saveTasksWithLatitude];
 		} if ([notificationName isEqualToString:TasksUpdatedSinceDidLoadNotification]) {
