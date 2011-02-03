@@ -63,8 +63,10 @@
 
 - (void)shouldReloadGraphContent:(NSNotification *)notification
 {
-#warning TODO
-	NSArray *newTasks = [notification object];
+	NSDictionary *graphDictionary = [notification object];
+	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
+	NSArray *newTasks = [graphDictionary
+								valueForKeyPath:[NSString stringWithFormat:@"%@.content", editedAt]];
 	[self reloadTasks:newTasks];
 }
 

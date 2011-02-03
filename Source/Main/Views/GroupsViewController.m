@@ -175,9 +175,7 @@
 
 - (void)didGetWithinTasksGraph:(NSNotification *)notification
 {
-#warning TODO
-	NSArray *newTasks = [notification object];
-	[self shouldCheckWithinTasks:newTasks updateCell:TRUE];
+	[self shouldCheckWithinTasks:[CacheServices sharedCacheServices].tasksWithin updateCell:TRUE];
 }
 
 - (void)shouldCheckWithinTasks:(NSArray *)tasks updateCell:(BOOL)updateCell

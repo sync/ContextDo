@@ -80,8 +80,9 @@
 
 - (void)shouldReloadGraphContent:(NSNotification *)notification
 {
-#warning TODO
-	NSArray *newTasks = [notification object];
+	NSDictionary *graphDictionary = [notification object];
+	NSArray *newTasks = [graphDictionary
+						 valueForKeyPath:[NSString stringWithFormat:@"%@.content", [self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]]];
 	[self reloadTasks:newTasks];
 }
 
