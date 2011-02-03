@@ -276,7 +276,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!group.syncId) {
 		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forKey:AddedKey];
+		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forPathToId:@"syncId" forKey:AddedKey];
 		[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
 	}
 	
@@ -323,8 +323,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!group.syncId) {
 		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forKey:UpdatedKey];
+		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forPathToId:@"syncId" forKey:UpdatedKey];
 		[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
+	} else {
+		if ([[CacheServices sharedCacheServices].groupsOutOfSyncDict objectUnderArray:group forPathToId:@"syncId" forKey:AddedKey]) {
+			[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forPathToId:@"syncId" forKey:AddedKey];
+			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:UpdatedKey];
+			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
+			return;
+		}
 	}
 	
 	NSString *notificationName = GroupEditNotification;
@@ -372,8 +379,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!group.syncId) {
 		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forKey:DeletedKey];
-		[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
+		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forPathToId:@"syncId" forKey:DeletedKey];
+	} else {
+		if ([[CacheServices sharedCacheServices].groupsOutOfSyncDict objectUnderArray:group forPathToId:@"syncId" forKey:UpdatedKey]) {
+			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:UpdatedKey];
+			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
+		}
+		if ([[CacheServices sharedCacheServices].groupsOutOfSyncDict objectUnderArray:group forPathToId:@"syncId" forKey:AddedKey]) {
+			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:AddedKey];
+			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:DeletedKey];
+			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
+			return;
+		}
 	}
 	
 	NSString *notificationName = GroupDeleteNotification;
@@ -505,8 +522,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!task.syncId) {
 		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forKey:AddedKey];
+		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
 		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
+	} else {
+		// TODO iterate trough all out of sync dict find task and update
 	}
 	
 	NSString *notificationName = TaskAddNotification;
@@ -559,8 +578,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!task.syncId) {
 		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forKey:AddedKey];
+		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
 		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
+	} else {
+		// TODO iterate trough all out of sync dict find task and update
 	}
 	
 	NSString *notificationName = TaskEditNotification;
@@ -615,8 +636,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!task.syncId) {
 		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forKey:AddedKey];
+		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
 		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
+	} else {
+		// TODO iterate trough all out of sync dict find task and update
 	}
 	
 	NSString *notificationName = TaskDeleteNotification;

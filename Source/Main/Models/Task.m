@@ -37,13 +37,13 @@
 	return task;
 }
 
-- (NSNumber *)taskId
-{
-	if (!taskId && syncId) {
-		return [NSNumber numberWithInteger:-syncId.integerValue];
-	}
-	return taskId;
-}
+//- (NSNumber *)taskId
+//{
+//	if (!taskId && syncId) {
+//		return [NSNumber numberWithInteger:-syncId.integerValue];
+//	}
+//	return taskId;
+//}
 
 - (CLLocationDistance)distance
 {

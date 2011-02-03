@@ -100,7 +100,7 @@
 		
 		Group *nonSyncedGroup = [info valueForKey:@"object"];
 		if ([[self notificationNameForRequest:request]isEqualToString:GroupDeleteNotification]) {
-			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:DeletedKey];
+			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forPathToId:@"syncId" forKey:DeletedKey];
 			[[CacheServices sharedCacheServices]deleteCachedGroup:nonSyncedGroup syncId:nonSyncedGroup.syncId];
 			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
 			[[CacheServices sharedCacheServices]saveGroups];
@@ -113,22 +113,15 @@
 		if (group) {
 			NSString *notificationName = [self notificationNameForRequest:request]; 
 			if ([notificationName isEqualToString:GroupAddNotification]) {
-				[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:AddedKey];
-			} else if ([notificationName isEqualToString:GroupEditNotification]) {
-				[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forKey:UpdatedKey];
-			}
-			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
-			if ([notificationName isEqualToString:GroupAddNotification]) {
+				[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forPathToId:@"syncId" forKey:AddedKey];
 				[[CacheServices sharedCacheServices] addCachedGroup:group syncId:nonSyncedGroup.syncId];
 			} else if ([notificationName isEqualToString:GroupEditNotification]) {
+				[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:nonSyncedGroup forPathToId:@"syncId" forKey:UpdatedKey];
 				[[CacheServices sharedCacheServices] updateCachedGroup:group syncId:nonSyncedGroup.syncId];
 			}
+			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
 			[[CacheServices sharedCacheServices]saveGroups];
-			[self notifyDone:request object:[NSDictionary dictionaryWithObjectsAndKeys:
-											 group, @"object",
-											 [info valueForKey:@"object"], @"group",
-											 nil
-											 ]];
+			[self notifyDone:request object:group];
 		} else {
 			if ([[self notificationNameForRequest:request]isEqualToString:GroupAddNotification]) {
 				[self notifyFailed:request withError:@"Unable to Create Group"];
@@ -225,7 +218,7 @@
 		
 		Task *nonSyncedTask = [info valueForKey:@"object"];
 		if ([[self notificationNameForRequest:request]isEqualToString:TaskDeleteNotification]) {
-			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:nonSyncedTask forKey:DeletedKey];
+			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:nonSyncedTask forPathToId:@"syncId" forKey:DeletedKey];
 			[[CacheServices sharedCacheServices]deleteCachedTask:nonSyncedTask syncId:nonSyncedTask.syncId];
 			[[CacheServices sharedCacheServices]saveTasksOutOfSync];
 			[[CacheServices sharedCacheServices]saveTasksWithGroupId];
@@ -242,10 +235,10 @@
 		if (task) {
 			NSString *notificationName = [self notificationNameForRequest:request]; 
 			if ([notificationName isEqualToString:TaskAddNotification]) {
-				[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:nonSyncedTask forKey:AddedKey];
+				[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:nonSyncedTask forPathToId:@"syncId" forKey:AddedKey];
 				[[CacheServices sharedCacheServices]addCachedTask:nonSyncedTask syncId:nonSyncedTask.syncId];
 			} else if ([notificationName isEqualToString:TaskEditNotification]) {
-				[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:nonSyncedTask forKey:UpdatedKey];
+				[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:nonSyncedTask forPathToId:@"syncId" forKey:UpdatedKey];
 				[[CacheServices sharedCacheServices]updateCachedTask:nonSyncedTask syncId:nonSyncedTask.syncId];
 			}
 			[[CacheServices sharedCacheServices]saveTasksOutOfSync];

@@ -11,8 +11,6 @@
 - (void)refreshGroups;
 - (void)reloadGroups:(NSArray *)newGroups;
 - (void)addGroup;
-- (void)groupEditNotification:(NSNotification *)notification;
-- (void)groupAddNotification:(NSNotification *)notification;
 - (void)addTask;
 - (void)showSettings;
 - (void)showGroupsEditAnimated:(BOOL)animated;
@@ -105,7 +103,7 @@
 	[super setupDataSource];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldHidInfo) name:GroupShouldDismissInfo object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasksGraph:) name:TasksWithinDidLoadNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasksGraph:) name:TasksGraphWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:GroupsGraphDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
@@ -162,9 +160,7 @@
 	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
 	
 	NSArray *tasksWithin = [CacheServices sharedCacheServices].tasksWithin;
-	if (tasksWithin.count > 0) {
-		[self shouldCheckWithinTasks:tasksWithin updateCell:FALSE];
-	}
+	[self shouldCheckWithinTasks:tasksWithin updateCell:FALSE];
 	
 	[self.tableView reloadData];
 }
@@ -185,7 +181,8 @@
 
 - (void)didGetWithinTasksGraph:(NSNotification *)notification
 {
-	[self shouldCheckWithinTasks:[CacheServices sharedCacheServices].tasksWithin updateCell:TRUE];
+	NSArray *tasksWithin = [CacheServices sharedCacheServices].tasksWithin;
+	[self shouldCheckWithinTasks:tasksWithin updateCell:TRUE];
 }
 
 - (void)shouldCheckWithinTasks:(NSArray *)tasks updateCell:(BOOL)updateCell

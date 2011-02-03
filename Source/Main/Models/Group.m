@@ -45,12 +45,12 @@
 	return group;
 }
 
-- (NSNumber *)groupId
-{
-	if (!groupId && syncId) {
-		return [NSNumber numberWithInteger:-syncId.integerValue];
-	}
-	return groupId;
-}
+//- (NSNumber *)groupId
+//{
+//	if (!groupId && syncId) {
+//		return [NSNumber numberWithInteger:-syncId.integerValue];
+//	}
+//	return groupId;
+//}
 
 @end
