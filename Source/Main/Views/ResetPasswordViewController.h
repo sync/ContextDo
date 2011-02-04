@@ -11,7 +11,6 @@
 - (void)startEditing;
 - (void)endEditing;
 - (BOOL)shouldReturn;
-- (void)shouldReloadContent:(NSNotification *)notification;
 
 - (IBAction)shouldResetPassword;
 

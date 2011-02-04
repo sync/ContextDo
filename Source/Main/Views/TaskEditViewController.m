@@ -75,8 +75,6 @@
 												 name:UIKeyboardWillHideNotification object:nil];
 	
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TaskAddNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TaskEditNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TaskAddNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TaskEditNotification];
 	self.taskEditDataSource = [[[TaskEditDataSource alloc]init]autorelease];

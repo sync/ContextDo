@@ -13,7 +13,6 @@
 - (void)endEditing;
 - (BOOL)shouldReturn;
 - (void)goNext;
-- (void)shouldReloadContent:(NSNotification *)notification;
 
 - (IBAction)shouldLogin;
 
