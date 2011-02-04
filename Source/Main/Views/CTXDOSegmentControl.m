@@ -23,7 +23,8 @@
 @synthesize target, action, gestureRecognizer;
 
 - (id)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
+    self = [super initWithFrame:frame];
+    if (self) {
 		// Custom initialization
 		[self setupCustomInitialisation];
     }
@@ -33,7 +34,8 @@
 // The designated initializer. Override to perform setup that is required before the view is loaded.
 // Only when using xib (interface buildder)
 - (id)initWithCoder:(NSCoder *)decoder {
-	if (self = [super initWithCoder:decoder]) {
+	self = [super initWithCoder:decoder];
+    if (self) {
 		// Custom initialization
 		[self setupCustomInitialisation];
 	}
