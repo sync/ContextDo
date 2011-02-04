@@ -296,7 +296,6 @@
 		24567FFD12F069FB0004189D /* icon_delete_whtTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24567FF912F069FB0004189D /* icon_delete_whtTouch@2x.png */; };
 		2456800512F06AAA0004189D /* icon_locateTouch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456800312F06AAA0004189D /* icon_locateTouch.png */; };
 		2456800612F06AAA0004189D /* icon_locateTouch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456800412F06AAA0004189D /* icon_locateTouch@2x.png */; };
-		245680A912F06F720004189D /* TISwipeableTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456808712F06F720004189D /* TISwipeableTableView.m */; };
 		245680B412F06FBC0004189D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B112F06FBC0004189D /* Icon@2x.png */; };
 		245680B612F06FBC0004189D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 245680B312F06FBC0004189D /* Icon.png */; };
 		245680FF12F072730004189D /* TasksCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 245680FE12F072730004189D /* TasksCalendarCell.m */; };
@@ -355,6 +354,7 @@
 		2491256312EE490D009191BA /* TasksCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491256212EE490D009191BA /* TasksCalendarDataSource.m */; };
 		2491273A12EE647B009191BA /* TaskDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491273912EE647B009191BA /* TaskDetailsView.m */; };
 		24912A2D12EE9CC0009191BA /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24912A2C12EE9CC0009191BA /* MessageUI.framework */; };
+		24E3990C12FC3F4000288B29 /* TISwipeableTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E398E512FC3F3F00288B29 /* TISwipeableTableView.m */; };
 		24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */; };
 		24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* InfoViewController.m */; };
 		24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoView.xib */; };
@@ -821,8 +821,6 @@
 		24567FF912F069FB0004189D /* icon_delete_whtTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_delete_whtTouch@2x.png"; sourceTree = "<group>"; };
 		2456800312F06AAA0004189D /* icon_locateTouch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_locateTouch.png; sourceTree = "<group>"; };
 		2456800412F06AAA0004189D /* icon_locateTouch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_locateTouch@2x.png"; sourceTree = "<group>"; };
-		2456808612F06F720004189D /* TISwipeableTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TISwipeableTableView.h; sourceTree = "<group>"; };
-		2456808712F06F720004189D /* TISwipeableTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISwipeableTableView.m; sourceTree = "<group>"; };
 		245680B112F06FBC0004189D /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		245680B312F06FBC0004189D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		245680FD12F072730004189D /* TasksCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksCalendarCell.h; sourceTree = "<group>"; };
@@ -907,6 +905,8 @@
 		2491273812EE647B009191BA /* TaskDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailsView.h; sourceTree = "<group>"; };
 		2491273912EE647B009191BA /* TaskDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailsView.m; sourceTree = "<group>"; };
 		24912A2C12EE9CC0009191BA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		24E398E412FC3F3F00288B29 /* TISwipeableTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TISwipeableTableView.h; sourceTree = "<group>"; };
+		24E398E512FC3F3F00288B29 /* TISwipeableTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISwipeableTableView.m; sourceTree = "<group>"; };
 		24E4496812EBA54900F08B7E /* TasksUpdatedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksUpdatedDataSource.h; sourceTree = "<group>"; };
 		24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksUpdatedDataSource.m; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -1308,15 +1308,6 @@
 			name = "Pull to Refresh";
 			sourceTree = "<group>";
 		};
-		2456804C12F06F720004189D /* TISwipeableTableView.git */ = {
-			isa = PBXGroup;
-			children = (
-				2456808612F06F720004189D /* TISwipeableTableView.h */,
-				2456808712F06F720004189D /* TISwipeableTableView.m */,
-			);
-			path = TISwipeableTableView.git;
-			sourceTree = "<group>";
-		};
 		248921C3128ED27000DC9712 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -1460,6 +1451,15 @@
 			name = Edition;
 			sourceTree = "<group>";
 		};
+		24E398A912FC3F3F00288B29 /* TISwipeableTableView */ = {
+			isa = PBXGroup;
+			children = (
+				24E398E412FC3F3F00288B29 /* TISwipeableTableView.h */,
+				24E398E512FC3F3F00288B29 /* TISwipeableTableView.m */,
+			);
+			path = TISwipeableTableView;
+			sourceTree = "<group>";
+		};
 		24E4496712EBA52600F08B7E /* Info */ = {
 			isa = PBXGroup;
 			children = (
@@ -1584,8 +1584,8 @@
 		24F8788D12D16A6F00370A5F /* External */ = {
 			isa = PBXGroup;
 			children = (
+				24E398A912FC3F3F00288B29 /* TISwipeableTableView */,
 				2426B0E712FAD91500969CBB /* scifihifi-iphone */,
-				2456804C12F06F720004189D /* TISwipeableTableView.git */,
 				24567AE912F01C2E0004189D /* facebook-ios-sdk */,
 				2491229612EE4018009191BA /* tapkulibrary */,
 				2491124F12EC2E0F009191BA /* MapKit-Route-Directions */,
@@ -2914,12 +2914,12 @@
 				24567BA612F01C2F0004189D /* FBRequest.m in Sources */,
 				24567E1912F04A740004189D /* CTXDORefreshTableHeaderView.m in Sources */,
 				24567E2F12F04C650004189D /* CTXDOTableViewRefreshController.m in Sources */,
-				245680A912F06F720004189D /* TISwipeableTableView.m in Sources */,
 				245680FF12F072730004189D /* TasksCalendarCell.m in Sources */,
 				24268C3612F647EB00969CBB /* NSDictionary+Persistence.m in Sources */,
 				24269EC812F846F300969CBB /* CacheServices.m in Sources */,
 				2426B07212FACB7200969CBB /* NSArray+Persistence.m in Sources */,
 				2426B0EB12FAD95100969CBB /* SFHFKeychainUtils.m in Sources */,
+				24E3990C12FC3F4000288B29 /* TISwipeableTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
