@@ -4,6 +4,7 @@
 #import "NSDate+Extensions.h"
 #import "Reachability.h"
 #import "SFHFKeychainUtils.h"
+#import "ObjectiveSupport.h"
 
 @implementation APIServices
 
@@ -185,7 +186,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[request setUsername:aUsername];
 	[request setPassword:aPassword];
 	
-	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == kNotReachable) {
+	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
 		NSString *offlineUserPassword = [SFHFKeychainUtils getPasswordForUsername:OfflineService andServiceName:OfflineService error:nil];
 		NSArray *components = [offlineUserPassword componentsSeparatedByString:@"|-|--_/_/_/--|-|"];
 		if (components.count == 2 &&
@@ -442,7 +443,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 - (void)syncGroups
 {
-	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != kNotReachable) {
+	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable) {
 		if (self.serialNetworkQueue.requestsCount > 0) {
 			[self performSelector:@selector(syncGroups) withObject:nil afterDelay:0.5];
 			return;
@@ -741,7 +742,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 - (void)syncTasks
 {
-	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != kNotReachable) {
+	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable) {
 		if (self.serialNetworkQueue.requestsCount > 0 && ![CacheServices sharedCacheServices].groupOperationsShouldUseSerialQueue) {
 			[self performSelector:@selector(syncTasks) withObject:nil afterDelay:0.5];
 			return;

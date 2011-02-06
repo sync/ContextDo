@@ -1,0 +1,5 @@
+name: tapkulibrary
+version: 1.0
+dependencies:
+  - TouchJSON: 1.0
+

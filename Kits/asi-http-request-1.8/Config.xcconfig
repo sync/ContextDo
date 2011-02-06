@@ -1,0 +1,2 @@
+OTHER_LDFLAGS = $(OTHER_LDFLAGS) -framework AVFoundation -framework CFNetwork -framework SystemConfiguration -framework MobileCoreServices -llibxml2
+HEADER_SEARCH_PATHS = $(HEADER_SEARCH_PATHS) /usr/include/libxml2

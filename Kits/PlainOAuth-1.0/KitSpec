@@ -1,0 +1,6 @@
+name: PlainOAuth
+version: 1.0
+dependencies:
+  - asi-http-request: 1.8
+  - json-framework: 3.0beta1
+

@@ -1,0 +1,6 @@
+name: asi-http-request
+version: 1.8
+source-directory: Classes
+dependencies:
+  - reachability: 2.2
+

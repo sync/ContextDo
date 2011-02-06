@@ -1,0 +1,5 @@
+name: facebook-ios-sdk
+version: 1.0
+dependencies:
+  - json-framework: 3.0beta1
+

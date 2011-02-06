@@ -8,11 +8,11 @@
 #ifdef __OBJC__
 	#import <Foundation/Foundation.h>
 	#import <UIKit/UIKit.h>
-	#import "SynthesizeSingleton.h"
+    #import "SynthesizeSingleton.h"
 	#import <QuartzCore/QuartzCore.h>
 	#import <MapKit/MapKit.h>
 	#import "Define.h"
-	#import "NSObject+Extensions.h"
+    #import "ObjectiveDump3.h"
 	#import "UIColor+i7HexColor.h"
 	#import "DefaultStyleSheet.h"
 	#import "CustomNavigationController.h"

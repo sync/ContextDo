@@ -1,0 +1,7 @@
+name: MapKit-Route-Directions
+version: 1.0
+source-directory: Classes
+dependencies:
+  - asi-http-request: 1.8
+  - json-framework: 3.0beta1
+

@@ -1,0 +1,12 @@
+name: ObjectiveDump3
+version: 3.0
+source-directory: Source
+dependencies:
+  - asi-http-request: 1.8
+  - facebook-ios-sdk: 1.0
+  - PlainOAuth: 1.0
+  - NSDate-Extensions: 1.0
+  - Gallager: 1.0
+  - EGOTableViewPullRefresh: 1.0
+  - MBProgressHUD: 1.0
+

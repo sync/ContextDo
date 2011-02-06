@@ -150,8 +150,6 @@
 }
 
 - (void)calendarMonthView:(TKCalendarMonthView*)mv monthDidChange:(NSDate*)d{
-	[super calendarMonthView:mv monthDidChange:d];
-	
 	[self refreshTasks];
 }
 
