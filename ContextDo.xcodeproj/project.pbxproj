@@ -1216,17 +1216,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				241B072C12FED4A30024A330 /* MessageUI.framework */,
-				241B071C12FED4680024A330 /* AVFoundation.framework */,
-				241B071D12FED4680024A330 /* CFNetwork.framework */,
-				241B071E12FED4680024A330 /* CoreGraphics.framework */,
-				241B071F12FED4680024A330 /* libxml2.dylib */,
-				241B072012FED4680024A330 /* libz.1.2.3.dylib */,
-				241B072112FED4680024A330 /* MobileCoreServices.framework */,
-				241B072212FED4680024A330 /* QuartzCore.framework */,
-				241B072312FED4680024A330 /* Security.framework */,
-				241B072412FED4680024A330 /* SystemConfiguration.framework */,
-				241B071A12FED4160024A330 /* CoreText.framework */,
 				3A57FEDC11FFB24F00248D1D /* Source */,
 				3A57FED411FFB24F00248D1D /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -1238,6 +1227,17 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				241B072C12FED4A30024A330 /* MessageUI.framework */,
+				241B071C12FED4680024A330 /* AVFoundation.framework */,
+				241B071D12FED4680024A330 /* CFNetwork.framework */,
+				241B071E12FED4680024A330 /* CoreGraphics.framework */,
+				241B071F12FED4680024A330 /* libxml2.dylib */,
+				241B072012FED4680024A330 /* libz.1.2.3.dylib */,
+				241B072112FED4680024A330 /* MobileCoreServices.framework */,
+				241B072212FED4680024A330 /* QuartzCore.framework */,
+				241B072312FED4680024A330 /* Security.framework */,
+				241B072412FED4680024A330 /* SystemConfiguration.framework */,
+				241B071A12FED4160024A330 /* CoreText.framework */,
 				24E971FD12FE956A002ECEB0 /* CoreLocation.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
