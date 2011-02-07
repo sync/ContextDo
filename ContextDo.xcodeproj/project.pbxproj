@@ -9,6 +9,27 @@
 /* Begin PBXBuildFile section */
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		241EBD0512FFFA5D00F871B5 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCEC12FFFA5C00F871B5 /* blackArrow.png */; };
+		241EBD0612FFFA5D00F871B5 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCED12FFFA5C00F871B5 /* blackArrow@2x.png */; };
+		241EBD0712FFFA5D00F871B5 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCEE12FFFA5C00F871B5 /* blueArrow.png */; };
+		241EBD0812FFFA5D00F871B5 /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCEF12FFFA5C00F871B5 /* blueArrow@2x.png */; };
+		241EBD0912FFFA5D00F871B5 /* grayArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCF012FFFA5C00F871B5 /* grayArrow.png */; };
+		241EBD0A12FFFA5D00F871B5 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCF112FFFA5C00F871B5 /* grayArrow@2x.png */; };
+		241EBD0B12FFFA5D00F871B5 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCF212FFFA5C00F871B5 /* whiteArrow.png */; };
+		241EBD0C12FFFA5D00F871B5 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCF312FFFA5C00F871B5 /* whiteArrow@2x.png */; };
+		241EBD0D12FFFA5D00F871B5 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCF512FFFA5C00F871B5 /* FBDialog.bundle */; };
+		241EBD0E12FFFA5D00F871B5 /* BaseWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCF712FFFA5D00F871B5 /* BaseWebView.xib */; };
+		241EBD0F12FFFA5D00F871B5 /* CustomNavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCF812FFFA5D00F871B5 /* CustomNavigationController.xib */; };
+		241EBD1012FFFA5D00F871B5 /* signinBullet1.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCFA12FFFA5D00F871B5 /* signinBullet1.png */; };
+		241EBD1112FFFA5D00F871B5 /* signinBullet1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCFB12FFFA5D00F871B5 /* signinBullet1@2x.png */; };
+		241EBD1212FFFA5D00F871B5 /* signinBullet2.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCFC12FFFA5D00F871B5 /* signinBullet2.png */; };
+		241EBD1312FFFA5D00F871B5 /* signinBullet2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCFD12FFFA5D00F871B5 /* signinBullet2@2x.png */; };
+		241EBD1412FFFA5D00F871B5 /* signinButtonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCFE12FFFA5D00F871B5 /* signinButtonBg.png */; };
+		241EBD1512FFFA5D00F871B5 /* signinButtonBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBCFF12FFFA5D00F871B5 /* signinButtonBg@2x.png */; };
+		241EBD1612FFFA5D00F871B5 /* signinHello.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBD0012FFFA5D00F871B5 /* signinHello.png */; };
+		241EBD1712FFFA5D00F871B5 /* signinHello@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBD0112FFFA5D00F871B5 /* signinHello@2x.png */; };
+		241EBD1812FFFA5D00F871B5 /* signinSeparator.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBD0212FFFA5D00F871B5 /* signinSeparator.png */; };
+		241EBD1912FFFA5D00F871B5 /* TapkuLibrary.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 241EBD0412FFFA5D00F871B5 /* TapkuLibrary.bundle */; };
 		24269EC812F846F300969CBB /* CacheServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 24269EC712F846F300969CBB /* CacheServices.m */; };
 		2426AC3712F9A1CF00969CBB /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 2426AC3612F9A1CF00969CBB /* iTunesArtwork */; };
 		242C911612FD097B00F557AA /* Kit.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 242C911212FD097B00F557AA /* Kit.xcconfig */; };
@@ -322,7 +343,6 @@
 		249121E412EDD957009191BA /* TasksCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 249121E312EDD957009191BA /* TasksCalendarViewController.m */; };
 		2491256312EE490D009191BA /* TasksCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491256212EE490D009191BA /* TasksCalendarDataSource.m */; };
 		2491273A12EE647B009191BA /* TaskDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491273912EE647B009191BA /* TaskDetailsView.m */; };
-		24B530E712FFD213002578E3 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 24B530E612FFD213002578E3 /* Resources */; };
 		24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */; };
 		24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* InfoViewController.m */; };
 		24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoView.xib */; };
@@ -374,6 +394,27 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* ContextDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContextDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		241EBCEC12FFFA5C00F871B5 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
+		241EBCED12FFFA5C00F871B5 /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
+		241EBCEE12FFFA5C00F871B5 /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
+		241EBCEF12FFFA5C00F871B5 /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
+		241EBCF012FFFA5C00F871B5 /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayArrow.png; sourceTree = "<group>"; };
+		241EBCF112FFFA5C00F871B5 /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
+		241EBCF212FFFA5C00F871B5 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
+		241EBCF312FFFA5C00F871B5 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
+		241EBCF512FFFA5C00F871B5 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBDialog.bundle; sourceTree = "<group>"; };
+		241EBCF712FFFA5D00F871B5 /* BaseWebView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BaseWebView.xib; sourceTree = "<group>"; };
+		241EBCF812FFFA5D00F871B5 /* CustomNavigationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomNavigationController.xib; sourceTree = "<group>"; };
+		241EBCFA12FFFA5D00F871B5 /* signinBullet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = signinBullet1.png; sourceTree = "<group>"; };
+		241EBCFB12FFFA5D00F871B5 /* signinBullet1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signinBullet1@2x.png"; sourceTree = "<group>"; };
+		241EBCFC12FFFA5D00F871B5 /* signinBullet2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = signinBullet2.png; sourceTree = "<group>"; };
+		241EBCFD12FFFA5D00F871B5 /* signinBullet2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signinBullet2@2x.png"; sourceTree = "<group>"; };
+		241EBCFE12FFFA5D00F871B5 /* signinButtonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = signinButtonBg.png; sourceTree = "<group>"; };
+		241EBCFF12FFFA5D00F871B5 /* signinButtonBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signinButtonBg@2x.png"; sourceTree = "<group>"; };
+		241EBD0012FFFA5D00F871B5 /* signinHello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = signinHello.png; sourceTree = "<group>"; };
+		241EBD0112FFFA5D00F871B5 /* signinHello@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signinHello@2x.png"; sourceTree = "<group>"; };
+		241EBD0212FFFA5D00F871B5 /* signinSeparator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = signinSeparator.png; sourceTree = "<group>"; };
+		241EBD0412FFFA5D00F871B5 /* TapkuLibrary.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TapkuLibrary.bundle; sourceTree = "<group>"; };
 		24269EC612F846F300969CBB /* CacheServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheServices.h; sourceTree = "<group>"; };
 		24269EC712F846F300969CBB /* CacheServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheServices.m; sourceTree = "<group>"; };
 		2426AC3612F9A1CF00969CBB /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
@@ -735,7 +776,6 @@
 		2491256212EE490D009191BA /* TasksCalendarDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksCalendarDataSource.m; sourceTree = "<group>"; };
 		2491273812EE647B009191BA /* TaskDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailsView.h; sourceTree = "<group>"; };
 		2491273912EE647B009191BA /* TaskDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailsView.m; sourceTree = "<group>"; };
-		24B530E612FFD213002578E3 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 		24E4496812EBA54900F08B7E /* TasksUpdatedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksUpdatedDataSource.h; sourceTree = "<group>"; };
 		24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksUpdatedDataSource.m; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -806,6 +846,74 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		241EBCEA12FFFA5C00F871B5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				241EBCEB12FFFA5C00F871B5 /* EGOTableViewPullRefresh */,
+				241EBCF412FFFA5C00F871B5 /* facebook-ios-sdk */,
+				241EBCF612FFFA5C00F871B5 /* ObjectiveDump3 */,
+				241EBCF912FFFA5D00F871B5 /* PlainOAuth */,
+				241EBD0312FFFA5D00F871B5 /* tapkulibrary */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		241EBCEB12FFFA5C00F871B5 /* EGOTableViewPullRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				241EBCEC12FFFA5C00F871B5 /* blackArrow.png */,
+				241EBCED12FFFA5C00F871B5 /* blackArrow@2x.png */,
+				241EBCEE12FFFA5C00F871B5 /* blueArrow.png */,
+				241EBCEF12FFFA5C00F871B5 /* blueArrow@2x.png */,
+				241EBCF012FFFA5C00F871B5 /* grayArrow.png */,
+				241EBCF112FFFA5C00F871B5 /* grayArrow@2x.png */,
+				241EBCF212FFFA5C00F871B5 /* whiteArrow.png */,
+				241EBCF312FFFA5C00F871B5 /* whiteArrow@2x.png */,
+			);
+			path = EGOTableViewPullRefresh;
+			sourceTree = "<group>";
+		};
+		241EBCF412FFFA5C00F871B5 /* facebook-ios-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				241EBCF512FFFA5C00F871B5 /* FBDialog.bundle */,
+			);
+			path = "facebook-ios-sdk";
+			sourceTree = "<group>";
+		};
+		241EBCF612FFFA5C00F871B5 /* ObjectiveDump3 */ = {
+			isa = PBXGroup;
+			children = (
+				241EBCF712FFFA5D00F871B5 /* BaseWebView.xib */,
+				241EBCF812FFFA5D00F871B5 /* CustomNavigationController.xib */,
+			);
+			path = ObjectiveDump3;
+			sourceTree = "<group>";
+		};
+		241EBCF912FFFA5D00F871B5 /* PlainOAuth */ = {
+			isa = PBXGroup;
+			children = (
+				241EBCFA12FFFA5D00F871B5 /* signinBullet1.png */,
+				241EBCFB12FFFA5D00F871B5 /* signinBullet1@2x.png */,
+				241EBCFC12FFFA5D00F871B5 /* signinBullet2.png */,
+				241EBCFD12FFFA5D00F871B5 /* signinBullet2@2x.png */,
+				241EBCFE12FFFA5D00F871B5 /* signinButtonBg.png */,
+				241EBCFF12FFFA5D00F871B5 /* signinButtonBg@2x.png */,
+				241EBD0012FFFA5D00F871B5 /* signinHello.png */,
+				241EBD0112FFFA5D00F871B5 /* signinHello@2x.png */,
+				241EBD0212FFFA5D00F871B5 /* signinSeparator.png */,
+			);
+			path = PlainOAuth;
+			sourceTree = "<group>";
+		};
+		241EBD0312FFFA5D00F871B5 /* tapkulibrary */ = {
+			isa = PBXGroup;
+			children = (
+				241EBD0412FFFA5D00F871B5 /* TapkuLibrary.bundle */,
+			);
+			path = tapkulibrary;
+			sourceTree = "<group>";
+		};
 		24269EC512F846CC00969CBB /* Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -821,7 +929,7 @@
 				242C910F12FD097B00F557AA /* KitDeps.xcodeproj */,
 				242C911212FD097B00F557AA /* Kit.xcconfig */,
 				2481FF5E12FF3E92003EEAB6 /* libKitDeps.a */,
-				24B530E612FFD213002578E3 /* Resources */,
+				241EBCEA12FFFA5C00F871B5 /* Resources */,
 			);
 			path = Kits;
 			sourceTree = SOURCE_ROOT;
@@ -1887,7 +1995,27 @@
 				245681B812F07C1C0004189D /* panel_swipe@2x.png in Resources */,
 				2426AC3712F9A1CF00969CBB /* iTunesArtwork in Resources */,
 				242C911612FD097B00F557AA /* Kit.xcconfig in Resources */,
-				24B530E712FFD213002578E3 /* Resources in Resources */,
+				241EBD0512FFFA5D00F871B5 /* blackArrow.png in Resources */,
+				241EBD0612FFFA5D00F871B5 /* blackArrow@2x.png in Resources */,
+				241EBD0712FFFA5D00F871B5 /* blueArrow.png in Resources */,
+				241EBD0812FFFA5D00F871B5 /* blueArrow@2x.png in Resources */,
+				241EBD0912FFFA5D00F871B5 /* grayArrow.png in Resources */,
+				241EBD0A12FFFA5D00F871B5 /* grayArrow@2x.png in Resources */,
+				241EBD0B12FFFA5D00F871B5 /* whiteArrow.png in Resources */,
+				241EBD0C12FFFA5D00F871B5 /* whiteArrow@2x.png in Resources */,
+				241EBD0D12FFFA5D00F871B5 /* FBDialog.bundle in Resources */,
+				241EBD0E12FFFA5D00F871B5 /* BaseWebView.xib in Resources */,
+				241EBD0F12FFFA5D00F871B5 /* CustomNavigationController.xib in Resources */,
+				241EBD1012FFFA5D00F871B5 /* signinBullet1.png in Resources */,
+				241EBD1112FFFA5D00F871B5 /* signinBullet1@2x.png in Resources */,
+				241EBD1212FFFA5D00F871B5 /* signinBullet2.png in Resources */,
+				241EBD1312FFFA5D00F871B5 /* signinBullet2@2x.png in Resources */,
+				241EBD1412FFFA5D00F871B5 /* signinButtonBg.png in Resources */,
+				241EBD1512FFFA5D00F871B5 /* signinButtonBg@2x.png in Resources */,
+				241EBD1612FFFA5D00F871B5 /* signinHello.png in Resources */,
+				241EBD1712FFFA5D00F871B5 /* signinHello@2x.png in Resources */,
+				241EBD1812FFFA5D00F871B5 /* signinSeparator.png in Resources */,
+				241EBD1912FFFA5D00F871B5 /* TapkuLibrary.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
