@@ -6,7 +6,7 @@ dependencies:
   - facebook-ios-sdk: 1.0
   - PlainOAuth: 1.0
   - NSDate-Extensions: 1.0
-  - Gallager: 1.0
+  - Gallagher: 1.0
   - EGOTableViewPullRefresh: 1.0
   - MBProgressHUD: 1.0
 

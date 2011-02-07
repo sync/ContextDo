@@ -5,7 +5,6 @@ dependencies:
   - NSDate-Extensions: 1.0
   - ObjectiveDump3: 3.0
   - OHAttributedLabel: 1.0
-  - scifihifi-iphone: 1.0
   - tapkulibrary: 1.0
   - TISwipeableTableView: 1.0
   - UIColor-i7HexColor: 0.11

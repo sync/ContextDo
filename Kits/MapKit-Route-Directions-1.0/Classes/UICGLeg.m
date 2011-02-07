@@ -5,8 +5,8 @@
 @property (nonatomic, retain) NSArray *steps;
 @property (nonatomic, retain) NSDictionary *duration;
 @property (nonatomic, retain) NSDictionary *distance;
-@property (nonatomic, retain) NSDictionary *startLocation;
-@property (nonatomic, retain) NSDictionary *endLocation;
+@property (nonatomic, retain) CLLocation *startLocation;
+@property (nonatomic, retain) CLLocation *endLocation;
 @property (nonatomic, retain) NSString *startAddress;
 @property (nonatomic, retain) NSString *endAddress;
 @property (nonatomic, retain) NSArray *viaWaypoint;

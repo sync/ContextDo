@@ -1,1 +1,1 @@
-OTHER_LDFLAGS = $(OTHER_LDFLAGS) -framework CoreText
+OTHER_LDFLAGS = $(OTHER_LDFLAGS) -ObjC -all_load -framework CoreText

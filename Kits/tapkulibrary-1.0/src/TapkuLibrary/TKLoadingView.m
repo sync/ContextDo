@@ -45,7 +45,8 @@
 @synthesize radius;
 
 - (id) initWithTitle:(NSString*)ttl message:(NSString*)msg{
-	if(self = [super initWithFrame:CGRectMake(0, 0, 280, 200)]){
+	self = [super initWithFrame:CGRectMake(0, 0, 280, 200)];
+	if(self){
 		
 		_title = [ttl copy];
 		_message = [msg copy];

@@ -1,1 +1,1 @@
-OTHER_LDFLAGS = $(OTHER_LDFLAGS) -framework CFNetwork -framework SystemConfiguration -framework MobileCoreServices -framework CoreGraphics -framework Security -llibz.1.2.3
+OTHER_LDFLAGS = $(OTHER_LDFLAGS) -ObjC -all_load -framework CFNetwork -framework SystemConfiguration -framework MobileCoreServices -framework CoreGraphics -framework Security -lz.1.2.3

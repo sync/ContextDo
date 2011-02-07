@@ -10,7 +10,7 @@
 
 @interface UICGPolyline ()
 
-@property (nonatomic, retain) NSMutableArray *points;
+@property (nonatomic, retain) NSArray *points;
 @property (nonatomic) NSInteger numberOfPoints;
 
 @end
