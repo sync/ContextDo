@@ -200,7 +200,9 @@
 
 - (void)dealloc 
 {
-	[arrowsControl release];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [arrowsControl release];
 	[taskDetailsViewController release];
 	[taskDirectionsViewController release];
 	[taskScheduleViewController release];

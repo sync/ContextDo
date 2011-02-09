@@ -21,9 +21,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 {
 	self = [super init];
 	if (self != nil) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreDueTasksfromCached) name:TasksGraphDueTodayDidLoadNotification object:nil];
+//		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreDueTasksfromCached) name:TasksGraphDueTodayDidLoadNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckTodayTasks:) name:TasksDueTodayDidLoadNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreWithinTasksFromCached) name:TasksGraphWithinDidLoadNotification object:nil];
+//		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreWithinTasksFromCached) name:TasksGraphWithinDidLoadNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	}
 	return self;
@@ -118,7 +118,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 		}
 	}
 	
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isClose == %@", [NSNumber numberWithBool:TRUE]];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"completedAt == nil && isClose == %@", [NSNumber numberWithBool:TRUE]];
 	NSArray *closeTasks = [newTasks filteredArrayUsingPredicate:predicate];
 	
 	UIDevice* device = [UIDevice currentDevice];
@@ -181,7 +181,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 		}
 	}
 	
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueAt != nil && expired == %@", [NSNumber numberWithBool:FALSE]];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"completedAt == nil && dueAt != nil && expired == %@", [NSNumber numberWithBool:FALSE]];
 	NSArray *dueTasks = [newTasks filteredArrayUsingPredicate:predicate];
 	
 	UIDevice* device = [UIDevice currentDevice];
