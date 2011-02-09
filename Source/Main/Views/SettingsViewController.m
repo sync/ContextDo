@@ -95,7 +95,7 @@
 		settingsSliderView.slider.minimumValue = 0.0;
 		settingsSliderView.slider.maximumValue = 4.0;
 		CGFloat value = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
-		self.settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];;
+		self.settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];
 	}
 	
 	return settingsSliderView;
@@ -120,7 +120,7 @@
 	
 	if (indexPath.section == 0) {
 		CGFloat value = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
-		self.settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];;
+		self.settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];
 		self.settingsSliderView.frame = cell.contentView.bounds;
 		[cell addSubview:self.settingsSliderView];
 	}
@@ -200,9 +200,10 @@
 
 - (User *)buildUser
 {
-	NSDictionary *settings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.lastSliderValue]
+	CGFloat toKmValue = [[APIServices sharedAPIServices]sliderValueToAlertsDistancKm:self.settingsSliderView.slider.value];
+    NSDictionary *settings = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:toKmValue]
 														 forKey:AlertsDistanceWithin];
-	[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:self.lastSliderValue];
+	[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:toKmValue];
 	User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken]; // todo remember fb token and pass it there
 	[[APIServices sharedAPIServices]updateUser:user];
 	return user;
