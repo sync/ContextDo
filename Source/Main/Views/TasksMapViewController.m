@@ -534,7 +534,7 @@
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)aSearchBar
 {
-	if (aSearchBar.text.length == 0) {
+	if (aSearchBar.text.length == 0 && aSearchBar.showsCancelButton) {
 		[self cancelSearch];
 	}
 }
