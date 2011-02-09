@@ -2,7 +2,7 @@
 #import "BaseTableViewController.h"
 #import "SettingsDataSource.h"
 #import "SettingsSliderView.h"
-#import "CTXDOButton.h"
+#import "CTXDOBlueButton.h"
 
 @interface SettingsViewController : BaseTableViewController {
 
@@ -10,7 +10,7 @@
 
 @property (nonatomic, retain) SettingsDataSource *settingsDataSource;
 
-@property (nonatomic, retain) IBOutlet CTXDOButton *fbButton;
+@property (nonatomic, retain) IBOutlet CTXDOBlueButton *fbButton;
 
 - (IBAction)shouldLogout;
 - (IBAction)shouldFacebookConnect;

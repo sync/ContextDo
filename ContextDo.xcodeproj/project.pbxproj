@@ -35,6 +35,10 @@
 		242C911612FD097B00F557AA /* Kit.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 242C911212FD097B00F557AA /* Kit.xcconfig */; };
 		2434D66F12B59F32007B8A13 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2434D66E12B59F32007B8A13 /* ResetPasswordViewController.m */; };
 		2434D67112B59F56007B8A13 /* ResetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2434D67012B59F56007B8A13 /* ResetPasswordView.xib */; };
+		2437358E1302FE2A002231E1 /* btn_fb_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2437358A1302FE2A002231E1 /* btn_fb_touch@2x.png */; };
+		2437358F1302FE2A002231E1 /* btn_fb_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2437358B1302FE2A002231E1 /* btn_fb_off@2x.png */; };
+		243735901302FE2A002231E1 /* btn_fb_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 2437358C1302FE2A002231E1 /* btn_fb_off.png */; };
+		243735911302FE2A002231E1 /* btn_fb_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 2437358D1302FE2A002231E1 /* btn_fb_touch.png */; };
 		243A35D012E3DC4300A6D402 /* DefaultStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A35CE12E3DC4300A6D402 /* DefaultStyleSheet.m */; };
 		243A368F12E3F00B00A6D402 /* btn-gry_tbar_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A368B12E3F00B00A6D402 /* btn-gry_tbar_off.png */; };
 		243A369012E3F00B00A6D402 /* btn-gry_tbar_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A368C12E3F00B00A6D402 /* btn-gry_tbar_off@2x.png */; };
@@ -365,6 +369,7 @@
 		24E44FD312EC0F2A00F08B7E /* TaskDirectionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E44FD212EC0F2A00F08B7E /* TaskDirectionsView.xib */; };
 		24E44FEE12EC125A00F08B7E /* TaskDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44FED12EC125A00F08B7E /* TaskDetailsViewController.m */; };
 		24E4500512EC138E00F08B7E /* TaskDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4500412EC138E00F08B7E /* TaskDetailsView.xib */; };
+		24FA42F71302F7BD001B1972 /* CTXDOBlueButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FA42F61302F7BA001B1972 /* CTXDOBlueButton.m */; };
 		3A034962125C5D1600F49FA6 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A034961125C5D1600F49FA6 /* RegisterViewController.m */; };
 		3A034A68125C751600F49FA6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A034A67125C751600F49FA6 /* LoginViewController.m */; };
 		3A034D4B125D62DD00F49FA6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A034D4A125D62DD00F49FA6 /* SettingsViewController.m */; };
@@ -423,6 +428,10 @@
 		2434D66D12B59F32007B8A13 /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
 		2434D66E12B59F32007B8A13 /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordViewController.m; sourceTree = "<group>"; };
 		2434D67012B59F56007B8A13 /* ResetPasswordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetPasswordView.xib; sourceTree = "<group>"; };
+		2437358A1302FE2A002231E1 /* btn_fb_touch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_fb_touch@2x.png"; sourceTree = "<group>"; };
+		2437358B1302FE2A002231E1 /* btn_fb_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_fb_off@2x.png"; sourceTree = "<group>"; };
+		2437358C1302FE2A002231E1 /* btn_fb_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_fb_off.png; sourceTree = "<group>"; };
+		2437358D1302FE2A002231E1 /* btn_fb_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_fb_touch.png; sourceTree = "<group>"; };
 		243A35CE12E3DC4300A6D402 /* DefaultStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultStyleSheet.m; sourceTree = "<group>"; };
 		243A35CF12E3DC4300A6D402 /* DefaultStyleSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultStyleSheet.h; sourceTree = "<group>"; };
 		243A368B12E3F00B00A6D402 /* btn-gry_tbar_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-gry_tbar_off.png"; sourceTree = "<group>"; };
@@ -807,6 +816,8 @@
 		24E44FEC12EC125A00F08B7E /* TaskDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailsViewController.h; sourceTree = "<group>"; };
 		24E44FED12EC125A00F08B7E /* TaskDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailsViewController.m; sourceTree = "<group>"; };
 		24E4500412EC138E00F08B7E /* TaskDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskDetailsView.xib; sourceTree = "<group>"; };
+		24FA42F51302F7B9001B1972 /* CTXDOBlueButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOBlueButton.h; sourceTree = "<group>"; };
+		24FA42F61302F7BA001B1972 /* CTXDOBlueButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOBlueButton.m; sourceTree = "<group>"; };
 		3A034960125C5D1600F49FA6 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		3A034961125C5D1600F49FA6 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		3A034A66125C751600F49FA6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -977,6 +988,8 @@
 				2456745D12EFBC570004189D /* CTXDOButton.m */,
 				243A46AD12E573C100A6D402 /* CTXDOLoginButton.h */,
 				243A46AE12E573C100A6D402 /* CTXDOLoginButton.m */,
+				24FA42F51302F7B9001B1972 /* CTXDOBlueButton.h */,
+				24FA42F61302F7BA001B1972 /* CTXDOBlueButton.m */,
 			);
 			name = UIButtons;
 			sourceTree = "<group>";
@@ -1577,6 +1590,10 @@
 				2456798B12F007030004189D /* icon_map_touch@2x.png */,
 				245681B512F07C1C0004189D /* panel_swipe.png */,
 				245681B612F07C1C0004189D /* panel_swipe@2x.png */,
+				2437358A1302FE2A002231E1 /* btn_fb_touch@2x.png */,
+				2437358B1302FE2A002231E1 /* btn_fb_off@2x.png */,
+				2437358C1302FE2A002231E1 /* btn_fb_off.png */,
+				2437358D1302FE2A002231E1 /* btn_fb_touch.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -2016,6 +2033,10 @@
 				241EBD1912FFFA5D00F871B5 /* TapkuLibrary.bundle in Resources */,
 				24B04F441302A88E00F27215 /* Icon@2x.png in Resources */,
 				24B04F451302A88E00F27215 /* Icon.png in Resources */,
+				2437358E1302FE2A002231E1 /* btn_fb_touch@2x.png in Resources */,
+				2437358F1302FE2A002231E1 /* btn_fb_off@2x.png in Resources */,
+				243735901302FE2A002231E1 /* btn_fb_off.png in Resources */,
+				243735911302FE2A002231E1 /* btn_fb_touch.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2087,6 +2108,7 @@
 				24567E2F12F04C650004189D /* CTXDOTableViewRefreshController.m in Sources */,
 				245680FF12F072730004189D /* TasksCalendarCell.m in Sources */,
 				24269EC812F846F300969CBB /* CacheServices.m in Sources */,
+				24FA42F71302F7BD001B1972 /* CTXDOBlueButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
