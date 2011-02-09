@@ -5,6 +5,10 @@
 - (NSDictionary *)userInfoForTask:(Task *)task today:(BOOL)today;
 - (UILocalNotification *)hasLocalNotificationForTaskId:(NSNumber *)taskId today:(BOOL)today;
 - (Task *)taskForUserInfo:(NSDictionary *)userInfo;
+- (void)restoreDueTasksfromCached;
+- (void)restoreWithinTasksFromCached;
+- (void)reloadTodayTasks:(NSArray *)newTasks;
+- (void)reloadWithinTasks:(NSArray *)newTasks;
 
 @end
 
@@ -17,8 +21,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 {
 	self = [super init];
 	if (self != nil) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckTodayTasks:) name:TasksDueTodayDidLoadNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreDueTasksfromCached) name:TasksGraphDueTodayDidLoadNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckTodayTasks:) name:TasksDueTodayDidLoadNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreWithinTasksFromCached) name:TasksGraphWithinDidLoadNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	}
 	return self;
 }
@@ -29,7 +35,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 
 - (void)refreshTasksForLocalNotification
 {
-	[[APIServices sharedAPIServices]refreshTasksDueToday];
+	[self restoreDueTasksfromCached];
+    [self restoreWithinTasksFromCached];
+    
+    [[APIServices sharedAPIServices]refreshTasksDueToday];
 }
 
 
@@ -88,16 +97,26 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 #pragma mark -
 #pragma mark Within
 
+- (void)restoreWithinTasksFromCached
+{
+    NSArray *archivedContent = [CacheServices sharedCacheServices].tasksWithin;
+    [self reloadWithinTasks:archivedContent];
+}
+
 - (void)shouldCheckWithinTasks:(NSNotification *)notification
 {
-	NSArray *notifications =  [[UIApplication sharedApplication]scheduledLocalNotifications];
+	NSArray *newTasks = [notification object];
+    [self reloadWithinTasks:newTasks];
+}
+
+- (void)reloadWithinTasks:(NSArray *)newTasks
+{
+    NSArray *notifications =  [[UIApplication sharedApplication]scheduledLocalNotifications];
 	for (UILocalNotification *olderNotification in notifications) {
 		if (!olderNotification.fireDate) {
 			[[UIApplication sharedApplication]cancelLocalNotification:olderNotification];
 		}
 	}
-	
-	NSArray *newTasks = [notification object];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isClose == %@", [NSNumber numberWithBool:TRUE]];
 	NSArray *closeTasks = [newTasks filteredArrayUsingPredicate:predicate];
@@ -139,16 +158,28 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 #pragma mark -
 #pragma mark Today
 
+- (void)restoreDueTasksfromCached
+{
+	NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
+    NSArray *archivedContent = [[CacheServices sharedCacheServices].tasksDueTodayDict
+                                valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
+    [self reloadTodayTasks:archivedContent];
+}
+
 - (void)shouldCheckTodayTasks:(NSNotification *)notification
 {
-	NSArray *notifications =  [[UIApplication sharedApplication]scheduledLocalNotifications];
+	NSArray *newTasks =[notification object];
+    [self reloadTodayTasks:newTasks];
+}
+
+- (void)reloadTodayTasks:(NSArray *)newTasks
+{
+    NSArray *notifications =  [[UIApplication sharedApplication]scheduledLocalNotifications];
 	for (UILocalNotification *olderNotification in notifications) {
 		if (olderNotification.fireDate) {
 			[[UIApplication sharedApplication]cancelLocalNotification:olderNotification];
 		}
 	}
-	
-	NSArray *newTasks =[notification object];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dueAt != nil && expired == %@", [NSNumber numberWithBool:FALSE]];
 	NSArray *dueTasks = [newTasks filteredArrayUsingPredicate:predicate];
