@@ -48,7 +48,7 @@
 		[picker setSubject:@"Check out this task!"];
 		
 		// Fill out the email body text
-		NSString *emailBody = [NSString stringWithFormat:@"For now only task name: %@, ", self.task.name];
+		NSString *emailBody = [NSString stringWithFormat:@"%@\n\nLocation:%@", self.task.name, self.task.location];
 		
 		[picker setMessageBody:emailBody isHTML:NO];
 		
