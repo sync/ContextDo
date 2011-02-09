@@ -15,8 +15,7 @@
 - (void)addAllAnnotationsTasksIncludingToday:(BOOL)includingToday;
 - (void)reloadTasks:(NSArray *)newTasks;
 - (void)restoreFromCached;
-- (void)removeOverlay;
-- (NSArray *)allAnnotationsTasksIncludingToday:(BOOL)includingToday;
+- (TaskAnnotation *)annotationForTask:(Task *)aTask;
 
 @end
 
@@ -82,6 +81,20 @@
 	self.mapView = nil;
 	
 	self.searchBar = nil;
+}
+
+- (TaskAnnotation *)annotationForTask:(Task *)aTask
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && task.taskId == %@", [TaskAnnotation class], aTask.taskId];
+    NSArray *annotations = [self.mapView.annotations filteredArrayUsingPredicate:predicate];
+    return (annotations.count > 0) ? [annotations objectAtIndex:0] : nil;
+}
+
+- (void)clearMapView
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && not task.taskId in %@ && task.taskId != %@", [TaskAnnotation class], [self.tasks valueForKey:@"taskId"], [NSNumber numberWithInteger:NSNotFound]];
+    NSArray *annotations = [self.mapView.annotations filteredArrayUsingPredicate:predicate];
+    [self.mapView removeAnnotations:annotations];
 }
 
 #pragma mark -
@@ -184,7 +197,10 @@
 
 - (void)reloadTasks:(NSArray *)newTasks
 {
-	self.tasks = newTasks;
+	[self.mapView removeOverlay:self.routeLine];
+    self.routeLineView = nil;
+    
+    self.tasks = newTasks;
 	
 	NSPredicate *todayPredicate = [NSPredicate predicateWithFormat:@"dueAt == nil || dueToday == %@ || expired == %@", 
                                    [NSNumber numberWithBool:TRUE], 
@@ -192,31 +208,18 @@
     self.todayTasks = [self.tasks filteredArrayUsingPredicate:todayPredicate];
     
     if (self.todayTasks.count == 0) {
-        [self removeOverlay];
 		[self addAllAnnotationsTasksIncludingToday:FALSE];
 	} else {
         [self updateDirections];
     }
 }
 
-- (NSArray *)allAnnotationsTasksIncludingToday:(BOOL)includingToday
-{
-    NSPredicate *routePredicate = [NSPredicate predicateWithFormat:@"class = %@", [TaskAnnotation class]];
-    NSArray *routeAnnotations = [self.mapView.annotations filteredArrayUsingPredicate:routePredicate];
-    
-    NSPredicate *otherTasksPredicate = nil;
-    if (!includingToday) {
-        otherTasksPredicate = [NSPredicate predicateWithFormat:@"not self in %@ && not self in %@", self.todayTasks, [routeAnnotations valueForKey:@"task"]];
-    } else {
-        otherTasksPredicate = [NSPredicate predicateWithFormat:@"not self in %@", [routeAnnotations valueForKey:@"task"]];
-    }
-    
-    return [self.tasks filteredArrayUsingPredicate:otherTasksPredicate];
-}
-
 - (void)addAllAnnotationsTasksIncludingToday:(BOOL)includingToday
 {
-    NSArray *allTasks = [self allAnnotationsTasksIncludingToday:includingToday];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"not taskId in %@", [self.todayTasks valueForKey:@"taskId"]];
+    NSArray *notTodayTasks = [self.tasks filteredArrayUsingPredicate:predicate];
+    
+    NSArray *allTasks = (includingToday || self.todayTasks.count == 0) ? self.tasks : notTodayTasks;
     if (allTasks.count == 0) {
         return;
     }
@@ -228,13 +231,19 @@
 	for (Task *task in allTasks) {
 		if (task.taskId.integerValue != NSNotFound) {
 			CLLocation *location = [[[CLLocation alloc]initWithLatitude:task.latitude.doubleValue longitude:task.longitude.doubleValue]autorelease];
-			TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
-																			   title:task.name
-																			subtitle:task.location
-																	  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
-			
-			annotation.task = task;
-			[self.mapView addAnnotation:annotation];
+			TaskAnnotation *annotation = [self annotationForTask:task];
+            if (!annotation) {
+                annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
+                                                                   title:task.name
+                                                                subtitle:task.location
+                                                          annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
+                [self.mapView addAnnotation:annotation];
+            } else {
+                annotation.title = task.name;
+                annotation.subtitle = task.location;
+                annotation.coordinate = location.coordinate;
+            }
+            annotation.task = task;
 			
 			if(location.coordinate.latitude > maxLat) {
 				maxLat = location.coordinate.latitude;
@@ -255,19 +264,13 @@
 	region.center.longitude    = (maxLon + minLon) / 2;
 	region.span.latitudeDelta  = maxLat - minLat;
 	region.span.longitudeDelta = maxLon - minLon;
+    
+    if (includingToday) {
+        // todo pass including today
+        [self clearMapView];
+    }
 	
 	[self.mapView setRegion:region animated:YES];
-}
-
-- (void)removeAllObsoleteTaskAnnotations
-{
-    
-}
-
-- (void)removeOverlay
-{
-    [self.mapView removeOverlay:self.routeLine];
-    self.routeLineView = nil;
 }
 
 - (void)updateDirections
@@ -327,36 +330,62 @@
 				index++;
 			}
 		}
-		
-		TaskAnnotation *startAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[[[route legAtIndex:0]startLocation]coordinate]
-																						title:[[organizedTasks objectAtIndex:0]name]
-																					 subtitle:[[route legAtIndex:0]startAddress]
-																			   annotationType:UICRouteAnnotationTypeStart] autorelease];
-		startAnnotation.task = [organizedTasks objectAtIndex:0];
-		[self.mapView addAnnotation:startAnnotation];
+        
+        Task *startTask = [organizedTasks objectAtIndex:0];
+        TaskAnnotation *startAnnotation = [self annotationForTask:startTask];
+        if (!startAnnotation) {
+            startAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[[[route legAtIndex:0]startLocation]coordinate]
+                                                                    title:startTask.name
+                                                                 subtitle:[[route.legs objectAtIndex:0]startAddress]
+                                                           annotationType:UICRouteAnnotationTypeStart] autorelease];
+            [self.mapView addAnnotation:startAnnotation];
+        } else {
+            startAnnotation.title = startTask.name;
+            startAnnotation.subtitle = startTask.location;
+            startAnnotation.coordinate = [[[route legAtIndex:0]startLocation]coordinate];
+        }
+        startAnnotation.task = startTask;
 		
 		for (NSInteger index = 0; index < route.numberOfLegs; index++) {
 			if (index == route.numberOfLegs - 1) {
 				break;
 			}
-			
-			UICGLeg *leg = [route legAtIndex:index];
-			TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:leg.endLocation.coordinate
-																					   title:[[organizedTasks objectAtIndex:index + 1]name]
-																					subtitle:leg.endAddress
-																			  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
-			annotation.task = [organizedTasks objectAtIndex:index + 1];
-			[self.mapView addAnnotation:annotation];
-			
+            
+            Task *task = [organizedTasks objectAtIndex:index + 1];
+            
+            UICGLeg *leg = [route legAtIndex:index];
+            TaskAnnotation *annotation = [self annotationForTask:task];
+            if (!annotation) {
+                annotation = [[[TaskAnnotation alloc] initWithCoordinate:leg.endLocation.coordinate
+                                                                        title:task.name
+                                                                     subtitle:task.location
+                                                               annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
+                [self.mapView addAnnotation:annotation];
+            } else {
+                annotation.title = task.name;
+                annotation.subtitle = task.location;
+                annotation.coordinate = leg.endLocation.coordinate;
+            }
+            annotation.task = task;
 		}
-		
-		TaskAnnotation *endAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[[[route.legs lastObject]endLocation]coordinate]
-																					  title:[[organizedTasks lastObject]name]
-																				   subtitle:[[route.legs lastObject]endAddress]
-																			 annotationType:UICRouteAnnotationTypeEnd] autorelease];
-		
-		endAnnotation.task = [organizedTasks lastObject];
-		[self.mapView addAnnotation:endAnnotation];
+        
+        Task *endTask = [organizedTasks lastObject];
+       
+        TaskAnnotation *endAnnotation = [self annotationForTask:endTask];
+        if (!endAnnotation) {
+            endAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[[[route.legs lastObject]endLocation]coordinate]
+                                                                  title:endTask.name
+                                                               subtitle:endTask.location
+                                                         annotationType:UICRouteAnnotationTypeEnd] autorelease];
+            [self.mapView addAnnotation:endAnnotation];
+        } else {
+            endAnnotation.title = endTask.name;
+            endAnnotation.subtitle = endTask.location;
+            endAnnotation.coordinate = [[[route.legs lastObject]endLocation]coordinate];
+        }
+        endAnnotation.task = endTask;
+        
+        [self clearMapView];
 	} else {
 		[self addAllAnnotationsTasksIncludingToday:TRUE];
 	}

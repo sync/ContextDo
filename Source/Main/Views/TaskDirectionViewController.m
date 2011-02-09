@@ -30,6 +30,9 @@
     [super viewDidLoad];
 	
 	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].taskDarkGrayColor;
+    
+    self.directions = [UICGDirections sharedDirections];
+	self.directions.delegate = self;
 	
 	self.mapView.showsUserLocation = TRUE;
 	[self refreshTask];
@@ -39,11 +42,6 @@
 {
     [self.mapView removeOverlay:self.routeLine];
     self.routeLineView = nil;
-	self.directions = [UICGDirections sharedDirections];
-	self.directions.delegate = self;
-	
-	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
-	options.travelMode = UICGTravelModeDriving;
 	
     if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
         CLLocation *startLocation = nil;
@@ -82,8 +80,8 @@
 
 - (void)clearMapView
 {
-    NSArray *array = [NSArray arrayWithObjects:self.currentLocationTask.taskId, self.task.taskId, nil];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && not task.taskId in %@", [TaskAnnotation class], array];
+    NSArray *tasks = [NSArray arrayWithObjects:self.currentLocationTask.taskId, self.task.taskId, nil];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && not task.taskId in %@", [TaskAnnotation class], tasks];
     NSArray *annotations = [self.mapView.annotations filteredArrayUsingPredicate:predicate];
     [self.mapView removeAnnotations:annotations];
 }
@@ -142,28 +140,23 @@
 	if (numberOfRoutes > 0) {
 		UICGRoute *route = [self.directions routeAtIndex:0];
 		
-		
-        CLLocation *currentLocation = [[[CLLocation alloc]initWithLatitude:self.currentLocationTask.latitude.doubleValue longitude:self.currentLocationTask.longitude.doubleValue]autorelease];
-        TaskAnnotation *startAnnotation = [self annotationForTask:self.currentLocationTask];
+		TaskAnnotation *startAnnotation = [self annotationForTask:self.currentLocationTask];
         if (!startAnnotation) {
-            startAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[currentLocation coordinate]
+            startAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
                                                                     title:CURRENT_LOCATION_PLACEHOLDER
                                                                  subtitle:[[route.legs objectAtIndex:0]startAddress]
                                                            annotationType:UICRouteAnnotationTypeStart] autorelease];
             [self.mapView addAnnotation:startAnnotation];
         } else {
-            startAnnotation.subtitle = self.currentLocationTask.location;
             startAnnotation.title = self.currentLocationTask.name;
-            startAnnotation.coordinate = currentLocation.coordinate;
+            startAnnotation.subtitle = [[route.legs objectAtIndex:0]startAddress];
+            startAnnotation.coordinate = [[routePoints objectAtIndex:0] coordinate];
         }
         startAnnotation.task = self.currentLocationTask;
         
-        
-        CLLocation *endLocation = [[[CLLocation alloc]initWithLatitude:self.task.latitude.doubleValue longitude:self.task.longitude.doubleValue]autorelease];
-        
         TaskAnnotation *endAnnotation = [self annotationForTask:self.task];
         if (!endAnnotation) {
-            endAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[endLocation coordinate]
+            endAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[[routePoints lastObject] coordinate]
                                                                   title:self.task.name
                                                                subtitle:self.task.location
                                                          annotationType:UICRouteAnnotationTypeEnd] autorelease];
@@ -171,7 +164,7 @@
         } else {
             endAnnotation.title = self.task.name;
             endAnnotation.subtitle = self.task.location;
-            endAnnotation.coordinate = endLocation.coordinate;
+            endAnnotation.coordinate = [[routePoints lastObject] coordinate];
         }
         endAnnotation.task = self.task;
         
