@@ -208,7 +208,7 @@
     self.todayTasks = [self.tasks filteredArrayUsingPredicate:todayPredicate];
     
     if (self.todayTasks.count == 0) {
-		[self addAllAnnotationsTasksIncludingToday:FALSE];
+		[self addAllAnnotationsTasksIncludingToday:TRUE];
 	} else {
         [self updateDirections];
     }
@@ -221,6 +221,7 @@
     
     NSArray *allTasks = (includingToday || self.todayTasks.count == 0) ? self.tasks : notTodayTasks;
     if (allTasks.count == 0) {
+        [self clearMapView];
         return;
     }
     
@@ -475,11 +476,11 @@
 			self.routeLineView.fillColor = [UIColor colorWithHexString:@"0000ff70"];
 			
 			CGFloat scale = 1.0;
-			#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
-				if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
-					scale = [[UIScreen mainScreen] scale];
-				}
-			#endif
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
+			if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+				scale = [[UIScreen mainScreen] scale];
+			}
+#endif
 			self.routeLineView.lineWidth = 4.0 * scale;
 		}
 		overlayView = self.routeLineView;
