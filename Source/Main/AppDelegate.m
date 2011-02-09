@@ -111,6 +111,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
+    
 	NSString *apiToken = [APIServices sharedAPIServices].apiToken;
 	if (apiToken.length == 0) {
 		if ([APIServices sharedAPIServices].username.length > 0 && [APIServices sharedAPIServices].password.length > 0) {

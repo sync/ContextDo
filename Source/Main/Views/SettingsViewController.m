@@ -240,7 +240,9 @@
 
 - (void)dealloc
 {
-	[fbButton release];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [fbButton release];
 	[settingsSliderView release];
 	[settingsDataSource release];
 	

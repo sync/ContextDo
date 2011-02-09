@@ -57,4 +57,9 @@
 	[self startEditing];
 }
 
+- (void)dealloc
+{
+    [super dealloc];
+}
+
 @end

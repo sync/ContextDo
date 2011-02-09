@@ -256,7 +256,9 @@
 
 - (void)dealloc
 {
-	[mapView release];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [mapView release];
 	[lastCenterLocation release];
 	[placemark release];
 	[reverseGeocoder release];
