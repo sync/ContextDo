@@ -341,8 +341,8 @@
 		249121E412EDD957009191BA /* TasksCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 249121E312EDD957009191BA /* TasksCalendarViewController.m */; };
 		2491256312EE490D009191BA /* TasksCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491256212EE490D009191BA /* TasksCalendarDataSource.m */; };
 		2491273A12EE647B009191BA /* TaskDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491273912EE647B009191BA /* TaskDetailsView.m */; };
-		24B04F3F1302A51300F27215 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B04F3E1302A51300F27215 /* Icon.png */; };
-		24B04F411302A53200F27215 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B04F401302A53200F27215 /* Icon@2x.png */; };
+		24B04F441302A88E00F27215 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B04F421302A88E00F27215 /* Icon@2x.png */; };
+		24B04F451302A88E00F27215 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B04F431302A88E00F27215 /* Icon.png */; };
 		24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */; };
 		24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* InfoViewController.m */; };
 		24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoView.xib */; };
@@ -774,8 +774,8 @@
 		2491256212EE490D009191BA /* TasksCalendarDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksCalendarDataSource.m; sourceTree = "<group>"; };
 		2491273812EE647B009191BA /* TaskDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailsView.h; sourceTree = "<group>"; };
 		2491273912EE647B009191BA /* TaskDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailsView.m; sourceTree = "<group>"; };
-		24B04F3E1302A51300F27215 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		24B04F401302A53200F27215 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		24B04F421302A88E00F27215 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		24B04F431302A88E00F27215 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		24E4496812EBA54900F08B7E /* TasksUpdatedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksUpdatedDataSource.h; sourceTree = "<group>"; };
 		24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksUpdatedDataSource.m; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -1246,8 +1246,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				24B04F401302A53200F27215 /* Icon@2x.png */,
-				24B04F3E1302A51300F27215 /* Icon.png */,
 				3A57FEDC11FFB24F00248D1D /* Source */,
 				3A57FED411FFB24F00248D1D /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -1326,6 +1324,8 @@
 		3A57FED811FFB24F00248D1D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				24B04F421302A88E00F27215 /* Icon@2x.png */,
+				24B04F431302A88E00F27215 /* Icon.png */,
 				2426AC3612F9A1CF00969CBB /* iTunesArtwork */,
 				2490FD9112E34D2300F56B39 /* titlebar.png */,
 				2490FD9212E34D2300F56B39 /* titlebar@2x.png */,
@@ -2014,8 +2014,8 @@
 				241EBD1712FFFA5D00F871B5 /* signinHello@2x.png in Resources */,
 				241EBD1812FFFA5D00F871B5 /* signinSeparator.png in Resources */,
 				241EBD1912FFFA5D00F871B5 /* TapkuLibrary.bundle in Resources */,
-				24B04F3F1302A51300F27215 /* Icon.png in Resources */,
-				24B04F411302A53200F27215 /* Icon@2x.png in Resources */,
+				24B04F441302A88E00F27215 /* Icon@2x.png in Resources */,
+				24B04F451302A88E00F27215 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
