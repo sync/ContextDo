@@ -1,17 +1,20 @@
 #import "TaskDirectionViewController.h"
-#import "UICRouteAnnotation.h"
+#import "TaskAnnotation.h"
 #import "UICRouteOverlay.h"
 
 @interface TaskDirectionsViewController (private)
 
 - (void)showCurrentLocation;
 - (void)updateDirections;
+- (TaskAnnotation *)annotationForTask:(Task *)task;
+- (void)addTaskAnnotation;
+- (void)clearMapView;
 
 @end
 
 @implementation TaskDirectionsViewController
 
-@synthesize mapView, task, directions, startPoint, endPoint, mainNavController;
+@synthesize mapView, task, directions, currentLocationTask, mainNavController;
 @synthesize routeLine, routeLineView;
 
 #pragma mark -
@@ -34,30 +37,33 @@
 
 - (void)refreshTask
 {
-	for (id<MKAnnotation> annotation in self.mapView.annotations) {
-		if ([annotation isKindOfClass:[UICRouteAnnotation class]]) {
-			[self.mapView removeAnnotation:annotation];
-		}
-	}
-	self.routeLineView = nil;
+    [self.mapView removeOverlay:self.routeLine];
+    self.routeLineView = nil;
 	self.directions = [UICGDirections sharedDirections];
 	self.directions.delegate = self;
 	
 	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
 	options.travelMode = UICGTravelModeDriving;
 	
+    if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
+        CLLocation *startLocation = nil;
+        if (TARGET_IPHONE_SIMULATOR) {
+            startLocation = [AppDelegate sharedAppDelegate].currentLocation;
+        } else {
+            startLocation = self.mapView.userLocation.location;
+        }
+        
+        self.currentLocationTask = [Task taskWithId:[NSNumber numberWithInteger:NSNotFound]
+                                               name:CURRENT_LOCATION_PLACEHOLDER
+                                           latitude:startLocation.coordinate.latitude
+                                          longitude:startLocation.coordinate.longitude];
+        
+        [self updateDirections];
+    } else {
+        [self addTaskAnnotation];
+    }
 	
-	CLLocation *startLocation = nil;
-	if (TARGET_IPHONE_SIMULATOR) {
-		startLocation = [AppDelegate sharedAppDelegate].currentLocation;
-	} else {
-		startLocation = self.mapView.userLocation.location;
-	}
 	
-	self.startPoint = [self stringForLatitude:[AppDelegate sharedAppDelegate].currentLocation.coordinate.latitude
-									longitude:[AppDelegate sharedAppDelegate].currentLocation.coordinate.longitude];
-	self.endPoint = [self.task latLngString];
-	[self updateDirections];
 }
 
 - (void)viewDidUnload {
@@ -67,13 +73,50 @@
 	self.mapView = nil;
 }
 
+- (TaskAnnotation *)annotationForTask:(Task *)aTask
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && task.taskId == %@", [TaskAnnotation class], aTask.taskId];
+    NSArray *annotations = [self.mapView.annotations filteredArrayUsingPredicate:predicate];
+    return (annotations.count > 0) ? [annotations objectAtIndex:0] : nil;
+}
 
+- (void)clearMapView
+{
+    NSArray *array = [NSArray arrayWithObjects:self.currentLocationTask.taskId, self.task.taskId, nil];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && not task.taskId in %@", [TaskAnnotation class], array];
+    NSArray *annotations = [self.mapView.annotations filteredArrayUsingPredicate:predicate];
+    [self.mapView removeAnnotations:annotations];
+}
+
+- (void)addTaskAnnotation
+{
+    CLLocation *location = [[[CLLocation alloc]initWithLatitude:self.task.latitude.doubleValue longitude:self.task.longitude.doubleValue]autorelease];
+    
+    TaskAnnotation *annotation = [self annotationForTask:self.task];
+    if (!annotation) {
+        annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
+                                                           title:self.task.name
+                                                        subtitle:self.task.location
+                                                  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
+         [self.mapView addAnnotation:annotation];
+    } else {
+        annotation.title = self.task.name;
+        annotation.subtitle = self.task.location;
+        annotation.coordinate = location.coordinate;
+    }
+    annotation.task = self.task;
+    
+    [self clearMapView];
+   
+    // zoom to current point
+    [self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewLocationDefaultSpanInMeters, MapViewLocationDefaultSpanInMeters) animated:TRUE];
+}
 
 - (void)updateDirections
 {
 	UICGDirectionsOptions *options = [[[UICGDirectionsOptions alloc] init] autorelease];
 	options.travelMode = UICGTravelModeDriving;
-	[self.directions loadWithStartPoint:self.startPoint endPoint:self.endPoint options:options];
+	[self.directions loadWithStartPoint:self.currentLocationTask.latLngString endPoint:self.task.latLngString options:options];
 }
 
 #pragma mark -
@@ -85,18 +128,7 @@
 	NSArray *routePoints = [polyline points];
 	
 	if (routePoints.count == 0) {
-		// add all tasks
-		CLLocation *location = [[[CLLocation alloc]initWithLatitude:self.task.latitude.doubleValue longitude:self.task.longitude.doubleValue]autorelease];
-		TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
-																		   title:self.task.name
-																		subtitle:self.task.location
-																  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
-		
-		annotation.task = self.task;
-		[self.mapView addAnnotation:annotation];
-		// zoom to current point
-		[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewLocationDefaultSpanInMeters, MapViewLocationDefaultSpanInMeters) animated:TRUE];
-
+		[self addTaskAnnotation];
 		return;
 	}
 	
@@ -110,28 +142,42 @@
 	if (numberOfRoutes > 0) {
 		UICGRoute *route = [self.directions routeAtIndex:0];
 		
-		// Add annotations
-		UICRouteAnnotation *startAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
-																						title:CURRENT_LOCATION_PLACEHOLDER
-																					 subtitle:[[route.legs objectAtIndex:0]startAddress]
-																			   annotationType:UICRouteAnnotationTypeStart] autorelease];
-		UICRouteAnnotation *endAnnotation = [[[UICRouteAnnotation alloc] initWithCoordinate:[[routePoints lastObject] coordinate]
-																					  title:self.task.name
-																				   subtitle:[[route.legs objectAtIndex:0]endAddress]
-																			 annotationType:UICRouteAnnotationTypeEnd] autorelease];
-		[self.mapView addAnnotations:[NSArray arrayWithObjects:startAnnotation, endAnnotation, nil]];
-	} else {
-		CLLocation *location = [[[CLLocation alloc]initWithLatitude:self.task.latitude.doubleValue longitude:self.task.longitude.doubleValue]autorelease];
-		TaskAnnotation *annotation = [[[TaskAnnotation alloc] initWithCoordinate:[location coordinate]
-																		   title:self.task.name
-																		subtitle:self.task.location
-																  annotationType:UICRouteAnnotationTypeWayPoint] autorelease];
 		
-		annotation.task = self.task;
-		[self.mapView addAnnotation:annotation];
-		// zoom to current point
-		[self.mapView setRegion:MKCoordinateRegionMakeWithDistance(location.coordinate, MapViewLocationDefaultSpanInMeters, MapViewLocationDefaultSpanInMeters) animated:TRUE];
-
+        CLLocation *currentLocation = [[[CLLocation alloc]initWithLatitude:self.currentLocationTask.latitude.doubleValue longitude:self.currentLocationTask.longitude.doubleValue]autorelease];
+        TaskAnnotation *startAnnotation = [self annotationForTask:self.currentLocationTask];
+        if (!startAnnotation) {
+            startAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[currentLocation coordinate]
+                                                                    title:CURRENT_LOCATION_PLACEHOLDER
+                                                                 subtitle:[[route.legs objectAtIndex:0]startAddress]
+                                                           annotationType:UICRouteAnnotationTypeStart] autorelease];
+            [self.mapView addAnnotation:startAnnotation];
+        } else {
+            startAnnotation.subtitle = self.currentLocationTask.location;
+            startAnnotation.title = self.currentLocationTask.name;
+            startAnnotation.coordinate = currentLocation.coordinate;
+        }
+        startAnnotation.task = self.currentLocationTask;
+        
+        
+        CLLocation *endLocation = [[[CLLocation alloc]initWithLatitude:self.task.latitude.doubleValue longitude:self.task.longitude.doubleValue]autorelease];
+        
+        TaskAnnotation *endAnnotation = [self annotationForTask:self.task];
+        if (!endAnnotation) {
+            endAnnotation = [[[TaskAnnotation alloc] initWithCoordinate:[endLocation coordinate]
+                                                                  title:self.task.name
+                                                               subtitle:self.task.location
+                                                         annotationType:UICRouteAnnotationTypeEnd] autorelease];
+            [self.mapView addAnnotation:endAnnotation];
+        } else {
+            endAnnotation.title = self.task.name;
+            endAnnotation.subtitle = self.task.location;
+            endAnnotation.coordinate = endLocation.coordinate;
+        }
+        endAnnotation.task = self.task;
+        
+         [self clearMapView];
+	} else {
+		[self addTaskAnnotation];
 	}
 }
 
@@ -166,13 +212,13 @@
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation {
 	static NSString *identifier = @"RoutePinAnnotation";
 	
-	if ([annotation isKindOfClass:[UICRouteAnnotation class]]) {
+	if ([annotation isKindOfClass:[TaskAnnotation class]]) {
 		MKPinAnnotationView *pinAnnotation = (MKPinAnnotationView *)[aMapView dequeueReusableAnnotationViewWithIdentifier:identifier];
 		if(!pinAnnotation) {
 			pinAnnotation = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier] autorelease];
 		}
 		
-		if ([(UICRouteAnnotation *)annotation annotationType] == UICRouteAnnotationTypeStart) {
+		if ([(TaskAnnotation *)annotation annotationType] == UICRouteAnnotationTypeStart) {
 			pinAnnotation.pinColor = MKPinAnnotationColorGreen;
 		} else if ([(UICRouteAnnotation *)annotation annotationType] == UICRouteAnnotationTypeEnd) {
 			pinAnnotation.pinColor = MKPinAnnotationColorRed;
@@ -244,8 +290,7 @@
 	[routeLine release];
 	[routeLineView release];
 	
-	[startPoint release];
-	[endPoint release];
+	[currentLocationTask release];
 	
 	[task release];
 	[mapView release];

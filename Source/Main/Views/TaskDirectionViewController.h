@@ -11,8 +11,7 @@
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 
 @property (nonatomic, retain) Task *task;
-@property (nonatomic, retain) NSString *startPoint;
-@property (nonatomic, retain) NSString *endPoint;
+@property (nonatomic, retain) Task *currentLocationTask;
 
 @property (nonatomic, retain) MKPolyline *routeLine;
 @property (nonatomic, retain) MKPolylineView* routeLineView;
