@@ -288,9 +288,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 {
 	NSSortDescriptor *order = [[[NSSortDescriptor alloc]initWithKey:@"dueAt" ascending:TRUE]autorelease];
 	NSArray *sortDescriptors = [NSArray arrayWithObject:order];
-	NSArray *content = [self.tasksWithGroupIdDict valueForKey:@"content"];
-	[(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
-	[self.tasksWithGroupIdDict saveDictForKey:TasksWithGroupIdKey];
+	for (NSString *key in self.tasksWithGroupIdDict) {
+        NSArray *content = [self.tasksWithGroupIdDict valueForKeyPath:[NSString stringWithFormat:@"%@.content", key]];
+        [(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
+    }
+    [self.tasksWithGroupIdDict saveDictForKey:TasksWithGroupIdKey];
+   
 	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphDidLoadNotification 
 													   object:self.tasksWithGroupIdDict];
 }
@@ -411,8 +414,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 {
 	NSSortDescriptor *order = [[[NSSortDescriptor alloc]initWithKey:@"dueAt" ascending:TRUE]autorelease];
 	NSArray *sortDescriptors = [NSArray arrayWithObject:order];
-	NSArray *content = [self.tasksWithGroupIdDict valueForKey:@"content"];
-	[(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
+	for (NSString *key in self.tasksWithDueDict) {
+        NSArray *content = [self.tasksWithDueDict valueForKeyPath:[NSString stringWithFormat:@"%@.content", key]];
+        [(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
+    }
 	[self.tasksWithDueDict saveDictForKey:TasksWithDueKey];
 	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphDueDidLoadNotification 
 													   object:[self.tasksWithDueDict valueForKey:@"content"]];
@@ -534,8 +539,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 {
 	NSSortDescriptor *order = [[[NSSortDescriptor alloc]initWithKey:@"dueAt" ascending:TRUE]autorelease];
 	NSArray *sortDescriptors = [NSArray arrayWithObject:order];
-	NSArray *content = [self.tasksWithGroupIdDict valueForKey:@"content"];
-	[(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
+	for (NSString *key in self.tasksDueTodayDict) {
+        NSArray *content = [self.tasksDueTodayDict valueForKeyPath:[NSString stringWithFormat:@"%@.content", key]];
+        [(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
+    }
 	[self.tasksDueTodayDict saveDictForKey:TasksDueTodaydKey];
 	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphDueTodayDidLoadNotification 
 													   object:[self.tasksDueTodayDict valueForKey:@"content"]];
@@ -677,8 +684,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	NSSortDescriptor *orderDistance = [[[NSSortDescriptor alloc]initWithKey:@"distance" ascending:TRUE]autorelease];
 	NSSortDescriptor *order = [[[NSSortDescriptor alloc]initWithKey:@"dueAt" ascending:TRUE]autorelease];
 	NSArray *sortDescriptors = [NSArray arrayWithObjects:orderDistance, order, nil];
-	NSArray *content = [self.tasksWithGroupIdDict valueForKey:@"content"];
-	[(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
+	for (NSString *key in self.tasksWithLatitudeDict) {
+        NSArray *content = [self.tasksWithLatitudeDict valueForKeyPath:[NSString stringWithFormat:@"%@.content", key]];
+        [(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
+    }
 	[self.tasksWithLatitudeDict saveDictForKey:TasksWithLatitudeKey];
 	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphWithinDidLoadNotification 
 													   object:[self.tasksWithLatitudeDict valueForKey:@"content"]];
@@ -800,8 +809,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 {
 	NSSortDescriptor *order = [[[NSSortDescriptor alloc]initWithKey:@"dueAt" ascending:TRUE]autorelease];
 	NSArray *sortDescriptors = [NSArray arrayWithObject:order];
-	NSArray *content = [self.tasksWithGroupIdDict valueForKey:@"content"];
-	[(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
+	for (NSString *key in self.editedTasksDict) {
+        NSArray *content = [self.editedTasksDict valueForKeyPath:[NSString stringWithFormat:@"%@.content", key]];
+        [(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
+    }
 	[self.editedTasksDict saveDictForKey:EditedTasksKey];
 	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphUpdatedSinceDidLoadNotification 
 													   object:[self.editedTasksDict valueForKey:@"content"]];
@@ -833,10 +844,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 - (void)saveGroupsOutOfSync
 {
-	NSSortDescriptor *order = [[[NSSortDescriptor alloc]initWithKey:@"dueAt" ascending:TRUE]autorelease];
-	NSArray *sortDescriptors = [NSArray arrayWithObject:order];
-	NSArray *content = [self.tasksWithGroupIdDict valueForKey:@"content"];
-	[(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
 	[self.groupsOutOfSyncDict saveDictForKey:GroupsOutOfSyncKey];
 }
 
@@ -863,10 +870,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 - (void)saveTasksOutOfSync
 {
-	NSSortDescriptor *order = [[[NSSortDescriptor alloc]initWithKey:@"dueAt" ascending:TRUE]autorelease];
-	NSArray *sortDescriptors = [NSArray arrayWithObject:order];
-	NSArray *content = [self.tasksWithGroupIdDict valueForKey:@"content"];
-	[(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
 	[self.tasksOutOfSyncDict saveDictForKey:TasksOutOfSyncKey];
 }
 
