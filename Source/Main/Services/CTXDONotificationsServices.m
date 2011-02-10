@@ -5,7 +5,7 @@
 - (NSDictionary *)userInfoForTask:(Task *)task today:(BOOL)today;
 - (UILocalNotification *)hasLocalNotificationForTaskId:(NSNumber *)taskId today:(BOOL)today;
 - (Task *)taskForUserInfo:(NSDictionary *)userInfo;
-- (void)restoreDueTasksfromCached;
+- (void)restoreTodayTasksfromCached;
 - (void)restoreWithinTasksFromCached;
 - (void)reloadTodayTasks:(NSArray *)newTasks;
 - (void)reloadWithinTasks:(NSArray *)newTasks;
@@ -21,9 +21,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 {
 	self = [super init];
 	if (self != nil) {
-//		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreDueTasksfromCached) name:TasksGraphDueTodayDidLoadNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreTodayTasksfromCached) name:TasksGraphDueTodayDidLoadNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckTodayTasks:) name:TasksDueTodayDidLoadNotification object:nil];
-//		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreWithinTasksFromCached) name:TasksGraphWithinDidLoadNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreWithinTasksFromCached) name:TasksGraphWithinDidLoadNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
 	}
 	return self;
@@ -35,7 +35,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 
 - (void)refreshTasksForLocalNotification
 {
-	[self restoreDueTasksfromCached];
+	[self restoreTodayTasksfromCached];
     [self restoreWithinTasksFromCached];
     
     [[APIServices sharedAPIServices]refreshTasksDueToday];
@@ -158,7 +158,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 #pragma mark -
 #pragma mark Today
 
-- (void)restoreDueTasksfromCached
+- (void)restoreTodayTasksfromCached
 {
 	NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
     NSArray *archivedContent = [[CacheServices sharedCacheServices].tasksDueTodayDict

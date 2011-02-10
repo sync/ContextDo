@@ -235,25 +235,6 @@
 	}
 }
 
-- (void)refreshAllTasks
-{
-	// todo here
-	
-	if (self.isTodayTasks) {
-		[[APIServices sharedAPIServices]refreshTasksDueToday];
-	} else if (self.isNearTasks) {
-		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-		[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-	} else {
-		[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
-	}
-	
-	if (self.tasksSave) {
-		// search mode
-		[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
-	}
-}
-
 #pragma mark -
 #pragma mark UISearchBarDelegate
 
