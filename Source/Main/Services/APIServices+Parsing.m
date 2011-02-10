@@ -223,8 +223,23 @@
 		//	}
 		
 		NSDictionary *info = request.userInfo;
-		
-		Task *nonSyncedTask = [info valueForKey:@"object"];
+        
+        Task *nonSyncedTask = [info valueForKey:@"object"];
+        
+        // [request responseStatusCode] == 422 ==> quick hack don't do this
+        if ([request responseStatusCode] == 422) {
+			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:nonSyncedTask forPathToId:@"syncId" forKey:AddedKey];
+			[[CacheServices sharedCacheServices]deleteCachedTask:nonSyncedTask syncId:nonSyncedTask.syncId];
+			[[CacheServices sharedCacheServices]saveTasksOutOfSync];
+			[[CacheServices sharedCacheServices]saveTasksWithGroupId];
+			[[CacheServices sharedCacheServices]saveTasksDueToday];
+			[[CacheServices sharedCacheServices]saveTasksWithDue];
+			[[CacheServices sharedCacheServices]saveTasksWithLatitude];
+			[[CacheServices sharedCacheServices]saveEditedTasks];
+			[self notifyFailed:request withError:@"Unable to Create Task"];
+			return;
+		}
+        
 		if ([[self notificationNameForRequest:request]isEqualToString:TaskDeleteNotification]) {
 			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:nonSyncedTask forPathToId:@"syncId" forKey:DeletedKey];
 			[[CacheServices sharedCacheServices]deleteCachedTask:nonSyncedTask syncId:nonSyncedTask.syncId];
@@ -237,6 +252,8 @@
 			[self notifyDone:request object:nil];
 			return;
 		}
+        
+        // [request responseStatusCode] == 422 ==> quick hack don't do this
 		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		Task *task = [Task fromJSONData:request.responseData];
@@ -258,6 +275,14 @@
 			[self notifyDone:request object:task];
 		} else {
 			if ([[self notificationNameForRequest:request]isEqualToString:TaskAddNotification]) {
+                [[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:nonSyncedTask forPathToId:@"syncId" forKey:AddedKey];
+                [[CacheServices sharedCacheServices]deleteCachedTask:nonSyncedTask syncId:nonSyncedTask.syncId];
+                [[CacheServices sharedCacheServices]saveTasksOutOfSync];
+                [[CacheServices sharedCacheServices]saveTasksWithGroupId];
+                [[CacheServices sharedCacheServices]saveTasksDueToday];
+                [[CacheServices sharedCacheServices]saveTasksWithDue];
+                [[CacheServices sharedCacheServices]saveTasksWithLatitude];
+                [[CacheServices sharedCacheServices]saveEditedTasks];
 				[self notifyFailed:request withError:@"Unable to Create Task"];
 			} else {
 				[self notifyFailed:request withError:@"Unable to Modify Task"];
