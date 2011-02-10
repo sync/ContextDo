@@ -29,7 +29,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	if (!previousGroup) {
 		NSArray *content = [self.groupsDict valueForKey:@"content"];
 		if (!content) {
-			[[CacheServices sharedCacheServices].groupsDict setValue:[NSArray arrayWithObject:group] forKey:@"content"];
+			[self.groupsDict setValue:[NSArray arrayWithObject:group] forKey:@"content"];
 		} else {
 			[(NSMutableArray *)content insertObject:group atIndex:group.position.integerValue];
 		}
@@ -120,11 +120,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 - (BOOL)hasCachedTask:(Task *)task syncId:(NSNumber *)syncId
 {
-	Task *previousTask1 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForGroupId:task.groupId taskId:task.taskId] : [self cachedTaskForGroupId:task.groupId syncId:task.syncId];
-	Task *previousTask2 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:task.dueAt taskId:task.taskId] : [self cachedTaskForDueAt:task.dueAt syncId:task.syncId];
-	Task *previousTask3 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:task.dueAt taskId:task.taskId] : [self cachedTaskForDueAt:task.dueAt syncId:task.syncId];
-	Task *previousTask4 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForLatLngString:task.latLngString taskId:task.taskId] : [self cachedTaskForLatLngString:task.latLngString syncId:task.syncId];
-	Task *previousTask5 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForUpdatedAt:task.updatedAt taskId:task.taskId] : [self cachedTaskForUpdatedAt:task.updatedAt syncId:task.syncId];
+	Task *previousTask1 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForGroupId:task.groupId syncId:task.syncId] : [self cachedTaskForGroupId:task.groupId taskId:task.taskId];
+	Task *previousTask2 = (syncId && syncId.integerValue != 0) ?  [self cachedTaskForDueAt:task.dueAt syncId:task.syncId] : [self cachedTaskForDueAt:task.dueAt taskId:task.taskId];
+	Task *previousTask3 = (syncId && syncId.integerValue != 0) ?  [self cachedTaskForDueAt:task.dueAt syncId:task.syncId] : [self cachedTaskForDueAt:task.dueAt taskId:task.taskId];
+	Task *previousTask4 = (syncId && syncId.integerValue != 0) ? [self cachedTaskForLatLngString:task.latLngString syncId:task.syncId] : [self cachedTaskForLatLngString:task.latLngString taskId:task.taskId];
+	Task *previousTask5 = (syncId && syncId.integerValue != 0) ?  [self cachedTaskForUpdatedAt:task.updatedAt syncId:task.syncId] : [self cachedTaskForUpdatedAt:task.updatedAt taskId:task.taskId];
 	
 	return (previousTask1 || previousTask2 || previousTask3 || previousTask4 || previousTask5);
 }
@@ -180,7 +180,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForGroupId:groupId taskId:task.taskId] : [self cachedTaskForGroupId:groupId syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForGroupId:groupId syncId:task.syncId] : [self cachedTaskForGroupId:groupId taskId:task.taskId];
 	if (!previousTask) {
 		NSString *key = [groupId stringValue];
 		NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
@@ -203,7 +203,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForGroupId:groupId taskId:task.taskId] : [self cachedTaskForGroupId:groupId syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ?  [self cachedTaskForGroupId:groupId syncId:task.syncId] : [self cachedTaskForGroupId:groupId taskId:task.taskId];
 	if (![previousTask isEqual:task]) {
 		NSString *key = [groupId stringValue];
 		NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
@@ -224,7 +224,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForGroupId:groupId taskId:task.taskId] : [self cachedTaskForGroupId:groupId syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForGroupId:groupId syncId:task.syncId] : [self cachedTaskForGroupId:groupId taskId:task.taskId];
 	if (previousTask) {
 		NSString *key = [groupId stringValue];
 		NSDictionary *dictionary = [self.tasksWithGroupIdDict valueForKey:key];
@@ -306,7 +306,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:dueAt taskId:task.taskId] : [self cachedTaskForDueAt:dueAt syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:dueAt syncId:task.syncId] : [self cachedTaskForDueAt:dueAt taskId:task.taskId];
 	if (!previousTask) {
 		NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.tasksWithDueDict valueForKey:key];
@@ -329,7 +329,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:dueAt taskId:task.taskId] : [self cachedTaskForDueAt:dueAt syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:dueAt syncId:task.syncId] : [self cachedTaskForDueAt:dueAt taskId:task.taskId];
 	if (![previousTask isEqual:task]) {
 		NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.tasksWithDueDict valueForKey:key];
@@ -431,7 +431,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:dueAt taskId:task.taskId] : [self cachedTaskForDueAt:dueAt syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:dueAt syncId:task.syncId] : [self cachedTaskForDueAt:dueAt taskId:task.taskId];
 	if (!previousTask) {
 		NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.tasksDueTodayDict valueForKey:key];
@@ -454,7 +454,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:dueAt taskId:task.taskId] : [self cachedTaskForDueAt:dueAt syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:dueAt syncId:task.syncId] : [self cachedTaskForDueAt:dueAt taskId:task.taskId];
 	if (![previousTask isEqual:task]) {
 		NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.tasksDueTodayDict valueForKey:key];
@@ -475,7 +475,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:dueAt taskId:task.taskId] : [self cachedTaskForDueAt:dueAt syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForDueAt:dueAt syncId:task.syncId] : [self cachedTaskForDueAt:dueAt taskId:task.taskId];
 	if (previousTask) {
 		NSString *key = [dueAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.tasksDueTodayDict valueForKey:key];
@@ -556,7 +556,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForLatLngString:latLngString taskId:task.taskId] : [self cachedTaskForLatLngString:latLngString syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForLatLngString:latLngString syncId:task.syncId] : [self cachedTaskForLatLngString:latLngString taskId:task.taskId] ;
 	if (!previousTask) {
 		NSString *key = latLngString;
 		NSDictionary *dictionary = [self.tasksWithLatitudeDict valueForKey:key];
@@ -576,7 +576,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForLatLngString:latLngString taskId:task.taskId] : [self cachedTaskForLatLngString:latLngString syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForLatLngString:latLngString syncId:task.syncId] : [self cachedTaskForLatLngString:latLngString taskId:task.taskId];
 	if (![previousTask isEqual:task]) {
 		NSString *key = latLngString;
 		NSDictionary *dictionary = [self.tasksWithLatitudeDict valueForKey:key];
@@ -597,7 +597,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForLatLngString:latLngString taskId:task.taskId] : [self cachedTaskForLatLngString:latLngString syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForLatLngString:latLngString syncId:task.syncId] : [self cachedTaskForLatLngString:latLngString taskId:task.taskId];
 	if (previousTask) {
 		NSString *key = latLngString;
 		NSDictionary *dictionary = [self.tasksWithLatitudeDict valueForKey:key];
@@ -701,7 +701,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForUpdatedAt:updatedAt taskId:task.taskId] : [self cachedTaskForUpdatedAt:updatedAt syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForUpdatedAt:updatedAt syncId:task.syncId] : [self cachedTaskForUpdatedAt:updatedAt taskId:task.taskId];
 	if (!previousTask) {
 		NSString *key = [updatedAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.editedTasksDict valueForKey:key];
@@ -724,7 +724,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForUpdatedAt:updatedAt taskId:task.taskId] : [self cachedTaskForUpdatedAt:updatedAt syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForUpdatedAt:updatedAt syncId:task.syncId] : [self cachedTaskForUpdatedAt:updatedAt taskId:task.taskId];
 	if (![previousTask isEqual:task]) {
 		NSString *key = [updatedAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.editedTasksDict valueForKey:key];
@@ -745,7 +745,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 		return;
 	}
 	
-	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForUpdatedAt:updatedAt taskId:task.taskId] : [self cachedTaskForUpdatedAt:updatedAt syncId:task.syncId];
+	Task *previousTask = (syncId && syncId.integerValue != 0) ? [self cachedTaskForUpdatedAt:updatedAt syncId:task.syncId] : [self cachedTaskForUpdatedAt:updatedAt taskId:task.taskId];
 	if (previousTask) {
 		NSString *key = [updatedAt getUTCDateWithformat:@"yyyy-MM-dd"];
 		NSDictionary *dictionary = [self.editedTasksDict valueForKey:key];
