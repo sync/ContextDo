@@ -201,7 +201,6 @@
 #pragma mark -
 #pragma mark <MKMapViewDelegate> Methods
 
-
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation {
 	static NSString *identifier = @"RoutePinAnnotation";
 	

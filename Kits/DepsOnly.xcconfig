@@ -1,1 +1,4 @@
 #include "Kit.xcconfig"
+
+SKIP_INSTALL=YES
+

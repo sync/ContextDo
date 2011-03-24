@@ -24,7 +24,8 @@
 {
 	[super viewDidLoad];
 	
-	[self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+	self.searchBar.tintColor = [UIColor colorWithWhite:0.3 alpha:1.0];
+    [self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 						   forBarStyle:UIBarStyleBlackOpaque];
 	self.searchBar.keyboardAppearance = UIKeyboardAppearanceAlert;
 }

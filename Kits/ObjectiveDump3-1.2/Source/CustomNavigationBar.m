@@ -1,18 +1,14 @@
-#import "CustomSearchBar.h"
+#import "CustomNavigationBar.h"
 
-@interface CustomSearchBar () 
+@interface CustomNavigationBar () 
 
 @property (nonatomic, readonly) NSMutableDictionary *backgroundImagesDict;
-@property (nonatomic, readonly) UIView *customBackgroundView;
 
 @end
 
-
-@implementation CustomSearchBar
+@implementation CustomNavigationBar
 
 @synthesize backgroundImagesDict;
-
-#pragma mark - Init
 
 // The designated initializer. Override to perform setup that is required before the view is loaded.
 // Only when xibless (interface buildder)
@@ -67,26 +63,13 @@
 		[self.backgroundImagesDict removeObjectForKey:[NSNumber numberWithInteger:aBarStyle]];
 	}
 	
-	[self layoutSubviews];
+	[self setNeedsDisplay];
 }
 
 - (void)clearBackground
 {
 	[self.backgroundImagesDict removeAllObjects];
-	[self layoutSubviews];
-}
-
-#pragma mark - Background hax
-
-- (UIView *)customBackgroundView
-{
-    NSString *stringClass = [NSString stringWithFormat:@"UISearchBar%@", @"Background"];
-    for (UIView *view in self.subviews) {
-        if ([view isKindOfClass:NSClassFromString(stringClass)]) {
-            return view;
-        }
-    }
-    return nil;
+	[self setNeedsDisplay];
 }
 
 #pragma mark -
@@ -97,39 +80,46 @@
     // Drawing code.
 	UIImage *backgroundImage = [self backgroundImageForStyle:self.barStyle];
 	if (backgroundImage) {
-        [backgroundImage drawInRect:rect];
+		[backgroundImage drawInRect:rect];
 	} else {
-        [super drawRect:rect];
+		[super drawRect:rect];
 	}
 }
 
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    
-    UIImage *backgroundImage = [self backgroundImageForStyle:self.barStyle];
-	self.customBackgroundView.hidden = (backgroundImage != nil);
-}
+#pragma mark -
+#pragma mark BackButton
 
-#pragma mark - Keyboard
-
-- (UIKeyboardAppearance)keyboardAppearance
+// Given the prpoer images and cap width, create a variable width back button
++ (UIButton *)customBackButtonForBackgroundImage:(UIImage*)backgroundImage 
+								highlightedImage:(UIImage*)highlightedImage 
+									leftCapWidth:(CGFloat)leftCapWidth
+										   title:(NSString *)title
+											font:(UIFont *)font
 {
-	for(UIView *subView in self.subviews) {
-		if([subView isKindOfClass: [UITextField class]]) {
-			return [(UITextField *)subView keyboardAppearance];
-		}
-	}
+	backgroundImage = [backgroundImage stretchableImageWithLeftCapWidth:leftCapWidth topCapHeight:0.0];
+	highlightedImage = [highlightedImage stretchableImageWithLeftCapWidth:leftCapWidth topCapHeight:0.0];
+
+	UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
 	
-	return UIKeyboardAppearanceDefault;
-}	
-
-- (void)setKeyboardAppearance:(UIKeyboardAppearance)keyboardAppearance
-{
-	for(UIView *subView in self.subviews) {
-		if([subView isKindOfClass: [UITextField class]]) {
-			[(UITextField *)subView setKeyboardAppearance: UIKeyboardAppearanceAlert];
-		}
-	}
+	button.titleEdgeInsets = UIEdgeInsetsMake(0, leftCapWidth, 0, 3.0);
+	button.titleLabel.font = (font) ? font : [UIFont boldSystemFontOfSize:[UIFont smallSystemFontSize]];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	button.titleLabel.shadowOffset = CGSizeMake(0,-1);
+	[button setTitleShadowColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+	button.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
+	
+	[button setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+	[button setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
+	
+	CGSize textSize = [title sizeWithFont:button.titleLabel.font];
+	button.frame = CGRectMake(button.frame.origin.x, 
+							  button.frame.origin.y, 
+							  textSize.width + leftCapWidth + 3.0 + 5.0, 
+							  backgroundImage.size.height);
+	
+	[button setTitle:title forState:UIControlStateNormal];
+	
+	return button;
 }
 
 #pragma mark -
@@ -141,5 +131,6 @@
 	
     [super dealloc];
 }
+
 
 @end

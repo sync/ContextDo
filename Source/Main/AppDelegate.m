@@ -292,7 +292,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)locationDidStop
 {
-	NSLog(@"user does not want to use core location");
+	DLog(@"user does not want to use core location");
 }
 
 - (BOOL)hasValidCurrentLocation

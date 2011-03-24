@@ -3,7 +3,7 @@ version: 1.0
 dependencies:
   - modelobject: 1.0
   - NSDate-Extensions: 1.0
-  - ObjectiveDump3: 3.0
+  - ObjectiveDump3: 1.2
   - OHAttributedLabel: 1.0
   - tapkulibrary: 1.0
   - TISwipeableTableView: 1.0
