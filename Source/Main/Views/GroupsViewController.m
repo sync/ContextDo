@@ -323,7 +323,11 @@
 	}
 	
 	[self.addGroupTextField resignFirstResponder];
+    
     [self.searchBar resignFirstResponder];
+	if ([self.searchBar respondsToSelector:@selector(cancelButton)]) {
+		[[self.searchBar valueForKey:@"cancelButton"] setEnabled:TRUE];
+	}
 }
 
 #pragma mark -
