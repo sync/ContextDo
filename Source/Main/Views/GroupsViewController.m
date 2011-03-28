@@ -22,6 +22,8 @@
 - (void)hideBlackOutMainViewAnimated:(BOOL)animated;
 - (void)shouldCheckWithinTasks:(NSArray *)tasks updateCell:(BOOL)updateCell;
 - (void)restoreFromCached;
+- (void)cancelSearch;
+- (void)reloadTasks:(NSArray *)newTasks;
 
 @end
 
@@ -30,6 +32,7 @@
 
 @synthesize groupsDataSource, groups, groupsEditViewController, addGroupTextField;
 @synthesize infoViewController, isShowingInfoView, blackedOutView, infoButton, hasCachedData;
+@synthesize searchBar, tasks, tableHeaderView, tasksDataSource;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -41,6 +44,10 @@
 	self.title = @"Groups";
 	
 	[self hideInfoAnimated:FALSE];
+    
+    self.searchBar.tintColor = [UIColor colorWithWhite:0.3 alpha:1.0];
+    [self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
+						   forBarStyle:UIBarStyleBlackOpaque];
 }
 
 - (void)viewDidUnload
@@ -56,6 +63,7 @@
 	infoViewController = nil;
 	
 	self.addGroupTextField = nil;
+    self.searchBar = nil;
 }
 
 #pragma mark -
@@ -109,6 +117,9 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupAddNotification];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadTasksContent:) name:TasksSearchDidLoadNotification object:nil];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	self.groupsDataSource = [[[GroupsDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.groupsDataSource;
@@ -120,8 +131,10 @@
 																										 target:self 
 																									   selector:@selector(addGroup)];
 
-	self.tableView.tableHeaderView.hidden = (self.groups.count == 0);
+	self.tableView.tableHeaderView = (self.groups.count > 0) ? self.tableHeaderView : nil;
 	[self refreshGroups];
+    
+    self.tasksDataSource = [[[TasksDataSource alloc]init]autorelease];
 }
 
 #pragma mark -
@@ -157,7 +170,7 @@
 	
 	[self.groupsDataSource.content addObject:[NSArray arrayWithObjects:todayGroup, nearGroup, nil]];
 	
-	self.tableView.tableHeaderView.hidden = (self.groupsDataSource.content.count == 0);
+	self.tableView.tableHeaderView = (self.groups.count > 0) ? self.tableHeaderView : nil;
 	
 	NSArray *tasksWithin = [CacheServices sharedCacheServices].tasksWithin;
 	[self shouldCheckWithinTasks:tasksWithin updateCell:FALSE];
@@ -185,12 +198,12 @@
 	[self shouldCheckWithinTasks:tasksWithin updateCell:TRUE];
 }
 
-- (void)shouldCheckWithinTasks:(NSArray *)tasks updateCell:(BOOL)updateCell
+- (void)shouldCheckWithinTasks:(NSArray *)aTasks updateCell:(BOOL)updateCell
 {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskWithin == %@", [NSNumber numberWithBool:TRUE]];
 	NSMutableSet *previousNearGroups = [[[self.groups filteredArrayUsingPredicate:predicate]mutableCopy]autorelease];
 	
-	for (Task *task in tasks) {
+	for (Task *task in aTasks) {
 		if (task.isClose) {
 			Group *group = [self groupForId:task.groupId];
 			if (!group.taskWithin) {
@@ -209,6 +222,27 @@
 	for (Group *group in previousNearGroups) {
 		group.taskWithin = FALSE;
 	}
+}
+
+#pragma mark -
+#pragma mark Tasks Content reloading
+
+- (void)shouldReloadTasksContent:(NSNotification *)notification
+{
+	NSArray *newTasks = [notification object];
+    [self reloadTasks:newTasks];
+}
+
+- (void)reloadTasks:(NSArray *)newTasks
+{
+	[self.tasksDataSource resetContent];
+	
+	self.tasks = newTasks;
+	
+	if (self.tasks.count > 0) {
+		[self.tasksDataSource.content addObjectsFromArray:self.tasks];
+	}
+	[self.tableView reloadData];
 }
 
 #pragma mark -
@@ -282,6 +316,7 @@
 	}
 	
 	[self.addGroupTextField resignFirstResponder];
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark -
@@ -296,6 +331,8 @@
 	if (self.isShowingGroupsEdit) {
 		return;
 	}
+    
+    
 	
 	[self.noResultsView hide:FALSE];
 	
@@ -359,6 +396,12 @@
 	} else {
 		[self hideInfoAnimated:TRUE];
 	}
+}
+
+- (void)refreshTasks
+{
+    // search mode
+    [[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
 }
 
 #pragma mark -
@@ -625,6 +668,63 @@
 }
 
 #pragma mark -
+#pragma mark UISearchBarDelegate
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)aSearchBar
+{
+	if (!aSearchBar.showsCancelButton) {
+		self.tasks = nil;
+	}
+	
+	[aSearchBar setShowsCancelButton:TRUE animated:TRUE];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)aSearchBar
+{
+	if (aSearchBar.text.length == 0 && aSearchBar.showsCancelButton) {
+		[self cancelSearch];
+	}
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)aSearchBar
+{
+	if ([aSearchBar.text isEqualToString:self.searchString]) {
+		return;
+	}
+	[self filterContentForSearchText:aSearchBar.text scope:nil];
+	
+	if ([self.searchBar respondsToSelector:@selector(cancelButton)]) {
+		[[self.searchBar valueForKey:@"cancelButton"] setEnabled:TRUE];
+	}
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
+{
+	[self cancelSearch];
+}
+
+- (void)cancelSearch
+{
+	[self.searchBar setShowsCancelButton:FALSE animated:TRUE];
+	[self.searchBar resignFirstResponder];
+	self.searchBar.text = nil;
+	self.searchString = nil;
+	[self reloadGroups:self.groups];
+	self.tasks = nil;
+}
+
+#pragma mark -
+#pragma mark Content Filtering
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+	[self.searchBar resignFirstResponder];
+	self.searchString = searchText;
+	
+	[self refreshTasks];
+}
+
+#pragma mark -
 #pragma mark EGORefreshTableHeaderDelegate 
 
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
@@ -640,8 +740,13 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupsDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:GroupAddNotification];
+    [[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksSearchDidLoadNotification];
 	
-	[infoButton release];
+    [tasksDataSource release];
+    [tableHeaderView release];
+	[tasks release];
+    [searchBar release];
+    [infoButton release];
 	[infoViewController release];
 	[addGroupTextField release];
 	[groupsEditViewController release];
