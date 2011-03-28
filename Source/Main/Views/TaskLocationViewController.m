@@ -1,6 +1,6 @@
 #import "TaskLocationViewController.h"
 
-@interface TaskLocationViewController (private)
+@interface TaskLocationViewController ()
 
 - (void)showCurrentLocation;
 - (void)shouldReverseLocation:(CLLocation *)centerLocation;

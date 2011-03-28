@@ -3,7 +3,7 @@
 #import "TaskContainerViewController.h"
 #import "NSDate+Extensions.h"
 
-@interface InfoViewController (private)
+@interface InfoViewController ()
 
 - (void)refreshTasks;
 - (void)reloadTasks:(NSArray *)newTasks;

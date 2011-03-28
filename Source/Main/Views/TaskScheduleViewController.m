@@ -1,6 +1,6 @@
 #import "TaskScheduleViewController.h"
 
-@interface TaskScheduleViewController (private)
+@interface TaskScheduleViewController ()
 
 
 

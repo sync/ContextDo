@@ -4,7 +4,7 @@
 #import "TasksContainerViewController.h"
 #import "CTXDONotificationsServices.h"
 
-@interface AppDelegate (private)
+@interface AppDelegate ()
 
 - (void)enableGPS;
 - (void)locationDidFix;

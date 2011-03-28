@@ -1,6 +1,6 @@
 #import "TaskContainerViewController.h"
 
-@interface TaskContainerViewController (private)
+@interface TaskContainerViewController ()
 
 - (void)showDetails;
 - (void)showDirections;

@@ -5,7 +5,7 @@
 #import "TaskContainerViewController.h"
 #import "NSDate+Extensions.h"
 
-@interface TasksMapViewController (private)
+@interface TasksMapViewController ()
 
 - (void)showCurrentLocation;
 - (void)updateDirections;

@@ -3,7 +3,7 @@
 #import "CTXDOTableHeaderView.h"
 #import "GroupsEditCell.h"
 
-@interface GroupsEditViewController (private)
+@interface GroupsEditViewController ()
 
 - (void)syncGroups;
 

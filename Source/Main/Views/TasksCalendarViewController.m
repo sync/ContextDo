@@ -4,7 +4,7 @@
 #import "NSDate+Extensions.h"
 #import "TasksCalendarCell.h"
 
-@interface TasksCalendarViewController (private)
+@interface TasksCalendarViewController ()
 
 - (NSArray *)filteredTasksForDate:(NSDate *)date;
 - (void)reloadTasks:(NSArray *)newTasks;

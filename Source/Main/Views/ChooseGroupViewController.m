@@ -1,7 +1,7 @@
 #import "ChooseGroupViewController.h"
 #import "TaskEditCell.h"
 
-@interface ChooseGroupViewController (private)
+@interface ChooseGroupViewController ()
 
 - (void)reloadGroups:(NSArray *)newGroups;
 - (void)refreshGroups;

@@ -1,6 +1,6 @@
 #import "ResetPasswordViewController.h"
 
-@interface ResetPasswordViewController (private)
+@interface ResetPasswordViewController ()
 
 @end
 

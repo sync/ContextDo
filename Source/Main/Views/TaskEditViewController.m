@@ -4,7 +4,7 @@
 #import "TaskDatePickerViewController.h"
 #import "TaskContactViewController.h"
 
-@interface TaskEditViewController (private)
+@interface TaskEditViewController ()
 
 - (void)updateLocationWithDict:(NSString *)text;
 

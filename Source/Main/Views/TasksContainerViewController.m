@@ -3,7 +3,7 @@
 #import <TapkuLibrary/TapkuLibrary.h>
 #import "NSDate+Extensions.h"
 
-@interface TasksContainerViewController (private)
+@interface TasksContainerViewController ()
 
 - (void)showList;
 - (void)showMap;

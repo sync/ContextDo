@@ -1,7 +1,7 @@
 #import "TaskDatePickerViewController.h"
 #import "TaskEditCell.h"
 
-@interface TaskDatePickerViewController (private)
+@interface TaskDatePickerViewController ()
 
 - (void)switchValueChanged:(id)sender;
 

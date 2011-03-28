@@ -6,7 +6,7 @@
 #import "TaskEditViewController.h"
 #import "SettingsViewController.h"
 
-@interface GroupsViewController (private)
+@interface GroupsViewController ()
 
 - (void)refreshGroups;
 - (void)reloadGroups:(NSArray *)newGroups;
@@ -24,6 +24,7 @@
 - (void)restoreFromCached;
 - (void)cancelSearch;
 - (void)reloadTasks:(NSArray *)newTasks;
+@property (nonatomic, readonly) BOOL searchIsActive;
 
 @end
 
@@ -133,8 +134,6 @@
 
 	self.tableView.tableHeaderView = (self.groups.count > 0) ? self.tableHeaderView : nil;
 	[self refreshGroups];
-    
-    self.tasksDataSource = [[[TasksDataSource alloc]init]autorelease];
 }
 
 #pragma mark -
@@ -235,7 +234,10 @@
 
 - (void)reloadTasks:(NSArray *)newTasks
 {
-	[self.tasksDataSource resetContent];
+	if (!self.tasksDataSource) {
+        self.tasksDataSource = [[[TasksDataSource alloc]init]autorelease];
+    }
+    [self.tasksDataSource resetContent];
 	
 	self.tasks = newTasks;
 	
@@ -243,6 +245,11 @@
 		[self.tasksDataSource.content addObjectsFromArray:self.tasks];
 	}
 	[self.tableView reloadData];
+}
+
+- (BOOL)searchIsActive
+{
+    return self.searchBar.showsCancelButton;
 }
 
 #pragma mark -
@@ -324,15 +331,13 @@
 
 - (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
 {
-	if (self.hasCachedData) {
+	if (!self.searchIsActive && self.hasCachedData) {
 		return;
 	}
 	
 	if (self.isShowingGroupsEdit) {
 		return;
 	}
-    
-    
 	
 	[self.noResultsView hide:FALSE];
 	

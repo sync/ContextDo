@@ -1,6 +1,6 @@
 #import "CTXDONotificationsServices.h"
 
-@interface CTXDONotificationsServices (private)
+@interface CTXDONotificationsServices ()
 
 - (NSDictionary *)userInfoForTask:(Task *)task today:(BOOL)today;
 - (UILocalNotification *)hasLocalNotificationForTaskId:(NSNumber *)taskId today:(BOOL)today;

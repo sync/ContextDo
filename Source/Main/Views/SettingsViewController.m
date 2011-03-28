@@ -3,7 +3,7 @@
 #import "CTXDOTableHeaderView.h"
 #import "FacebookServices.h"
 
-@interface SettingsViewController (private)
+@interface SettingsViewController ()
 
 - (void)setupFBButton;
 - (User *)buildUser;

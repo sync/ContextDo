@@ -2,7 +2,7 @@
 #import "RegisterViewController.h"
 #import "ResetPasswordViewController.h"
 
-@interface LoginViewController (private)
+@interface LoginViewController ()
 
 - (void)shouldRegister;
 - (void)shouldResetPassword;

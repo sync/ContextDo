@@ -2,7 +2,7 @@
 #import "TaskAnnotation.h"
 #import "UICRouteOverlay.h"
 
-@interface TaskDirectionsViewController (private)
+@interface TaskDirectionsViewController ()
 
 - (void)showCurrentLocation;
 - (void)updateDirections;

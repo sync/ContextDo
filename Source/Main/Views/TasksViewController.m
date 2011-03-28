@@ -3,7 +3,7 @@
 #import "TaskContainerViewController.h"
 #import "NSDate+Extensions.h"
 
-@interface TasksViewController (private)
+@interface TasksViewController ()
 
 - (void)cancelSearch;
 - (void)refreshTasks;
