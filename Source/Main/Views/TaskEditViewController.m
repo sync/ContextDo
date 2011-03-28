@@ -207,7 +207,7 @@
 	if (formattedAddress.length > 0) {
 		[self updateLocationWithDict:[NSDictionary dictionaryWithObjectsAndKeys:
 									  index, @"index",
-									  @"Unknown Location!", @"text",
+									  formattedAddress, @"text",
 									  nil]];
 	} else {
 		[self updateLocationWithDict:[NSDictionary dictionaryWithObjectsAndKeys:
