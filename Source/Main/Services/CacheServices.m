@@ -96,7 +96,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (NSMutableDictionary *)groupsDict
 {
 	if (!groupsDict) {
-		groupsDict = [[NSDictionary savedDictForKey:GroupsKey]mutableCopy]; 
+		groupsDict = [[NSDictionary savedForKey:GroupsKey]mutableCopy]; 
 		if (!groupsDict) {
 			groupsDict = [[NSMutableDictionary alloc]init];
 		}
@@ -111,7 +111,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 	NSArray *sortDescriptors = [NSArray arrayWithObject:order];
 	NSArray *content = [self.groupsDict valueForKey:@"content"];
 	[(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
-	[self.groupsDict saveDictForKey:GroupsKey];
+	[self.groupsDict saveForKey:GroupsKey];
 	[[NSNotificationCenter defaultCenter]postNotificationName:GroupsGraphDidLoadNotification object:self.groupsDict];
 }
 
@@ -275,7 +275,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (NSMutableDictionary *)tasksWithGroupIdDict
 {
 	if (!tasksWithGroupIdDict) {
-		tasksWithGroupIdDict = [[NSDictionary savedDictForKey:TasksWithGroupIdKey]mutableCopy]; 
+		tasksWithGroupIdDict = [[NSDictionary savedForKey:TasksWithGroupIdKey]mutableCopy]; 
 		if (!tasksWithGroupIdDict) {
 			tasksWithGroupIdDict = [[NSMutableDictionary alloc]init];
 		}
@@ -292,7 +292,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
         NSArray *content = [self.tasksWithGroupIdDict valueForKeyPath:[NSString stringWithFormat:@"%@.content", key]];
         [(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
     }
-    [self.tasksWithGroupIdDict saveDictForKey:TasksWithGroupIdKey];
+    [self.tasksWithGroupIdDict saveForKey:TasksWithGroupIdKey];
    
 	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphDidLoadNotification 
 													   object:self.tasksWithGroupIdDict];
@@ -401,7 +401,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (NSMutableDictionary *)tasksWithDueDict
 {
 	if (!tasksWithDueDict) {
-		tasksWithDueDict = [[NSDictionary savedDictForKey:TasksWithDueKey]mutableCopy]; 
+		tasksWithDueDict = [[NSDictionary savedForKey:TasksWithDueKey]mutableCopy]; 
 		if (!tasksWithDueDict) {
 			tasksWithDueDict = [[NSMutableDictionary alloc]init];
 		}
@@ -418,7 +418,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
         NSArray *content = [self.tasksWithDueDict valueForKeyPath:[NSString stringWithFormat:@"%@.content", key]];
         [(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
     }
-	[self.tasksWithDueDict saveDictForKey:TasksWithDueKey];
+	[self.tasksWithDueDict saveForKey:TasksWithDueKey];
 	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphDueDidLoadNotification 
 													   object:[self.tasksWithDueDict valueForKey:@"content"]];
 }
@@ -526,7 +526,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (NSMutableDictionary *)tasksDueTodayDict
 {
 	if (!tasksDueTodayDict) {
-		tasksDueTodayDict = [[NSDictionary savedDictForKey:TasksDueTodaydKey]mutableCopy]; 
+		tasksDueTodayDict = [[NSDictionary savedForKey:TasksDueTodaydKey]mutableCopy]; 
 		if (!tasksDueTodayDict) {
 			tasksDueTodayDict = [[NSMutableDictionary alloc]init];
 		}
@@ -543,7 +543,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
         NSArray *content = [self.tasksDueTodayDict valueForKeyPath:[NSString stringWithFormat:@"%@.content", key]];
         [(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
     }
-	[self.tasksDueTodayDict saveDictForKey:TasksDueTodaydKey];
+	[self.tasksDueTodayDict saveForKey:TasksDueTodaydKey];
 	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphDueTodayDidLoadNotification 
 													   object:[self.tasksDueTodayDict valueForKey:@"content"]];
 }
@@ -648,7 +648,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (NSMutableDictionary *)tasksWithLatitudeDict
 {
 	if (!tasksWithLatitudeDict) {
-		tasksWithLatitudeDict = [[NSDictionary savedDictForKey:TasksWithLatitudeKey]mutableCopy]; 
+		tasksWithLatitudeDict = [[NSDictionary savedForKey:TasksWithLatitudeKey]mutableCopy]; 
 		if (!tasksWithLatitudeDict) {
 			tasksWithLatitudeDict = [[NSMutableDictionary alloc]init];
 		}
@@ -688,7 +688,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
         NSArray *content = [self.tasksWithLatitudeDict valueForKeyPath:[NSString stringWithFormat:@"%@.content", key]];
         [(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
     }
-	[self.tasksWithLatitudeDict saveDictForKey:TasksWithLatitudeKey];
+	[self.tasksWithLatitudeDict saveForKey:TasksWithLatitudeKey];
 	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphWithinDidLoadNotification 
 													   object:[self.tasksWithLatitudeDict valueForKey:@"content"]];
 }
@@ -796,7 +796,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (NSMutableDictionary *)editedTasksDict
 {
 	if (!editedTasksDict) {
-		editedTasksDict = [[NSDictionary savedDictForKey:EditedTasksKey]mutableCopy]; 
+		editedTasksDict = [[NSDictionary savedForKey:EditedTasksKey]mutableCopy]; 
 		if (!editedTasksDict) {
 			editedTasksDict = [[NSMutableDictionary alloc]init];
 		}
@@ -813,7 +813,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
         NSArray *content = [self.editedTasksDict valueForKeyPath:[NSString stringWithFormat:@"%@.content", key]];
         [(NSMutableArray *)content sortUsingDescriptors:sortDescriptors];
     }
-	[self.editedTasksDict saveDictForKey:EditedTasksKey];
+	[self.editedTasksDict saveForKey:EditedTasksKey];
 	[[NSNotificationCenter defaultCenter]postNotificationName:TasksGraphUpdatedSinceDidLoadNotification 
 													   object:[self.editedTasksDict valueForKey:@"content"]];
 }
@@ -833,7 +833,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (NSMutableDictionary *)groupsOutOfSyncDict
 {
 	if (!groupsOutOfSyncDict) {
-		groupsOutOfSyncDict = [[NSDictionary savedDictForKey:GroupsOutOfSyncKey]mutableCopy]; 
+		groupsOutOfSyncDict = [[NSDictionary savedForKey:GroupsOutOfSyncKey]mutableCopy]; 
 		if (!groupsOutOfSyncDict) {
 			groupsOutOfSyncDict = [[NSMutableDictionary alloc]init];
 		}
@@ -844,7 +844,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 - (void)saveGroupsOutOfSync
 {
-	[self.groupsOutOfSyncDict saveDictForKey:GroupsOutOfSyncKey];
+	[self.groupsOutOfSyncDict saveForKey:GroupsOutOfSyncKey];
 }
 
 - (BOOL)taskOperationsShouldUseSerialQueue
@@ -859,7 +859,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 - (NSMutableDictionary *)tasksOutOfSyncDict
 {
 	if (!tasksOutOfSyncDict) {
-		tasksOutOfSyncDict = [[NSDictionary savedDictForKey:TasksOutOfSyncKey]mutableCopy]; 
+		tasksOutOfSyncDict = [[NSDictionary savedForKey:TasksOutOfSyncKey]mutableCopy]; 
 		if (!tasksOutOfSyncDict) {
 			tasksOutOfSyncDict = [[NSMutableDictionary alloc]init];
 		}
@@ -870,7 +870,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CacheServices)
 
 - (void)saveTasksOutOfSync
 {
-	[self.tasksOutOfSyncDict saveDictForKey:TasksOutOfSyncKey];
+	[self.tasksOutOfSyncDict saveForKey:TasksOutOfSyncKey];
 }
 
 #pragma mark -
