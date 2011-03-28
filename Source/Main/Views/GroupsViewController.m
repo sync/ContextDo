@@ -51,6 +51,7 @@
     self.searchBar.tintColor = [UIColor colorWithWhite:0.3 alpha:1.0];
     [self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
 						   forBarStyle:UIBarStyleBlackOpaque];
+    self.searchBar.keyboardAppearance = UIKeyboardAppearanceAlert;
 }
 
 - (void)viewDidUnload
@@ -284,7 +285,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if (self.searchIsActive) {
+	if (self.searchIsActive && tableView.dataSource == self.tasksDataSource) {
         Task *task  = [self.tasksDataSource taskForIndexPath:indexPath];
         
         CTXDOCellContext context = CTXDOCellContextStandard;
@@ -324,7 +325,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-	if (self.searchIsActive) {
+	if (self.searchIsActive && tableView.dataSource == self.tasksDataSource) {
         TasksDataSource *dataSource = (TasksDataSource *)self.tableView.dataSource;
         Task *task  = [dataSource taskForIndexPath:indexPath];
         
@@ -351,7 +352,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-	if (self.searchIsActive) {
+	if (self.searchIsActive && tableView.dataSource == self.tasksDataSource) {
         return nil;
     } 
     
@@ -363,7 +364,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (self.searchIsActive) {
+    if (self.searchIsActive && tableView.dataSource == self.tasksDataSource) {
         return 0.0;
     } 
     return 40.0;
@@ -756,6 +757,7 @@
 		self.tasks = nil;
 	}
 	
+    self.navigationItem.leftBarButtonItem = nil;
 	[aSearchBar setShowsCancelButton:TRUE animated:TRUE];
 }
 
@@ -789,6 +791,7 @@
 	[self.searchBar resignFirstResponder];
 	self.searchBar.text = nil;
 	self.searchString = nil;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.tableView.dataSource = self.groupsDataSource;
     self.tableView.rowHeight = 44.0;
 	[self reloadGroups:self.groups];
