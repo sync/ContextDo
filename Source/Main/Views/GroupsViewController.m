@@ -5,6 +5,8 @@
 #import "TasksContainerViewController.h"
 #import "TaskEditViewController.h"
 #import "SettingsViewController.h"
+#import "TasksCell.h"
+#import "TaskContainerViewController.h"
 
 @interface GroupsViewController ()
 
@@ -234,9 +236,24 @@
 
 - (void)reloadTasks:(NSArray *)newTasks
 {
-	if (!self.tasksDataSource) {
+	if (!self.searchIsActive) {
+        return;
+    }
+    
+    self.tableView.tableHeaderView = nil;
+    
+    if (!self.tasksDataSource) {
         self.tasksDataSource = [[[TasksDataSource alloc]init]autorelease];
     }
+    
+    if (self.tableView.dataSource != self.tasksDataSource) {
+        self.tableView.dataSource = self.tasksDataSource;
+    }
+    
+    if (self.tableView.rowHeight != 88.0) {
+        self.tableView.rowHeight = 88.0;
+    }
+    
     [self.tasksDataSource resetContent];
 	
 	self.tasks = newTasks;
@@ -267,7 +284,23 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
+	if (self.searchIsActive) {
+        Task *task  = [self.tasksDataSource taskForIndexPath:indexPath];
+        
+        CTXDOCellContext context = CTXDOCellContextStandard;
+        if (task.isClose) {
+            context = CTXDOCellContextLocationAware;
+        } else if (indexPath.row % 2 > 0) {
+            context = CTXDOCellContextStandardAlternate;
+        }
+        
+        [(TasksCell *)cell setCellContext:context];
+        
+        [[(TasksCell *)cell completedButton]addTarget:self action:@selector(completedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        return;
+    }
+    
+    Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
 	
 	CTXDOCellContext context = CTXDOCellContextStandard;
 	if (group.expiredCount.integerValue > 0) {
@@ -291,7 +324,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-	[self.addGroupTextField resignFirstResponder];
+	if (self.searchIsActive) {
+        TasksDataSource *dataSource = (TasksDataSource *)self.tableView.dataSource;
+        Task *task  = [dataSource taskForIndexPath:indexPath];
+        
+        TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
+        controller.hidesBottomBarWhenPushed = TRUE;
+        controller.task = task;
+        controller.tasks = self.tasks;
+        [self.navigationController pushViewController:controller animated:TRUE];
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+        return;
+    }
+    
+    [self.addGroupTextField resignFirstResponder];
 	
 	Group *group  = [self.groupsDataSource groupForIndexPath:indexPath];
 	
@@ -304,7 +351,11 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-	CTXDOTableHeaderView *view = [[[CTXDOTableHeaderView alloc]initWithFrame:CGRectZero]autorelease];
+	if (self.searchIsActive) {
+        return nil;
+    } 
+    
+    CTXDOTableHeaderView *view = [[[CTXDOTableHeaderView alloc]initWithFrame:CGRectZero]autorelease];
 	view.textLabel.text = [self.groupsDataSource tableView:self.tableView
 								   titleForHeaderInSection:section];
 	return view;
@@ -312,7 +363,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-	return 40.0;
+    if (self.searchIsActive) {
+        return 0.0;
+    } 
+    return 40.0;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -411,6 +465,23 @@
 {
     // search mode
     [[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
+}
+
+- (void)completedButtonTouched:(id)sender
+{
+	UIButton *button = (UIButton *)sender;
+	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.tasksDataSource rowForTag:button.tag]inSection:0];
+	
+	Task *task = [self.tasksDataSource taskForIndexPath:indexPath];
+	
+	if (task.completed) {
+		task.completedAt = nil;
+	} else {
+		task.completedAt = [NSDate date];
+	}
+	
+	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+	[[APIServices sharedAPIServices]updateTask:task];
 }
 
 #pragma mark -
@@ -718,6 +789,8 @@
 	[self.searchBar resignFirstResponder];
 	self.searchBar.text = nil;
 	self.searchString = nil;
+    self.tableView.dataSource = self.groupsDataSource;
+    self.tableView.rowHeight = 44.0;
 	[self reloadGroups:self.groups];
 	self.tasks = nil;
 }

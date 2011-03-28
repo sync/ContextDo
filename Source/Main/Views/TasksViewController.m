@@ -144,23 +144,6 @@
 	[[(TasksCell *)cell completedButton]addTarget:self action:@selector(completedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)completedButtonTouched:(id)sender
-{
-	UIButton *button = (UIButton *)sender;
-	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.tasksDataSource rowForTag:button.tag]inSection:0];
-	
-	Task *task = [self.tasksDataSource taskForIndexPath:indexPath];
-	
-	if (task.completed) {
-		task.completedAt = nil;
-	} else {
-		task.completedAt = [NSDate date];
-	}
-	
-	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-	[[APIServices sharedAPIServices]updateTask:task];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 	TasksDataSource *dataSource = (TasksDataSource *)self.tableView.dataSource;
@@ -234,6 +217,23 @@
 		// search mode
 		[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
 	}
+}
+
+- (void)completedButtonTouched:(id)sender
+{
+	UIButton *button = (UIButton *)sender;
+	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.tasksDataSource rowForTag:button.tag]inSection:0];
+	
+	Task *task = [self.tasksDataSource taskForIndexPath:indexPath];
+	
+	if (task.completed) {
+		task.completedAt = nil;
+	} else {
+		task.completedAt = [NSDate date];
+	}
+	
+	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+	[[APIServices sharedAPIServices]updateTask:task];
 }
 
 #pragma mark -
