@@ -20,8 +20,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 																			  font:[UIFont boldSystemFontOfSize:14.0]];
 	
 	backButton.titleLabel.font = [UIFont boldSystemFontOfSize:14.0];
-	[backButton setTitleColor:[UIColor colorWithHexString:@"7e7e83"] forState:UIControlStateNormal];
-	[backButton setTitleColor:[UIColor colorWithHexString:@"7e7e83"] forState:UIControlStateHighlighted];
+	[backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	[backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 	backButton.titleLabel.shadowOffset = CGSizeMake(0,-1);
 	[backButton setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateNormal];
 	[backButton setTitleShadowColor:[UIColor colorWithHexString:@"00000040"] forState:UIControlStateHighlighted];
