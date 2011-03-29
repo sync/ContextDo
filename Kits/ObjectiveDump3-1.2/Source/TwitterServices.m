@@ -5,12 +5,12 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(TwitterServices)
 
-@synthesize oAuth, loginPopup;
+@synthesize oAuth, loginPopup, oauthConsumerKey, oauthConsumerSecret;
 
 - (OAuth *)oAuth
 {
 	if (!oAuth) {
-		oAuth = [[OAuth alloc] initWithConsumerKey:OAUTH_CONSUMER_KEY andConsumerSecret:OAUTH_CONSUMER_SECRET];
+		oAuth = [[OAuth alloc] initWithConsumerKey:self.oauthConsumerKey andConsumerSecret:self.oauthConsumerSecret];
 	}
 	
 	return oAuth;
@@ -119,7 +119,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TwitterServices)
 }
 
 - (void)dealloc {
-	[loginPopup release];
+	[oauthConsumerSecret release];
+    [oauthConsumerKey release];
+    [loginPopup release];
 	[oAuth release];
 	
     [super dealloc];

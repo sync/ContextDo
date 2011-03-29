@@ -3,6 +3,7 @@
 #import "TaskContainerViewController.h"
 #import "TasksContainerViewController.h"
 #import "CTXDONotificationsServices.h"
+#import "FacebookServices.h"
 
 @interface AppDelegate ()
 
@@ -45,6 +46,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 															 [NSNumber numberWithFloat:AlertsDistanceWithinDefaultValue], AlertsDistanceWithin,
 															 nil]];
+    
+    [FacebookServices sharedFacebookServices].facebookApplicationId = FacebookApplicationId;
 	
 	// Add the navigation controller's view to the window and display.
     [window addSubview:self.navigationController.view];

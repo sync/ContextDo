@@ -4,7 +4,7 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(FacebookServices)
 
-@synthesize facebook;
+@synthesize facebook, facebookApplicationId;
 
 - (Facebook *)facebook
 {
@@ -17,7 +17,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(FacebookServices)
 
 - (void)authorizeForPermissions:(NSArray *)permissions
 {
-	[self.facebook authorize:FacebookApplicationId permissions:permissions delegate:self];
+	[self.facebook authorize:self.facebookApplicationId permissions:permissions delegate:self];
 }
 
 #pragma mark -
@@ -93,7 +93,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(FacebookServices)
 #pragma mark Deallo
 
 - (void)dealloc {
-	[facebook release];
+	[facebookApplicationId release];
+    [facebook release];
 	
     [super dealloc];
 }

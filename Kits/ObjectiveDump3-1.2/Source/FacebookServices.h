@@ -4,15 +4,12 @@
 #define FacebookNotification @"FacebookNotification"
 #define FacebookAuthorizedPermissionsUserDefaults @"FacebookAuthorizedPermissionsUserDefaults"
 
-#if !defined(FacebookApplicationId)
-#define FacebookApplicationId @"your_key_here"
-#endif
-
 @interface FacebookServices : NSObject <FBSessionDelegate, UIAlertViewDelegate> {
 
 }
 
 @property (nonatomic, readonly) Facebook *facebook;
+@property (nonatomic, copy) NSString *facebookApplicationId;
 
 + (FacebookServices *)sharedFacebookServices;
 - (void)authorizeForPermissions:(NSArray *)permission;

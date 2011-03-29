@@ -309,8 +309,6 @@
 		2481FF5F12FF3E92003EEAB6 /* libKitDeps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FF5E12FF3E92003EEAB6 /* libKitDeps.a */; };
 		2481FF9B12FF477F003EEAB6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FF9A12FF477F003EEAB6 /* MapKit.framework */; };
 		2481FFB112FF4874003EEAB6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FFB012FF4873003EEAB6 /* MessageUI.framework */; };
-		24889CFA134155C00098ECAF /* drpDwnPanel_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 24889CF8134155C00098ECAF /* drpDwnPanel_open.png */; };
-		24889CFB134155C00098ECAF /* drpDwnPanel_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24889CF9134155C00098ECAF /* drpDwnPanel_open@2x.png */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -735,8 +733,6 @@
 		2481FF5E12FF3E92003EEAB6 /* libKitDeps.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libKitDeps.a; sourceTree = SOURCE_ROOT; };
 		2481FF9A12FF477F003EEAB6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2481FFB012FF4873003EEAB6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		24889CF8134155C00098ECAF /* drpDwnPanel_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = drpDwnPanel_open.png; path = "../../../Sliced Images/drpDwnPanel_open.png"; sourceTree = "<group>"; };
-		24889CF9134155C00098ECAF /* drpDwnPanel_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "drpDwnPanel_open@2x.png"; path = "../../../Sliced Images/drpDwnPanel_open@2x.png"; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -1598,8 +1594,6 @@
 				2437358B1302FE2A002231E1 /* btn_fb_off@2x.png */,
 				2437358C1302FE2A002231E1 /* btn_fb_off.png */,
 				2437358D1302FE2A002231E1 /* btn_fb_touch.png */,
-				24889CF8134155C00098ECAF /* drpDwnPanel_open.png */,
-				24889CF9134155C00098ECAF /* drpDwnPanel_open@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -2043,8 +2037,6 @@
 				2437358F1302FE2A002231E1 /* btn_fb_off@2x.png in Resources */,
 				243735901302FE2A002231E1 /* btn_fb_off.png in Resources */,
 				243735911302FE2A002231E1 /* btn_fb_touch.png in Resources */,
-				24889CFA134155C00098ECAF /* drpDwnPanel_open.png in Resources */,
-				24889CFB134155C00098ECAF /* drpDwnPanel_open@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
