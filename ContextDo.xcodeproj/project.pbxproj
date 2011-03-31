@@ -309,6 +309,14 @@
 		2481FF5F12FF3E92003EEAB6 /* libKitDeps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FF5E12FF3E92003EEAB6 /* libKitDeps.a */; };
 		2481FF9B12FF477F003EEAB6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FF9A12FF477F003EEAB6 /* MapKit.framework */; };
 		2481FFB112FF4874003EEAB6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FFB012FF4873003EEAB6 /* MessageUI.framework */; };
+		24889D0E134174630098ECAF /* drpDwnPanel_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 24889D0C134174620098ECAF /* drpDwnPanel_open.png */; };
+		24889D0F134174630098ECAF /* drpDwnPanel_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24889D0D134174630098ECAF /* drpDwnPanel_open@2x.png */; };
+		24889D13134175060098ECAF /* TasksChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24889D12134175060098ECAF /* TasksChooserViewController.m */; };
+		24889D15134186C00098ECAF /* TasksChooserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24889D14134186BF0098ECAF /* TasksChooserView.xib */; };
+		24889D22134190090098ECAF /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 24889D1E134190080098ECAF /* checked.png */; };
+		24889D23134190090098ECAF /* checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24889D1F134190080098ECAF /* checked@2x.png */; };
+		24889D24134190090098ECAF /* selectedcheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 24889D20134190080098ECAF /* selectedcheck.png */; };
+		24889D25134190090098ECAF /* selectedcheck@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24889D21134190090098ECAF /* selectedcheck@2x.png */; };
 		248921C6128ED28700DC9712 /* APIServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921C5128ED28700DC9712 /* APIServices.m */; };
 		248921CC128EDE0200DC9712 /* APIServices+Parsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 248921CA128EDE0200DC9712 /* APIServices+Parsing.m */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
@@ -733,6 +741,15 @@
 		2481FF5E12FF3E92003EEAB6 /* libKitDeps.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libKitDeps.a; sourceTree = SOURCE_ROOT; };
 		2481FF9A12FF477F003EEAB6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2481FFB012FF4873003EEAB6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		24889D0C134174620098ECAF /* drpDwnPanel_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drpDwnPanel_open.png; sourceTree = "<group>"; };
+		24889D0D134174630098ECAF /* drpDwnPanel_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "drpDwnPanel_open@2x.png"; sourceTree = "<group>"; };
+		24889D11134175060098ECAF /* TasksChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksChooserViewController.h; sourceTree = "<group>"; };
+		24889D12134175060098ECAF /* TasksChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksChooserViewController.m; sourceTree = "<group>"; };
+		24889D14134186BF0098ECAF /* TasksChooserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TasksChooserView.xib; sourceTree = "<group>"; };
+		24889D1E134190080098ECAF /* checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked.png; sourceTree = "<group>"; };
+		24889D1F134190080098ECAF /* checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked@2x.png"; sourceTree = "<group>"; };
+		24889D20134190080098ECAF /* selectedcheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectedcheck.png; sourceTree = "<group>"; };
+		24889D21134190090098ECAF /* selectedcheck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectedcheck@2x.png"; sourceTree = "<group>"; };
 		248921C4128ED28700DC9712 /* APIServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIServices.h; sourceTree = "<group>"; };
 		248921C5128ED28700DC9712 /* APIServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIServices.m; sourceTree = "<group>"; };
 		248921C9128EDE0200DC9712 /* APIServices+Parsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APIServices+Parsing.h"; sourceTree = "<group>"; };
@@ -1071,6 +1088,16 @@
 			name = "Pull to Refresh";
 			sourceTree = "<group>";
 		};
+		24889D10134174AC0098ECAF /* TasksChooser */ = {
+			isa = PBXGroup;
+			children = (
+				24889D11134175060098ECAF /* TasksChooserViewController.h */,
+				24889D12134175060098ECAF /* TasksChooserViewController.m */,
+				24889D14134186BF0098ECAF /* TasksChooserView.xib */,
+			);
+			name = TasksChooser;
+			sourceTree = "<group>";
+		};
 		248921C3128ED27000DC9712 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -1108,6 +1135,7 @@
 				243A537312E677F200A6D402 /* TasksContainerView.xib */,
 				24E44F5C12EC06AE00F08B7E /* List */,
 				24E44F5D12EC06BF00F08B7E /* Map */,
+				24889D10134174AC0098ECAF /* TasksChooser */,
 				24E44F5E12EC06D000F08B7E /* Calendar */,
 			);
 			name = Tasks;
@@ -1594,6 +1622,12 @@
 				2437358B1302FE2A002231E1 /* btn_fb_off@2x.png */,
 				2437358C1302FE2A002231E1 /* btn_fb_off.png */,
 				2437358D1302FE2A002231E1 /* btn_fb_touch.png */,
+				24889D0C134174620098ECAF /* drpDwnPanel_open.png */,
+				24889D0D134174630098ECAF /* drpDwnPanel_open@2x.png */,
+				24889D1E134190080098ECAF /* checked.png */,
+				24889D1F134190080098ECAF /* checked@2x.png */,
+				24889D20134190080098ECAF /* selectedcheck.png */,
+				24889D21134190090098ECAF /* selectedcheck@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -2037,6 +2071,13 @@
 				2437358F1302FE2A002231E1 /* btn_fb_off@2x.png in Resources */,
 				243735901302FE2A002231E1 /* btn_fb_off.png in Resources */,
 				243735911302FE2A002231E1 /* btn_fb_touch.png in Resources */,
+				24889D0E134174630098ECAF /* drpDwnPanel_open.png in Resources */,
+				24889D0F134174630098ECAF /* drpDwnPanel_open@2x.png in Resources */,
+				24889D15134186C00098ECAF /* TasksChooserView.xib in Resources */,
+				24889D22134190090098ECAF /* checked.png in Resources */,
+				24889D23134190090098ECAF /* checked@2x.png in Resources */,
+				24889D24134190090098ECAF /* selectedcheck.png in Resources */,
+				24889D25134190090098ECAF /* selectedcheck@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2109,6 +2150,7 @@
 				245680FF12F072730004189D /* TasksCalendarCell.m in Sources */,
 				24269EC812F846F300969CBB /* CacheServices.m in Sources */,
 				24FA42F71302F7BD001B1972 /* CTXDOBlueButton.m in Sources */,
+				24889D13134175060098ECAF /* TasksChooserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
