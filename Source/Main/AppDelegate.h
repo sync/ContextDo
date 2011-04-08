@@ -5,7 +5,6 @@
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, readonly) UINavigationController *loginNavigationController;
 @property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
 
 @property (nonatomic, readonly) MyLocationGetter *locationGetter;
@@ -19,17 +18,8 @@
 
 @property (nonatomic) BOOL firstGPSFix;
 
-- (void)hideLoginView:(BOOL)animated;
-- (void)showLoginView:(BOOL)animated;
-- (void)logout:(BOOL)showingLogin animated:(BOOL)animated;;
-
 - (void)showTask:(Task *)task animated:(BOOL)animated;
 - (void)showNearTasksAnimated:(BOOL)animated;
-
-@property (nonatomic, readonly) BOOL isBlackingOutTopViewElements;
-- (void)blackOutTopViewElementsAnimated:(BOOL)animated;
-- (void)hideBlackOutTopViewElementsAnimated:(BOOL)animated;
-@property (nonatomic, assign) UIView *blackedOutView;
 
 @property (nonatomic) BOOL backgrounding;
 

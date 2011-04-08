@@ -21,10 +21,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 {
 	self = [super init];
 	if (self != nil) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreTodayTasksfromCached) name:TasksGraphDueTodayDidLoadNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckTodayTasks:) name:TasksDueTodayDidLoadNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreWithinTasksFromCached) name:TasksGraphWithinDidLoadNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldCheckWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTasksForLocalNotification) name:DropboxSyncedNotification object:nil];
 	}
 	return self;
 }
@@ -32,14 +29,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 
 #pragma mark -
 #pragma mark Main
-
-- (void)refreshTasksForLocalNotification
-{
-	[self restoreTodayTasksfromCached];
-    [self restoreWithinTasksFromCached];
-    
-    [[APIServices sharedAPIServices]refreshTasksDueToday];
-}
 
 
 - (void)parseNotification:(UILocalNotification *)notification
@@ -99,11 +88,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 
 - (void)restoreWithinTasksFromCached
 {
-    NSArray *archivedContent = [CacheServices sharedCacheServices].tasksWithin;
-    [self reloadWithinTasks:archivedContent];
+    // todo
 }
 
-- (void)shouldCheckWithinTasks:(NSNotification *)notification
+- (void)dropboxSynced:(NSNotification *)notification
 {
 	NSArray *newTasks = [notification object];
     [self reloadWithinTasks:newTasks];
@@ -160,10 +148,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 
 - (void)restoreTodayTasksfromCached
 {
-	NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-    NSArray *archivedContent = [[CacheServices sharedCacheServices].tasksDueTodayDict
-                                valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
-    [self reloadTodayTasks:archivedContent];
+    // todo
 }
 
 - (void)shouldCheckTodayTasks:(NSNotification *)notification

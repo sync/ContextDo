@@ -1,5 +1,4 @@
 #import "TasksViewController.h"
-#import "TasksCell.h"
 #import "TaskContainerViewController.h"
 #import "NSDate+Extensions.h"
 
@@ -8,14 +7,13 @@
 - (void)cancelSearch;
 - (void)refreshTasks;
 - (void)reloadTasks:(NSArray *)newTasks;
-- (void)restoreFromCached;
 
 @end
 
 
 @implementation TasksViewController
 
-@synthesize tasksDataSource, tasks, group, searchBar, tasksSave, mainNavController, hasCachedData;
+@synthesize tasksDataSource, tasks, searchBar, tasksSave, mainNavController;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -42,34 +40,17 @@
 
 - (BOOL)isTodayTasks
 {
-	return [self.group.name isEqualToString:TodaysTasksPlacholder];
+	return FALSE; // todo
 }
 
 - (BOOL)isNearTasks
 {
-	return [self.group.name isEqualToString:NearTasksPlacholder];
+	return FALSE; // todo
 }
 
 - (void)setupDataSource
 {
 	[super setupDataSource];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksSearchDidLoadNotification object:nil];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
-	
-	if (self.isTodayTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphDueTodayDidLoadNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueTodayDidLoadNotification object:nil];
-		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueTodayDidLoadNotification];
-	} else if (self.isNearTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphWithinDidLoadNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
-		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksWithinDidLoadNotification];
-	} else {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphDidLoadNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
-		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
-	}
 	
 	self.tasksDataSource = [[[TasksDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksDataSource;
@@ -85,32 +66,7 @@
 {
 	// recognise when entire graph or not
 	NSArray *newTasks = [notification object];
-	if (![notification.name isEqualToString:TasksSearchDidLoadNotification] && self.tasksSave) {
-		self.tasksSave = newTasks;
-		return;
-	}
 	[self reloadTasks:newTasks];
-}
-
-- (void)restoreFromCached
-{
-	NSArray *archivedContent = nil;
-	if (self.isTodayTasks) {
-		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-		archivedContent = [[CacheServices sharedCacheServices].tasksDueTodayDict
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
-		self.hasCachedData = (archivedContent != nil);
-		[self reloadTasks:archivedContent];
-	} else if (self.isNearTasks) {
-		archivedContent = [CacheServices sharedCacheServices].tasksWithin;
-		self.hasCachedData = (archivedContent != nil);
-		[self reloadTasks:archivedContent];
-	} else {
-		archivedContent = [[CacheServices sharedCacheServices].tasksWithGroupIdDict 
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
-		self.hasCachedData = (archivedContent != nil);
-		[self reloadTasks:archivedContent];
-	}
 }
 
 - (void)reloadTasks:(NSArray *)newTasks
@@ -139,9 +95,9 @@
 		context = CTXDOCellContextStandardAlternate;
 	}
 	
-	[(TasksCell *)cell setCellContext:context];
-	
-	[[(TasksCell *)cell completedButton]addTarget:self action:@selector(completedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//	[(TasksCell *)cell setCellContext:context];
+//	
+//	[[(TasksCell *)cell completedButton]addTarget:self action:@selector(completedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -173,49 +129,15 @@
 }
 
 #pragma mark -
-#pragma mark BaseLoadingViewCenter Delegate
-
-- (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
-{
-	if (!self.tasksSave && self.hasCachedData) {
-		return;
-	}
-	
-	[self.noResultsView hide:FALSE];
-	
-	if (!self.loadingView) {
-		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
-		self.loadingView.delegate = self;
-		[self.view addSubview:self.loadingView];
-		[self.view bringSubviewToFront:self.loadingView];
-		[self.loadingView show:TRUE];
-	}
-	self.loadingView.labelText = @"Loading";
-}
-
-#pragma mark -
 #pragma mark Actions
 
 - (void)refreshTasks
 {
 	if (!self.tasksSave) {
-		if (self.isTodayTasks) {
-			[self restoreFromCached];
-			
-			[[APIServices sharedAPIServices]refreshTasksDueToday];
-		} else if (self.isNearTasks) {
-			[self restoreFromCached];
-			
-			CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-		} else {
-			[self restoreFromCached];
-			
-			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
-		}
+		// todo
 	} else {
 		// search mode
-		[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
+		// todo
 	}
 }
 
@@ -233,7 +155,7 @@
 	}
 	
 	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-	[[APIServices sharedAPIServices]updateTask:task];
+	// save todo
 }
 
 #pragma mark -
@@ -306,16 +228,9 @@
 #pragma mark Dealloc
 
 - (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksWithinDidLoadNotification];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDidLoadNotification];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDueTodayDidLoadNotification];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksSearchDidLoadNotification];
-	
+{	
 	[tasksSave release];
 	[searchBar release];
-	[group release];
 	[tasks release];
 	[tasksDataSource release];
 	

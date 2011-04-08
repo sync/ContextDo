@@ -13,7 +13,6 @@
 
 @property (nonatomic, copy) NSArray *tasksSave;
 
-@property (nonatomic, retain) Group *group;
 @property (nonatomic, retain) NSArray *tasks;
 @property (nonatomic, retain) NSArray *todayTasks;
 
@@ -28,7 +27,5 @@
 
 // Content Filtering
 @property (nonatomic, retain) NSString *searchString;
-
-@property (nonatomic) BOOL hasCachedData;
 
 @end

@@ -3,4 +3,5 @@ version: 1.0
 dependencies:
   - asi-http-request: 1.8
   - json-framework: 3.0beta1
+  - Crypto: 1.0
 

@@ -1,5 +1,4 @@
 #import "AppDelegate.h"
-#import "LoginViewController.h"
 #import "TaskContainerViewController.h"
 #import "TasksContainerViewController.h"
 #import "CTXDONotificationsServices.h"
@@ -11,7 +10,6 @@
 - (void)locationDidFix;
 - (void)locationDidStop;
 - (void)handleLocalNotification:(NSDictionary *)launchOptions;
-- (void)checkUserSettings;
 
 @end
 
@@ -20,32 +18,20 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
-@synthesize window, navigationController, placemark, reverseGeocoder, locationGetter, firstGPSFix, blackedOutView, lastCurrentLocation;
+@synthesize window, navigationController, placemark, reverseGeocoder, locationGetter, firstGPSFix, lastCurrentLocation;
 @synthesize backgrounding;
 
 #pragma mark -
 #pragma mark Application lifecycle
 
-- (UINavigationController *)loginNavigationController
-{
-	LoginViewController *controller = [[[LoginViewController alloc]initWithNibName:@"LoginView" bundle:nil]autorelease];
-	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
-	
-	return navController;
-}
-
 - (void)awakeFromNib {
 }
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
 	self.backgrounding = FALSE;
 	
 	// Override point for customization after application launch.
-	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
-															 [NSNumber numberWithFloat:AlertsDistanceWithinDefaultValue], AlertsDistanceWithin,
-															 nil]];
     
     [FacebookServices sharedFacebookServices].facebookApplicationId = FacebookApplicationId;
 	
@@ -60,30 +46,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	[self.navigationController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
 												forBarStyle:UIBarStyleBlackOpaque];
 	
-	NSString *apiToken = [APIServices sharedAPIServices].apiToken;
-	if (apiToken.length == 0) {
-		[self handleLocalNotification:launchOptions];
-	}
-	
     return YES;
-}
-
-- (void)checkUserSettings
-{
-	[[APIServices sharedAPIServices]refreshUser];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserSettings:) name:UserDidLoadNotification object:nil];
-}
-
-- (void)handleUserSettings:(NSNotification *)notification
-{
-	if (notification.object) {
-		User *user = (User *)notification.object;
-		NSDictionary *settings = user.settings;
-		if (settings) {
-			NSNumber *alertsDistanceWithin = [settings valueForKey:AlertsDistanceWithin];
-			[APIServices sharedAPIServices].alertsDistanceWithin = alertsDistanceWithin;
-		}
-	}
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -116,18 +79,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
      */
     [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
     
-	NSString *apiToken = [APIServices sharedAPIServices].apiToken;
-	if (apiToken.length == 0) {
-		if ([APIServices sharedAPIServices].username.length > 0 && [APIServices sharedAPIServices].password.length > 0) {
-			[[APIServices sharedAPIServices]loginWithUsername:[APIServices sharedAPIServices].username password:[APIServices sharedAPIServices].password];
-		} else {
-			[self showLoginView:FALSE];
-		}
-	} else {
-		[self checkUserSettings];
-		[self enableGPS];
-		[[CTXDONotificationsServices sharedCTXDONotificationsServices]refreshTasksForLocalNotification];
-	}
+    [self enableGPS];
 	self.backgrounding = FALSE;
 }
 
@@ -140,115 +92,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	}
 }
 
-- (void)logout:(BOOL)showingLogin animated:(BOOL)animated
-{
-	// clear apiKey
-	[APIServices sharedAPIServices].apiToken = nil;
-	// clear username / password
-	[APIServices sharedAPIServices].username = nil;
-	[APIServices sharedAPIServices].password = nil;
-	// clear all sessions + cookies
-	[ASIHTTPRequest clearSession];
-	// go back to user login
-	if (showingLogin) {
-		[[AppDelegate sharedAppDelegate]showLoginView:animated];
-	}
-	[self.navigationController popToRootViewControllerAnimated:TRUE];
-}
-
 /**
  applicationWillTerminate: saves changes in the application's managed object context before the application terminates.
  */
 - (void)applicationWillTerminate:(UIApplication *)application {
 	[self.locationGetter stopUpdates];
-}
-
-#pragma mark -
-#pragma mark Login
-
-- (void)hideLoginView:(BOOL)animated
-{
-	[self.navigationController dismissModalViewControllerAnimated:animated];
-	
-	[self checkUserSettings];
-	[self enableGPS];
-	[[CTXDONotificationsServices sharedCTXDONotificationsServices]refreshTasksForLocalNotification];
-	[[APIServices sharedAPIServices]refreshGroups];
-}
-
-- (void)showLoginView:(BOOL)animated
-{
-	[self.navigationController presentModalViewController:self.loginNavigationController animated:animated];
-}
-
-#pragma mark -
-#pragma mark Blackout Main View
-
-- (BOOL)isBlackingOutTopViewElements
-{
-	return (self.blackedOutView != nil);
-}
-
-- (void)blackOutTopViewElementsAnimated:(BOOL)animated
-{
-	if (self.isBlackingOutTopViewElements) {
-		return;
-	}
-	
-	CGSize boundsSize = self.window.bounds.size;
-	self.blackedOutView = [[[UIView alloc]initWithFrame:CGRectMake(0.0, 
-																   -(20 + 44),
-																   boundsSize.width,
-																   20 + 44)]autorelease];
-	self.blackedOutView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].blackedOutColor;
-	[self.window addSubview:self.blackedOutView];
-	
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:0.1];
-		[UIView setAnimationCurve:UIViewAnimationCurveLinear];
-	}
-	
-	self.blackedOutView.frame = CGRectMake(0.0, 
-										   0.0,
-										   boundsSize.width,
-										   self.blackedOutView.frame.size.height);
-	
-	if (animated) {
-		[UIView commitAnimations];
-	}
-}
-
-- (void)hideBlackOutTopViewElementsAnimated:(BOOL)animated
-{
-	if (!self.isBlackingOutTopViewElements) {
-		return;
-	}
-	
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDelay:0.28];
-		[UIView setAnimationDuration:0.09];
-		[UIView setAnimationCurve:UIViewAnimationCurveLinear];
-		[UIView setAnimationDelegate:self];
-		[UIView setAnimationDidStopSelector:@selector(hideBlackoutAnimationDidStop)];
-	}
-	
-	CGSize boundsSize = self.window.bounds.size;
-	self.blackedOutView.frame = CGRectMake(0.0, 
-										   -self.blackedOutView.frame.size.height,
-										   boundsSize.width,
-										   self.blackedOutView.frame.size.height);
-	
-	if (animated) {
-		[UIView commitAnimations];
-	}
-}
-
-- (void)hideBlackoutAnimationDidStop
-{
-	[self.blackedOutView removeFromSuperview];
-	blackedOutView = nil;
 }
 
 #pragma mark -
@@ -272,19 +120,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	DLog(@"user got a fix with core location");
 	
 	if (self.hasValidCurrentLocation) {
-		CLLocationCoordinate2D coordinate = self.currentLocation.coordinate;
-		
-		CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue * 1000;
-		if (!self.lastCurrentLocation || [self.currentLocation distanceFromLocation:self.lastCurrentLocation] >= distance) {
-			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-		}
-			
-		if (reverseGeocoder) {
+        if (reverseGeocoder) {
 			[reverseGeocoder cancel];
 			reverseGeocoder.delegate = nil;
 			[reverseGeocoder release];
 			reverseGeocoder = nil;
 		}
+        
+		CLLocationCoordinate2D coordinate = self.currentLocation.coordinate;
 		reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:coordinate];
 		reverseGeocoder.delegate = self;
 		[reverseGeocoder start];
@@ -351,14 +194,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)showTask:(Task *)task animated:(BOOL)animated
 {
-	[[NSNotificationCenter defaultCenter]postNotificationName:GroupShouldDismissInfo object:nil];
-	
-	TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
-	controller.task = task;
-	controller.tasks = [NSArray arrayWithObject:task];
-	controller.showCloseButton = TRUE;
-	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
-	[self.navigationController presentModalViewController:navController animated:TRUE];
+	// todo
 }
 
 #pragma mark -
@@ -366,16 +202,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)showNearTasksAnimated:(BOOL)animated
 {
-	[[NSNotificationCenter defaultCenter]postNotificationName:GroupShouldDismissInfo object:nil];
-	
-	Group *nearGroup = [Group groupWithId:[NSNumber numberWithInt:NSNotFound]
-									 name:NearTasksPlacholder];
-	
-	TasksContainerViewController *controller = [[[TasksContainerViewController alloc]initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
-	controller.group = nearGroup;
-	controller.showCloseButton = TRUE;
-	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
-	[self.navigationController presentModalViewController:navController animated:TRUE];
+	// todo
 }
 
 #pragma mark -

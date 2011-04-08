@@ -1,6 +1,5 @@
 #import "TasksDataSource.h"
 #import "TimeFormatters.h"
-#import "TasksCell.h"
 
 
 @implementation TasksDataSource
@@ -27,17 +26,17 @@
 {
 #define TasksCellIdentifier @"TasksCellIdentifier"
 	
-	TasksCell *cell = (TasksCell *)[tableView dequeueReusableCellWithIdentifier:TasksCellIdentifier];
+	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:TasksCellIdentifier];
     if (cell == nil) {
-        cell = [[[TasksCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:TasksCellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:TasksCellIdentifier] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
 	
-	Task *task = [self taskForIndexPath:indexPath];
-	[cell setTask:task];
-	
-	cell.completedButton.tag = [self tagForRow:indexPath.row];
+//	Task *task = [self taskForIndexPath:indexPath];
+//	[cell setTask:task];
+//	
+//	cell.completedButton.tag = [self tagForRow:indexPath.row];
 	
     return cell;
 }

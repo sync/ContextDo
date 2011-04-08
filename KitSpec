@@ -6,9 +6,7 @@ dependencies:
   - ObjectiveDump3: 1.2
   - OHAttributedLabel: 1.0
   - tapkulibrary: 1.0
-  - TISwipeableTableView: 1.0
   - UIColor-i7HexColor: 0.11
-  - json-framework: 3.0beta1
-  - objectivesupport: 1.0
   - MapKit-Route-Directions: 1.0
   - scifihifi-iphone: 1.0
+  - Gallagher: 1.0

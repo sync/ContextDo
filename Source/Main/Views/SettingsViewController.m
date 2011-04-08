@@ -6,7 +6,6 @@
 @interface SettingsViewController ()
 
 - (void)setupFBButton;
-- (User *)buildUser;
 
 @end
 
@@ -40,9 +39,6 @@
 {
 	[super setupDataSource];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:UserDidLoadNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:UserEditNotification object:nil];
-	
 	NSArray *section1 = [NSArray arrayWithObjects:@"", nil];
 	NSArray *choicesList = [NSArray arrayWithObjects:section1, nil];
 	
@@ -54,7 +50,7 @@
 
 - (BOOL)isFacebookConnected
 {
-	return ([APIServices sharedAPIServices].user.hasFacebookAccessToken.boolValue);
+	return NO;
 }
 
 - (void)setupFBButton
@@ -94,9 +90,8 @@
 		[settingsSliderView.slider addTarget:self action:@selector(sliderDidChangeValue:) forControlEvents:UIControlEventValueChanged];
 		settingsSliderView.slider.minimumValue = 0.0;
 		settingsSliderView.slider.maximumValue = 4.0;
-		CGFloat value = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
-		self.settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];
-	}
+		self.settingsSliderView.slider.value = 1.0; // todo;	
+    }
 	
 	return settingsSliderView;
 	
@@ -119,8 +114,7 @@
 	}
 	
 	if (indexPath.section == 0) {
-		CGFloat value = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
-		self.settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];
+		self.settingsSliderView.slider.value = 1.0; // todo
 		self.settingsSliderView.frame = cell.contentView.bounds;
 		[cell addSubview:self.settingsSliderView];
 	}
@@ -140,7 +134,7 @@
 	CTXDOTableHeaderView *view = [[[CTXDOTableHeaderView alloc]initWithFrame:CGRectZero]autorelease];
 	view.textLabel.font = [UIFont boldSystemFontOfSize:16.0];
 	view.textLabel.text = [self.settingsDataSource tableView:self.tableView
-								   titleForHeaderInSection:section];
+                                     titleForHeaderInSection:section];
 	return view;
 }
 
@@ -170,7 +164,6 @@
 	BOOL success = [[infoDict valueForKey:@"success"]boolValue];
 	NSArray *permissions = [infoDict valueForKey:@"permissions"];
 	[[FacebookServices sharedFacebookServices]setFacebookAuthorizedForPemissions:permissions remove:!success];
-	[[APIServices sharedAPIServices]updateUser:[self buildUser]];
 	[self setupFBButton];
 }
 
@@ -198,30 +191,13 @@
 	self.lastSliderValue = value;
 }
 
-- (User *)buildUser
-{
-	CGFloat toKmValue = [[APIServices sharedAPIServices]sliderValueToAlertsDistancKm:self.settingsSliderView.slider.value];
-    NSDictionary *settings = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:toKmValue]
-														 forKey:AlertsDistanceWithin];
-	[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:toKmValue];
-	User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken]; // todo remember fb token and pass it there
-	[[APIServices sharedAPIServices]updateUser:user];
-	return user;
-}
-
 - (void)doneTouched
 {
 	if (self.lastSliderValue != -1.0) {
-		[[APIServices sharedAPIServices]updateUser:[self buildUser]];
+		// todo
 	}
 	
 	[self dismissModalViewControllerAnimated:TRUE];
-}
-
-- (IBAction)shouldLogout
-{
-	[self dismissModalViewControllerAnimated:FALSE];
-	[[AppDelegate sharedAppDelegate]logout:TRUE animated:FALSE];
 }
 
 - (IBAction)shouldFacebookConnect
@@ -231,7 +207,7 @@
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socialServicesFacebookNotification:) name:FacebookNotification object:nil];
 	} else {
 		[[FacebookServices sharedFacebookServices].facebook logout:[FacebookServices sharedFacebookServices]];
-		[[APIServices sharedAPIServices]updateUser:[self buildUser]];
+		// todo
 	}
 }
 

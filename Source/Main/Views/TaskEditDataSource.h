@@ -7,7 +7,6 @@
 #define AddContactPlaceholder @"Contact Name - Detail"
 #define TimePlaceholder @"Time"
 #define AlertsPlaceholder @"Alerts Inform / update"
-#define GroupPlaceholder @"Group"
 
 @interface TaskEditDataSource : BaseTableViewDataSource {
 

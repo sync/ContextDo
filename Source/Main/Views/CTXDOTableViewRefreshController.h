@@ -1,9 +1,8 @@
 #import <UIKit/UIKit.h>
 #import "BaseTableViewRefreshController.h"
 #import "CTXDORefreshTableHeaderView.h"
-#import "TISwipeableTableView.h"
 
-@interface CTXDOTableViewRefreshController : BaseTableViewRefreshController <TISwipeableTableViewDelegate> {
+@interface CTXDOTableViewRefreshController : BaseTableViewRefreshController {
 	EGORefreshTableHeaderView *refreshHeaderView;
 	
 	id _delegate;
@@ -16,7 +15,5 @@
 }
 
 @property (nonatomic) CGFloat refreshHeaderOffset;
-
-//@property (nonatomic, readonly) TISwipeableTableView *swipeableTableView;
 
 @end

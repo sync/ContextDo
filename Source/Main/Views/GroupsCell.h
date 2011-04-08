@@ -10,6 +10,6 @@
 
 - (void)setCellPosition:(CTXDOCellPosition)cellPosition context:(CTXDOCellContext)cellContext;
 
-- (void)setGroup:(Group *)group;
+- (void)setGroup:(id)group;
 
 @end

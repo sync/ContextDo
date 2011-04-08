@@ -32,6 +32,12 @@
 	[self loadRequest];
 }
 
+- (void)viewDidUnload {
+	self.webView = nil;
+    
+    [super viewDidUnload];
+}
+
 - (void)setupNavigationBar
 {
 	self.navigationController.navigationBar.hidden = TRUE;
@@ -185,13 +191,6 @@
 			[[UIApplication sharedApplication]openURL:self.request.URL];
 		}
 	}
-}
-
-#pragma mark -
-#pragma mark Memory
-
-- (void)viewDidUnload {
-	self.webView = nil;
 }
 
 #pragma mark -

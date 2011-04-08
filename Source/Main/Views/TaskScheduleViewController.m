@@ -17,7 +17,7 @@
 - (void)updateTask
 {
 	if (self.userEdited ) {
-		[[APIServices sharedAPIServices]updateTask:self.task];
+		// save todo
 		self.userEdited = FALSE;
 	} else if (self.datePicker) {
 		BOOL shouldRefresh = FALSE;
@@ -29,7 +29,7 @@
 			shouldRefresh = TRUE;
 		}
 		if (shouldRefresh) {
-			[[APIServices sharedAPIServices]updateTask:self.task];
+			// save todo
 		}
 	}
 }

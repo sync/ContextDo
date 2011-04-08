@@ -10,7 +10,6 @@
 @property (nonatomic, retain) TasksDataSource *tasksDataSource;
 
 @property (nonatomic, retain) NSArray *tasks;
-@property (nonatomic, retain) Group *group;
 @property (nonatomic, retain) NSArray *tasksSave;
 
 @property (nonatomic, readonly) BOOL isTodayTasks;
@@ -19,7 +18,5 @@
 @property (nonatomic, retain) IBOutlet CustomSearchBar *searchBar;
 
 @property (nonatomic,  assign) UINavigationController *mainNavController;
-
-@property (nonatomic) BOOL hasCachedData;
 
 @end

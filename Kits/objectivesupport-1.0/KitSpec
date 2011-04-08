@@ -1,5 +1,0 @@
-name: objectivesupport
-version: 1.0
-source-directory: Classes
-dependencies:
-  - json-framework: 3.0beta1

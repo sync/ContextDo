@@ -35,8 +35,6 @@
 	}
 	
 	[self refreshTask];
-	
-	[[APIServices sharedAPIServices]updateTask:self.task];
 }
 
 - (IBAction)mailTouched
@@ -68,7 +66,6 @@
 - (IBAction)deleteTouched
 {
 	[self.mainNavController popViewControllerAnimated:TRUE];
-	[[APIServices sharedAPIServices]deleteTask:self.task];
 }
 
 #pragma mark -

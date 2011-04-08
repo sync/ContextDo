@@ -1,1 +1,0 @@
-OTHER_LDFLAGS = $(OTHER_LDFLAGS) -ObjC -all_load 

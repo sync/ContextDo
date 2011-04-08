@@ -12,7 +12,6 @@
 
 @property (nonatomic, retain) IBOutlet CTXDOBlueButton *fbButton;
 
-- (IBAction)shouldLogout;
 - (IBAction)shouldFacebookConnect;
 
 @property (nonatomic) CGFloat lastSliderValue;

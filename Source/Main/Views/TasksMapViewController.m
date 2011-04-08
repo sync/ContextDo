@@ -14,15 +14,14 @@
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 - (void)addAllAnnotationsTasksIncludingToday:(BOOL)includingToday;
 - (void)reloadTasks:(NSArray *)newTasks;
-- (void)restoreFromCached;
 - (TaskAnnotation *)annotationForTask:(Task *)aTask;
 
 @end
 
 @implementation TasksMapViewController
 
-@synthesize mapView, tasks, directions, searchBar, group, mainNavController;
-@synthesize routeLine, routeLineView, todayTasks, tasksSave, searchString, hasCachedData;
+@synthesize mapView, tasks, directions, searchBar, mainNavController;
+@synthesize routeLine, routeLineView, todayTasks, tasksSave, searchString;
 
 #pragma mark -
 #pragma mark Setup
@@ -34,12 +33,12 @@
 
 - (BOOL)isTodayTasks
 {
-	return [self.group.name isEqualToString:TodaysTasksPlacholder];
+	return FALSE; // todo
 }
 
 - (BOOL)isNearTasks
 {
-	return [self.group.name isEqualToString:NearTasksPlacholder];
+	return FALSE; // todo
 }
 
 - (void)viewDidLoad 
@@ -55,22 +54,6 @@
     self.directions = [UICGDirections sharedDirections];
 	self.directions.delegate = self;
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksSearchDidLoadNotification object:nil];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
-	
-	if (self.isTodayTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphDueTodayDidLoadNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueTodayDidLoadNotification object:nil];
-		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueTodayDidLoadNotification];
-	} else if (self.isNearTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphWithinDidLoadNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
-		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksWithinDidLoadNotification];
-	} else {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphDidLoadNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
-		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
-	}
 	[self refreshTasks];
 }
 
@@ -98,49 +81,15 @@
 }
 
 #pragma mark -
-#pragma mark BaseLoadingViewCenter Delegate
-
-- (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
-{
-	if (!self.tasksSave && self.hasCachedData) {
-		return;
-	}
-	
-	[self.noResultsView hide:FALSE];
-	
-	if (!self.loadingView) {
-		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
-		self.loadingView.delegate = self;
-		[self.view addSubview:self.loadingView];
-		[self.view bringSubviewToFront:self.loadingView];
-		[self.loadingView show:TRUE];
-	}
-	self.loadingView.labelText = @"Loading";
-}
-
-#pragma mark -
 #pragma mark Actions
 
 - (void)refreshTasks
 {
 	if (!self.tasksSave) {
-		if (self.isTodayTasks) {
-			[self restoreFromCached];
-			
-			[[APIServices sharedAPIServices]refreshTasksDueToday];
-		} else if (self.isNearTasks) {
-			[self restoreFromCached];
-			
-			CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
-			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-		} else {
-			[self restoreFromCached];
-			
-			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
-		}
+		// todo
 	} else {
 		// search mode
-		[[APIServices sharedAPIServices]refreshTasksWithQuery:self.searchString];
+		// todo
 	}
 }
 
@@ -150,32 +99,7 @@
 - (void)shouldReloadContent:(NSNotification *)notification
 {
 	NSArray *newTasks = [notification object];	
-	if (![notification.name isEqualToString:TasksSearchDidLoadNotification] && self.tasksSave) {
-		self.tasksSave = newTasks;
-		return;
-	}
 	[self reloadTasks:newTasks];
-}
-
-- (void)restoreFromCached
-{
-	NSArray *archivedContent = nil;
-	if (self.isTodayTasks) {
-		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-		archivedContent = [[CacheServices sharedCacheServices].tasksDueTodayDict
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
-		self.hasCachedData = (archivedContent != nil);
-		[self reloadTasks:archivedContent];
-	} else if (self.isNearTasks) {
-		archivedContent = [CacheServices sharedCacheServices].tasksWithin;
-		self.hasCachedData = (archivedContent != nil);
-		[self reloadTasks:archivedContent];
-	} else {
-		archivedContent = [[CacheServices sharedCacheServices].tasksWithGroupIdDict 
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
-		self.hasCachedData = (archivedContent != nil);
-		[self reloadTasks:archivedContent];
-	}
 }
 
 - (void)reloadTasks:(NSArray *)newTasks
@@ -566,11 +490,6 @@
 - (void)dealloc
 {
 	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksWithinDidLoadNotification];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDidLoadNotification];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDueTodayDidLoadNotification];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	self.mapView.delegate = nil;
 	self.directions.delegate = nil;
@@ -579,8 +498,6 @@
 	[routeLineView release];
 	
 	[searchBar release];
-	
-	[group release];
 	
 	[todayTasks release];
 	[tasksSave release];

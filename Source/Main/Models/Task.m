@@ -53,7 +53,7 @@
 
 - (BOOL)isClose
 {
-	CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue * 1000;
+	CGFloat distance = 0.0; // todo
 	return ((!self.completed || self.completedWithin24hours) && self.distance < distance);
 }
 

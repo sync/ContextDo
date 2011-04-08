@@ -23,8 +23,6 @@
 		value = [NSDate stringForDisplayFromDate:self.tempTask.dueAt prefixed:NO alwaysShowTime:TRUE];
 	} else if ([placeholder isEqualToString:AlertsPlaceholder]) {
 		
-	} else if ([placeholder isEqualToString:GroupPlaceholder]) {
-		value = self.tempTask.groupName;
 	}
 	
 	return value;

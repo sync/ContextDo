@@ -7,14 +7,13 @@
 
 - (void)refreshTasks;
 - (void)reloadTasks:(NSArray *)newTasks;
-- (void)restoreFromCached;
 
 @end
 
 
 @implementation InfoViewController
 
-@synthesize tasksUpdatedDataSource, mainNavController, hasCachedData;
+@synthesize tasksUpdatedDataSource, mainNavController;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -33,10 +32,6 @@
 {
 	[super setupDataSource];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksUpdatedSinceDidLoadNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksUpdatedSinceDidLoadNotification object:nil];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksUpdatedSinceDidLoadNotification];
-	
 	self.tasksUpdatedDataSource = [[[TasksUpdatedDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksUpdatedDataSource;
 	self.tableView.backgroundColor = [UIColor clearColor];
@@ -44,8 +39,7 @@
 
 - (void)refreshTasks
 {
-	[self restoreFromCached];
-	[[APIServices sharedAPIServices]refreshTasksEdited];
+	// todo
 }
 
 #pragma mark -
@@ -56,16 +50,6 @@
 	NSArray *newTasks = [notification object];
 	[self reloadTasks:newTasks];
 }
-
-- (void)restoreFromCached
-{
-	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-	NSArray *archivedContent = [[CacheServices sharedCacheServices].editedTasksDict
-								valueForKeyPath:[NSString stringWithFormat:@"%@.content", editedAt]];
-	self.hasCachedData = (archivedContent != nil);
-	[self reloadTasks:archivedContent];
-}
-
 
 - (void)reloadTasks:(NSArray *)newTasks
 {
@@ -106,29 +90,6 @@
 	[self.mainNavController pushViewController:controller animated:TRUE];
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
-	
-	[[NSNotificationCenter defaultCenter]postNotificationName:GroupShouldDismissInfo object:nil];
-}
-
-#pragma mark -
-#pragma mark BaseLoadingViewCenter Delegate
-
-- (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
-{
-	if (self.hasCachedData) {
-		return;
-	}
-	
-	[self.noResultsView hide:FALSE];
-	
-	if (!self.loadingView) {
-		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
-		self.loadingView.delegate = self;
-		[self.view addSubview:self.loadingView];
-		[self.view bringSubviewToFront:self.loadingView];
-		[self.loadingView show:TRUE];
-	}
-	self.loadingView.labelText = @"Loading";
 }
 
 #pragma mark -
@@ -136,9 +97,6 @@
 
 - (void)dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksUpdatedSinceDidLoadNotification];
-	
 	[tasksUpdatedDataSource release];
 	
 	[super dealloc];

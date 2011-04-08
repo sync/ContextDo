@@ -119,6 +119,8 @@
 
 - (void)viewDidUnload {
 	self.tableView = nil;
+    
+    [super viewDidUnload];
 }
 
 /*

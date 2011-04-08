@@ -8,15 +8,14 @@
 
 - (NSArray *)filteredTasksForDate:(NSDate *)date;
 - (void)reloadTasks:(NSArray *)newTasks;
-- (void)restoreFromCached;
 
 @end
 
 
 @implementation TasksCalendarViewController
 
-@synthesize tasks, group, mainNavController;
-@synthesize loadingView, noResultsView, tasksCalendarDataSource, hasCachedData;
+@synthesize tasks, mainNavController;
+@synthesize tasksCalendarDataSource;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -38,20 +37,16 @@
 
 - (BOOL)isTodayTasks
 {
-	return [self.group.name isEqualToString:TodaysTasksPlacholder];
+	return FALSE; // todo
 }
 
 - (BOOL)isNearTasks
 {
-	return [self.group.name isEqualToString:NearTasksPlacholder];
+	return FALSE; // todo
 }
 
 - (void)setupDataSource
-{
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphDueDidLoadNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueDidLoadNotification object:nil];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueDidLoadNotification];
-	
+{	
 	self.tasksCalendarDataSource = [[[TasksCalendarDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksCalendarDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
@@ -62,9 +57,8 @@
 
 - (void)refreshTasks
 {
-	[self restoreFromCached];
-	
-	[[APIServices sharedAPIServices]refreshTasksWithDue:[self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]];
+	// todo refresh
+    [self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"];
 }
 
 #pragma mark -
@@ -74,14 +68,6 @@
 {
 	NSArray *newTasks = [notification object];
 	[self reloadTasks:newTasks];
-}
-
-- (void)restoreFromCached
-{
-	NSArray *archivedContent = [[CacheServices sharedCacheServices].tasksWithDueDict 
-								valueForKeyPath:[NSString stringWithFormat:@"%@.content", [self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]]];
-	self.hasCachedData = (archivedContent != nil);
-	[self reloadTasks:archivedContent];
 }
 
 - (void)reloadTasks:(NSArray *)newTasks
@@ -179,103 +165,15 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }
 
-#pragma mark -
-#pragma mark BaseLoadingViewCenter Delegate
-
-- (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
-{
-	if (self.hasCachedData) {
-		return;
-	}
-	
-	[self.noResultsView hide:FALSE];
-	
-	if (!self.loadingView) {
-		self.loadingView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
-		self.loadingView.delegate = self;
-		[self.view addSubview:self.loadingView];
-		[self.view bringSubviewToFront:self.loadingView];
-		[self.loadingView show:TRUE];
-	}
-	self.loadingView.labelText = @"Loading";
-}
-
-- (void)baseLoadingViewCenterDidStopForKey:(NSString *)key
-{
-	[self.loadingView hide:TRUE];
-}
-
-- (void)baseLoadingViewCenterShowErrorMsg:(NSString *)errorMsg forKey:(NSString *)key;
-{
-	[self.loadingView hide:FALSE];
-	
-	if (!self.noResultsView) {
-		self.noResultsView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
-		self.noResultsView.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]] autorelease];
-		self.noResultsView.labelText = errorMsg;
-		self.noResultsView.mode = MBProgressHUDModeCustomView;
-		self.noResultsView.delegate = self;
-		[self.view addSubview:self.noResultsView];
-		[self.view bringSubviewToFront:self.noResultsView];
-		[self.noResultsView show:TRUE];
-		[self performSelector:@selector(baseLoadingViewCenterRemoveErrorMsgForKey:) withObject:key afterDelay:1.5];
-	}
-}
-
-- (void)baseLoadingViewCenterShowErrorMsg:(NSString *)errorMsg details:(NSString *)details forKey:(NSString *)key
-{
-	[self.loadingView hide:FALSE];
-	
-	if (!self.noResultsView) {
-		self.noResultsView = [[[MBProgressHUD alloc] initWithView:self.view]autorelease];
-		self.noResultsView.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]] autorelease];
-		self.noResultsView.labelText = errorMsg;
-		self.noResultsView.detailsLabelText = details;
-		self.noResultsView.mode = MBProgressHUDModeCustomView;
-		self.noResultsView.delegate = self;
-		[self.view addSubview:self.noResultsView];
-		[self.view bringSubviewToFront:self.noResultsView];
-		[self.noResultsView show:TRUE];
-		[self performSelector:@selector(baseLoadingViewCenterRemoveErrorMsgForKey:) withObject:key afterDelay:1.5];
-	}
-}
-
-- (void)baseLoadingViewCenterRemoveErrorMsgForKey:(NSString *)key
-{
-	[self.noResultsView hide:TRUE];
-}
-
-#pragma mark -
-#pragma mark MBProgressHUDDelegate methods
-
-- (void)hudWasHidden:(MBProgressHUD *)hud
-{
-    if (hud == self.loadingView) {
-		[self.loadingView removeFromSuperview];
-		self.loadingView = nil;
-	} else if (hud == self.noResultsView) {
-		[self.noResultsView removeFromSuperview];
-		self.noResultsView = nil;
-	}
-}
 
 #pragma mark -
 #pragma mark Dealloc
 
 - (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TasksDueDidLoadNotification];
-	
-	[group release];
+{	
 	[tasks release];
 	
 	[tasksCalendarDataSource release];
-	
-	noResultsView.delegate = nil;
-	[noResultsView release];
-	loadingView.delegate = nil;
-	[loadingView release];
 	
 	[super dealloc];
 }

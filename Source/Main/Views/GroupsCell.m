@@ -143,11 +143,11 @@
 													 boundsSize.height));
 }
 
-- (void)setGroup:(Group *)group
+- (void)setGroup:(id)group;
 {
-	self.textLabel.text = group.name;
+	self.textLabel.text = @"Todo";
 	
-	self.detailTextLabel.text = (group.expiredCount.integerValue > 0) ?  [group.expiredCount stringValue] : nil;
+	self.detailTextLabel.text = @"Todo";
 	[self setNeedsLayout];
 }
 

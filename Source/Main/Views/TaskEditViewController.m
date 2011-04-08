@@ -1,6 +1,5 @@
 #import "TaskEditViewController.h"
 #import "TaskEditCell.h"
-#import "ChooseGroupViewController.h"
 #import "TaskDatePickerViewController.h"
 #import "TaskContactViewController.h"
 
@@ -13,7 +12,7 @@
 
 @implementation TaskEditViewController
 
-@synthesize taskEditDataSource, editingTextField, keyboardShown, task, editingTextView, group;
+@synthesize taskEditDataSource, editingTextField, keyboardShown, task, editingTextView;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -74,17 +73,10 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
 												 name:UIKeyboardWillHideNotification object:nil];
 	
-	
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TaskAddNotification];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TaskEditNotification];
 	self.taskEditDataSource = [[[TaskEditDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.taskEditDataSource;
 	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.taskEditDataSource.tempTask = (self.task) ? [[self.task copy]autorelease] : [[[Task alloc]init]autorelease];
-	if (self.group.groupId && self.group.groupId.integerValue != NSNotFound) {
-		self.taskEditDataSource.tempTask.groupId = self.group.groupId;
-		self.taskEditDataSource.tempTask.groupName = self.group.name;
-	}
 	self.tableView.sectionFooterHeight = 0.0;
 	self.tableView.sectionHeaderHeight = 12.0;
 	
@@ -93,15 +85,7 @@
 	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:AddContactPlaceholder]];
 	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:TimePlaceholder]];
 	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:AlertsPlaceholder]];
-	[self.taskEditDataSource.content addObject:[NSArray arrayWithObject:GroupPlaceholder]];
 	[self.tableView reloadData];
-}
-#pragma mark -
-#pragma mark BaseLoadingViewCenter Delegate
-
-- (void)baseLoadingViewCenterDidStartForKey:(NSString *)key
-{
-
 }
 
 #pragma mark -
@@ -247,11 +231,7 @@
 		[cell.textField becomeFirstResponder];
 	} else {
 		NSString *placeholder = [self.taskEditDataSource objectForIndexPath:indexPath];
-		if ([placeholder isEqualToString:GroupPlaceholder]) {
-			ChooseGroupViewController *controller = [[[ChooseGroupViewController alloc]initWithNibName:@"ChooseGroupView" bundle:nil]autorelease];
-			controller.task = self.taskEditDataSource.tempTask;
-			[self.navigationController pushViewController:controller animated:TRUE];
-		} else if ([placeholder isEqualToString:TimePlaceholder]) {
+		if ([placeholder isEqualToString:TimePlaceholder]) {
 			TaskDatePickerViewController *controller = [[[TaskDatePickerViewController alloc]initWithNibName:@"TaskDatePickerView" bundle:nil]autorelease];
 			controller.task = self.taskEditDataSource.tempTask;
 			[self.navigationController pushViewController:controller animated:TRUE];
@@ -445,9 +425,9 @@
 	}
 	
 	if (self.task) {
-		[[APIServices sharedAPIServices]updateTask:self.taskEditDataSource.tempTask];
+		// todo
 	} else {
-		[[APIServices sharedAPIServices]addTask:self.taskEditDataSource.tempTask];
+		// todo
 	}
 	[self dismissModalViewControllerAnimated:TRUE];
 }
@@ -472,11 +452,8 @@
 
 - (void)dealloc
 {
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TaskEditNotification];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:TaskAddNotification];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
-	[group release];
 	[editingTextView release];
 	[task release];
 	[editingTextField release];

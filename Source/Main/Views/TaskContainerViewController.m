@@ -33,8 +33,6 @@
 	[self.containerView addSubview:self.containerNavController.view];
 	self.containerNavController.view.frame = self.containerView.bounds;
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(taskEditNotification:) name:TaskEditNotification object:nil];
-	
 	[self refreshTask];
 	
 	[self showDetails];

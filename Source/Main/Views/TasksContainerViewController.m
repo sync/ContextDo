@@ -15,7 +15,7 @@
 
 @implementation TasksContainerViewController
 
-@synthesize containerNavController, tasksViewController, group, containerView, tasksMapViewController;
+@synthesize containerNavController, tasksViewController, containerView, tasksMapViewController;
 @synthesize tasksCalendarViewController, showCloseButton;
 
 #pragma mark -
@@ -25,7 +25,7 @@
 {	
 	[super viewDidLoad];
 	
-	self.title = self.group.name;
+	self.title = @"TODO";
 	
 	self.containerNavController.navigationBarHidden = TRUE;
 	self.containerNavController.toolbarHidden = TRUE;
@@ -37,8 +37,6 @@
 
 - (void)viewDidUnload
 {
-	self.title = self.group.name;
-	
 	[super viewDidUnload];
 	
 	self.containerNavController = nil;
@@ -48,7 +46,6 @@
 {
 	if (!tasksViewController) {
 		tasksViewController = [[TasksViewController alloc]initWithNibName:@"TasksView" bundle:nil];
-		tasksViewController.group = self.group;
 		tasksViewController.mainNavController = self.navigationController;
 	}
 	
@@ -59,7 +56,6 @@
 {
 	if (!tasksMapViewController) {
 		tasksMapViewController = [[TasksMapViewController alloc]initWithNibName:@"TasksMapView" bundle:nil];
-		tasksMapViewController.group = self.group;
 		tasksMapViewController.mainNavController = self.navigationController;
 	}
 	
@@ -70,7 +66,6 @@
 {
 	if (!tasksCalendarViewController) {
 		tasksCalendarViewController = [[TasksCalendarViewController alloc]initWithNibName:nil bundle:nil];
-		tasksCalendarViewController.group = self.group;
 		tasksCalendarViewController.mainNavController = self.navigationController;
 	}
 	
@@ -165,7 +160,6 @@
 - (void)addTask
 {
 	TaskEditViewController *controller = [[[TaskEditViewController alloc]initWithNibName:@"TaskEditView" bundle:nil]autorelease];
-	controller.group = self.group;
 	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
 	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
@@ -181,7 +175,6 @@
 - (void)dealloc {
 	[tasksCalendarViewController release];
 	[containerView release];
-	[group release];
 	[tasksViewController release];
 	[tasksMapViewController release];
 	[containerNavController release];
