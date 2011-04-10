@@ -114,7 +114,6 @@
 		243A3F6412E4968600A6D402 /* table_arrow_loc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A3F5C12E4968600A6D402 /* table_arrow_loc@2x.png */; };
 		243A3FA412E49CD100A6D402 /* icon_location.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A3FA012E49CD100A6D402 /* icon_location.png */; };
 		243A3FA512E49CD100A6D402 /* icon_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A3FA112E49CD100A6D402 /* icon_location@2x.png */; };
-		243A401E12E4A89C00A6D402 /* CTXDODarkTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A401D12E4A89C00A6D402 /* CTXDODarkTextField.m */; };
 		243A46A712E5725300A6D402 /* btn_std_login_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A46A312E5725300A6D402 /* btn_std_login_off.png */; };
 		243A46A812E5725300A6D402 /* btn_std_login_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A46A412E5725300A6D402 /* btn_std_login_off@2x.png */; };
 		243A46A912E5725300A6D402 /* btn_std_login_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 243A46A512E5725300A6D402 /* btn_std_login_touch.png */; };
@@ -279,8 +278,6 @@
 		24567C8912F0265B0004189D /* refresh11.png in Resources */ = {isa = PBXBuildFile; fileRef = 24567C7F12F0265B0004189D /* refresh11.png */; };
 		24567C8C12F026670004189D /* refresh_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 24567C8A12F026670004189D /* refresh_bg.png */; };
 		24567C8D12F026670004189D /* refresh_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24567C8B12F026670004189D /* refresh_bg@2x.png */; };
-		24567E1912F04A740004189D /* CTXDORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24567E1812F04A740004189D /* CTXDORefreshTableHeaderView.m */; };
-		24567E2F12F04C650004189D /* CTXDOTableViewRefreshController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24567E2E12F04C650004189D /* CTXDOTableViewRefreshController.m */; };
 		24567E7F12F04FDD0004189D /* refresh_bg_middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 24567E7C12F04FDD0004189D /* refresh_bg_middle.png */; };
 		24567E8012F04FDD0004189D /* refresh_bg_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 24567E7D12F04FDD0004189D /* refresh_bg_bottom.png */; };
 		24567E8112F04FDD0004189D /* refresh_bg_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 24567E7E12F04FDD0004189D /* refresh_bg_top.png */; };
@@ -487,8 +484,6 @@
 		243A3F5C12E4968600A6D402 /* table_arrow_loc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table_arrow_loc@2x.png"; sourceTree = "<group>"; };
 		243A3FA012E49CD100A6D402 /* icon_location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_location.png; sourceTree = "<group>"; };
 		243A3FA112E49CD100A6D402 /* icon_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_location@2x.png"; sourceTree = "<group>"; };
-		243A401C12E4A89C00A6D402 /* CTXDODarkTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDODarkTextField.h; sourceTree = "<group>"; };
-		243A401D12E4A89C00A6D402 /* CTXDODarkTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDODarkTextField.m; sourceTree = "<group>"; };
 		243A46A312E5725300A6D402 /* btn_std_login_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_std_login_off.png; sourceTree = "<group>"; };
 		243A46A412E5725300A6D402 /* btn_std_login_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_std_login_off@2x.png"; sourceTree = "<group>"; };
 		243A46A512E5725300A6D402 /* btn_std_login_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_std_login_touch.png; sourceTree = "<group>"; };
@@ -670,10 +665,6 @@
 		24567C7F12F0265B0004189D /* refresh11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh11.png; sourceTree = "<group>"; };
 		24567C8A12F026670004189D /* refresh_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh_bg.png; sourceTree = "<group>"; };
 		24567C8B12F026670004189D /* refresh_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh_bg@2x.png"; sourceTree = "<group>"; };
-		24567E1712F04A740004189D /* CTXDORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDORefreshTableHeaderView.h; sourceTree = "<group>"; };
-		24567E1812F04A740004189D /* CTXDORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDORefreshTableHeaderView.m; sourceTree = "<group>"; };
-		24567E2D12F04C650004189D /* CTXDOTableViewRefreshController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOTableViewRefreshController.h; sourceTree = "<group>"; };
-		24567E2E12F04C650004189D /* CTXDOTableViewRefreshController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOTableViewRefreshController.m; sourceTree = "<group>"; };
 		24567E7C12F04FDD0004189D /* refresh_bg_middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh_bg_middle.png; sourceTree = "<group>"; };
 		24567E7D12F04FDD0004189D /* refresh_bg_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh_bg_bottom.png; sourceTree = "<group>"; };
 		24567E7E12F04FDD0004189D /* refresh_bg_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh_bg_top.png; sourceTree = "<group>"; };
@@ -893,15 +884,6 @@
 			name = "Table header";
 			sourceTree = "<group>";
 		};
-		243A40F712E4B7D100A6D402 /* TextFields */ = {
-			isa = PBXGroup;
-			children = (
-				243A401C12E4A89C00A6D402 /* CTXDODarkTextField.h */,
-				243A401D12E4A89C00A6D402 /* CTXDODarkTextField.m */,
-			);
-			name = TextFields;
-			sourceTree = "<group>";
-		};
 		243A46B012E573D000A6D402 /* UIButtons */ = {
 			isa = PBXGroup;
 			children = (
@@ -967,17 +949,6 @@
 				245674D212EFC3F40004189D /* CTXDoSlider.m */,
 			);
 			name = UISliders;
-			sourceTree = "<group>";
-		};
-		24567E1A12F04A960004189D /* Pull to Refresh */ = {
-			isa = PBXGroup;
-			children = (
-				24567E1712F04A740004189D /* CTXDORefreshTableHeaderView.h */,
-				24567E1812F04A740004189D /* CTXDORefreshTableHeaderView.m */,
-				24567E2D12F04C650004189D /* CTXDOTableViewRefreshController.h */,
-				24567E2E12F04C650004189D /* CTXDOTableViewRefreshController.m */,
-			);
-			name = "Pull to Refresh";
 			sourceTree = "<group>";
 		};
 		2489CAA112BE102F00C1A58A /* Tasks */ = {
@@ -1500,10 +1471,8 @@
 		3A57FFA811FFB24F00248D1D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				24567E1A12F04A960004189D /* Pull to Refresh */,
 				2456745B12EFBC030004189D /* UISliders */,
 				243A46B012E573D000A6D402 /* UIButtons */,
-				243A40F712E4B7D100A6D402 /* TextFields */,
 				243A3C1E12E450DC00A6D402 /* Table header */,
 				2489CAC512BE185400C1A58A /* Cells */,
 				3A034D43125D629A00F49FA6 /* Settings */,
@@ -1897,7 +1866,6 @@
 				243A3C2112E4511500A6D402 /* CTXDOTableHeaderView.m in Sources */,
 				243A3D5B12E46A4F00A6D402 /* GroupsCell.m in Sources */,
 				243A3DA112E4748B00A6D402 /* CellBackgroundView.m in Sources */,
-				243A401E12E4A89C00A6D402 /* CTXDODarkTextField.m in Sources */,
 				243A46AF12E573C100A6D402 /* CTXDOLoginButton.m in Sources */,
 				243A536E12E676B700A6D402 /* TasksContainerViewController.m in Sources */,
 				2448D18612E82D93005EEEDA /* TaskEditViewController.m in Sources */,
@@ -1929,8 +1897,6 @@
 				2456745E12EFBC570004189D /* CTXDOButton.m in Sources */,
 				245674D312EFC3F40004189D /* CTXDoSlider.m in Sources */,
 				2456752D12EFC9630004189D /* SettingsSliderView.m in Sources */,
-				24567E1912F04A740004189D /* CTXDORefreshTableHeaderView.m in Sources */,
-				24567E2F12F04C650004189D /* CTXDOTableViewRefreshController.m in Sources */,
 				245680FF12F072730004189D /* TasksCalendarCell.m in Sources */,
 				24FA42F71302F7BD001B1972 /* CTXDOBlueButton.m in Sources */,
 			);
@@ -1991,7 +1957,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -2010,7 +1976,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;

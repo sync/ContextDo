@@ -1,12 +1,12 @@
 #import <Foundation/Foundation.h>
-#import "BaseTableViewController.h"
+#import "BaseViewController.h"
 #import "CTXDOSegmentControl.h"
 #import "TaskScheduleViewController.h"
 #import "TaskDirectionViewController.h"
 #import "TaskDetailsViewController.h"
 #import "CTXDONavigationArrowsControl.h"
 
-@interface TaskContainerViewController : BaseTableViewController {
+@interface TaskContainerViewController : BaseViewController {
 
 }
 

@@ -10,3 +10,4 @@ dependencies:
   - MapKit-Route-Directions: 1.0
   - scifihifi-iphone: 1.0
   - Gallagher: 1.0
+  - TITokenFieldView: 1.0
