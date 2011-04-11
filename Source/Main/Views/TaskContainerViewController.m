@@ -41,7 +41,7 @@
 - (void)taskEditNotification:(NSNotification *)notification
 {
 	Task *editedTasks = [notification object];
-	if ([editedTasks.taskId isEqual:self.task.taskId]) {
+	if ([editedTasks isEqual:self.task]) {
 		self.task = editedTasks;
 		[self refreshTask];
 	}

@@ -3,46 +3,20 @@
 
 @implementation Task
 
-@synthesize taskId, action, contactDetail, contactName, dueAt, location, name;
-@synthesize updatedAt, createdAt, groupId, latitude, longitude, groupName, completedAt, info;
-@synthesize sourceName, sourceId, syncId;
-
-- (id)init
++ (Task *)taskWithName:(NSString *)aName
+              latitude:(CLLocationDegrees)aLatitude 
+             longitude:(CLLocationDegrees)aLongitude
 {
-	self = [super init];
-	if (self != nil) {
-		NSDate *now = [NSDate date];
-		self.createdAt = now;
-		self.updatedAt = now;
-	}
-	return self;
-}
-
-
-+ (Task *)taskWithId:(NSNumber *)aTaskId
-				name:(NSString *)aName
-			latitude:(CLLocationDegrees)aLatitude 
-		   longitude:(CLLocationDegrees)aLongitude
-{
-	if (!aTaskId || !aName) {
+	if (!aName) {
 		return nil;
 	}
 	
 	Task *task = [[[Task alloc]init]autorelease];
-	task.taskId = aTaskId;
 	task.name = aName;
 	task.latitude = [NSNumber numberWithDouble:aLatitude];
 	task.longitude = [NSNumber numberWithDouble:aLongitude];
 	
 	return task;
-}
-
-- (NSNumber *)taskId
-{
-	if (!taskId && syncId) {
-		return [NSNumber numberWithInteger:-syncId.integerValue];
-	}
-	return taskId;
 }
 
 - (CLLocationDistance)distance
@@ -104,11 +78,6 @@
 {
 	return [NSString stringWithFormat:@"%f,%f", self.latitude.doubleValue, self.longitude.doubleValue];
 	
-}
-
-- (BOOL)editedToday
-{
-	return (!self.updatedAt && [self.updatedAt isToday]);
 }
 
 @end

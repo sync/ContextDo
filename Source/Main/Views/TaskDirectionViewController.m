@@ -51,8 +51,7 @@
             startLocation = self.mapView.userLocation.location;
         }
         
-        self.currentLocationTask = [Task taskWithId:[NSNumber numberWithInteger:NSNotFound]
-                                               name:CURRENT_LOCATION_PLACEHOLDER
+        self.currentLocationTask = [Task taskWithName:CURRENT_LOCATION_PLACEHOLDER
                                            latitude:startLocation.coordinate.latitude
                                           longitude:startLocation.coordinate.longitude];
         
@@ -73,15 +72,15 @@
 
 - (TaskAnnotation *)annotationForTask:(Task *)aTask
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && task.taskId == %@", [TaskAnnotation class], aTask.taskId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && task == %@", [TaskAnnotation class], aTask];
     NSArray *annotations = [self.mapView.annotations filteredArrayUsingPredicate:predicate];
     return (annotations.count > 0) ? [annotations objectAtIndex:0] : nil;
 }
 
 - (void)clearMapView
 {
-    NSArray *tasks = [NSArray arrayWithObjects:self.currentLocationTask.taskId, self.task.taskId, nil];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && not task.taskId in %@", [TaskAnnotation class], tasks];
+    NSArray *tasks = [NSArray arrayWithObjects:self.currentLocationTask, self.task, nil];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && not task in %@", [TaskAnnotation class], tasks];
     NSArray *annotations = [self.mapView.annotations filteredArrayUsingPredicate:predicate];
     [self.mapView removeAnnotations:annotations];
 }

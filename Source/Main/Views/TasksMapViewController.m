@@ -68,14 +68,14 @@
 
 - (TaskAnnotation *)annotationForTask:(Task *)aTask
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && task.taskId == %@", [TaskAnnotation class], aTask.taskId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && task == %@", [TaskAnnotation class], aTask];
     NSArray *annotations = [self.mapView.annotations filteredArrayUsingPredicate:predicate];
     return (annotations.count > 0) ? [annotations objectAtIndex:0] : nil;
 }
 
 - (void)clearMapView
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && not task.taskId in %@ && task.taskId != %@", [TaskAnnotation class], [self.tasks valueForKey:@"taskId"], [NSNumber numberWithInteger:NSNotFound]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class = %@ && not task in %@ && task != %@", [TaskAnnotation class], self.tasks, [NSNumber numberWithInteger:NSNotFound]];
     NSArray *annotations = [self.mapView.annotations filteredArrayUsingPredicate:predicate];
     [self.mapView removeAnnotations:annotations];
 }
@@ -123,7 +123,7 @@
 
 - (void)addAllAnnotationsTasksIncludingToday:(BOOL)includingToday
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"not taskId in %@", [self.todayTasks valueForKey:@"taskId"]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"not self in %@", self.tasks];
     NSArray *notTodayTasks = [self.tasks filteredArrayUsingPredicate:predicate];
     
     NSArray *allTasks = (includingToday || self.todayTasks.count == 0) ? self.tasks : notTodayTasks;
@@ -137,7 +137,7 @@
 	CLLocationDegrees minLat = 90.0f;
 	CLLocationDegrees minLon = 180.0f;
 	for (Task *task in allTasks) {
-		if (task.taskId.integerValue != NSNotFound) {
+		if (task) { /* todo */
 			CLLocation *location = [[[CLLocation alloc]initWithLatitude:task.latitude.doubleValue longitude:task.longitude.doubleValue]autorelease];
 			TaskAnnotation *annotation = [self annotationForTask:task];
             if (!annotation) {
@@ -191,8 +191,7 @@
 		} else {
 			startLocation = self.mapView.userLocation.location;
 		}
-		Task *currentLocation = [Task taskWithId:[NSNumber numberWithInteger:NSNotFound]
-											name:CURRENT_LOCATION_PLACEHOLDER
+		Task *currentLocation = [Task taskWithName:CURRENT_LOCATION_PLACEHOLDER
 										latitude:startLocation.coordinate.latitude
 									   longitude:startLocation.coordinate.longitude];
 		[tasksToDirections insertObject:currentLocation atIndex:0];

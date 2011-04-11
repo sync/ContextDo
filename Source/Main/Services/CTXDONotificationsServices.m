@@ -3,7 +3,7 @@
 @interface CTXDONotificationsServices ()
 
 - (NSDictionary *)userInfoForTask:(Task *)task today:(BOOL)today;
-- (UILocalNotification *)hasLocalNotificationForTaskId:(NSNumber *)taskId today:(BOOL)today;
+- (UILocalNotification *)hasLocalNotificationForTask:(Task *)task today:(BOOL)today;
 - (Task *)taskForUserInfo:(NSDictionary *)userInfo;
 - (void)restoreTodayTasksfromCached;
 - (void)restoreWithinTasksFromCached;
@@ -65,7 +65,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 	return notificationTask;
 }
 
-- (UILocalNotification *)hasLocalNotificationForTaskId:(NSNumber *)taskId today:(BOOL)today
+- (UILocalNotification *)hasLocalNotificationForTask:(Task *)task today:(BOOL)today
 {
 	NSArray *notifications =  [[UIApplication sharedApplication]scheduledLocalNotifications];
 	for (UILocalNotification *notification in notifications) {
@@ -74,9 +74,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 			return nil;
 		}
 		
-		NSNumber *notificationTaskId = notificationTask.taskId;
 		BOOL notificationCurrentToday = [[notification.userInfo valueForKey:@"today"]boolValue];
-		if ([taskId isEqualToNumber:notificationTaskId] && today == notificationCurrentToday) {
+		if ([task isEqual:notificationTask] && today == notificationCurrentToday) {
 			return notification;
 		}
 	}
@@ -116,7 +115,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 		Task *task = [closeTasks objectAtIndex:0];
 		
 		if ([device respondsToSelector:@selector(isMultitaskingSupported)] && device.isMultitaskingSupported) {
-			UILocalNotification *previousNotification = [self hasLocalNotificationForTaskId:task.taskId today:TRUE];
+			UILocalNotification *previousNotification = [self hasLocalNotificationForTask:task today:TRUE];
 			if (previousNotification) {
 				[[UIApplication sharedApplication]cancelLocalNotification:previousNotification];
 			}
@@ -174,7 +173,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(CTXDONotificationsServices);
 	
 	for (Task *task in dueTasks) {
 		if ([device respondsToSelector:@selector(isMultitaskingSupported)] && device.isMultitaskingSupported) {
-			UILocalNotification *previousNotification = [self hasLocalNotificationForTaskId:task.taskId today:TRUE];
+			UILocalNotification *previousNotification = [self hasLocalNotificationForTask:task today:TRUE];
 			if (previousNotification) {
 				[[UIApplication sharedApplication]cancelLocalNotification:previousNotification];
 			}

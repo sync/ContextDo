@@ -418,8 +418,7 @@
 	[self endEditing];
 	
 	if (self.taskEditDataSource.tempTask.name.length == 0 ||
-		self.taskEditDataSource.tempTask.location.length == 0 ||
-		!self.taskEditDataSource.tempTask.groupId) {
+		self.taskEditDataSource.tempTask.location.length == 0) {
 		// todo error msg
 		return;
 	}

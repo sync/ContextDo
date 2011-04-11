@@ -59,12 +59,16 @@
 		245674D312EFC3F40004189D /* CTXDoSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 245674D212EFC3F40004189D /* CTXDoSlider.m */; };
 		2456752D12EFC9630004189D /* SettingsSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456752C12EFC9630004189D /* SettingsSliderView.m */; };
 		245680FF12F072730004189D /* TasksCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 245680FE12F072730004189D /* TasksCalendarCell.m */; };
+		246BA8251352B82E0066AD19 /* DatabaseServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 246BA8241352B82E0066AD19 /* DatabaseServices.m */; };
+		246BA8271352BA960066AD19 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 246BA8261352BA960066AD19 /* CoreData.framework */; };
+		246BA82A1352BED50066AD19 /* Database.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 246BA8281352BED40066AD19 /* Database.xcdatamodeld */; };
+		246BA82F1352C37E0066AD19 /* _Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 246BA82D1352C37E0066AD19 /* _Task.m */; };
+		246BA8331352C3BD0066AD19 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 246BA8311352C3BC0066AD19 /* Task.m */; };
 		2481FF5F12FF3E92003EEAB6 /* libKitDeps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FF5E12FF3E92003EEAB6 /* libKitDeps.a */; };
 		2481FF9B12FF477F003EEAB6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FF9A12FF477F003EEAB6 /* MapKit.framework */; };
 		2481FFB112FF4874003EEAB6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FFB012FF4873003EEAB6 /* MessageUI.framework */; };
 		248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921D3128EE15E00DC9712 /* MainWindow.xib */; };
 		248921ED128EE27500DC9712 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248921EC128EE27500DC9712 /* SettingsView.xib */; };
-		2489CA7612BDFCC500C1A58A /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CA7512BDFCC500C1A58A /* Task.m */; };
 		2489CAA412BE10E300C1A58A /* TasksDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CAA312BE10E300C1A58A /* TasksDataSource.m */; };
 		2489CADB12BE1D5E00C1A58A /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CADA12BE1D5E00C1A58A /* TasksViewController.m */; };
 		2489CADD12BE1D6700C1A58A /* TasksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2489CADC12BE1D6700C1A58A /* TasksView.xib */; };
@@ -193,13 +197,19 @@
 		2456752C12EFC9630004189D /* SettingsSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsSliderView.m; sourceTree = "<group>"; };
 		245680FD12F072730004189D /* TasksCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksCalendarCell.h; sourceTree = "<group>"; };
 		245680FE12F072730004189D /* TasksCalendarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksCalendarCell.m; sourceTree = "<group>"; };
+		246BA8231352B82E0066AD19 /* DatabaseServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseServices.h; sourceTree = "<group>"; };
+		246BA8241352B82E0066AD19 /* DatabaseServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseServices.m; sourceTree = "<group>"; };
+		246BA8261352BA960066AD19 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		246BA8291352BED50066AD19 /* Database01.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Database01.xcdatamodel; sourceTree = "<group>"; };
+		246BA82D1352C37E0066AD19 /* _Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Task.m; sourceTree = "<group>"; };
+		246BA82E1352C37E0066AD19 /* _Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Task.h; sourceTree = "<group>"; };
+		246BA8311352C3BC0066AD19 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
+		246BA8321352C3BC0066AD19 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		2481FF5E12FF3E92003EEAB6 /* libKitDeps.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libKitDeps.a; sourceTree = SOURCE_ROOT; };
 		2481FF9A12FF477F003EEAB6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2481FFB012FF4873003EEAB6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		248921D3128EE15E00DC9712 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainWindow.xib; path = Views/MainWindow.xib; sourceTree = "<group>"; };
 		248921EC128EE27500DC9712 /* SettingsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
-		2489CA7412BDFCC500C1A58A /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
-		2489CA7512BDFCC500C1A58A /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		2489CAA212BE10E300C1A58A /* TasksDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksDataSource.h; sourceTree = "<group>"; };
 		2489CAA312BE10E300C1A58A /* TasksDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksDataSource.m; sourceTree = "<group>"; };
 		2489CAD912BE1D5E00C1A58A /* TasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksViewController.h; sourceTree = "<group>"; };
@@ -261,6 +271,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				246BA8271352BA960066AD19 /* CoreData.framework in Frameworks */,
 				2481FFB112FF4874003EEAB6 /* MessageUI.framework in Frameworks */,
 				2481FF9B12FF477F003EEAB6 /* MapKit.framework in Frameworks */,
 				2481FF5F12FF3E92003EEAB6 /* libKitDeps.a in Frameworks */,
@@ -443,6 +454,24 @@
 			name = UISliders;
 			sourceTree = "<group>";
 		};
+		246BA8221352B8080066AD19 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				246BA8231352B82E0066AD19 /* DatabaseServices.h */,
+				246BA8241352B82E0066AD19 /* DatabaseServices.m */,
+			);
+			name = Database;
+			sourceTree = "<group>";
+		};
+		246BA8301352C3820066AD19 /* Machine */ = {
+			isa = PBXGroup;
+			children = (
+				246BA82E1352C37E0066AD19 /* _Task.h */,
+				246BA82D1352C37E0066AD19 /* _Task.m */,
+			);
+			name = Machine;
+			sourceTree = "<group>";
+		};
 		2489CAA112BE102F00C1A58A /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
@@ -608,6 +637,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				246BA8261352BA960066AD19 /* CoreData.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				2481FFB012FF4873003EEAB6 /* MessageUI.framework */,
@@ -646,6 +676,7 @@
 				3A57FED811FFB24F00248D1D /* Images */,
 				3A57FED511FFB24F00248D1D /* Info.plist */,
 				3A035468125FFFBB00F49FA6 /* Entitlements.plist */,
+				246BA8281352BED40066AD19 /* Database.xcdatamodeld */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -691,8 +722,9 @@
 		3A57FFA411FFB24F00248D1D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2489CA7412BDFCC500C1A58A /* Task.h */,
-				2489CA7512BDFCC500C1A58A /* Task.m */,
+				246BA8301352C3820066AD19 /* Machine */,
+				246BA8321352C3BC0066AD19 /* Task.h */,
+				246BA8311352C3BC0066AD19 /* Task.m */,
 				24E44FC912EC0E5700F08B7E /* Annotations */,
 			);
 			path = Models;
@@ -701,6 +733,7 @@
 		3A57FFA611FFB24F00248D1D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				246BA8221352B8080066AD19 /* Database */,
 				2456726512EF50180004189D /* Notifications */,
 			);
 			path = Services;
@@ -843,7 +876,6 @@
 				3A57000F11FFB24F00248D1D /* AppDelegate.m in Sources */,
 				3A57001011FFB24F00248D1D /* main.m in Sources */,
 				3A034D4B125D62DD00F49FA6 /* SettingsViewController.m in Sources */,
-				2489CA7612BDFCC500C1A58A /* Task.m in Sources */,
 				2489CAA412BE10E300C1A58A /* TasksDataSource.m in Sources */,
 				2489CADB12BE1D5E00C1A58A /* TasksViewController.m in Sources */,
 				243A35D012E3DC4300A6D402 /* DefaultStyleSheet.m in Sources */,
@@ -883,6 +915,10 @@
 				2456752D12EFC9630004189D /* SettingsSliderView.m in Sources */,
 				245680FF12F072730004189D /* TasksCalendarCell.m in Sources */,
 				24FA42F71302F7BD001B1972 /* CTXDOBlueButton.m in Sources */,
+				246BA8251352B82E0066AD19 /* DatabaseServices.m in Sources */,
+				246BA82A1352BED50066AD19 /* Database.xcdatamodeld in Sources */,
+				246BA82F1352C37E0066AD19 /* _Task.m in Sources */,
+				246BA8331352C3BD0066AD19 /* Task.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -993,6 +1029,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		246BA8281352BED40066AD19 /* Database.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				246BA8291352BED50066AD19 /* Database01.xcdatamodel */,
+			);
+			currentVersion = 246BA8291352BED50066AD19 /* Database01.xcdatamodel */;
+			path = Database.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
 }
