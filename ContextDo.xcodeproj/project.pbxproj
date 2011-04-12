@@ -72,6 +72,9 @@
 		2489CAA412BE10E300C1A58A /* TasksDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CAA312BE10E300C1A58A /* TasksDataSource.m */; };
 		2489CADB12BE1D5E00C1A58A /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CADA12BE1D5E00C1A58A /* TasksViewController.m */; };
 		2489CADD12BE1D6700C1A58A /* TasksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2489CADC12BE1D6700C1A58A /* TasksView.xib */; };
+		248F21E81353CB2C00D9475C /* TasksScrollContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 248F21E71353CB2C00D9475C /* TasksScrollContainerViewController.m */; };
+		248F21F31353CBBD00D9475C /* ForwardTouchesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248F21F21353CBBD00D9475C /* ForwardTouchesView.m */; };
+		248F21F51353D05C00D9475C /* TasksScrollContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248F21F41353D05B00D9475C /* TasksScrollContainerView.xib */; };
 		2490FD9312E34D2300F56B39 /* titlebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FD9112E34D2300F56B39 /* titlebar.png */; };
 		2490FD9412E34D2300F56B39 /* titlebar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FD9212E34D2300F56B39 /* titlebar@2x.png */; };
 		249113D112EC4D4B009191BA /* CTXDONavigationArrowsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 249113D012EC4D4B009191BA /* CTXDONavigationArrowsControl.m */; };
@@ -215,6 +218,11 @@
 		2489CAD912BE1D5E00C1A58A /* TasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksViewController.h; sourceTree = "<group>"; };
 		2489CADA12BE1D5E00C1A58A /* TasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksViewController.m; sourceTree = "<group>"; };
 		2489CADC12BE1D6700C1A58A /* TasksView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TasksView.xib; sourceTree = "<group>"; };
+		248F21E61353CB2C00D9475C /* TasksScrollContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TasksScrollContainerViewController.h; sourceTree = "<group>"; };
+		248F21E71353CB2C00D9475C /* TasksScrollContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksScrollContainerViewController.m; sourceTree = "<group>"; };
+		248F21F11353CBBD00D9475C /* ForwardTouchesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForwardTouchesView.h; path = ../../../../../../Self/DeliciousPageControl/DeliciousPageControl/ForwardTouchesView.h; sourceTree = "<group>"; };
+		248F21F21353CBBD00D9475C /* ForwardTouchesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForwardTouchesView.m; path = ../../../../../../Self/DeliciousPageControl/DeliciousPageControl/ForwardTouchesView.m; sourceTree = "<group>"; };
+		248F21F41353D05B00D9475C /* TasksScrollContainerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TasksScrollContainerView.xib; sourceTree = "<group>"; };
 		2490FD9112E34D2300F56B39 /* titlebar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = titlebar.png; sourceTree = "<group>"; };
 		2490FD9212E34D2300F56B39 /* titlebar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "titlebar@2x.png"; sourceTree = "<group>"; };
 		249113CF12EC4D4B009191BA /* CTXDONavigationArrowsControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDONavigationArrowsControl.h; sourceTree = "<group>"; };
@@ -504,6 +512,18 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
+		248F21E51353CA2F00D9475C /* Tasks Scroll Container */ = {
+			isa = PBXGroup;
+			children = (
+				248F21F11353CBBD00D9475C /* ForwardTouchesView.h */,
+				248F21F21353CBBD00D9475C /* ForwardTouchesView.m */,
+				248F21E61353CB2C00D9475C /* TasksScrollContainerViewController.h */,
+				248F21E71353CB2C00D9475C /* TasksScrollContainerViewController.m */,
+				248F21F41353D05B00D9475C /* TasksScrollContainerView.xib */,
+			);
+			name = "Tasks Scroll Container";
+			sourceTree = "<group>";
+		};
 		24ADA8C412C84C97000BE62C /* Edition */ = {
 			isa = PBXGroup;
 			children = (
@@ -748,6 +768,7 @@
 				2489CAC512BE185400C1A58A /* Cells */,
 				3A034D43125D629A00F49FA6 /* Settings */,
 				24E4496712EBA52600F08B7E /* Info */,
+				248F21E51353CA2F00D9475C /* Tasks Scroll Container */,
 				2489CAA112BE102F00C1A58A /* Tasks */,
 				24E44BF812EBD5D800F08B7E /* Task */,
 			);
@@ -863,6 +884,7 @@
 				24000E55134C918C002C6601 /* signinHello@2x.png in Resources */,
 				24000E56134C918D002C6601 /* signinSeparator.png in Resources */,
 				24000E57134C918D002C6601 /* TapkuLibrary.bundle in Resources */,
+				248F21F51353D05C00D9475C /* TasksScrollContainerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -919,6 +941,8 @@
 				246BA82A1352BED50066AD19 /* Database.xcdatamodeld in Sources */,
 				246BA82F1352C37E0066AD19 /* _Task.m in Sources */,
 				246BA8331352C3BD0066AD19 /* Task.m in Sources */,
+				248F21E81353CB2C00D9475C /* TasksScrollContainerViewController.m in Sources */,
+				248F21F31353CBBD00D9475C /* ForwardTouchesView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

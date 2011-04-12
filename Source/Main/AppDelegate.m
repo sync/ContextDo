@@ -36,7 +36,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
     [FacebookServices sharedFacebookServices].facebookApplicationId = FacebookApplicationId;
 	
 	// Add the navigation controller's view to the window and display.
-    [window addSubview:self.navigationController.view];
+    self.window.rootViewController = self.navigationController;
     [window makeKeyAndVisible];
 	
 	[self.navigationController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
