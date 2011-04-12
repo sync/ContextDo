@@ -13,7 +13,7 @@
 #define LeftRightDiff 12.0
 #define PageWidth 255.0
 #define PagesDiff 24.0
-#define PageHeight 393.0
+#define PageHeight 357.0
 #define TopDiff 0.0
     
     self.scrollView.contentSize = CGSizeMake(2 * LeftRightDiff + 3 * PageWidth + 2 * PagesDiff, PageHeight);
