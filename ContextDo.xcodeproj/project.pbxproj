@@ -110,6 +110,8 @@
 		24E5BBF21389F717008D10A2 /* 06-magnify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BBF01389F717008D10A2 /* 06-magnify@2x.png */; };
 		24E5BBF51389F72F008D10A2 /* 15-tags.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BBF31389F72F008D10A2 /* 15-tags.png */; };
 		24E5BBF61389F72F008D10A2 /* 15-tags@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BBF41389F72F008D10A2 /* 15-tags@2x.png */; };
+		24E5BC65138A0314008D10A2 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BC63138A0314008D10A2 /* calendar.png */; };
+		24E5BC66138A0314008D10A2 /* calendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BC64138A0314008D10A2 /* calendar@2x.png */; };
 		24FA42F71302F7BD001B1972 /* CTXDOBlueButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FA42F61302F7BA001B1972 /* CTXDOBlueButton.m */; };
 		3A034D4B125D62DD00F49FA6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A034D4A125D62DD00F49FA6 /* SettingsViewController.m */; };
 		3A035469125FFFBB00F49FA6 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A035468125FFFBB00F49FA6 /* Entitlements.plist */; };
@@ -287,6 +289,8 @@
 		24E5BBF01389F717008D10A2 /* 06-magnify@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify@2x.png"; sourceTree = "<group>"; };
 		24E5BBF31389F72F008D10A2 /* 15-tags.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "15-tags.png"; sourceTree = "<group>"; };
 		24E5BBF41389F72F008D10A2 /* 15-tags@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "15-tags@2x.png"; sourceTree = "<group>"; };
+		24E5BC63138A0314008D10A2 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
+		24E5BC64138A0314008D10A2 /* calendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar@2x.png"; sourceTree = "<group>"; };
 		24FA42F51302F7B9001B1972 /* CTXDOBlueButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOBlueButton.h; sourceTree = "<group>"; };
 		24FA42F61302F7BA001B1972 /* CTXDOBlueButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOBlueButton.m; sourceTree = "<group>"; };
 		3A034D49125D62DD00F49FA6 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -682,6 +686,13 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		24E5BBFD1389FF5D008D10A2 /* External */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -756,6 +767,8 @@
 				24E5BBF01389F717008D10A2 /* 06-magnify@2x.png */,
 				24E5BBF31389F72F008D10A2 /* 15-tags.png */,
 				24E5BBF41389F72F008D10A2 /* 15-tags@2x.png */,
+				24E5BC63138A0314008D10A2 /* calendar.png */,
+				24E5BC64138A0314008D10A2 /* calendar@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -763,6 +776,7 @@
 		3A57FEDC11FFB24F00248D1D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				24E5BBFD1389FF5D008D10A2 /* External */,
 				242C910E12FD08ED00F557AA /* Kits */,
 				3A57FFA011FFB24F00248D1D /* Main */,
 				3A57002D11FFB2AC00248D1D /* Other */,
@@ -941,6 +955,8 @@
 				24E5BBF21389F717008D10A2 /* 06-magnify@2x.png in Resources */,
 				24E5BBF51389F72F008D10A2 /* 15-tags.png in Resources */,
 				24E5BBF61389F72F008D10A2 /* 15-tags@2x.png in Resources */,
+				24E5BC65138A0314008D10A2 /* calendar.png in Resources */,
+				24E5BC66138A0314008D10A2 /* calendar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

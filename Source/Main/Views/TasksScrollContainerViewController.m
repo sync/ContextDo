@@ -18,6 +18,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)slideFrameDown;
 - (void)slideFrame:(BOOL)up;
 - (void)dismissKeyboard;
+- (void)updateTitle;
 
 @end
 
@@ -140,16 +141,16 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 {
     [super setupNavigationBar];
     
-    UIButton *tagButton = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];
-	UIImage *tagImage = [UIImage imageNamed:@"15-tags.png"];
-	[tagButton setImage:tagImage forState:UIControlStateNormal];
-	tagButton.frame = CGRectMake(tagButton.frame.origin.x, 
-							  tagButton.frame.origin.y, 
-							  tagImage.size.width + 10.0, 
-							  tagImage.size.height);
-	[tagButton addTarget:self action:@selector(tagsTouched) forControlEvents:UIControlEventTouchUpInside];
-	UIBarButtonItem *tagItem = [[[UIBarButtonItem alloc]initWithCustomView:tagButton]autorelease];
-    self.navigationItem.leftBarButtonItem = tagItem;
+    UIButton *calendarButton = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];
+	UIImage *calendarImage = [UIImage imageNamed:@"calendar.png"];
+	[calendarButton setImage:calendarImage forState:UIControlStateNormal];
+	calendarButton.frame = CGRectMake(calendarButton.frame.origin.x, 
+							  calendarButton.frame.origin.y, 
+							  calendarImage.size.width + 10.0, 
+							  calendarImage.size.height);
+	[calendarButton addTarget:self action:@selector(calendarTouched) forControlEvents:UIControlEventTouchUpInside];
+	UIBarButtonItem *calendarItem = [[[UIBarButtonItem alloc]initWithCustomView:calendarButton]autorelease];
+    self.navigationItem.leftBarButtonItem = calendarItem;
     
     UIButton *searchButton = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];
 	UIImage *searchImage = [UIImage imageNamed:@"06-magnify.png"];
@@ -161,6 +162,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	[searchButton addTarget:self action:@selector(searchTouched) forControlEvents:UIControlEventTouchUpInside];
 	UIBarButtonItem *searchItem = [[[UIBarButtonItem alloc]initWithCustomView:searchButton]autorelease];
     self.navigationItem.rightBarButtonItem = searchItem;
+    
+    [self updateTitle];
 }
 
 #pragma mark - ScrollView delegate
@@ -170,6 +173,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	if (self.currentPage != self.pageIndex) {
         self.currentPage = self.pageIndex;
         NSLog(@"did scroll to page: %d", self.pageIndex);
+        [self updateTitle];
     }
 }
 
@@ -402,7 +406,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     }
 }
 
-- (void) tagsTouched
+- (void) calendarTouched
 {
     
 }
@@ -410,6 +414,23 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void) searchTouched
 {
     
+}
+
+- (void) updateTitle
+{
+    NSString *title = nil;
+    switch (self.currentPage) {
+        case 0:
+            title = @"Calendar";
+            break;
+        case 1:
+            title = @"List";
+            break;
+        case 2:
+            title = @"Map";
+            break;
+    }
+    self.title = title;
 }
 
 #pragma mark - Dealloc
