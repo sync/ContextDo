@@ -121,9 +121,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     // Listen for keyboard.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification object:nil];
+                                                 name:UIKeyboardWillShowNotification object:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
+                                                 name:UIKeyboardWillHideNotification object:self];
     
 //    // Gesture dismiss
 //    UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self

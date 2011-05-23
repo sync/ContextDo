@@ -49,11 +49,12 @@
 {
 	self.tokensArray = [NSMutableArray array];
     
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor clearColor];
     
     self.promptLabel = [[[UILabel alloc] initWithFrame:CGRectZero]autorelease];
     [self.promptLabel setFont:[UIFont systemFontOfSize:15]];
 	[self.promptLabel setTextColor:[UIColor colorWithWhite:0.5 alpha:1]];
+    [self.promptLabel setBackgroundColor:[UIColor clearColor]];
     [self addSubview:self.promptLabel];
     
     self.textField = [[[UITextField alloc]initWithFrame:CGRectZero]autorelease];
@@ -61,7 +62,7 @@
     [self.textField setBorderStyle:UITextBorderStyleNone];
     [self.textField setTextColor:[UIColor blackColor]];
     [self.textField setFont:[UIFont systemFontOfSize:14]];
-    [self.textField setBackgroundColor:[UIColor whiteColor]];
+    [self.textField setBackgroundColor:[UIColor clearColor]];
     [self.textField setAutocorrectionType:UITextAutocorrectionTypeNo];
     [self.textField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     [self.textField setTextAlignment:UITextAlignmentLeft];
