@@ -4,6 +4,8 @@
 #import <CoreData/CoreData.h>
 
 
+@class Tag;
+
 
 
 
@@ -28,49 +30,9 @@
 
 
 
-@property (nonatomic, retain) NSDate *completedAt;
+@property (nonatomic, retain) NSString *location;
 
-//- (BOOL)validateCompletedAt:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *sourceId;
-
-@property long long sourceIdValue;
-- (long long)sourceIdValue;
-- (void)setSourceIdValue:(long long)value_;
-
-//- (BOOL)validateSourceId:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *contactDetail;
-
-//- (BOOL)validateContactDetail:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *contactName;
-
-//- (BOOL)validateContactName:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *name;
-
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *info;
-
-//- (BOOL)validateInfo:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *sourceName;
-
-//- (BOOL)validateSourceName:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateLocation:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -84,15 +46,9 @@
 
 
 
-@property (nonatomic, retain) NSString *location;
+@property (nonatomic, retain) NSDate *completedAt;
 
-//- (BOOL)validateLocation:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSDate *dueAt;
-
-//- (BOOL)validateDueAt:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateCompletedAt:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -106,58 +62,81 @@
 
 
 
+@property (nonatomic, retain) NSNumber *sourceId;
+
+@property long long sourceIdValue;
+- (long long)sourceIdValue;
+- (void)setSourceIdValue:(long long)value_;
+
+//- (BOOL)validateSourceId:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *info;
+
+//- (BOOL)validateInfo:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *identifier;
+
+//- (BOOL)validateIdentifier:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *name;
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSDate *dueAt;
+
+//- (BOOL)validateDueAt:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *sourceName;
+
+//- (BOOL)validateSourceName:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *contactName;
+
+//- (BOOL)validateContactName:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *contactDetail;
+
+//- (BOOL)validateContactDetail:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, retain) NSSet* tag;
+- (NSMutableSet*)tagSet;
+
+
 
 
 @end
 
 @interface _Task (CoreDataGeneratedAccessors)
 
+- (void)addTag:(NSSet*)value_;
+- (void)removeTag:(NSSet*)value_;
+- (void)addTagObject:(Tag*)value_;
+- (void)removeTagObject:(Tag*)value_;
+
 @end
 
 @interface _Task (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSDate*)primitiveCompletedAt;
-- (void)setPrimitiveCompletedAt:(NSDate*)value;
-
-
-
-
-- (NSNumber*)primitiveSourceId;
-- (void)setPrimitiveSourceId:(NSNumber*)value;
-
-- (long long)primitiveSourceIdValue;
-- (void)setPrimitiveSourceIdValue:(long long)value_;
-
-
-
-
-- (NSString*)primitiveContactDetail;
-- (void)setPrimitiveContactDetail:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveContactName;
-- (void)setPrimitiveContactName:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveInfo;
-- (void)setPrimitiveInfo:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveSourceName;
-- (void)setPrimitiveSourceName:(NSString*)value;
+- (NSString*)primitiveLocation;
+- (void)setPrimitiveLocation:(NSString*)value;
 
 
 
@@ -171,14 +150,8 @@
 
 
 
-- (NSString*)primitiveLocation;
-- (void)setPrimitiveLocation:(NSString*)value;
-
-
-
-
-- (NSDate*)primitiveDueAt;
-- (void)setPrimitiveDueAt:(NSDate*)value;
+- (NSDate*)primitiveCompletedAt;
+- (void)setPrimitiveCompletedAt:(NSDate*)value;
 
 
 
@@ -190,6 +163,62 @@
 - (void)setPrimitiveLatitudeValue:(double)value_;
 
 
+
+
+- (NSNumber*)primitiveSourceId;
+- (void)setPrimitiveSourceId:(NSNumber*)value;
+
+- (long long)primitiveSourceIdValue;
+- (void)setPrimitiveSourceIdValue:(long long)value_;
+
+
+
+
+- (NSString*)primitiveInfo;
+- (void)setPrimitiveInfo:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveIdentifier;
+- (void)setPrimitiveIdentifier:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
+
+
+
+
+- (NSDate*)primitiveDueAt;
+- (void)setPrimitiveDueAt:(NSDate*)value;
+
+
+
+
+- (NSString*)primitiveSourceName;
+- (void)setPrimitiveSourceName:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveContactName;
+- (void)setPrimitiveContactName:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveContactDetail;
+- (void)setPrimitiveContactDetail:(NSString*)value;
+
+
+
+
+
+- (NSMutableSet*)primitiveTag;
+- (void)setPrimitiveTag:(NSMutableSet*)value;
 
 
 @end

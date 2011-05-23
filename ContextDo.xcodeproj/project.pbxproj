@@ -104,6 +104,8 @@
 		24E5BBE21389D44C008D10A2 /* ChatBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BBE01389D44C008D10A2 /* ChatBar.png */; };
 		24E5BBE31389D44C008D10A2 /* CreateButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BBE11389D44C008D10A2 /* CreateButton.png */; };
 		24E5BBE71389E316008D10A2 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E5BBE61389E316008D10A2 /* NSString+Additions.m */; };
+		24E5BBED1389F534008D10A2 /* _Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E5BBEA1389F534008D10A2 /* _Tag.m */; };
+		24E5BBEE1389F534008D10A2 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E5BBEC1389F534008D10A2 /* Tag.m */; };
 		24FA42F71302F7BD001B1972 /* CTXDOBlueButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FA42F61302F7BA001B1972 /* CTXDOBlueButton.m */; };
 		3A034D4B125D62DD00F49FA6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A034D4A125D62DD00F49FA6 /* SettingsViewController.m */; };
 		3A035469125FFFBB00F49FA6 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A035468125FFFBB00F49FA6 /* Entitlements.plist */; };
@@ -272,6 +274,11 @@
 		24E5BBE11389D44C008D10A2 /* CreateButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CreateButton.png; sourceTree = "<group>"; };
 		24E5BBE51389E316008D10A2 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
 		24E5BBE61389E316008D10A2 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
+		24E5BBE81389F20A008D10A2 /* Database02.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Database02.xcdatamodel; sourceTree = "<group>"; };
+		24E5BBE91389F534008D10A2 /* _Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Tag.h; sourceTree = "<group>"; };
+		24E5BBEA1389F534008D10A2 /* _Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Tag.m; sourceTree = "<group>"; };
+		24E5BBEB1389F534008D10A2 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		24E5BBEC1389F534008D10A2 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 		24FA42F51302F7B9001B1972 /* CTXDOBlueButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOBlueButton.h; sourceTree = "<group>"; };
 		24FA42F61302F7BA001B1972 /* CTXDOBlueButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOBlueButton.m; sourceTree = "<group>"; };
 		3A034D49125D62DD00F49FA6 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -489,6 +496,8 @@
 			children = (
 				246BA82E1352C37E0066AD19 /* _Task.h */,
 				246BA82D1352C37E0066AD19 /* _Task.m */,
+				24E5BBE91389F534008D10A2 /* _Tag.h */,
+				24E5BBEA1389F534008D10A2 /* _Tag.m */,
 			);
 			name = Machine;
 			sourceTree = "<group>";
@@ -772,6 +781,8 @@
 				246BA8301352C3820066AD19 /* Machine */,
 				246BA8321352C3BC0066AD19 /* Task.h */,
 				246BA8311352C3BC0066AD19 /* Task.m */,
+				24E5BBEB1389F534008D10A2 /* Tag.h */,
+				24E5BBEC1389F534008D10A2 /* Tag.m */,
 				24E44FC912EC0E5700F08B7E /* Annotations */,
 			);
 			path = Models;
@@ -973,6 +984,8 @@
 				248F21E81353CB2C00D9475C /* TasksScrollContainerViewController.m in Sources */,
 				248F21F31353CBBD00D9475C /* ForwardTouchesView.m in Sources */,
 				24E5BBE71389E316008D10A2 /* NSString+Additions.m in Sources */,
+				24E5BBED1389F534008D10A2 /* _Tag.m in Sources */,
+				24E5BBEE1389F534008D10A2 /* Tag.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1088,9 +1101,10 @@
 		246BA8281352BED40066AD19 /* Database.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				24E5BBE81389F20A008D10A2 /* Database02.xcdatamodel */,
 				246BA8291352BED50066AD19 /* Database01.xcdatamodel */,
 			);
-			currentVersion = 246BA8291352BED50066AD19 /* Database01.xcdatamodel */;
+			currentVersion = 24E5BBE81389F20A008D10A2 /* Database02.xcdatamodel */;
 			path = Database.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

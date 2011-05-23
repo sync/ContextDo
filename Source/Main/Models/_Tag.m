@@ -1,29 +1,29 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to Task.m instead.
+// Make changes to Tag.m instead.
 
-#import "_Task.h"
+#import "_Tag.h"
 
-@implementation TaskID
+@implementation TagID
 @end
 
-@implementation _Task
+@implementation _Tag
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:moc_];
+	return [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:moc_];
 }
 
 + (NSString*)entityName {
-	return @"Task";
+	return @"Tag";
 }
 
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription entityForName:@"Task" inManagedObjectContext:moc_];
+	return [NSEntityDescription entityForName:@"Tag" inManagedObjectContext:moc_];
 }
 
-- (TaskID*)objectID {
-	return (TaskID*)[super objectID];
+- (TagID*)objectID {
+	return (TagID*)[super objectID];
 }
 
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
@@ -37,10 +37,6 @@
 		NSSet *affectingKey = [NSSet setWithObject:@"latitude"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"sourceIdValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"sourceId"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 
 	return keyPaths;
 }
@@ -48,7 +44,7 @@
 
 
 
-@dynamic location;
+@dynamic name;
 
 
 
@@ -81,7 +77,7 @@
 
 
 
-@dynamic completedAt;
+@dynamic location;
 
 
 
@@ -114,88 +110,13 @@
 
 
 
-@dynamic sourceId;
-
-
-
-- (long long)sourceIdValue {
-	NSNumber *result = [self sourceId];
-	return [result longLongValue];
-}
-
-- (void)setSourceIdValue:(long long)value_ {
-	[self setSourceId:[NSNumber numberWithLongLong:value_]];
-}
-
-- (long long)primitiveSourceIdValue {
-	NSNumber *result = [self primitiveSourceId];
-	return [result longLongValue];
-}
-
-- (void)setPrimitiveSourceIdValue:(long long)value_ {
-	[self setPrimitiveSourceId:[NSNumber numberWithLongLong:value_]];
-}
-
-
-
-
-
-@dynamic info;
-
-
-
-
-
-
-@dynamic identifier;
-
-
-
-
-
-
-@dynamic name;
-
-
-
-
-
-
-@dynamic dueAt;
-
-
-
-
-
-
-@dynamic sourceName;
-
-
-
-
-
-
-@dynamic contactName;
-
-
-
-
-
-
-@dynamic contactDetail;
-
-
-
-
-
-
-@dynamic tag;
+@dynamic tasks;
 
 	
-- (NSMutableSet*)tagSet {
-	[self willAccessValueForKey:@"tag"];
-	NSMutableSet *result = [self mutableSetValueForKey:@"tag"];
-	[self didAccessValueForKey:@"tag"];
+- (NSMutableSet*)tasksSet {
+	[self willAccessValueForKey:@"tasks"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"tasks"];
+	[self didAccessValueForKey:@"tasks"];
 	return result;
 }
 	
