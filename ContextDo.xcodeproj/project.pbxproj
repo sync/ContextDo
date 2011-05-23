@@ -99,6 +99,11 @@
 		24E44FD312EC0F2A00F08B7E /* TaskDirectionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E44FD212EC0F2A00F08B7E /* TaskDirectionsView.xib */; };
 		24E44FEE12EC125A00F08B7E /* TaskDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44FED12EC125A00F08B7E /* TaskDetailsViewController.m */; };
 		24E4500512EC138E00F08B7E /* TaskDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4500412EC138E00F08B7E /* TaskDetailsView.xib */; };
+		24E5BBD81389D04E008D10A2 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24E5BBD61389D04E008D10A2 /* EventKit.framework */; };
+		24E5BBD91389D04E008D10A2 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24E5BBD71389D04E008D10A2 /* EventKitUI.framework */; };
+		24E5BBE21389D44C008D10A2 /* ChatBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BBE01389D44C008D10A2 /* ChatBar.png */; };
+		24E5BBE31389D44C008D10A2 /* CreateButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BBE11389D44C008D10A2 /* CreateButton.png */; };
+		24E5BBE71389E316008D10A2 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E5BBE61389E316008D10A2 /* NSString+Additions.m */; };
 		24FA42F71302F7BD001B1972 /* CTXDOBlueButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FA42F61302F7BA001B1972 /* CTXDOBlueButton.m */; };
 		3A034D4B125D62DD00F49FA6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A034D4A125D62DD00F49FA6 /* SettingsViewController.m */; };
 		3A035469125FFFBB00F49FA6 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A035468125FFFBB00F49FA6 /* Entitlements.plist */; };
@@ -218,7 +223,7 @@
 		2489CAD912BE1D5E00C1A58A /* TasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksViewController.h; sourceTree = "<group>"; };
 		2489CADA12BE1D5E00C1A58A /* TasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksViewController.m; sourceTree = "<group>"; };
 		2489CADC12BE1D6700C1A58A /* TasksView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TasksView.xib; sourceTree = "<group>"; };
-		248F21E61353CB2C00D9475C /* TasksScrollContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TasksScrollContainerViewController.h; sourceTree = "<group>"; };
+		248F21E61353CB2C00D9475C /* TasksScrollContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksScrollContainerViewController.h; sourceTree = "<group>"; };
 		248F21E71353CB2C00D9475C /* TasksScrollContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksScrollContainerViewController.m; sourceTree = "<group>"; };
 		248F21F11353CBBD00D9475C /* ForwardTouchesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForwardTouchesView.h; path = ../../../../../../Self/DeliciousPageControl/DeliciousPageControl/ForwardTouchesView.h; sourceTree = "<group>"; };
 		248F21F21353CBBD00D9475C /* ForwardTouchesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForwardTouchesView.m; path = ../../../../../../Self/DeliciousPageControl/DeliciousPageControl/ForwardTouchesView.m; sourceTree = "<group>"; };
@@ -261,6 +266,12 @@
 		24E44FEC12EC125A00F08B7E /* TaskDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailsViewController.h; sourceTree = "<group>"; };
 		24E44FED12EC125A00F08B7E /* TaskDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailsViewController.m; sourceTree = "<group>"; };
 		24E4500412EC138E00F08B7E /* TaskDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskDetailsView.xib; sourceTree = "<group>"; };
+		24E5BBD61389D04E008D10A2 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		24E5BBD71389D04E008D10A2 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		24E5BBE01389D44C008D10A2 /* ChatBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChatBar.png; sourceTree = "<group>"; };
+		24E5BBE11389D44C008D10A2 /* CreateButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CreateButton.png; sourceTree = "<group>"; };
+		24E5BBE51389E316008D10A2 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
+		24E5BBE61389E316008D10A2 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		24FA42F51302F7B9001B1972 /* CTXDOBlueButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOBlueButton.h; sourceTree = "<group>"; };
 		24FA42F61302F7BA001B1972 /* CTXDOBlueButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOBlueButton.m; sourceTree = "<group>"; };
 		3A034D49125D62DD00F49FA6 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -279,6 +290,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24E5BBD81389D04E008D10A2 /* EventKit.framework in Frameworks */,
+				24E5BBD91389D04E008D10A2 /* EventKitUI.framework in Frameworks */,
 				246BA8271352BA960066AD19 /* CoreData.framework in Frameworks */,
 				2481FFB112FF4874003EEAB6 /* MessageUI.framework in Frameworks */,
 				2481FF9B12FF477F003EEAB6 /* MapKit.framework in Frameworks */,
@@ -643,6 +656,15 @@
 			name = Details;
 			sourceTree = "<group>";
 		};
+		24E5BBE41389E2E4008D10A2 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				24E5BBE51389E316008D10A2 /* NSString+Additions.h */,
+				24E5BBE61389E316008D10A2 /* NSString+Additions.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -657,6 +679,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				24E5BBD61389D04E008D10A2 /* EventKit.framework */,
+				24E5BBD71389D04E008D10A2 /* EventKitUI.framework */,
 				246BA8261352BA960066AD19 /* CoreData.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
@@ -709,6 +733,8 @@
 				2426AC3612F9A1CF00969CBB /* iTunesArtwork */,
 				2490FD9112E34D2300F56B39 /* titlebar.png */,
 				2490FD9212E34D2300F56B39 /* titlebar@2x.png */,
+				24E5BBE01389D44C008D10A2 /* ChatBar.png */,
+				24E5BBE11389D44C008D10A2 /* CreateButton.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -732,6 +758,7 @@
 				3A57FFA111FFB24F00248D1D /* AppDelegate.h */,
 				3A57FFA211FFB24F00248D1D /* AppDelegate.m */,
 				248921D3128EE15E00DC9712 /* MainWindow.xib */,
+				24E5BBE41389E2E4008D10A2 /* Utilities */,
 				3A57FFA411FFB24F00248D1D /* Models */,
 				3A57FFA611FFB24F00248D1D /* Services */,
 				3A57FFA811FFB24F00248D1D /* Views */,
@@ -885,6 +912,8 @@
 				24000E56134C918D002C6601 /* signinSeparator.png in Resources */,
 				24000E57134C918D002C6601 /* TapkuLibrary.bundle in Resources */,
 				248F21F51353D05C00D9475C /* TasksScrollContainerView.xib in Resources */,
+				24E5BBE21389D44C008D10A2 /* ChatBar.png in Resources */,
+				24E5BBE31389D44C008D10A2 /* CreateButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -943,6 +972,7 @@
 				246BA8331352C3BD0066AD19 /* Task.m in Sources */,
 				248F21E81353CB2C00D9475C /* TasksScrollContainerViewController.m in Sources */,
 				248F21F31353CBBD00D9475C /* ForwardTouchesView.m in Sources */,
+				24E5BBE71389E316008D10A2 /* NSString+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
