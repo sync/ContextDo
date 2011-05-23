@@ -85,9 +85,8 @@
 		2491273A12EE647B009191BA /* TaskDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491273912EE647B009191BA /* TaskDetailsView.m */; };
 		24B04F441302A88E00F27215 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B04F421302A88E00F27215 /* Icon@2x.png */; };
 		24B04F451302A88E00F27215 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B04F431302A88E00F27215 /* Icon.png */; };
-		24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */; };
-		24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* InfoViewController.m */; };
-		24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* InfoView.xib */; };
+		24E4496D12EBA56600F08B7E /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* TagsViewController.m */; };
+		24E4497112EBA5A400F08B7E /* TagsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* TagsView.xib */; };
 		24E44A1412EBB58500F08B7E /* TasksInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44A1312EBB58500F08B7E /* TasksInfoCell.m */; };
 		24E44BFC12EBD6C500F08B7E /* TaskContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44BFB12EBD6C500F08B7E /* TaskContainerViewController.m */; };
 		24E44C0D12EBD8F700F08B7E /* TaskContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E44C0C12EBD8F700F08B7E /* TaskContainerView.xib */; };
@@ -112,6 +111,8 @@
 		24E5BBF61389F72F008D10A2 /* 15-tags@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BBF41389F72F008D10A2 /* 15-tags@2x.png */; };
 		24E5BC65138A0314008D10A2 /* calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BC63138A0314008D10A2 /* calendar.png */; };
 		24E5BC66138A0314008D10A2 /* calendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BC64138A0314008D10A2 /* calendar@2x.png */; };
+		24E5BC69138A156E008D10A2 /* tabpanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BC67138A156D008D10A2 /* tabpanel.png */; };
+		24E5BC6A138A156E008D10A2 /* tabpanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E5BC68138A156E008D10A2 /* tabpanel@2x.png */; };
 		24FA42F71302F7BD001B1972 /* CTXDOBlueButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FA42F61302F7BA001B1972 /* CTXDOBlueButton.m */; };
 		3A034D4B125D62DD00F49FA6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A034D4A125D62DD00F49FA6 /* SettingsViewController.m */; };
 		3A035469125FFFBB00F49FA6 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A035468125FFFBB00F49FA6 /* Entitlements.plist */; };
@@ -251,11 +252,9 @@
 		2491273912EE647B009191BA /* TaskDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailsView.m; sourceTree = "<group>"; };
 		24B04F421302A88E00F27215 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		24B04F431302A88E00F27215 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		24E4496812EBA54900F08B7E /* TasksUpdatedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksUpdatedDataSource.h; sourceTree = "<group>"; };
-		24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksUpdatedDataSource.m; sourceTree = "<group>"; };
-		24E4496B12EBA56600F08B7E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
-		24E4496C12EBA56600F08B7E /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
-		24E4497012EBA5A400F08B7E /* InfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoView.xib; sourceTree = "<group>"; };
+		24E4496B12EBA56600F08B7E /* TagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagsViewController.h; sourceTree = "<group>"; };
+		24E4496C12EBA56600F08B7E /* TagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsViewController.m; sourceTree = "<group>"; };
+		24E4497012EBA5A400F08B7E /* TagsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagsView.xib; sourceTree = "<group>"; };
 		24E44A1212EBB58500F08B7E /* TasksInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksInfoCell.h; sourceTree = "<group>"; };
 		24E44A1312EBB58500F08B7E /* TasksInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksInfoCell.m; sourceTree = "<group>"; };
 		24E44BFA12EBD6C500F08B7E /* TaskContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskContainerViewController.h; sourceTree = "<group>"; };
@@ -291,6 +290,8 @@
 		24E5BBF41389F72F008D10A2 /* 15-tags@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "15-tags@2x.png"; sourceTree = "<group>"; };
 		24E5BC63138A0314008D10A2 /* calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar.png; sourceTree = "<group>"; };
 		24E5BC64138A0314008D10A2 /* calendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar@2x.png"; sourceTree = "<group>"; };
+		24E5BC67138A156D008D10A2 /* tabpanel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabpanel.png; sourceTree = "<group>"; };
+		24E5BC68138A156E008D10A2 /* tabpanel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabpanel@2x.png"; sourceTree = "<group>"; };
 		24FA42F51302F7B9001B1972 /* CTXDOBlueButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOBlueButton.h; sourceTree = "<group>"; };
 		24FA42F61302F7BA001B1972 /* CTXDOBlueButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOBlueButton.m; sourceTree = "<group>"; };
 		3A034D49125D62DD00F49FA6 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -576,11 +577,9 @@
 		24E4496712EBA52600F08B7E /* Info */ = {
 			isa = PBXGroup;
 			children = (
-				24E4496812EBA54900F08B7E /* TasksUpdatedDataSource.h */,
-				24E4496912EBA54900F08B7E /* TasksUpdatedDataSource.m */,
-				24E4496B12EBA56600F08B7E /* InfoViewController.h */,
-				24E4496C12EBA56600F08B7E /* InfoViewController.m */,
-				24E4497012EBA5A400F08B7E /* InfoView.xib */,
+				24E4496B12EBA56600F08B7E /* TagsViewController.h */,
+				24E4496C12EBA56600F08B7E /* TagsViewController.m */,
+				24E4497012EBA5A400F08B7E /* TagsView.xib */,
 			);
 			name = Info;
 			sourceTree = "<group>";
@@ -769,6 +768,8 @@
 				24E5BBF41389F72F008D10A2 /* 15-tags@2x.png */,
 				24E5BC63138A0314008D10A2 /* calendar.png */,
 				24E5BC64138A0314008D10A2 /* calendar@2x.png */,
+				24E5BC67138A156D008D10A2 /* tabpanel.png */,
+				24E5BC68138A156E008D10A2 /* tabpanel@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -917,7 +918,7 @@
 				2448D55B12E8B32B005EEEDA /* TaskDatePickerView.xib in Resources */,
 				2448D93B12E95999005EEEDA /* TaskContactView.xib in Resources */,
 				2448DCAD12E9AB8C005EEEDA /* TaskLocationView.xib in Resources */,
-				24E4497112EBA5A400F08B7E /* InfoView.xib in Resources */,
+				24E4497112EBA5A400F08B7E /* TagsView.xib in Resources */,
 				24E44C0D12EBD8F700F08B7E /* TaskContainerView.xib in Resources */,
 				24E44F6A12EC09D200F08B7E /* TaskScheduleView.xib in Resources */,
 				24E44FD312EC0F2A00F08B7E /* TaskDirectionsView.xib in Resources */,
@@ -957,6 +958,8 @@
 				24E5BBF61389F72F008D10A2 /* 15-tags@2x.png in Resources */,
 				24E5BC65138A0314008D10A2 /* calendar.png in Resources */,
 				24E5BC66138A0314008D10A2 /* calendar@2x.png in Resources */,
+				24E5BC69138A156E008D10A2 /* tabpanel.png in Resources */,
+				24E5BC6A138A156E008D10A2 /* tabpanel@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -987,8 +990,7 @@
 				2448DA5712E96A35005EEEDA /* TaskContactDataSource.m in Sources */,
 				2448DCA812E9AB64005EEEDA /* TaskLocationViewController.m in Sources */,
 				2448DCAB12E9AB77005EEEDA /* TaskLocationDataSource.m in Sources */,
-				24E4496A12EBA54900F08B7E /* TasksUpdatedDataSource.m in Sources */,
-				24E4496D12EBA56600F08B7E /* InfoViewController.m in Sources */,
+				24E4496D12EBA56600F08B7E /* TagsViewController.m in Sources */,
 				24E44A1412EBB58500F08B7E /* TasksInfoCell.m in Sources */,
 				24E44BFC12EBD6C500F08B7E /* TaskContainerViewController.m in Sources */,
 				24E44C2412EBDAF500F08B7E /* CTXDOSegmentControl.m in Sources */,
