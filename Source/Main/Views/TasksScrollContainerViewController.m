@@ -19,12 +19,17 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)slideFrame:(BOOL)up;
 - (void)dismissKeyboard;
 - (void)updateTitle;
+- (void)showTagsAnimated:(BOOL)animated;
+- (void)hideTagsAnimated:(BOOL)animated;
+- (void)blackOutMainViewAnimated:(BOOL)animated;
+- (void)hideBlackOutMainViewAnimated:(BOOL)animated;
 
 @end
 
 @implementation TasksScrollContainerViewController
 
 @synthesize scrollView, currentPage, chatBar, chatInput, previousContentHeight, createButton;
+@synthesize tagsViewController, blackedOutView, tagsButton;
 
 - (void)viewDidLoad
 {
@@ -123,14 +128,20 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     // Gesture dismiss
     UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                   action:@selector(dismissKeyboard)];
+    tapGesture.delegate = self;
     [self.view addGestureRecognizer:tapGesture];
     [tapGesture release];
+    
+    [self hideTagsAnimated:FALSE];
 }
 
 - (void)viewDidUnload
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    [self hideTagsAnimated:FALSE];
+	[tagsViewController release];
+	tagsViewController = nil;
     self.scrollView = nil;
     self.chatBar = nil;
     
@@ -164,6 +175,17 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     self.navigationItem.rightBarButtonItem = searchItem;
     
     [self updateTitle];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if (touch.view == self.tagsButton) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - ScrollView delegate
@@ -406,17 +428,17 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     }
 }
 
-- (void) calendarTouched
+- (void)calendarTouched
 {
     
 }
 
-- (void) searchTouched
+- (void)searchTouched
 {
     
 }
 
-- (void) updateTitle
+- (void)updateTitle
 {
     NSString *title = nil;
     switch (self.currentPage) {
@@ -431,6 +453,165 @@ static CGFloat const kChatBarHeight4    = 94.0f;
             break;
     }
     self.title = title;
+}
+
+- (IBAction)tagsButtonPressed
+{
+	if (!self.isShowingTagsView) {
+		[self showTagsAnimated:TRUE];
+	} else {
+		[self hideTagsAnimated:TRUE];
+	}
+}
+
+#pragma mark - TagsView
+
+#define TagsHiddenHeight 46.0
+#define TagsShowingHeight 290.0
+
+- (TagsViewController *)tagsViewController
+{
+	if (!tagsViewController) {
+		tagsViewController = [[TagsViewController alloc]initWithNibName:@"TagsView" bundle:nil];
+		tagsViewController.view.userInteractionEnabled = FALSE;
+		[self.view addSubview:tagsViewController.view];
+		[self.view bringSubviewToFront:tagsViewController.view];
+		[self.view bringSubviewToFront:self.tagsButton];
+        [self.view bringSubviewToFront:self.chatBar];
+	}
+	
+	return tagsViewController;
+}
+
+- (BOOL)isShowingTagsView
+{
+	CGSize boundsSize = self.view.bounds.size;
+	return (self.tagsViewController.view.frame.origin.y != boundsSize.height  - (boundsSize.height - TagsShowingHeight - TagsHiddenHeight));
+}
+
+- (void)showTagsAnimated:(BOOL)animated
+{
+	if (self.isShowingTagsView) {
+		return;
+	}
+	
+	self.tagsViewController.view.userInteractionEnabled = TRUE;
+	
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDuration:0.4];
+	}
+	
+	CGSize boundsSize = self.view.bounds.size;
+	[self.tagsViewController viewWillAppear:animated];
+	self.tagsViewController.view.frame = CGRectMake(0.0, 
+													boundsSize.height - TagsShowingHeight, 
+													boundsSize.width, 
+													TagsShowingHeight);
+	
+	[[AppDelegate sharedAppDelegate]blackOutTopViewElementsAnimated:animated];
+	[self blackOutMainViewAnimated:animated];
+	
+	self.tagsButton.frame = CGRectMake(0.0, self.tagsViewController.view.frame.origin.y, self.tagsButton.frame.size.width, self.tagsButton.frame.size.height);
+	
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
+}
+
+- (void)hideTagsAnimated:(BOOL)animated
+{
+	if (!self.isShowingTagsView) {
+		return;
+	}
+	
+	self.tagsViewController.view.userInteractionEnabled = FALSE;
+    
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDuration:0.4];
+	}
+	
+	CGSize boundsSize = self.view.bounds.size;
+	self.tagsViewController.view.frame = CGRectMake(0.0, 
+													boundsSize.height  - (boundsSize.height - TagsShowingHeight - TagsHiddenHeight), 
+													boundsSize.width, 
+													TagsShowingHeight);
+	
+	[[AppDelegate sharedAppDelegate]hideBlackOutTopViewElementsAnimated:animated];
+	[self hideBlackOutMainViewAnimated:TRUE];
+	
+	self.tagsButton.frame = CGRectMake(0.0, self.tagsViewController.view.frame.origin.y, self.tagsButton.frame.size.width, self.tagsButton.frame.size.height);
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
+}
+
+#pragma mark -
+#pragma mark Blackout Main View
+
+- (BOOL)isBlackingOutMainView
+{
+	return (self.blackedOutView != nil);
+}
+
+- (void)blackOutMainViewAnimated:(BOOL)animated
+{
+	if (self.isBlackingOutMainView) {
+		return;
+	}
+	
+	CGSize boundsSize = self.view.bounds.size;
+	self.blackedOutView = [[[UIView alloc]initWithFrame:CGRectMake(0.0, 
+																   0.0,
+																   boundsSize.width,
+																   boundsSize.height)]autorelease];
+    self.blackedOutView.alpha = 0.0;
+	self.blackedOutView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].blackedOutColor;
+	[self.view insertSubview:self.blackedOutView belowSubview:self.tagsViewController.view];
+	
+	
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDelay:0.1];
+		[UIView setAnimationDuration:0.3];
+		[UIView setAnimationCurve:UIViewAnimationCurveLinear];
+	}
+	
+	self.blackedOutView.alpha = 1.0;
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
+}
+
+- (void)hideBlackOutMainViewAnimated:(BOOL)animated
+{
+	if (!self.isBlackingOutMainView) {
+		return;
+	}
+	
+	if (animated) {
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationDuration:0.3];
+		[UIView setAnimationCurve:UIViewAnimationCurveLinear];
+		[UIView setAnimationDelegate:self];
+		[UIView setAnimationDidStopSelector:@selector(hideBlackoutAnimationDidStop)];
+	}
+	
+	self.blackedOutView.alpha = 0.0;
+	
+	if (animated) {
+		[UIView commitAnimations];
+	}
+}
+
+- (void)hideBlackoutAnimationDidStop
+{
+	[self.blackedOutView removeFromSuperview];
+	blackedOutView = nil;
 }
 
 #pragma mark - Dealloc

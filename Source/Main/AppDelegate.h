@@ -23,6 +23,11 @@
 
 @property (nonatomic) BOOL backgrounding;
 
+@property (nonatomic, readonly) BOOL isBlackingOutTopViewElements;
+- (void)blackOutTopViewElementsAnimated:(BOOL)animated;
+- (void)hideBlackOutTopViewElementsAnimated:(BOOL)animated;
+@property (nonatomic, assign) UIView *blackedOutView;
+
 + (AppDelegate *)sharedAppDelegate;
 
 @end

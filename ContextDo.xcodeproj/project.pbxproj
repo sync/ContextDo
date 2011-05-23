@@ -574,14 +574,14 @@
 			name = Edition;
 			sourceTree = "<group>";
 		};
-		24E4496712EBA52600F08B7E /* Info */ = {
+		24E4496712EBA52600F08B7E /* Tags */ = {
 			isa = PBXGroup;
 			children = (
 				24E4496B12EBA56600F08B7E /* TagsViewController.h */,
 				24E4496C12EBA56600F08B7E /* TagsViewController.m */,
 				24E4497012EBA5A400F08B7E /* TagsView.xib */,
 			);
-			name = Info;
+			name = Tags;
 			sourceTree = "<group>";
 		};
 		24E44BF812EBD5D800F08B7E /* Task */ = {
@@ -832,7 +832,7 @@
 				243A3C1E12E450DC00A6D402 /* Table header */,
 				2489CAC512BE185400C1A58A /* Cells */,
 				3A034D43125D629A00F49FA6 /* Settings */,
-				24E4496712EBA52600F08B7E /* Info */,
+				24E4496712EBA52600F08B7E /* Tags */,
 				248F21E51353CA2F00D9475C /* Tasks Scroll Container */,
 				2489CAA112BE102F00C1A58A /* Tasks */,
 				24E44BF812EBD5D800F08B7E /* Task */,
