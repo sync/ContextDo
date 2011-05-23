@@ -17,6 +17,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)slideFrameUp;
 - (void)slideFrameDown;
 - (void)slideFrame:(BOOL)up;
+- (void)dismissKeyboard;
 
 @end
 
@@ -117,6 +118,12 @@ static CGFloat const kChatBarHeight4    = 94.0f;
                                                  name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification object:nil];
+    
+    // Gesture dismiss
+    UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tapGesture];
+    [tapGesture release];
 }
 
 - (void)viewDidUnload
@@ -336,10 +343,15 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 }
 
 #pragma mark - Actions
+                                           
+- (void)dismissKeyboard
+{
+    [chatInput resignFirstResponder];
+}
 
 - (void)createEvent
 {
-    [chatInput resignFirstResponder];
+    [self dismissKeyboard];
 }
 
 - (void)resetCreateButton
