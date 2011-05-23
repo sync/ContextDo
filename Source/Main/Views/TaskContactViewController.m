@@ -28,8 +28,6 @@
 																								   target:self.navigationController
 																								 selector:@selector(customBackButtonTouched)];
 	
-	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
-	
 	self.navigationItem.rightBarButtonItem = nil;
 }
 

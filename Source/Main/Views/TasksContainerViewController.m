@@ -1,14 +1,8 @@
 #import "TasksContainerViewController.h"
-#import "TaskEditViewController.h"
 #import <TapkuLibrary/TapkuLibrary.h>
 #import "NSDate+Extensions.h"
 
 @interface TasksContainerViewController ()
-
-- (void)showList;
-- (void)showMap;
-- (void)showCalendar;
-- (void)addTask;
 
 @end
 
@@ -16,7 +10,7 @@
 @implementation TasksContainerViewController
 
 @synthesize containerNavController, tasksViewController, containerView, tasksMapViewController;
-@synthesize tasksCalendarViewController, showCloseButton;
+@synthesize tasksCalendarViewController;
 
 #pragma mark -
 #pragma mark Setup
@@ -25,14 +19,10 @@
 {	
 	[super viewDidLoad];
 	
-	self.title = @"TODO";
-	
 	self.containerNavController.navigationBarHidden = TRUE;
 	self.containerNavController.toolbarHidden = TRUE;
 	[self.containerView addSubview:self.containerNavController.view];
 	self.containerNavController.view.frame = self.containerView.bounds;
-	
-	[self showList];
 }
 
 - (void)viewDidUnload
@@ -76,71 +66,14 @@
 {
 	[super setupNavigationBar];
 	
-	if (!self.showCloseButton) {
-		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:self.navigationController.navigationBar.topItem.title
-																									   target:self.navigationController
-																									 selector:@selector(customBackButtonTouched)];
-	} else {
-		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Close"
-																											   target:self
-																											 selector:@selector(closeButtonTouched)];
-		
-	}
-	
-		
-	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
-}
-
-- (void)setupToolbar
-{	
-	[super setupToolbar];
-	
-	[self.navigationController setToolbarHidden:FALSE animated:FALSE];
-	
-	UIBarButtonItem *flexItem = [[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-																			  target:nil
-																			  action:nil]autorelease];
-	
-	UISegmentedControl *segmentedControl = [[[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"List", 
-																					  @"Map", 
-																					  @"Calendar",
-																					  nil]]autorelease];
-	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-	segmentedControl.selectedSegmentIndex = 0;
-	[segmentedControl addTarget:self action:@selector(segementControlChanged:) forControlEvents:UIControlEventValueChanged];
-	UIBarButtonItem *segmentItem = [[[UIBarButtonItem alloc]initWithCustomView:segmentedControl]autorelease];
-	
-	
-	UIBarButtonItem *addItem = [[DefaultStyleSheet sharedDefaultStyleSheet] buttonItemWithImageNamed:@"icon_add_off.png" 
-																			   highlightedImageNamed:@"icon_add_touch.png"
-																							  target:self 
-																							selector:@selector(addTask)];
-	
-	
-	NSArray *items = [NSArray arrayWithObjects:
-					  flexItem,
-					  segmentItem,
-					  flexItem,
-					  addItem,
-					  nil];
-	[self setToolbarItems:items animated:TRUE];
+	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] 
+                                             backItemWithText:self.navigationController.navigationBar.topItem.title
+                                                        target:self.navigationController
+                                                    selector:@selector(customBackButtonTouched)];
 }
 
 #pragma mark -
 #pragma mark Actions
-
-- (void)segementControlChanged:(id)sender
-{
-	UISegmentedControl* segCtl = (UISegmentedControl *)sender;
-	
-	if ([segCtl selectedSegmentIndex] == 0) {
-		[self showList];
-	} else if ([segCtl selectedSegmentIndex] == 1) {
-		[self showMap];
-	} else {
-		[self showCalendar];
-	}
-}
 
 - (void)showList
 {
@@ -155,18 +88,6 @@
 - (void)showCalendar
 {
 	[self.containerNavController setViewControllers:[NSArray arrayWithObject:self.tasksCalendarViewController]];
-}
-
-- (void)addTask
-{
-	TaskEditViewController *controller = [[[TaskEditViewController alloc]initWithNibName:@"TaskEditView" bundle:nil]autorelease];
-	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
-	[self.navigationController presentModalViewController:navController animated:TRUE];
-}
-
-- (void)closeButtonTouched
-{
-	[self dismissModalViewControllerAnimated:TRUE];
 }
 
 #pragma mark -

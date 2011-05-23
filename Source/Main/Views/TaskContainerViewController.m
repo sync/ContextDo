@@ -113,7 +113,6 @@
 - (void)refreshTask
 {
 	self.title = self.task.name;
-	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 	
 	NSInteger index = [self.tasks indexOfObject:self.task];
 	self.arrowsControl.canGoBack = (index > 0);

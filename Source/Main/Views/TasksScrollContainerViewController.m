@@ -1,5 +1,6 @@
 #import "TasksScrollContainerViewController.h"
 #import "NSString+Additions.h"
+#import "TasksContainerViewController.h"
 
 static CGFloat const kSentDateFontSize = 13.0f;
 static CGFloat const kMessageFontSize   = 16.0f;
@@ -42,35 +43,44 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #define PagesDiff 24.0
 #define PageHeight 357.0
 #define TopDiff 0.0
+#define NavDiff 44.0
     
     self.scrollView.contentSize = CGSizeMake(2 * LeftRightDiff + 3 * PageWidth + 2 * PagesDiff, PageHeight);
     self.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
     self.scrollView.delaysContentTouches = NO;
     self.scrollView.clipsToBounds = NO;
-    
-    UIView *view1 = [[[UIView alloc]initWithFrame:CGRectMake(LeftRightDiff, TopDiff, PageWidth, PageHeight)]autorelease];
-    view1.backgroundColor = [UIColor redColor];
-    CALayer *layer1 = [view1 layer];
+     
+    TasksContainerViewController * controller1 = [[[TasksContainerViewController alloc] initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
+    controller1.view.transform = CGAffineTransformIdentity;
+    controller1.view.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    controller1.view.frame = CGRectMake(LeftRightDiff, TopDiff, PageWidth, PageHeight + NavDiff);
+    controller1.view.backgroundColor = [UIColor redColor];
+    CALayer *layer1 = [controller1.view layer];
 	layer1.masksToBounds = YES;
 	[layer1 setBorderWidth:1.0];
 	[layer1 setBorderColor:[[UIColor blackColor] CGColor]];
-    [self.scrollView addSubview:view1];
+    [self.scrollView addSubview:controller1.view];
+    [controller1 showCalendar];
     
-    UIView *view2 = [[[UIView alloc]initWithFrame:CGRectMake(view1.frame.origin.x + view1.frame.size.width + PagesDiff, TopDiff, PageWidth, PageHeight)]autorelease];
-    view2.backgroundColor = [UIColor greenColor];
-    CALayer *layer2 = [view2 layer];
+    TasksContainerViewController * controller2 = [[[TasksContainerViewController alloc] initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
+    controller2.view.frame = CGRectMake(controller1.view.frame.origin.x + controller1.view.frame.size.width + PagesDiff, TopDiff, PageWidth, PageHeight + NavDiff);
+    controller2.view.backgroundColor = [UIColor greenColor];
+    CALayer *layer2 = [controller2.view layer];
 	layer2.masksToBounds = YES;
 	[layer2 setBorderWidth:1.0];
 	[layer2 setBorderColor:[[UIColor blackColor] CGColor]];
-    [self.scrollView addSubview:view2];
+    [self.scrollView addSubview:controller2.view];
+    [controller2 showList];
     
-    UIView *view3 = [[[UIView alloc]initWithFrame:CGRectMake(view2.frame.origin.x + view2.frame.size.width + PagesDiff, TopDiff, PageWidth, PageHeight)]autorelease];
-    view3.backgroundColor = [UIColor yellowColor];
-    CALayer *layer3 = [view3 layer];
+    TasksContainerViewController * controller3 = [[[TasksContainerViewController alloc] initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
+    controller3.view.frame = CGRectMake(controller2.view.frame.origin.x + controller2.view.frame.size.width + PagesDiff, TopDiff, PageWidth, PageHeight + NavDiff);
+    controller3.view.backgroundColor = [UIColor yellowColor];
+    CALayer *layer3 = [controller3.view layer];
 	layer3.masksToBounds = YES;
 	[layer3 setBorderWidth:1.0];
 	[layer3 setBorderColor:[[UIColor blackColor] CGColor]];
-    [self.scrollView addSubview:view3];
+    [self.scrollView addSubview:controller3.view];
+    [controller3 showMap];
     
     // chat
     // background
@@ -121,9 +131,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     // Listen for keyboard.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification object:self];
+                                                 name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification object:self];
+                                                 name:UIKeyboardWillHideNotification object:nil];
     
 //    // Gesture dismiss
 //    UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -357,6 +367,10 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 // TODO: Test on different SDK versions; make more flexible if desired.
 - (void)slideFrame:(BOOL)up 
 {
+    if (![chatInput isFirstResponder]) {
+        return;
+    }
+    
     CGFloat movementDistance;
     
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
@@ -499,8 +513,10 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:0.4];
+		[UIView setAnimationDuration:0.3];
 	}
+    
+    [self.tagsViewController.tagsLabel becomeFirstResponder];
 	
 	CGSize boundsSize = self.view.bounds.size;
 	[self.tagsViewController viewWillAppear:animated];
@@ -530,7 +546,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:0.4];
+		[UIView setAnimationDuration:0.3];
 	}
 	
 	CGSize boundsSize = self.view.bounds.size;

@@ -51,8 +51,6 @@
 {
 	[super setupNavigationBar];
 	
-	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
-	
 	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:@"Back"
 																								   target:self.navigationController
 																								 selector:@selector(customBackButtonTouched)];

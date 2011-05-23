@@ -2,7 +2,7 @@
 #import "TasksDataSource.h"
 
 
-@interface TasksViewController : BaseTableViewController <UISearchBarDelegate> {
+@interface TasksViewController : BaseTableViewController {
 
 }
 
@@ -14,8 +14,8 @@
 @property (nonatomic, readonly) BOOL isTodayTasks;
 @property (nonatomic, readonly) BOOL isNearTasks;
 
-@property (nonatomic, retain) IBOutlet CustomSearchBar *searchBar;
-
 @property (nonatomic,  assign) UINavigationController *mainNavController;
+
+- (void)cancelSearch;
 
 @end

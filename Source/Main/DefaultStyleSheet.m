@@ -31,22 +31,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DefaultStyleSheet)
 	return [[[UIBarButtonItem alloc]initWithCustomView:backButton]autorelease];
 }
 
-- (UILabel *)titleViewWithText:(NSString *)text
-{
-	UILabel *label = [[[UILabel alloc]initWithFrame:CGRectZero]autorelease];
-	label.font = [UIFont boldSystemFontOfSize:16.0];
-	label.shadowOffset = CGSizeMake(0,-1);
-	label.textColor = [UIColor colorWithHexString:@"FFF"];
-	label.shadowColor = [UIColor colorWithHexString:@"00000040"];
-	label.textAlignment = UITextAlignmentCenter;
-	label.backgroundColor = [UIColor clearColor];
-	
-	label.text = text;
-	[label sizeToFit];
-	
-	return label;
-}
-
 #define LeftRightDiffNavBarButton 8.0
 #define NavBarButtonMinWidth 65.0
 

@@ -59,8 +59,6 @@
 	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Cancel"
 																										   target:self
 																										 selector:@selector(cancelTouched)];
-	
-	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 }
 
 - (void)setupDataSource

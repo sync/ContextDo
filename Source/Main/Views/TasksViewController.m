@@ -4,7 +4,6 @@
 
 @interface TasksViewController ()
 
-- (void)cancelSearch;
 - (void)refreshTasks;
 - (void)reloadTasks:(NSArray *)newTasks;
 
@@ -13,7 +12,7 @@
 
 @implementation TasksViewController
 
-@synthesize tasksDataSource, tasks, searchBar, tasksSave, mainNavController;
+@synthesize tasksDataSource, tasks, tasksSave, mainNavController;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -22,17 +21,12 @@
 {
 	[super viewDidLoad];
 	
-	self.searchBar.tintColor = [UIColor colorWithWhite:0.3 alpha:1.0];
-    [self.searchBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-						   forBarStyle:UIBarStyleBlackOpaque];
-	self.searchBar.keyboardAppearance = UIKeyboardAppearanceAlert;
+	
 }
 
 - (void)viewDidUnload
 {
 	[super viewDidUnload];
-	
-	self.searchBar = nil;
 }
 
 #pragma mark -
@@ -54,7 +48,7 @@
 	
 	self.tasksDataSource = [[[TasksDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksDataSource;
-	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
+	//self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
 	self.tableView.rowHeight = 88.0;
 	[self refreshTasks];
 }
@@ -114,20 +108,6 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-	[super scrollViewDidScroll:scrollView];
-	
-	if (!scrollView.dragging || scrollView.decelerating) {
-		return;
-	}
-	
-	[self.searchBar resignFirstResponder];
-	if ([self.searchBar respondsToSelector:@selector(cancelButton)]) {
-		[[self.searchBar valueForKey:@"cancelButton"] setEnabled:TRUE];
-	}
-}
-
 #pragma mark -
 #pragma mark Actions
 
@@ -159,61 +139,20 @@
 }
 
 #pragma mark -
-#pragma mark UISearchBarDelegate
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)aSearchBar
-{
-	if (!aSearchBar.showsCancelButton) {
-		self.tasksSave = self.tasks;
-		self.tasks = nil;
-	}
-	
-	[aSearchBar setShowsCancelButton:TRUE animated:TRUE];
-}
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)aSearchBar
-{
-	if (aSearchBar.text.length == 0 && aSearchBar.showsCancelButton) {
-		[self cancelSearch];
-	}
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)aSearchBar
-{
-	if ([aSearchBar.text isEqualToString:self.searchString]) {
-		return;
-	}
-	[self filterContentForSearchText:aSearchBar.text scope:nil];
-	
-	if ([self.searchBar respondsToSelector:@selector(cancelButton)]) {
-		[[self.searchBar valueForKey:@"cancelButton"] setEnabled:TRUE];
-	}
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
-{
-	[self cancelSearch];
-}
+#pragma mark Content Filtering
 
 - (void)cancelSearch
 {
-	[self.searchBar setShowsCancelButton:FALSE animated:TRUE];
-	[self.searchBar resignFirstResponder];
-	self.searchBar.text = nil;
-	self.searchString = nil;
-	[self reloadTasks:self.tasksSave];
-	self.tasksSave = nil;
+    self.searchString = nil;
+    [self reloadTasks:self.tasksSave];
+    self.tasksSave = nil;
 }
-
-#pragma mark -
-#pragma mark Content Filtering
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-	[self.searchBar resignFirstResponder];
-	self.searchString = searchText;
-	
-	[self refreshTasks];
+    self.searchString = searchText;
+    
+    [self refreshTasks];
 }
 
 #pragma mark -
@@ -222,7 +161,6 @@
 - (void)dealloc
 {	
 	[tasksSave release];
-	[searchBar release];
 	[tasks release];
 	[tasksDataSource release];
 	

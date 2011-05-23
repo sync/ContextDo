@@ -49,7 +49,6 @@
 {	
 	self.tasksCalendarDataSource = [[[TasksCalendarDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksCalendarDataSource;
-	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
 	self.tableView.delegate = self;
 	self.tableView.separatorColor = [UIColor clearColor];
 	[self refreshTasks];

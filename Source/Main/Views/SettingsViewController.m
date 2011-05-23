@@ -79,8 +79,6 @@
 	self.navigationItem.rightBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Done"
 																												target:self
 																											  selector:@selector(doneTouched)];
-	
-	self.navigationItem.titleView = [[DefaultStyleSheet sharedDefaultStyleSheet] titleViewWithText:self.title];
 }
 
 - (SettingsSliderView *)settingsSliderView

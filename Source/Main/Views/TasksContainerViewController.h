@@ -15,6 +15,8 @@
 @property (nonatomic, readonly) TasksMapViewController *tasksMapViewController;
 @property (nonatomic, readonly) TasksCalendarViewController *tasksCalendarViewController;
 
-@property (nonatomic) BOOL showCloseButton;
+- (void)showList;
+- (void)showMap;
+- (void)showCalendar;
 
 @end

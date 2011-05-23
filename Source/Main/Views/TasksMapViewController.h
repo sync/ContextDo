@@ -4,12 +4,11 @@
 #import "TaskAnnotation.h"
 #import "UICGDirections.h"
 
-@interface TasksMapViewController : BaseViewController <MKMapViewDelegate, UICGDirectionsDelegate, UISearchBarDelegate> {
+@interface TasksMapViewController : BaseViewController <MKMapViewDelegate, UICGDirectionsDelegate> {
 
 }
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
-@property (nonatomic, retain) IBOutlet CustomSearchBar *searchBar;
 
 @property (nonatomic, copy) NSArray *tasksSave;
 
