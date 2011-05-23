@@ -136,24 +136,31 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [super viewDidUnload];
 }
 
-- (void)scrollToRowAtIndex:(NSInteger)index animated:(BOOL)animated
+- (void) setupNavigationBar
 {
-	NSInteger itemIndex = index;
-	
-	NSInteger count = 3.0;
-	
-	if (itemIndex < 0 && itemIndex < count) {
-		itemIndex = 0;
-	}
-	
-	if (itemIndex > count - 1) {
-		itemIndex = count - 1;
-	}
-	
-	if (itemIndex >= 0) {
-		// Remember which index we are targeting so we can ignore intermediates along the way
-		[self.scrollView setContentOffset:CGPointMake(itemIndex * (PageWidth + PagesDiff), 0.0) animated:animated];
-	}
+    [super setupNavigationBar];
+    
+    UIButton *tagButton = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];
+	UIImage *tagImage = [UIImage imageNamed:@"15-tags.png"];
+	[tagButton setImage:tagImage forState:UIControlStateNormal];
+	tagButton.frame = CGRectMake(tagButton.frame.origin.x, 
+							  tagButton.frame.origin.y, 
+							  tagImage.size.width + 10.0, 
+							  tagImage.size.height);
+	[tagButton addTarget:self action:@selector(tagsTouched) forControlEvents:UIControlEventTouchUpInside];
+	UIBarButtonItem *tagItem = [[[UIBarButtonItem alloc]initWithCustomView:tagButton]autorelease];
+    self.navigationItem.leftBarButtonItem = tagItem;
+    
+    UIButton *searchButton = [[[UIButton alloc] initWithFrame:CGRectZero]autorelease];
+	UIImage *searchImage = [UIImage imageNamed:@"06-magnify.png"];
+	[searchButton setImage:searchImage forState:UIControlStateNormal];
+	searchButton.frame = CGRectMake(searchButton.frame.origin.x, 
+                                 searchButton.frame.origin.y, 
+                                 searchImage.size.width + 10.0, 
+                                 searchImage.size.height);
+	[searchButton addTarget:self action:@selector(searchTouched) forControlEvents:UIControlEventTouchUpInside];
+	UIBarButtonItem *searchItem = [[[UIBarButtonItem alloc]initWithCustomView:searchButton]autorelease];
+    self.navigationItem.rightBarButtonItem = searchItem;
 }
 
 #pragma mark - ScrollView delegate
@@ -343,6 +350,26 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 }
 
 #pragma mark - Actions
+
+- (void)scrollToRowAtIndex:(NSInteger)index animated:(BOOL)animated
+{
+	NSInteger itemIndex = index;
+	
+	NSInteger count = 3.0;
+	
+	if (itemIndex < 0 && itemIndex < count) {
+		itemIndex = 0;
+	}
+	
+	if (itemIndex > count - 1) {
+		itemIndex = count - 1;
+	}
+	
+	if (itemIndex >= 0) {
+		// Remember which index we are targeting so we can ignore intermediates along the way
+		[self.scrollView setContentOffset:CGPointMake(itemIndex * (PageWidth + PagesDiff), 0.0) animated:animated];
+	}
+}
                                            
 - (void)dismissKeyboard
 {
@@ -373,6 +400,16 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     if (createButton.enabled == YES) {
         [self resetCreateButton];
     }
+}
+
+- (void) tagsTouched
+{
+    
+}
+
+- (void) searchTouched
+{
+    
 }
 
 #pragma mark - Dealloc
