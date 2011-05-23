@@ -23,4 +23,7 @@
 @property (nonatomic, retain) IBOutlet UIButton *tagsButton;
 - (IBAction)tagsButtonPressed;
 
+@property (nonatomic, retain) IBOutlet CustomSearchBar *searchBar;
+@property (nonatomic, readonly) BOOL isShowingSearchBar;
+
 @end

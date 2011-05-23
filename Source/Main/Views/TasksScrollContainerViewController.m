@@ -30,7 +30,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 @implementation TasksScrollContainerViewController
 
 @synthesize scrollView, currentPage, chatBar, chatInput, previousContentHeight, createButton;
-@synthesize tagsViewController, blackedOutView, tagsButton;
+@synthesize tagsViewController, blackedOutView, tagsButton, searchBar;
 
 - (void)viewDidLoad
 {
@@ -447,9 +447,29 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
 }
 
+- (BOOL)isShowingSearchBar
+{
+    return (self.searchBar.frame.origin.y == 0);
+}
+
 - (void)searchTouched
 {
+    if (self.isShowingSearchBar) {
+        [self.searchBar resignFirstResponder];
+    } else {
+        [self.searchBar becomeFirstResponder];
+    }
     
+    CGFloat newY = (self.isShowingSearchBar) ? -44.0 : 0.0;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    
+    CGRect frame = self.searchBar.frame;
+    frame.origin.y = newY;
+    self.searchBar.frame = frame;
+    
+    [UIView commitAnimations];
 }
 
 - (void)updateTitle
@@ -634,6 +654,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)dealloc
 {
+    [searchBar release];
     [createButton release];
     [chatInput release];
     [chatBar release];
