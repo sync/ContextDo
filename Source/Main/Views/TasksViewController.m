@@ -115,6 +115,8 @@
 {
 	if (!self.tasksSave) {
 		// todo
+//        Task *task = [Task taskWithName:@"Test Task" latitude:0.0 longitude:0.0];
+//        self.tasks = [NSArray arrayWithObject:task];
 	} else {
 		// search mode
 		// todo

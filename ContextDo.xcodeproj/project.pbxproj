@@ -83,6 +83,9 @@
 		249121E412EDD957009191BA /* TasksCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 249121E312EDD957009191BA /* TasksCalendarViewController.m */; };
 		2491256312EE490D009191BA /* TasksCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491256212EE490D009191BA /* TasksCalendarDataSource.m */; };
 		2491273A12EE647B009191BA /* TaskDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491273912EE647B009191BA /* TaskDetailsView.m */; };
+		24A629CD138B184D009E03BA /* CalendarChooserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24A629CC138B184D009E03BA /* CalendarChooserView.xib */; };
+		24A629D0138B18A5009E03BA /* CalendarChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A629CF138B18A5009E03BA /* CalendarChooserViewController.m */; };
+		24A629D3138B1947009E03BA /* CalendarChooserDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A629D2138B1946009E03BA /* CalendarChooserDataSource.m */; };
 		24B04F441302A88E00F27215 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B04F421302A88E00F27215 /* Icon@2x.png */; };
 		24B04F451302A88E00F27215 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B04F431302A88E00F27215 /* Icon.png */; };
 		24E4496D12EBA56600F08B7E /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* TagsViewController.m */; };
@@ -250,6 +253,11 @@
 		2491256212EE490D009191BA /* TasksCalendarDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksCalendarDataSource.m; sourceTree = "<group>"; };
 		2491273812EE647B009191BA /* TaskDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailsView.h; sourceTree = "<group>"; };
 		2491273912EE647B009191BA /* TaskDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailsView.m; sourceTree = "<group>"; };
+		24A629CC138B184D009E03BA /* CalendarChooserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarChooserView.xib; sourceTree = "<group>"; };
+		24A629CE138B18A4009E03BA /* CalendarChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarChooserViewController.h; sourceTree = "<group>"; };
+		24A629CF138B18A5009E03BA /* CalendarChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarChooserViewController.m; sourceTree = "<group>"; };
+		24A629D1138B1946009E03BA /* CalendarChooserDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarChooserDataSource.h; sourceTree = "<group>"; };
+		24A629D2138B1946009E03BA /* CalendarChooserDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarChooserDataSource.m; sourceTree = "<group>"; };
 		24B04F421302A88E00F27215 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		24B04F431302A88E00F27215 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* TagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagsViewController.h; sourceTree = "<group>"; };
@@ -559,6 +567,18 @@
 			name = "Tasks Scroll Container";
 			sourceTree = "<group>";
 		};
+		24A629C8138B17CD009E03BA /* Calendars */ = {
+			isa = PBXGroup;
+			children = (
+				24A629D1138B1946009E03BA /* CalendarChooserDataSource.h */,
+				24A629D2138B1946009E03BA /* CalendarChooserDataSource.m */,
+				24A629CE138B18A4009E03BA /* CalendarChooserViewController.h */,
+				24A629CF138B18A5009E03BA /* CalendarChooserViewController.m */,
+				24A629CC138B184D009E03BA /* CalendarChooserView.xib */,
+			);
+			name = Calendars;
+			sourceTree = "<group>";
+		};
 		24ADA8C412C84C97000BE62C /* Edition */ = {
 			isa = PBXGroup;
 			children = (
@@ -832,6 +852,7 @@
 				243A3C1E12E450DC00A6D402 /* Table header */,
 				2489CAC512BE185400C1A58A /* Cells */,
 				3A034D43125D629A00F49FA6 /* Settings */,
+				24A629C8138B17CD009E03BA /* Calendars */,
 				24E4496712EBA52600F08B7E /* Tags */,
 				248F21E51353CA2F00D9475C /* Tasks Scroll Container */,
 				2489CAA112BE102F00C1A58A /* Tasks */,
@@ -960,6 +981,7 @@
 				24E5BC66138A0314008D10A2 /* calendar@2x.png in Resources */,
 				24E5BC69138A156E008D10A2 /* tabpanel.png in Resources */,
 				24E5BC6A138A156E008D10A2 /* tabpanel@2x.png in Resources */,
+				24A629CD138B184D009E03BA /* CalendarChooserView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1020,6 +1042,8 @@
 				24E5BBE71389E316008D10A2 /* NSString+Additions.m in Sources */,
 				24E5BBED1389F534008D10A2 /* _Tag.m in Sources */,
 				24E5BBEE1389F534008D10A2 /* Tag.m in Sources */,
+				24A629D0138B18A5009E03BA /* CalendarChooserViewController.m in Sources */,
+				24A629D3138B1947009E03BA /* CalendarChooserDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

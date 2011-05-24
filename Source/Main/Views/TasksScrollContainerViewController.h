@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
 #import "BaseViewController.h"
 #import "TagsViewController.h"
+#import <EventKitUI/EventKitUI.h>
 
-@interface TasksScrollContainerViewController : BaseViewController <UIScrollViewDelegate, UITextViewDelegate, UIGestureRecognizerDelegate> {
+@interface TasksScrollContainerViewController : BaseViewController <UIScrollViewDelegate, UITextViewDelegate, UIGestureRecognizerDelegate, UIActionSheetDelegate, EKEventEditViewDelegate> {
     
 }
 

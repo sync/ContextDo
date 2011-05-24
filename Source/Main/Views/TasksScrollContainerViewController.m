@@ -1,6 +1,7 @@
 #import "TasksScrollContainerViewController.h"
 #import "NSString+Additions.h"
 #import "TasksContainerViewController.h"
+#import "CalendarChooserViewController.h"
 
 static CGFloat const kSentDateFontSize = 13.0f;
 static CGFloat const kMessageFontSize   = 16.0f;
@@ -235,9 +236,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #define VIEW_WIDTH    self.view.frame.size.width
 #define VIEW_HEIGHT    self.view.frame.size.height
 
-#define RESET_CHAT_BAR_HEIGHT    SET_CHAT_BAR_HEIGHT(kChatBarHeight1)
-#define EXPAND_CHAT_BAR_HEIGHT    SET_CHAT_BAR_HEIGHT(kChatBarHeight4)
-
 - (void)textViewDidChange:(UITextView *)textView {
     CGFloat contentHeight = textView.contentSize.height - kMessageFontSize + 2.0f;
     NSString *rightTrimmedText = @"";
@@ -419,6 +417,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)createEvent
 {
     [self dismissKeyboard];
+    
+    UIActionSheet * actionSheet = [[[UIActionSheet alloc] initWithTitle:@"Would you like to add more information?" 
+                                                               delegate:self
+                                                      cancelButtonTitle:@"No" 
+                                                 destructiveButtonTitle:nil
+                                                      otherButtonTitles:@"Yes", nil]autorelease];
+    [actionSheet showInView:self.view];
 }
 
 - (void)resetCreateButton
@@ -444,7 +449,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)calendarTouched
 {
-    
+    CalendarChooserViewController * controller = [[[CalendarChooserViewController alloc] initWithNibName:@"CalendarChooserView" bundle:nil]autorelease];
+    CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
+	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
 
 - (BOOL)isShowingSearchBar
@@ -648,6 +655,51 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 {
 	[self.blackedOutView removeFromSuperview];
 	blackedOutView = nil;
+}
+
+#pragma mark - ActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    EKEventStore *store = [[EKEventStore alloc] init];
+    
+    EKEvent * event = [EKEvent eventWithEventStore:store];
+    [event setTitle:chatInput.text];
+    
+    chatInput.text = @"";
+    [self textViewDidChange:chatInput];
+    
+    if (buttonIndex == 0) {
+        // Yes
+        NSLog(@"Yes");
+        
+//        EKEventViewController *eventViewController = [[EKEventViewController alloc] init];
+//        eventViewController.event = event;
+//        eventViewController.allowsEditing = YES; 
+//        UINavigationController *navigationController = nil;
+//        navigationController = [[UINavigationController alloc] initWithRootViewController:eventViewController]; 
+//        [eventViewController release];
+//        
+//         [self presentModalViewController:navigationController animated:YES];
+        
+        EKEventEditViewController* controller = [[EKEventEditViewController alloc] init];
+        controller.eventStore = store;
+        controller.event = event;
+        controller.editViewDelegate = self; 
+        [self presentModalViewController: controller animated:YES]; 
+        [controller release];
+        
+    } else {
+        // No
+        NSLog(@"No");
+    }
+}
+
+#pragma mark - EventKitDelegate
+
+- (void)eventEditViewController:(EKEventEditViewController *)controller didCompleteWithAction:(EKEventEditViewAction)action
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - Dealloc
