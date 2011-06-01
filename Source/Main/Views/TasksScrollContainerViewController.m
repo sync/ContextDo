@@ -146,6 +146,20 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 //    [self.view addGestureRecognizer:panGesture];
 //    [panGesture release];
     
+//    UISwipeGestureRecognizer * leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+//                                                                                        action:@selector(leftSwipe)];
+//    leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+//    leftSwipeGesture.delegate = self;
+//    [self.view addGestureRecognizer:leftSwipeGesture];
+//    [leftSwipeGesture release];
+//    
+//    UISwipeGestureRecognizer * rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+//                                                                                            action:@selector(rightSwipe)];
+//    rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
+//    rightSwipeGesture.delegate = self;
+//    [self.view addGestureRecognizer:rightSwipeGesture];
+//    [rightSwipeGesture release];
+    
     // Gesture dismiss
     UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                   action:@selector(dismissKeyboard)];
@@ -204,6 +218,16 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     }
     
     return YES;
+}
+
+- (void)leftSwipe
+{
+    [self scrollToRowAtIndex:self.currentPage - 1 animated:YES];
+}
+
+- (void)rightSwipe
+{
+     [self scrollToRowAtIndex:self.currentPage + 1 animated:YES];
 }
 
 #pragma mark - ScrollView delegate
