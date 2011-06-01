@@ -24,10 +24,7 @@
 - (void)setupNavigationBar
 {
 	[super setupNavigationBar];
-	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:@"Back"
-																								   target:self.navigationController
-																								 selector:@selector(customBackButtonTouched)];
-	
+    
 	self.navigationItem.rightBarButtonItem = nil;
 }
 
@@ -44,7 +41,6 @@
 	
 	self.taskEditDataSource = [[[TaskContactDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.taskEditDataSource;
-	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.taskEditDataSource.tempTask = self.task;;
 	self.tableView.sectionFooterHeight = 0.0;
 	self.tableView.sectionHeaderHeight = 12.0;

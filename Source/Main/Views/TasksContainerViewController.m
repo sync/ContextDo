@@ -64,11 +64,6 @@
 - (void)setupNavigationBar
 {
 	[super setupNavigationBar];
-	
-	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] 
-                                             backItemWithText:self.navigationController.navigationBar.topItem.title
-                                                        target:self.navigationController
-                                                    selector:@selector(customBackButtonTouched)];
 }
 
 #pragma mark -

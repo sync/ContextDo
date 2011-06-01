@@ -32,7 +32,6 @@
 		24000E57134C918D002C6601 /* TapkuLibrary.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 24000E34134C9180002C6601 /* TapkuLibrary.bundle */; };
 		2426AC3712F9A1CF00969CBB /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 2426AC3612F9A1CF00969CBB /* iTunesArtwork */; };
 		242C911612FD097B00F557AA /* Kit.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 242C911212FD097B00F557AA /* Kit.xcconfig */; };
-		243A35D012E3DC4300A6D402 /* DefaultStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A35CE12E3DC4300A6D402 /* DefaultStyleSheet.m */; };
 		243A3C2112E4511500A6D402 /* CTXDOTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A3C2012E4511500A6D402 /* CTXDOTableHeaderView.m */; };
 		243A3D5B12E46A4F00A6D402 /* GroupsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A3D5A12E46A4F00A6D402 /* GroupsCell.m */; };
 		243A3DA112E4748B00A6D402 /* CellBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 243A3DA012E4748B00A6D402 /* CellBackgroundView.m */; };
@@ -56,7 +55,6 @@
 		245673C912EFB1EE0004189D /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 245673C812EFB1EE0004189D /* SettingsCell.m */; };
 		245673D812EFB4F20004189D /* SettingsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 245673D712EFB4F20004189D /* SettingsDataSource.m */; };
 		2456745E12EFBC570004189D /* CTXDOButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456745D12EFBC570004189D /* CTXDOButton.m */; };
-		245674D312EFC3F40004189D /* CTXDoSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 245674D212EFC3F40004189D /* CTXDoSlider.m */; };
 		2456752D12EFC9630004189D /* SettingsSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456752C12EFC9630004189D /* SettingsSliderView.m */; };
 		245680FF12F072730004189D /* TasksCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 245680FE12F072730004189D /* TasksCalendarCell.m */; };
 		246BA8251352B82E0066AD19 /* DatabaseServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 246BA8241352B82E0066AD19 /* DatabaseServices.m */; };
@@ -75,8 +73,6 @@
 		248F21E81353CB2C00D9475C /* TasksScrollContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 248F21E71353CB2C00D9475C /* TasksScrollContainerViewController.m */; };
 		248F21F31353CBBD00D9475C /* ForwardTouchesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248F21F21353CBBD00D9475C /* ForwardTouchesView.m */; };
 		248F21F51353D05C00D9475C /* TasksScrollContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248F21F41353D05B00D9475C /* TasksScrollContainerView.xib */; };
-		2490FD9312E34D2300F56B39 /* titlebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FD9112E34D2300F56B39 /* titlebar.png */; };
-		2490FD9412E34D2300F56B39 /* titlebar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2490FD9212E34D2300F56B39 /* titlebar@2x.png */; };
 		249113D112EC4D4B009191BA /* CTXDONavigationArrowsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 249113D012EC4D4B009191BA /* CTXDONavigationArrowsControl.m */; };
 		2491212012EDC638009191BA /* TasksMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491211F12EDC638009191BA /* TasksMapViewController.m */; };
 		2491212212EDC725009191BA /* TasksMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2491212112EDC725009191BA /* TasksMapView.xib */; };
@@ -168,8 +164,6 @@
 		2426AC3612F9A1CF00969CBB /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		242C910F12FD097B00F557AA /* KitDeps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = KitDeps.xcodeproj; sourceTree = "<group>"; };
 		242C911212FD097B00F557AA /* Kit.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Kit.xcconfig; sourceTree = "<group>"; };
-		243A35CE12E3DC4300A6D402 /* DefaultStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultStyleSheet.m; sourceTree = "<group>"; };
-		243A35CF12E3DC4300A6D402 /* DefaultStyleSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultStyleSheet.h; sourceTree = "<group>"; };
 		243A3C1F12E4511500A6D402 /* CTXDOTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOTableHeaderView.h; sourceTree = "<group>"; };
 		243A3C2012E4511500A6D402 /* CTXDOTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOTableHeaderView.m; sourceTree = "<group>"; };
 		243A3D5912E46A4F00A6D402 /* GroupsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsCell.h; sourceTree = "<group>"; };
@@ -211,8 +205,6 @@
 		245673D712EFB4F20004189D /* SettingsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsDataSource.m; sourceTree = "<group>"; };
 		2456745C12EFBC570004189D /* CTXDOButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDOButton.h; sourceTree = "<group>"; };
 		2456745D12EFBC570004189D /* CTXDOButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDOButton.m; sourceTree = "<group>"; };
-		245674D112EFC3F40004189D /* CTXDoSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDoSlider.h; sourceTree = "<group>"; };
-		245674D212EFC3F40004189D /* CTXDoSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDoSlider.m; sourceTree = "<group>"; };
 		2456752B12EFC9630004189D /* SettingsSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSliderView.h; sourceTree = "<group>"; };
 		2456752C12EFC9630004189D /* SettingsSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsSliderView.m; sourceTree = "<group>"; };
 		245680FD12F072730004189D /* TasksCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksCalendarCell.h; sourceTree = "<group>"; };
@@ -240,8 +232,6 @@
 		248F21F11353CBBD00D9475C /* ForwardTouchesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForwardTouchesView.h; path = ../../../../../../Self/DeliciousPageControl/DeliciousPageControl/ForwardTouchesView.h; sourceTree = "<group>"; };
 		248F21F21353CBBD00D9475C /* ForwardTouchesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForwardTouchesView.m; path = ../../../../../../Self/DeliciousPageControl/DeliciousPageControl/ForwardTouchesView.m; sourceTree = "<group>"; };
 		248F21F41353D05B00D9475C /* TasksScrollContainerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TasksScrollContainerView.xib; sourceTree = "<group>"; };
-		2490FD9112E34D2300F56B39 /* titlebar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = titlebar.png; sourceTree = "<group>"; };
-		2490FD9212E34D2300F56B39 /* titlebar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "titlebar@2x.png"; sourceTree = "<group>"; };
 		249113CF12EC4D4B009191BA /* CTXDONavigationArrowsControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDONavigationArrowsControl.h; sourceTree = "<group>"; };
 		249113D012EC4D4B009191BA /* CTXDONavigationArrowsControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDONavigationArrowsControl.m; sourceTree = "<group>"; };
 		2491211E12EDC638009191BA /* TasksMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksMapViewController.h; sourceTree = "<group>"; };
@@ -492,15 +482,6 @@
 				2456726712EF50450004189D /* CTXDONotificationsServices.m */,
 			);
 			name = Notifications;
-			sourceTree = "<group>";
-		};
-		2456745B12EFBC030004189D /* UISliders */ = {
-			isa = PBXGroup;
-			children = (
-				245674D112EFC3F40004189D /* CTXDoSlider.h */,
-				245674D212EFC3F40004189D /* CTXDoSlider.m */,
-			);
-			name = UISliders;
 			sourceTree = "<group>";
 		};
 		246BA8221352B8080066AD19 /* Database */ = {
@@ -778,8 +759,6 @@
 				24B04F421302A88E00F27215 /* Icon@2x.png */,
 				24B04F431302A88E00F27215 /* Icon.png */,
 				2426AC3612F9A1CF00969CBB /* iTunesArtwork */,
-				2490FD9112E34D2300F56B39 /* titlebar.png */,
-				2490FD9212E34D2300F56B39 /* titlebar@2x.png */,
 				24E5BBE01389D44C008D10A2 /* ChatBar.png */,
 				24E5BBE11389D44C008D10A2 /* CreateButton.png */,
 				24E5BBEF1389F717008D10A2 /* 06-magnify.png */,
@@ -809,8 +788,6 @@
 			isa = PBXGroup;
 			children = (
 				3A57002C11FFB2A500248D1D /* Define.h */,
-				243A35CF12E3DC4300A6D402 /* DefaultStyleSheet.h */,
-				243A35CE12E3DC4300A6D402 /* DefaultStyleSheet.m */,
 				3A57FFA111FFB24F00248D1D /* AppDelegate.h */,
 				3A57FFA211FFB24F00248D1D /* AppDelegate.m */,
 				248921D3128EE15E00DC9712 /* MainWindow.xib */,
@@ -847,7 +824,6 @@
 		3A57FFA811FFB24F00248D1D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2456745B12EFBC030004189D /* UISliders */,
 				243A46B012E573D000A6D402 /* UIButtons */,
 				243A3C1E12E450DC00A6D402 /* Table header */,
 				2489CAC512BE185400C1A58A /* Cells */,
@@ -932,8 +908,6 @@
 				248921D4128EE15E00DC9712 /* MainWindow.xib in Resources */,
 				248921ED128EE27500DC9712 /* SettingsView.xib in Resources */,
 				2489CADD12BE1D6700C1A58A /* TasksView.xib in Resources */,
-				2490FD9312E34D2300F56B39 /* titlebar.png in Resources */,
-				2490FD9412E34D2300F56B39 /* titlebar@2x.png in Resources */,
 				243A537412E677F200A6D402 /* TasksContainerView.xib in Resources */,
 				2448D1D812E856CA005EEEDA /* TaskEditView.xib in Resources */,
 				2448D55B12E8B32B005EEEDA /* TaskDatePickerView.xib in Resources */,
@@ -997,7 +971,6 @@
 				3A034D4B125D62DD00F49FA6 /* SettingsViewController.m in Sources */,
 				2489CAA412BE10E300C1A58A /* TasksDataSource.m in Sources */,
 				2489CADB12BE1D5E00C1A58A /* TasksViewController.m in Sources */,
-				243A35D012E3DC4300A6D402 /* DefaultStyleSheet.m in Sources */,
 				243A3C2112E4511500A6D402 /* CTXDOTableHeaderView.m in Sources */,
 				243A3D5B12E46A4F00A6D402 /* GroupsCell.m in Sources */,
 				243A3DA112E4748B00A6D402 /* CellBackgroundView.m in Sources */,
@@ -1029,7 +1002,6 @@
 				245673C912EFB1EE0004189D /* SettingsCell.m in Sources */,
 				245673D812EFB4F20004189D /* SettingsDataSource.m in Sources */,
 				2456745E12EFBC570004189D /* CTXDOButton.m in Sources */,
-				245674D312EFC3F40004189D /* CTXDoSlider.m in Sources */,
 				2456752D12EFC9630004189D /* SettingsSliderView.m in Sources */,
 				245680FF12F072730004189D /* TasksCalendarCell.m in Sources */,
 				24FA42F71302F7BD001B1972 /* CTXDOBlueButton.m in Sources */,

@@ -19,7 +19,7 @@
 SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 @synthesize window, navigationController, placemark, reverseGeocoder, locationGetter, firstGPSFix, lastCurrentLocation;
-@synthesize backgrounding, blackedOutView;
+@synthesize backgrounding;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -38,14 +38,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	// Add the navigation controller's view to the window and display.
     self.window.rootViewController = self.navigationController;
     [window makeKeyAndVisible];
-	
-	[self.navigationController.customNavigationBar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].navBarBackgroundImage
-														  forBarStyle:UIBarStyleBlackOpaque];
-	[self.navigationController.customToolbar setBackgroundImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarBackgroundImage
-													forBarStyle:UIBarStyleBlackOpaque];
-	[self.navigationController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
-												forBarStyle:UIBarStyleBlackOpaque];
-	
+    
     return YES;
 }
 
@@ -203,70 +196,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (void)showNearTasksAnimated:(BOOL)animated
 {
 	// todo
-}
-
-#pragma mark -
-#pragma mark Blackout Main View
-
-- (BOOL)isBlackingOutTopViewElements
-{
-	return (self.blackedOutView != nil);
-}
-
-- (void)blackOutTopViewElementsAnimated:(BOOL)animated
-{
-	if (self.isBlackingOutTopViewElements) {
-		return;
-	}
-	
-	CGSize boundsSize = self.window.bounds.size;
-	self.blackedOutView = [[[UIView alloc]initWithFrame:CGRectMake(0.0, 
-																   0.0,
-																   boundsSize.width,
-																   20 + 44)]autorelease];
-    self.blackedOutView.alpha = 0.0;
-	self.blackedOutView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].blackedOutColor;
-	[self.window addSubview:self.blackedOutView];
-	
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDelay:0.1];
-		[UIView setAnimationDuration:0.3];
-		[UIView setAnimationCurve:UIViewAnimationCurveLinear];
-	}
-    
-    self.blackedOutView.alpha = 1.0;
-	
-	if (animated) {
-		[UIView commitAnimations];
-	}
-}
-
-- (void)hideBlackOutTopViewElementsAnimated:(BOOL)animated
-{
-	if (!self.isBlackingOutTopViewElements) {
-		return;
-	}
-	
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:0.3];
-		[UIView setAnimationCurve:UIViewAnimationCurveLinear];
-		[UIView setAnimationDelegate:self];
-		[UIView setAnimationDidStopSelector:@selector(hideBlackoutAnimationDidStop)];
-	}
-	
-	self.blackedOutView.alpha = 0.0;
-	
-	if (animated) {
-		[UIView commitAnimations];
-	}
-}
-
-- (void)hideBlackoutAnimationDidStop
-{
-	[self.blackedOutView removeFromSuperview];
-	blackedOutView = nil;
 }
 
 #pragma mark -

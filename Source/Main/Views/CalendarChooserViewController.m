@@ -27,28 +27,30 @@
 {
     [super setupNavigationBar];
     
-    self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Close"
-                                                                                                           target:self
-                                                                                                         selector:@selector(closeButtonTouched)];
+    self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Close"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(closeButtonTouched)] autorelease];
 }
     
 - (void)setupDataSource
 {
 	[super setupDataSource];
 	
-	NSArray *choicesList = [NSArray arrayWithObjects:@"MobileMe", @"Gmail", @"QUT", nil];
+	EKEventStore *store = [[[EKEventStore alloc] init] autorelease];
 	
-	self.calendarChooserDataSource = [[[CalendarChooserDataSource alloc]initWitChoicesList:choicesList]autorelease];
-    self.calendarChooserDataSource.selectedCalendarName = @"QUT";
-	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
+	self.calendarChooserDataSource = [[[CalendarChooserDataSource alloc] init] autorelease];
+    [self.calendarChooserDataSource.content addObjectsFromArray:store.calendars];
+    self.calendarChooserDataSource.selectedCalendar = [store defaultCalendarForNewEvents];
 	self.tableView.dataSource = self.calendarChooserDataSource;
 	[self.tableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-	NSString *choice  = [self.calendarChooserDataSource choiceForIndexPath:indexPath];
-    self.calendarChooserDataSource.selectedCalendarName = choice;
+	EKCalendar *calendar = [self.calendarChooserDataSource calendarForIndexPath:indexPath];
+    
+    self.calendarChooserDataSource.selectedCalendar = calendar;
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
     

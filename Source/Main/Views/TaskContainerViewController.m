@@ -91,14 +91,11 @@
 {
 	[super setupNavigationBar];
 	
-	if (!self.showCloseButton) {
-		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:self.navigationController.navigationBar.topItem.title
-																									   target:self.navigationController
-																									 selector:@selector(customBackButtonTouched)];
-	} else {
-		self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Close"
-																											   target:self
-																											 selector:@selector(closeButtonTouched)];
+	if (self.showCloseButton) {
+        self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Close"
+                                                                                  style:UIBarButtonItemStylePlain
+                                                                                 target:self
+                                                                                 action:@selector(closeButtonTouched)] autorelease];
 		
 	}
 	

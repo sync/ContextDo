@@ -35,10 +35,10 @@
 	self.backgroundColor = [UIColor clearColor];
 }
 
-- (CTXDoSlider *)slider
+- (UISlider *)slider
 {
 	if (!slider) {
-		slider = [[[CTXDoSlider alloc]initWithFrame:CGRectZero]autorelease];
+		slider = [[[UISlider alloc]initWithFrame:CGRectZero]autorelease];
 		[self addSubview:slider];
 	}
 	

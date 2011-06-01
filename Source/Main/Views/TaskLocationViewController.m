@@ -32,8 +32,6 @@
 	[layer setBorderWidth:1.0];
 	[layer setBorderColor:[[UIColor colorWithHexString:@"bbb"] CGColor]];
 	
-	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
-	
 	self.userEdited = (self.taskEditDataSource.tempTask.location.length  != 0);
 	
 	placemark = [[AppDelegate sharedAppDelegate].placemark retain];
@@ -56,13 +54,10 @@
 {
 	[super setupNavigationBar];
 	
-	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:@"Back"
-																								   target:self.navigationController
-																								 selector:@selector(customBackButtonTouched)];
-    
-    self.navigationItem.rightBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet]navBarButtonItemWithText:@"Clear"
-																										   target:self
-																										 selector:@selector(clearTouched)];
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Clear"
+                                                                               style:UIBarButtonItemStylePlain
+                                                                              target:self
+                                                                              action:@selector(clearTouched)] autorelease];
 }
 
 - (void)setupDataSource
@@ -78,7 +73,6 @@
 	
 	self.taskEditDataSource = [[[TaskLocationDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.taskEditDataSource;
-	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.taskEditDataSource.tempTask = self.task;
 	self.tableView.sectionFooterHeight = 0.0;
 	self.tableView.sectionHeaderHeight = 12.0;

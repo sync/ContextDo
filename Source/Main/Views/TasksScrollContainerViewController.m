@@ -21,17 +21,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)slideFrame:(BOOL)up;
 - (void)dismissKeyboard;
 - (void)updateTitle;
-- (void)showTagsAnimated:(BOOL)animated;
-- (void)hideTagsAnimated:(BOOL)animated;
-- (void)blackOutMainViewAnimated:(BOOL)animated;
-- (void)hideBlackOutMainViewAnimated:(BOOL)animated;
 
 @end
 
 @implementation TasksScrollContainerViewController
 
 @synthesize scrollView, currentPage, chatBar, chatInput, previousContentHeight, createButton;
-@synthesize tagsViewController, blackedOutView, tagsButton, searchBar;
+@synthesize searchBar;
 
 - (void)viewDidLoad
 {
@@ -116,7 +112,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     createButton.frame = CGRectMake(chatBar.frame.size.width - 70.0f, 6.0f, 64.0f, 26.0f);
     createButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | // multi-line input
     UIViewAutoresizingFlexibleLeftMargin;                       // landscape
-    UIImage *createButtonBackground = [UIImage imageNamed:@"createButton.png"];
+    UIImage *createButtonBackground = [UIImage imageNamed:@"CreateButton.png"];
     [createButton setBackgroundImage:createButtonBackground forState:UIControlStateNormal];
     [createButton setBackgroundImage:createButtonBackground forState:UIControlStateDisabled];
     createButton.titleLabel.font = [UIFont boldSystemFontOfSize:16.0f];
@@ -136,23 +132,32 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification object:nil];
     
-//    // Gesture dismiss
-//    UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                                                                  action:@selector(dismissKeyboard)];
-//    tapGesture.delegate = self;
-//    [self.view addGestureRecognizer:tapGesture];
-//    [tapGesture release];
+//    //disables the built-in pan gesture
+//    for (UIGestureRecognizer *gesture in scrollView.gestureRecognizers){
+//        if ([gesture isKindOfClass:[UIPanGestureRecognizer class]]){
+//            UIPanGestureRecognizer * panGesture = (UIPanGestureRecognizer *)gesture;
+//            panGesture.minimumNumberOfTouches = 3;
+//            panGesture.maximumNumberOfTouches = 3;
+//        }
+//    }
     
-    [self hideTagsAnimated:FALSE];
+//    UIPanGestureRecognizer * panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self 
+//                                                                                  action:@selector(pangGesture:)];
+//    [self.view addGestureRecognizer:panGesture];
+//    [panGesture release];
+    
+    // Gesture dismiss
+    UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(dismissKeyboard)];
+    tapGesture.delegate = self;
+    [self.view addGestureRecognizer:tapGesture];
+    [tapGesture release];
 }
 
 - (void)viewDidUnload
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [self hideTagsAnimated:FALSE];
-	[tagsViewController release];
-	tagsViewController = nil;
     self.scrollView = nil;
     self.chatBar = nil;
     
@@ -192,7 +197,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if (touch.view == self.tagsButton) {
+    if (touch.view == self.createButton ||
+        touch.view == self.chatBar ||
+        touch.view == self.chatInput) {
         return NO;
     }
     
@@ -450,7 +457,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)calendarTouched
 {
     CalendarChooserViewController * controller = [[[CalendarChooserViewController alloc] initWithNibName:@"CalendarChooserView" bundle:nil]autorelease];
-    CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
+    UINavigationController *navController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
 	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
 
@@ -496,172 +503,11 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     self.title = title;
 }
 
-- (IBAction)tagsButtonPressed
-{
-	if (!self.isShowingTagsView) {
-		[self showTagsAnimated:TRUE];
-	} else {
-		[self hideTagsAnimated:TRUE];
-	}
-}
-
-#pragma mark - TagsView
-
-#define TagsHiddenHeight 46.0
-#define TagsShowingHeight 290.0
-
-- (TagsViewController *)tagsViewController
-{
-	if (!tagsViewController) {
-		tagsViewController = [[TagsViewController alloc]initWithNibName:@"TagsView" bundle:nil];
-		tagsViewController.view.userInteractionEnabled = FALSE;
-		[self.view addSubview:tagsViewController.view];
-		[self.view bringSubviewToFront:tagsViewController.view];
-		[self.view bringSubviewToFront:self.tagsButton];
-        [self.view bringSubviewToFront:self.chatBar];
-	}
-	
-	return tagsViewController;
-}
-
-- (BOOL)isShowingTagsView
-{
-	CGSize boundsSize = self.view.bounds.size;
-	return (self.tagsViewController.view.frame.origin.y != boundsSize.height  - (boundsSize.height - TagsShowingHeight - TagsHiddenHeight));
-}
-
-- (void)showTagsAnimated:(BOOL)animated
-{
-	if (self.isShowingTagsView) {
-		return;
-	}
-	
-	self.tagsViewController.view.userInteractionEnabled = TRUE;
-	
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:0.3];
-	}
-    
-    [self.tagsViewController.tagsLabel becomeFirstResponder];
-	
-	CGSize boundsSize = self.view.bounds.size;
-	[self.tagsViewController viewWillAppear:animated];
-	self.tagsViewController.view.frame = CGRectMake(0.0, 
-													boundsSize.height - TagsShowingHeight, 
-													boundsSize.width, 
-													TagsShowingHeight);
-	
-	[[AppDelegate sharedAppDelegate]blackOutTopViewElementsAnimated:animated];
-	[self blackOutMainViewAnimated:animated];
-	
-	self.tagsButton.frame = CGRectMake(0.0, self.tagsViewController.view.frame.origin.y, self.tagsButton.frame.size.width, self.tagsButton.frame.size.height);
-	
-	
-	if (animated) {
-		[UIView commitAnimations];
-	}
-}
-
-- (void)hideTagsAnimated:(BOOL)animated
-{
-	if (!self.isShowingTagsView) {
-		return;
-	}
-	
-	self.tagsViewController.view.userInteractionEnabled = FALSE;
-    
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:0.3];
-	}
-	
-	CGSize boundsSize = self.view.bounds.size;
-	self.tagsViewController.view.frame = CGRectMake(0.0, 
-													boundsSize.height  - (boundsSize.height - TagsShowingHeight - TagsHiddenHeight), 
-													boundsSize.width, 
-													TagsShowingHeight);
-	
-	[[AppDelegate sharedAppDelegate]hideBlackOutTopViewElementsAnimated:animated];
-	[self hideBlackOutMainViewAnimated:TRUE];
-	
-	self.tagsButton.frame = CGRectMake(0.0, self.tagsViewController.view.frame.origin.y, self.tagsButton.frame.size.width, self.tagsButton.frame.size.height);
-	
-	if (animated) {
-		[UIView commitAnimations];
-	}
-}
-
-#pragma mark -
-#pragma mark Blackout Main View
-
-- (BOOL)isBlackingOutMainView
-{
-	return (self.blackedOutView != nil);
-}
-
-- (void)blackOutMainViewAnimated:(BOOL)animated
-{
-	if (self.isBlackingOutMainView) {
-		return;
-	}
-	
-	CGSize boundsSize = self.view.bounds.size;
-	self.blackedOutView = [[[UIView alloc]initWithFrame:CGRectMake(0.0, 
-																   0.0,
-																   boundsSize.width,
-																   boundsSize.height)]autorelease];
-    self.blackedOutView.alpha = 0.0;
-	self.blackedOutView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].blackedOutColor;
-	[self.view insertSubview:self.blackedOutView belowSubview:self.tagsViewController.view];
-	
-	
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDelay:0.1];
-		[UIView setAnimationDuration:0.3];
-		[UIView setAnimationCurve:UIViewAnimationCurveLinear];
-	}
-	
-	self.blackedOutView.alpha = 1.0;
-	
-	if (animated) {
-		[UIView commitAnimations];
-	}
-}
-
-- (void)hideBlackOutMainViewAnimated:(BOOL)animated
-{
-	if (!self.isBlackingOutMainView) {
-		return;
-	}
-	
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:0.3];
-		[UIView setAnimationCurve:UIViewAnimationCurveLinear];
-		[UIView setAnimationDelegate:self];
-		[UIView setAnimationDidStopSelector:@selector(hideBlackoutAnimationDidStop)];
-	}
-	
-	self.blackedOutView.alpha = 0.0;
-	
-	if (animated) {
-		[UIView commitAnimations];
-	}
-}
-
-- (void)hideBlackoutAnimationDidStop
-{
-	[self.blackedOutView removeFromSuperview];
-	blackedOutView = nil;
-}
-
 #pragma mark - ActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    EKEventStore *store = [[EKEventStore alloc] init];
+    EKEventStore *store = [[[EKEventStore alloc] init] autorelease];
     
     EKEvent * event = [EKEvent eventWithEventStore:store];
     [event setTitle:chatInput.text];
@@ -673,21 +519,21 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         // Yes
         NSLog(@"Yes");
         
-//        EKEventViewController *eventViewController = [[EKEventViewController alloc] init];
-//        eventViewController.event = event;
-//        eventViewController.allowsEditing = YES; 
-//        UINavigationController *navigationController = nil;
-//        navigationController = [[UINavigationController alloc] initWithRootViewController:eventViewController]; 
-//        [eventViewController release];
-//        
-//         [self presentModalViewController:navigationController animated:YES];
+        EKEventViewController *eventViewController = [[EKEventViewController alloc] init];
+        eventViewController.event = event;
+        eventViewController.allowsEditing = YES; 
+        UINavigationController *navigationController = nil;
+        navigationController = [[UINavigationController alloc] initWithRootViewController:eventViewController]; 
+        [eventViewController release];
         
-        EKEventEditViewController* controller = [[EKEventEditViewController alloc] init];
-        controller.eventStore = store;
-        controller.event = event;
-        controller.editViewDelegate = self; 
-        [self presentModalViewController: controller animated:YES]; 
-        [controller release];
+         [self presentModalViewController:navigationController animated:YES];
+        
+//        EKEventEditViewController* controller = [[EKEventEditViewController alloc] init];
+//        controller.eventStore = store;
+//        controller.event = event;
+//        controller.editViewDelegate = self; 
+//        [self presentModalViewController: controller animated:YES]; 
+//        [controller release];
         
     } else {
         // No

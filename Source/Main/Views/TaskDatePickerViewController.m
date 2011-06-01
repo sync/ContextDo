@@ -50,11 +50,6 @@
 - (void)setupNavigationBar
 {
 	[super setupNavigationBar];
-	
-	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] backItemWithText:@"Back"
-																								   target:self.navigationController
-																								 selector:@selector(customBackButtonTouched)];
-	
 }
 
 - (void)setupDataSource
@@ -64,7 +59,6 @@
 	self.taskDatePickerDataSource = [[[TaskDatePickerDataSource alloc]init]autorelease];
 	self.taskDatePickerDataSource.tempTask = self.task;
 	self.tableView.dataSource = self.taskDatePickerDataSource;
-	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.tableView.allowsSelection = FALSE;
 	[self.taskDatePickerDataSource.content addObject:@"Show Due Time"];
 	self.tableView.sectionHeaderHeight = 130.0;

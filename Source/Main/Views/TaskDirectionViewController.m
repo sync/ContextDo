@@ -29,9 +29,7 @@
 {
     [super viewDidLoad];
 	
-	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].taskDarkGrayColor;
-    
-    self.directions = [UICGDirections sharedDirections];
+	self.directions = [UICGDirections sharedDirections];
 	self.directions.delegate = self;
 	
 	self.mapView.showsUserLocation = TRUE;

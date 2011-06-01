@@ -3,7 +3,12 @@
 
 @implementation CalendarChooserDataSource
 
-@synthesize selectedCalendarName;
+@synthesize selectedCalendar;
+
+- (EKCalendar *)calendarForIndexPath:(NSIndexPath *)indexPath
+{
+	return [self objectForIndexPath:indexPath];
+}
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
@@ -15,22 +20,22 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CalendarChooserCellIdentifier] autorelease];
     }
 	
-	NSString *choice = [self choiceForIndexPath:indexPath];
+	EKCalendar *calendar = [self calendarForIndexPath:indexPath];
 	
-	if ([choice isEqualToString:self.selectedCalendarName]) {
+	if ([calendar isEqual:self.selectedCalendar]) {
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
 	} else {
 		cell.accessoryType = UITableViewCellAccessoryNone;
 	}
     
-    cell.textLabel.text = choice;
+    cell.textLabel.text = calendar.title;
 	
     return cell;
 }
 
 - (void)dealloc
 {
-    [selectedCalendarName release];
+    [selectedCalendar release];
     
     [super dealloc];
 }

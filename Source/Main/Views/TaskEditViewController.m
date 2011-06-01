@@ -52,13 +52,15 @@
 {
 	[super setupNavigationBar];
 	
-	self.navigationItem.rightBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Save"
-																												target:self
-																											  selector:@selector(saveTouched)];
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Save"
+                                                                               style:UIBarButtonItemStylePlain
+                                                                              target:self
+                                                                              action:@selector(saveTouched)] autorelease];
 	
-	self.navigationItem.leftBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] navBarButtonItemWithText:@"Cancel"
-																										   target:self
-																										 selector:@selector(cancelTouched)];
+	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(cancelTouched)] autorelease];
 }
 
 - (void)setupDataSource
@@ -73,7 +75,6 @@
 	
 	self.taskEditDataSource = [[[TaskEditDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.taskEditDataSource;
-	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].backgroundTexture;
 	self.taskEditDataSource.tempTask = (self.task) ? [[self.task copy]autorelease] : [[[Task alloc]init]autorelease];
 	self.tableView.sectionFooterHeight = 0.0;
 	self.tableView.sectionHeaderHeight = 12.0;

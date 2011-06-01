@@ -12,7 +12,6 @@
 {
 	[super viewDidLoad];
 	
-	self.view.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].taskDarkGrayColor;
 	[self.taskDetailsView.completedButton addTarget:self action:@selector(completedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
 
 	[self refreshTask];
@@ -59,7 +58,7 @@
 {
 	TaskEditViewController *controller = [[[TaskEditViewController alloc]initWithNibName:@"TaskEditView" bundle:nil]autorelease];
 	controller.task = self.task;
-	CustomNavigationController *navController = [[DefaultStyleSheet sharedDefaultStyleSheet]customNavigationControllerWithRoot:controller];
+	UINavigationController *navController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
 	[self.mainNavController presentModalViewController:navController animated:TRUE];
 }
 

@@ -1,10 +1,12 @@
 #import <Foundation/Foundation.h>
-#import "ChoicesListDataSource.h"
+#import "BaseTableViewDataSource.h"
 
-@interface CalendarChooserDataSource : ChoicesListDataSource {
+@interface CalendarChooserDataSource : BaseTableViewDataSource {
     
 }
 
-@property (nonatomic, retain) NSString *selectedCalendarName;
+@property (nonatomic, retain) EKCalendar *selectedCalendar;
+
+- (EKCalendar *)calendarForIndexPath:(NSIndexPath *)indexPath;
 
 @end

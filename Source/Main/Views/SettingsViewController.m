@@ -43,7 +43,6 @@
 	NSArray *choicesList = [NSArray arrayWithObjects:section1, nil];
 	
 	self.settingsDataSource = [[[SettingsDataSource alloc]initWitChoicesList:choicesList]autorelease];
-	self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
 	self.tableView.dataSource = self.settingsDataSource;
 	[self.tableView reloadData];
 }
@@ -75,10 +74,10 @@
 - (void)setupNavigationBar
 {
 	[super setupNavigationBar];
-	
-	self.navigationItem.rightBarButtonItem = [[DefaultStyleSheet sharedDefaultStyleSheet] doneNavBarButtonItemWithText:@"Done"
-																												target:self
-																											  selector:@selector(doneTouched)];
+    
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                     target:self 
+                                                                                     action:@selector(doneTouched)] autorelease];
 }
 
 - (SettingsSliderView *)settingsSliderView
@@ -170,7 +169,7 @@
 
 - (void)sliderDidChangeValue:(id)sender
 {
-	CTXDoSlider *slider = (CTXDoSlider *)sender;
+	UISlider *slider = (UISlider *)sender;
 	CGFloat value = slider.value;
 	CGFloat sliderValue = 0.0;
 	if (value < 0.5) {

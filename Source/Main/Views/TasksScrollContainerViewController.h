@@ -1,7 +1,5 @@
 #import <Foundation/Foundation.h>
 #import "BaseViewController.h"
-#import "TagsViewController.h"
-#import <EventKitUI/EventKitUI.h>
 
 @interface TasksScrollContainerViewController : BaseViewController <UIScrollViewDelegate, UITextViewDelegate, UIGestureRecognizerDelegate, UIActionSheetDelegate, EKEventEditViewDelegate> {
     
@@ -18,13 +16,7 @@
 @property (nonatomic, assign) CGFloat previousContentHeight;
 @property (nonatomic, retain) UIButton *createButton;
 
-@property (nonatomic, readonly) TagsViewController *tagsViewController;
-@property (nonatomic, readonly) BOOL isShowingTagsView;
-@property (nonatomic, assign) UIView *blackedOutView;
-@property (nonatomic, retain) IBOutlet UIButton *tagsButton;
-- (IBAction)tagsButtonPressed;
-
-@property (nonatomic, retain) IBOutlet CustomSearchBar *searchBar;
+@property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, readonly) BOOL isShowingSearchBar;
 
 @end
