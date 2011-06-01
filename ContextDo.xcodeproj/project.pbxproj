@@ -71,7 +71,6 @@
 		2489CADB12BE1D5E00C1A58A /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2489CADA12BE1D5E00C1A58A /* TasksViewController.m */; };
 		2489CADD12BE1D6700C1A58A /* TasksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2489CADC12BE1D6700C1A58A /* TasksView.xib */; };
 		248F21E81353CB2C00D9475C /* TasksScrollContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 248F21E71353CB2C00D9475C /* TasksScrollContainerViewController.m */; };
-		248F21F31353CBBD00D9475C /* ForwardTouchesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 248F21F21353CBBD00D9475C /* ForwardTouchesView.m */; };
 		248F21F51353D05C00D9475C /* TasksScrollContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248F21F41353D05B00D9475C /* TasksScrollContainerView.xib */; };
 		249113D112EC4D4B009191BA /* CTXDONavigationArrowsControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 249113D012EC4D4B009191BA /* CTXDONavigationArrowsControl.m */; };
 		2491212012EDC638009191BA /* TasksMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491211F12EDC638009191BA /* TasksMapViewController.m */; };
@@ -229,8 +228,6 @@
 		2489CADC12BE1D6700C1A58A /* TasksView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TasksView.xib; sourceTree = "<group>"; };
 		248F21E61353CB2C00D9475C /* TasksScrollContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksScrollContainerViewController.h; sourceTree = "<group>"; };
 		248F21E71353CB2C00D9475C /* TasksScrollContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksScrollContainerViewController.m; sourceTree = "<group>"; };
-		248F21F11353CBBD00D9475C /* ForwardTouchesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForwardTouchesView.h; path = ../../../../../../Self/DeliciousPageControl/DeliciousPageControl/ForwardTouchesView.h; sourceTree = "<group>"; };
-		248F21F21353CBBD00D9475C /* ForwardTouchesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForwardTouchesView.m; path = ../../../../../../Self/DeliciousPageControl/DeliciousPageControl/ForwardTouchesView.m; sourceTree = "<group>"; };
 		248F21F41353D05B00D9475C /* TasksScrollContainerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TasksScrollContainerView.xib; sourceTree = "<group>"; };
 		249113CF12EC4D4B009191BA /* CTXDONavigationArrowsControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTXDONavigationArrowsControl.h; sourceTree = "<group>"; };
 		249113D012EC4D4B009191BA /* CTXDONavigationArrowsControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTXDONavigationArrowsControl.m; sourceTree = "<group>"; };
@@ -539,8 +536,6 @@
 		248F21E51353CA2F00D9475C /* Tasks Scroll Container */ = {
 			isa = PBXGroup;
 			children = (
-				248F21F11353CBBD00D9475C /* ForwardTouchesView.h */,
-				248F21F21353CBBD00D9475C /* ForwardTouchesView.m */,
 				248F21E61353CB2C00D9475C /* TasksScrollContainerViewController.h */,
 				248F21E71353CB2C00D9475C /* TasksScrollContainerViewController.m */,
 				248F21F41353D05B00D9475C /* TasksScrollContainerView.xib */,
@@ -1010,7 +1005,6 @@
 				246BA82F1352C37E0066AD19 /* _Task.m in Sources */,
 				246BA8331352C3BD0066AD19 /* Task.m in Sources */,
 				248F21E81353CB2C00D9475C /* TasksScrollContainerViewController.m in Sources */,
-				248F21F31353CBBD00D9475C /* ForwardTouchesView.m in Sources */,
 				24E5BBE71389E316008D10A2 /* NSString+Additions.m in Sources */,
 				24E5BBED1389F534008D10A2 /* _Tag.m in Sources */,
 				24E5BBEE1389F534008D10A2 /* Tag.m in Sources */,

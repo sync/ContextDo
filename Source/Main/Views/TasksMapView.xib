@@ -45,7 +45,7 @@
 					<object class="IBMKMapView" id="915961156">
 						<reference key="NSNextResponder" ref="79537660"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrameSize">{255, 357}</string>
+						<string key="NSFrameSize">{320, 376}</string>
 						<reference key="NSSuperview" ref="79537660"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -54,7 +54,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</object>
-				<string key="NSFrameSize">{255, 357}</string>
+				<string key="NSFrameSize">{320, 376}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="915961156"/>

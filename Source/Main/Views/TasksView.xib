@@ -45,7 +45,7 @@
 					<object class="IBUITableView" id="836498833">
 						<reference key="NSNextResponder" ref="225183005"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrameSize">{255, 357}</string>
+						<string key="NSFrameSize">{320, 376}</string>
 						<reference key="NSSuperview" ref="225183005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -66,7 +66,7 @@
 						<float key="IBUISectionFooterHeight">22</float>
 					</object>
 				</object>
-				<string key="NSFrameSize">{255, 357}</string>
+				<string key="NSFrameSize">{320, 376}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="836498833"/>

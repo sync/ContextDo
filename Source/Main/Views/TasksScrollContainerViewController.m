@@ -35,10 +35,10 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     self.currentPage = 0;
     
-#define LeftRightDiff 12.0
-#define PageWidth 255.0
-#define PagesDiff 24.0
-#define PageHeight 357.0
+#define LeftRightDiff 0.0
+#define PageWidth 320.0
+#define PagesDiff 0.0
+#define PageHeight 376.0
 #define TopDiff 0.0
 #define NavDiff 44.0
     
@@ -48,34 +48,34 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     self.scrollView.clipsToBounds = NO;
      
     TasksContainerViewController * controller1 = [[[TasksContainerViewController alloc] initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
-    controller1.view.transform = CGAffineTransformIdentity;
-    controller1.view.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    //    controller1.view.transform = CGAffineTransformIdentity;
+    //controller1.view.transform = CGAffineTransformMakeScale(0.8, 0.8);
     controller1.view.frame = CGRectMake(LeftRightDiff, TopDiff, PageWidth, PageHeight + NavDiff);
     controller1.view.backgroundColor = [UIColor redColor];
-    CALayer *layer1 = [controller1.view layer];
-	layer1.masksToBounds = YES;
-	[layer1 setBorderWidth:1.0];
-	[layer1 setBorderColor:[[UIColor blackColor] CGColor]];
+//    CALayer *layer1 = [controller1.view layer];
+//	layer1.masksToBounds = YES;
+//	[layer1 setBorderWidth:1.0];
+//	[layer1 setBorderColor:[[UIColor blackColor] CGColor]];
     [self.scrollView addSubview:controller1.view];
     [controller1 showCalendar];
     
     TasksContainerViewController * controller2 = [[[TasksContainerViewController alloc] initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
     controller2.view.frame = CGRectMake(controller1.view.frame.origin.x + controller1.view.frame.size.width + PagesDiff, TopDiff, PageWidth, PageHeight + NavDiff);
     controller2.view.backgroundColor = [UIColor greenColor];
-    CALayer *layer2 = [controller2.view layer];
-	layer2.masksToBounds = YES;
-	[layer2 setBorderWidth:1.0];
-	[layer2 setBorderColor:[[UIColor blackColor] CGColor]];
+//    CALayer *layer2 = [controller2.view layer];
+//	layer2.masksToBounds = YES;
+//	[layer2 setBorderWidth:1.0];
+//	[layer2 setBorderColor:[[UIColor blackColor] CGColor]];
     [self.scrollView addSubview:controller2.view];
     [controller2 showList];
     
     TasksContainerViewController * controller3 = [[[TasksContainerViewController alloc] initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
     controller3.view.frame = CGRectMake(controller2.view.frame.origin.x + controller2.view.frame.size.width + PagesDiff, TopDiff, PageWidth, PageHeight + NavDiff);
     controller3.view.backgroundColor = [UIColor yellowColor];
-    CALayer *layer3 = [controller3.view layer];
-	layer3.masksToBounds = YES;
-	[layer3 setBorderWidth:1.0];
-	[layer3 setBorderColor:[[UIColor blackColor] CGColor]];
+//    CALayer *layer3 = [controller3.view layer];
+//	layer3.masksToBounds = YES;
+//	[layer3 setBorderWidth:1.0];
+//	[layer3 setBorderColor:[[UIColor blackColor] CGColor]];
     [self.scrollView addSubview:controller3.view];
     [controller3 showMap];
     
@@ -203,6 +203,15 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	[searchButton addTarget:self action:@selector(searchTouched) forControlEvents:UIControlEventTouchUpInside];
 	UIBarButtonItem *searchItem = [[[UIBarButtonItem alloc]initWithCustomView:searchButton]autorelease];
     self.navigationItem.rightBarButtonItem = searchItem;
+    
+    NSArray * items = [NSArray arrayWithObjects:@"Month", @"List", @"Map", nil];
+    UISegmentedControl * segmentedControl = [[[UISegmentedControl alloc] initWithItems:items] autorelease];
+    segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    segmentedControl.selectedSegmentIndex = 0;
+    self.navigationItem.titleView = segmentedControl;
+    [segmentedControl addTarget:self
+                         action:@selector(segmentChanged:)
+               forControlEvents:UIControlEventValueChanged];
     
     [self updateTitle];
 }
@@ -515,7 +524,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     NSString *title = nil;
     switch (self.currentPage) {
         case 0:
-            title = @"Calendar";
+            title = @"Month";
             break;
         case 1:
             title = @"List";
@@ -525,6 +534,12 @@ static CGFloat const kChatBarHeight4    = 94.0f;
             break;
     }
     self.title = title;
+}
+
+- (void)segmentChanged:(id)sender
+{
+    UISegmentedControl * segmentedControl = (UISegmentedControl *)sender;
+    [self scrollToRowAtIndex:segmentedControl.selectedSegmentIndex animated:YES];
 }
 
 #pragma mark - ActionSheetDelegate
