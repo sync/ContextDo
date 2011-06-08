@@ -1,5 +1,9 @@
 #import <Foundation/Foundation.h>
 #import "BaseViewController.h"
+#import "TasksViewController.h"
+#import "TasksMapViewController.h"
+#import "TasksCalendarViewController.h"
+#import "TITokenFieldView.h"
 
 @interface TasksScrollContainerViewController : BaseViewController <UIScrollViewDelegate, UITextViewDelegate, UIGestureRecognizerDelegate, UIActionSheetDelegate, EKEventEditViewDelegate> {
     
@@ -16,7 +20,12 @@
 @property (nonatomic, assign) CGFloat previousContentHeight;
 @property (nonatomic, retain) UIButton *createButton;
 
-@property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, readonly) BOOL isShowingSearchBar;
+@property (nonatomic, readonly) TasksViewController *tasksViewController;
+@property (nonatomic, readonly) TasksMapViewController *tasksMapViewController;
+@property (nonatomic, readonly) TasksCalendarViewController *tasksCalendarViewController;
+
+@property (nonatomic, retain) IBOutlet TITokenField *tokenField;
+
+@property (nonatomic, retain) UITapGestureRecognizer *tapGesture;
 
 @end

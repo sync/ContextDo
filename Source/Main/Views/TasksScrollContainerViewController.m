@@ -1,6 +1,5 @@
 #import "TasksScrollContainerViewController.h"
 #import "NSString+Additions.h"
-#import "TasksContainerViewController.h"
 #import "CalendarChooserViewController.h"
 
 static CGFloat const kSentDateFontSize = 13.0f;
@@ -27,7 +26,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 @implementation TasksScrollContainerViewController
 
 @synthesize scrollView, currentPage, chatBar, chatInput, previousContentHeight, createButton;
-@synthesize searchBar;
+@synthesize tasksViewController, tasksMapViewController, tasksCalendarViewController;
+@synthesize tokenField, tapGesture;
 
 - (void)viewDidLoad
 {
@@ -47,37 +47,20 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     self.scrollView.delaysContentTouches = NO;
     self.scrollView.clipsToBounds = NO;
      
-    TasksContainerViewController * controller1 = [[[TasksContainerViewController alloc] initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
-    //    controller1.view.transform = CGAffineTransformIdentity;
-    //controller1.view.transform = CGAffineTransformMakeScale(0.8, 0.8);
+    TasksCalendarViewController * controller1 = self.tasksCalendarViewController;
     controller1.view.frame = CGRectMake(LeftRightDiff, TopDiff, PageWidth, PageHeight + NavDiff);
     controller1.view.backgroundColor = [UIColor redColor];
-//    CALayer *layer1 = [controller1.view layer];
-//	layer1.masksToBounds = YES;
-//	[layer1 setBorderWidth:1.0];
-//	[layer1 setBorderColor:[[UIColor blackColor] CGColor]];
     [self.scrollView addSubview:controller1.view];
-    [controller1 showCalendar];
     
-    TasksContainerViewController * controller2 = [[[TasksContainerViewController alloc] initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
+    TasksViewController * controller2 = self.tasksViewController;
     controller2.view.frame = CGRectMake(controller1.view.frame.origin.x + controller1.view.frame.size.width + PagesDiff, TopDiff, PageWidth, PageHeight + NavDiff);
     controller2.view.backgroundColor = [UIColor greenColor];
-//    CALayer *layer2 = [controller2.view layer];
-//	layer2.masksToBounds = YES;
-//	[layer2 setBorderWidth:1.0];
-//	[layer2 setBorderColor:[[UIColor blackColor] CGColor]];
     [self.scrollView addSubview:controller2.view];
-    [controller2 showList];
     
-    TasksContainerViewController * controller3 = [[[TasksContainerViewController alloc] initWithNibName:@"TasksContainerView" bundle:nil]autorelease];
+    TasksMapViewController * controller3 = self.tasksMapViewController;
     controller3.view.frame = CGRectMake(controller2.view.frame.origin.x + controller2.view.frame.size.width + PagesDiff, TopDiff, PageWidth, PageHeight + NavDiff);
     controller3.view.backgroundColor = [UIColor yellowColor];
-//    CALayer *layer3 = [controller3.view layer];
-//	layer3.masksToBounds = YES;
-//	[layer3 setBorderWidth:1.0];
-//	[layer3 setBorderColor:[[UIColor blackColor] CGColor]];
     [self.scrollView addSubview:controller3.view];
-    [controller3 showMap];
     
     // chat
     // background
@@ -132,40 +115,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification object:nil];
     
-//    //disables the built-in pan gesture
-//    for (UIGestureRecognizer *gesture in scrollView.gestureRecognizers){
-//        if ([gesture isKindOfClass:[UIPanGestureRecognizer class]]){
-//            UIPanGestureRecognizer * panGesture = (UIPanGestureRecognizer *)gesture;
-//            panGesture.minimumNumberOfTouches = 3;
-//            panGesture.maximumNumberOfTouches = 3;
-//        }
-//    }
-    
-//    UIPanGestureRecognizer * panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self 
-//                                                                                  action:@selector(pangGesture:)];
-//    [self.view addGestureRecognizer:panGesture];
-//    [panGesture release];
-    
-//    UISwipeGestureRecognizer * leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-//                                                                                        action:@selector(leftSwipe)];
-//    leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
-//    leftSwipeGesture.delegate = self;
-//    [self.view addGestureRecognizer:leftSwipeGesture];
-//    [leftSwipeGesture release];
-//    
-//    UISwipeGestureRecognizer * rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-//                                                                                            action:@selector(rightSwipe)];
-//    rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
-//    rightSwipeGesture.delegate = self;
-//    [self.view addGestureRecognizer:rightSwipeGesture];
-//    [rightSwipeGesture release];
-    
-    // Gesture dismiss
-    UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                  action:@selector(dismissKeyboard)];
-    tapGesture.delegate = self;
-    [self.view addGestureRecognizer:tapGesture];
-    [tapGesture release];
+    self.tokenField.promptText = @"Tags:";
 }
 
 - (void)viewDidUnload
@@ -174,8 +124,27 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     self.scrollView = nil;
     self.chatBar = nil;
+    self.chatInput = nil;
+    self.createButton = nil;
+    self.tokenField = nil;
+    [self.view removeGestureRecognizer:self.tapGesture];
+    self.tapGesture = nil;
     
     [super viewDidUnload];
+}
+
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+    [tapGesture release];
+    [tokenField release];
+    [createButton release];
+    [chatInput release];
+    [chatBar release];
+    [scrollView release];
+    
+    [super dealloc];
 }
 
 - (void) setupNavigationBar
@@ -214,6 +183,38 @@ static CGFloat const kChatBarHeight4    = 94.0f;
                forControlEvents:UIControlEventValueChanged];
     
     [self updateTitle];
+}
+
+#pragma mark - Contained Views
+
+- (TasksViewController *)tasksViewController
+{
+	if (!tasksViewController) {
+		tasksViewController = [[TasksViewController alloc]initWithNibName:@"TasksView" bundle:nil];
+		tasksViewController.mainNavController = self.navigationController;
+	}
+	
+	return tasksViewController;
+}
+
+- (TasksMapViewController *)tasksMapViewController
+{
+	if (!tasksMapViewController) {
+		tasksMapViewController = [[TasksMapViewController alloc]initWithNibName:@"TasksMapView" bundle:nil];
+		tasksMapViewController.mainNavController = self.navigationController;
+	}
+	
+	return tasksMapViewController;
+}
+
+- (TasksCalendarViewController *)tasksCalendarViewController
+{
+	if (!tasksCalendarViewController) {
+		tasksCalendarViewController = [[TasksCalendarViewController alloc]initWithNibName:nil bundle:nil];
+		tasksCalendarViewController.mainNavController = self.navigationController;
+	}
+	
+	return tasksCalendarViewController;
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -379,6 +380,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     // They should check for version of iPhone OS.
     // And use appropriate methods to determine:
     //   animation movement, speed, duration, etc.
+    
+    //Gesture dismiss
+    if (tapGesture == nil) {
+        tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+        tapGesture.delegate = self;
+        [self.view addGestureRecognizer:tapGesture];
+    }
 }
 
 // Expand textview on keyboard dismissal
@@ -389,6 +397,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     //    [(NSValue *)[userInfo objectForKey:UIKeyboardBoundsUserInfoKey] getValue:&bounds];
     
     [self slideFrameDown];
+    
+    [self.view removeGestureRecognizer:self.tapGesture];
+    self.tapGesture = nil;
 }
 
 - (void)slideFrameUp 
@@ -494,29 +505,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	[self.navigationController presentModalViewController:navController animated:TRUE];
 }
 
-- (BOOL)isShowingSearchBar
-{
-    return (self.searchBar.frame.origin.y == 0);
-}
-
 - (void)searchTouched
 {
-    if (self.isShowingSearchBar) {
-        [self.searchBar resignFirstResponder];
-    } else {
-        [self.searchBar becomeFirstResponder];
-    }
     
-    CGFloat newY = (self.isShowingSearchBar) ? -44.0 : 0.0;
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    
-    CGRect frame = self.searchBar.frame;
-    frame.origin.y = newY;
-    self.searchBar.frame = frame;
-    
-    [UIView commitAnimations];
 }
 
 - (void)updateTitle
@@ -585,19 +576,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)eventEditViewController:(EKEventEditViewController *)controller didCompleteWithAction:(EKEventEditViewAction)action
 {
     [self dismissModalViewControllerAnimated:YES];
-}
-
-#pragma mark - Dealloc
-
-- (void)dealloc
-{
-    [searchBar release];
-    [createButton release];
-    [chatInput release];
-    [chatBar release];
-    [scrollView release];
-    
-    [super dealloc];
 }
 
 @end

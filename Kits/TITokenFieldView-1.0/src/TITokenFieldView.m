@@ -17,7 +17,6 @@
 @property (nonatomic, readwrite, retain) NSMutableArray * tokensArray;
 @property (nonatomic, retain) NSString *text;
 @property (nonatomic, assign) UILabel *promptLabel;
-@property (nonatomic) BOOL keyboardShown;
 @end
 
 #pragma mark -
@@ -25,8 +24,8 @@
 
 @implementation TITokenField
 
-@synthesize tokensArray, textField, delegate, numberOfLines;
-@synthesize promptLabel, keyboardShown;
+@synthesize tokensArray, textField, delegate;
+@synthesize promptLabel;
 
 - (id)initWithFrame:(CGRect)frame {
 	self = [super initWithFrame:frame];
@@ -71,10 +70,6 @@
     [self.textField setClearsOnBeginEditing:NO];
     [self.textField setLeftViewMode:UITextFieldViewModeNever];
     [self addSubview:self.textField];
-    
-    self.keyboardShown = FALSE;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     UITapGestureRecognizer *gestureRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)]autorelease];
 	gestureRecognizer.delegate = self;
@@ -195,7 +190,10 @@
 #pragma mark UITextFieldDelegate
 
 - (void)processLeftoverText:(NSString *)text {
-	if (![text isEqualToString:textEmpty] && ![text isEqualToString:textHidden] && 
+	if (text.length == 1) {
+        // return pressed
+        [self resignFirstResponder];
+    } else if (![text isEqualToString:textEmpty] && ![text isEqualToString:textHidden] && 
 		[[text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] != 0){
 		
 		NSString * title = nil;
@@ -257,7 +255,7 @@
 		return NO;
 	}
 	
-	if ([aTextField.text	isEqualToString:textHidden] && [string isEqualToString:@""]){
+	if ([aTextField.text isEqualToString:textHidden] && [string isEqualToString:@""]){
 		// When the user presses backspace and the text is hidden,
 		// we find the highlighted token, and remove it.
 		for (TIToken * tok in [NSArray arrayWithArray:self.tokensArray]){
@@ -283,68 +281,6 @@
 }
 
 #pragma mark -
-#pragma mark Keyboard
-
-#pragma mark -
-#pragma mark Keyboard
-
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-	if (self.keyboardShown) {
-		return;
-	}
-	
-	NSDictionary *userInfo = [notification userInfo]; 
-	NSValue* keyboardOriginValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey]; 
-	CGRect keyboardRect = [self convertRect:[keyboardOriginValue CGRectValue] fromView:nil];
-	CGFloat keyboardTop = keyboardRect.origin.y;
-	
-	// This assumes that no one else cares about the table view's insets...
-	UIEdgeInsets insets = UIEdgeInsetsMake(0, 
-										   0, 
-										   keyboardTop + 30.0, 
-										   0);
-	
-	NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-	NSTimeInterval animationDuration; [animationDurationValue getValue:&animationDuration];
-	[UIView beginAnimations:nil context:NULL]; 
-	[UIView setAnimationBeginsFromCurrentState:YES];
-	[UIView setAnimationDuration:animationDuration];
-    
-    self.contentOffset = CGPointMake(0.0, cursorLocation.y);
-	
-	[self setContentInset:insets];
-	[self setScrollIndicatorInsets:insets];
-	
-	[UIView commitAnimations];
-	
-	self.keyboardShown = TRUE;
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification
-{
-	if (!self.keyboardShown) {
-		return;
-	}
-	
-	// This assumes that no one else cares about the table view's insets...
-	NSDictionary *userInfo = [notification userInfo]; 
-	
-	NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-	NSTimeInterval animationDuration; [animationDurationValue getValue:&animationDuration];
-	[UIView beginAnimations:nil context:NULL]; 
-	[UIView setAnimationDuration:animationDuration];
-	[UIView setAnimationBeginsFromCurrentState:YES];
-	
-	[self setContentInset:UIEdgeInsetsZero];
-    [self setScrollIndicatorInsets:UIEdgeInsetsZero];
-	
-	[UIView commitAnimations];
-	
-	self.keyboardShown = FALSE;
-}
-
-#pragma mark -
 #pragma mark Layout
 
 - (void)layoutSubviews
@@ -357,34 +293,16 @@
     // Adapted from Joe Hewitt's Three20 layout method.
 	
 	CGFloat fontHeight = (self.textField.font.ascender - self.textField.font.descender) + 1;
-	CGFloat lineHeight = fontHeight + 15;
 	CGFloat topMargin = floor(fontHeight / 1.75);
 	CGFloat leftMargin = self.promptLabel.text.length > 0 ? self.promptLabel.frame.size.width + 12 : 8;
-	CGFloat rightMargin = 10;
-	CGFloat initialPadding = 8;
 	CGFloat tokenPadding = 4;
-	
-	numberOfLines = 1;
+    
 	cursorLocation.x = leftMargin;
 	cursorLocation.y = topMargin - 1;
 	
 	NSArray * tokens = [[NSArray alloc] initWithArray:tokensArray];
 	
 	for (TIToken * token in tokens){
-		
-		CGFloat lineWidth = cursorLocation.x + token.frame.size.width + rightMargin;
-		
-		if (lineWidth >= self.frame.size.width){
-			
-			numberOfLines++;
-			cursorLocation.x = leftMargin;
-			
-			if (numberOfLines > 1){
-				cursorLocation.x = initialPadding;
-			}
-			
-			cursorLocation.y += lineHeight;
-		}
 		
 		CGRect oldFrame = CGRectMake(token.frame.origin.x, token.frame.origin.y, token.frame.size.width, token.frame.size.height);
 		CGRect newFrame = CGRectMake(cursorLocation.x, cursorLocation.y, token.frame.size.width, token.frame.size.height);
@@ -403,21 +321,7 @@
 	
 	[tokens release];
 	
-	CGFloat leftoverWidth = self.frame.size.width - (cursorLocation.x + rightMargin);
-	
-	if (leftoverWidth < 50){
-		
-		numberOfLines++;
-		cursorLocation.x = leftMargin;
-		
-		if (numberOfLines > 1){
-			cursorLocation.x = initialPadding;
-		}
-		
-		cursorLocation.y += lineHeight;
-	}
-    
-    if ([self.textField.text isEqualToString:textHidden]){
+	if ([self.textField.text isEqualToString:textHidden]){
 		self.textField.frame =  CGRectMake(-1000, -1000, 0, 0);
 	} else {
         CGSize boundsSize = self.bounds.size;
@@ -428,11 +332,6 @@
         textFieldFrame.origin.y = cursorLocation.y + 3;
         textFieldFrame.size.width = boundsSize.width - cursorLocation.x - 8;
         self.textField.frame = CGRectIntegral(textFieldFrame);
-    }
-    
-    CGFloat height = cursorLocation.y + fontHeight + topMargin + 5;
-    if (self.contentSize.height != height) {
-        self.contentSize = CGSizeMake(self.bounds.size.width, height);
     }
 }
 

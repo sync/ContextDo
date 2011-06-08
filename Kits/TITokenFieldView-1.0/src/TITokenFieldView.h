@@ -57,7 +57,6 @@
 }
 
 @property (nonatomic, readonly, retain) NSMutableArray * tokensArray;
-@property (nonatomic, readonly) int numberOfLines;
 @property (nonatomic, assign) id <TITokenFieldDelegate> delegate;
 @property (nonatomic, retain) NSString *promptText;
 
