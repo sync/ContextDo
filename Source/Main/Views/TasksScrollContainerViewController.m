@@ -27,7 +27,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 @synthesize scrollView, currentPage, chatBar, chatInput, previousContentHeight, createButton;
 @synthesize tasksViewController, tasksMapViewController, tasksCalendarViewController;
-@synthesize tokenField, tapGesture;
+@synthesize tokenField, tapGesture, keyboardShown;
 
 - (void)viewDidLoad
 {
@@ -116,6 +116,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
                                                  name:UIKeyboardWillHideNotification object:nil];
     
     self.tokenField.promptText = @"Tags:";
+    
+    self.keyboardShown = NO;
 }
 
 - (void)viewDidUnload
@@ -366,6 +368,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 // Prepare to resize for keyboard.
 - (void)keyboardWillShow:(NSNotification *)notification 
 {
+
+    
     //    NSDictionary *userInfo = [notification userInfo];
     //    CGRect bounds;
     //    [(NSValue *)[userInfo objectForKey:UIKeyboardBoundsUserInfoKey] getValue:&bounds];
@@ -380,6 +384,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     // They should check for version of iPhone OS.
     // And use appropriate methods to determine:
     //   animation movement, speed, duration, etc.
+    
+    self.keyboardShown = TRUE;
     
     //Gesture dismiss
     if (tapGesture == nil) {
@@ -398,12 +404,18 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     [self slideFrameDown];
     
+    self.keyboardShown = NO;
+    
     [self.view removeGestureRecognizer:self.tapGesture];
     self.tapGesture = nil;
 }
 
 - (void)slideFrameUp 
 {
+    if (self.keyboardShown) {
+        return;
+    }
+    
     [self slideFrame:YES];
 }
 
@@ -416,10 +428,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 // TODO: Test on different SDK versions; make more flexible if desired.
 - (void)slideFrame:(BOOL)up 
 {
-    if (![chatInput isFirstResponder]) {
-        return;
-    }
-    
     CGFloat movementDistance;
     
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];

@@ -27,5 +27,6 @@
 @property (nonatomic, retain) IBOutlet TITokenField *tokenField;
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGesture;
+@property (nonatomic, assign) BOOL keyboardShown;
 
 @end
