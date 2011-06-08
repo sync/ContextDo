@@ -13,7 +13,7 @@
 
 @interface TITokenField ()
 - (void)setupCustomInitialisation;
-@property (nonatomic, assign) UITextField *textField;
+@property (nonatomic, assign, readwrite) UITextField *textField;
 @property (nonatomic, readwrite, retain) NSMutableArray * tokensArray;
 @property (nonatomic, retain) NSString *text;
 @property (nonatomic, assign) UILabel *promptLabel;
@@ -49,6 +49,8 @@
 	self.tokensArray = [NSMutableArray array];
     
     self.backgroundColor = [UIColor clearColor];
+    
+    self.showsHorizontalScrollIndicator = FALSE;
     
     self.promptLabel = [[[UILabel alloc] initWithFrame:CGRectZero]autorelease];
     [self.promptLabel setFont:[UIFont systemFontOfSize:15]];
@@ -204,6 +206,9 @@
 		}
 		
 		[self addToken:title];
+        
+        CGRect scrollToFrame = self.textField.frame;
+        [self scrollRectToVisible:scrollToFrame animated:TRUE];
 	}
 }
 
@@ -296,6 +301,7 @@
 	CGFloat topMargin = floor(fontHeight / 1.75);
 	CGFloat leftMargin = self.promptLabel.text.length > 0 ? self.promptLabel.frame.size.width + 12 : 8;
 	CGFloat tokenPadding = 4;
+    CGFloat rightMargin = 10;
     
 	cursorLocation.x = leftMargin;
 	cursorLocation.y = topMargin - 1;
@@ -320,6 +326,9 @@
 	}
 	
 	[tokens release];
+    
+    CGFloat lineWidth = cursorLocation.x + 50.0 + rightMargin;
+    self.contentSize = CGSizeMake(lineWidth, self.bounds.size.height);
 	
 	if ([self.textField.text isEqualToString:textHidden]){
 		self.textField.frame =  CGRectMake(-1000, -1000, 0, 0);
@@ -330,7 +339,7 @@
         CGRect textFieldFrame = self.textField.frame;
         textFieldFrame.origin.x = cursorLocation.x;
         textFieldFrame.origin.y = cursorLocation.y + 3;
-        textFieldFrame.size.width = boundsSize.width - cursorLocation.x - 8;
+        textFieldFrame.size.width = (lineWidth < boundsSize.width) ? lineWidth - cursorLocation.x - 8 : lineWidth - cursorLocation.x - 8;
         self.textField.frame = CGRectIntegral(textFieldFrame);
     }
 }

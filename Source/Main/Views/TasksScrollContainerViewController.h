@@ -5,7 +5,7 @@
 #import "TasksCalendarViewController.h"
 #import "TITokenFieldView.h"
 
-@interface TasksScrollContainerViewController : BaseViewController <UIScrollViewDelegate, UITextViewDelegate, UIGestureRecognizerDelegate, UIActionSheetDelegate, EKEventEditViewDelegate> {
+@interface TasksScrollContainerViewController : BaseViewController <UIScrollViewDelegate, UITextViewDelegate, UIGestureRecognizerDelegate, UIActionSheetDelegate, EKEventEditViewDelegate, TITokenFieldDelegate> {
     
 }
 

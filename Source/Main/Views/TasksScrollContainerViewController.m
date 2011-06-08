@@ -116,6 +116,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
                                                  name:UIKeyboardWillHideNotification object:nil];
     
     self.tokenField.promptText = @"Tags:";
+    self.tokenField.delegate = self;
     
     self.keyboardShown = NO;
 }
@@ -470,7 +471,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
                                            
 - (void)dismissKeyboard
 {
-    [chatInput resignFirstResponder];
+    [self.chatInput resignFirstResponder];
+    [self.tokenField resignFirstResponder];
 }
 
 - (void)createEvent
@@ -584,6 +586,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)eventEditViewController:(EKEventEditViewController *)controller didCompleteWithAction:(EKEventEditViewAction)action
 {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - TITokenFieldDelegate
+
+- (void)tokenField:(TITokenField *)aTokenField tokenTouched:(TIToken *)token
+{
+    [aTokenField becomeFirstResponder];
 }
 
 @end
