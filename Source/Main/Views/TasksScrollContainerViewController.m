@@ -1,6 +1,5 @@
 #import "TasksScrollContainerViewController.h"
 #import "NSString+Additions.h"
-#import "CalendarChooserViewController.h"
 
 static CGFloat const kSentDateFontSize = 13.0f;
 static CGFloat const kMessageFontSize   = 16.0f;
@@ -510,9 +509,18 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)calendarTouched
 {
-    CalendarChooserViewController * controller = [[[CalendarChooserViewController alloc] initWithNibName:@"CalendarChooserView" bundle:nil]autorelease];
-    UINavigationController *navController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
-	[self.navigationController presentModalViewController:navController animated:TRUE];
+    EKEventStore *store = [[[EKEventStore alloc] init] autorelease];
+    
+    EKCalendarChooser * controller = [[[EKCalendarChooser alloc] initWithSelectionStyle:EKCalendarChooserSelectionStyleSingle
+                                                                           displayStyle:EKCalendarChooserDisplayWritableCalendarsOnly 
+                                                                             eventStore:store] autorelease];
+    controller.showsDoneButton = FALSE;
+    controller.showsCancelButton = TRUE;
+    controller.delegate = self;
+    // todo selected calendar
+    UINavigationController * navController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
+    
+    [self.navigationController presentModalViewController:navController animated:TRUE];
 }
 
 - (void)searchTouched
@@ -593,6 +601,19 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 - (void)tokenField:(TITokenField *)aTokenField tokenTouched:(TIToken *)token
 {
     [aTokenField becomeFirstResponder];
+}
+
+#pragma mark - EKCalendarChooserDelegate
+
+- (void)calendarChooserDidCancel:(EKCalendarChooser *)calendarChooser
+{
+    [self dismissModalViewControllerAnimated:TRUE];
+}
+
+- (void)calendarChooserDidFinish:(EKCalendarChooser *)calendarChooser
+{
+    // todo selected calendar
+    [self dismissModalViewControllerAnimated:TRUE];
 }
 
 @end

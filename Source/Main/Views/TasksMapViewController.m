@@ -46,6 +46,7 @@
     [super viewDidLoad];
 	
 	self.mapView.showsUserLocation = TRUE;
+    self.mapView.userTrackingMode = MKUserTrackingModeFollowWithHeading;
     
     self.directions = [UICGDirections sharedDirections];
 	self.directions.delegate = self;
