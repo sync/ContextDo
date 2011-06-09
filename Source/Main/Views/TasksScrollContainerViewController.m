@@ -569,21 +569,20 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         // Yes
         NSLog(@"Yes");
         
-        EKEventViewController *eventViewController = [[EKEventViewController alloc] init];
-        eventViewController.event = event;
-        eventViewController.allowsEditing = YES; 
-        UINavigationController *navigationController = nil;
-        navigationController = [[UINavigationController alloc] initWithRootViewController:eventViewController]; 
-        [eventViewController release];
+//        EKEventViewController *eventViewController = [[EKEventViewController alloc] init];
+//        eventViewController.event = event;
+//        eventViewController.allowsEditing = YES; 
+//        UINavigationController *navigationController = nil;
+//        navigationController = [[UINavigationController alloc] initWithRootViewController:eventViewController]; 
+//        [eventViewController release];
+    //[self presentModalViewController:navigationController animated:YES];
         
-         [self presentModalViewController:navigationController animated:YES];
-        
-//        EKEventEditViewController* controller = [[EKEventEditViewController alloc] init];
-//        controller.eventStore = store;
-//        controller.event = event;
-//        controller.editViewDelegate = self; 
-//        [self presentModalViewController: controller animated:YES]; 
-//        [controller release];
+        EKEventEditViewController* controller = [[EKEventEditViewController alloc] init];
+        controller.eventStore = store;
+        controller.event = event;
+        controller.editViewDelegate = self; 
+        [self presentModalViewController: controller animated:YES]; 
+        [controller release];
         
     } else {
         // No

@@ -4,7 +4,7 @@
 
 @implementation TasksDataSource
 
-- (Task *)taskForIndexPath:(NSIndexPath *)indexPath
+- (NSDictionary *)taskForIndexPath:(NSIndexPath *)indexPath
 {
 	return [self objectForIndexPath:indexPath];
 }
@@ -21,6 +21,11 @@
 	return tag - TagDiff;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"Today";
+}
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
 {
@@ -28,13 +33,15 @@
 	
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:TasksCellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:TasksCellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:TasksCellIdentifier] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
 	
-//	Task *task = [self taskForIndexPath:indexPath];
-//	[cell setTask:task];
+	NSDictionary *dictionary = [self taskForIndexPath:indexPath];
+	
+    cell.textLabel.text = [dictionary valueForKey:@"date"];
+    cell.detailTextLabel.text = [dictionary valueForKey:@"title"];
 //	
 //	cell.completedButton.tag = [self tagForRow:indexPath.row];
 	

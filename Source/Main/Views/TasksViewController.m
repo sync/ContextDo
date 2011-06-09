@@ -21,7 +21,32 @@
 {
 	[super viewDidLoad];
 	
-	
+	NSMutableArray *todayTasks = [NSMutableArray arrayWithCapacity:2];
+    NSDictionary * task1 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 @"3pm", @"date",
+                                 @"Tutorial", @"title",
+                                 nil];
+    [todayTasks addObject:task1];
+    NSDictionary * task2 = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"5pm", @"date",
+                            @"Lecture", @"title",
+                            nil];
+    [todayTasks addObject:task2];
+    
+    NSMutableArray *tomorrowTasks = [NSMutableArray arrayWithCapacity:2];
+    NSDictionary * task3 = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"3pm", @"date",
+                            @"Tutorial", @"title",
+                            nil];
+    [tomorrowTasks addObject:task3];
+    NSDictionary * task4 = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"5pm", @"date",
+                            @"Lecture", @"title",
+                            nil];
+    [tomorrowTasks addObject:task4];
+    
+    NSArray * newTasks = [NSArray arrayWithObjects:todayTasks, tomorrowTasks, nil];
+    [self reloadTasks:newTasks];
 }
 
 - (void)viewDidUnload
@@ -49,7 +74,6 @@
 	self.tasksDataSource = [[[TasksDataSource alloc]init]autorelease];
 	self.tableView.dataSource = self.tasksDataSource;
 	//self.tableView.backgroundColor = [DefaultStyleSheet sharedDefaultStyleSheet].darkBackgroundTexture;
-	self.tableView.rowHeight = 88.0;
 	[self refreshTasks];
 }
 
@@ -78,32 +102,18 @@
 #pragma mark -
 #pragma mark TableView Delegate
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	Task *task  = [self.tasksDataSource taskForIndexPath:indexPath];
-	
-	CTXDOCellContext context = CTXDOCellContextStandard;
-	if (task.isClose) {
-		context = CTXDOCellContextLocationAware;
-	} else if (indexPath.row % 2 > 0) {
-		context = CTXDOCellContextStandardAlternate;
-	}
-	
-//	[(TasksCell *)cell setCellContext:context];
-//	
-//	[[(TasksCell *)cell completedButton]addTarget:self action:@selector(completedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 	TasksDataSource *dataSource = (TasksDataSource *)self.tableView.dataSource;
-	Task *task  = [dataSource taskForIndexPath:indexPath];
+	NSDictionary *task  = [dataSource taskForIndexPath:indexPath];
+    
+    // todo
 	
-	TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
-	controller.hidesBottomBarWhenPushed = TRUE;
-	controller.task = task;
-	controller.tasks = self.tasks;
-	[self.mainNavController pushViewController:controller animated:TRUE];
+//	TaskContainerViewController *controller = [[[TaskContainerViewController alloc]initWithNibName:@"TaskContainerView" bundle:nil]autorelease];
+//	controller.hidesBottomBarWhenPushed = TRUE;
+//	controller.task = task;
+//	controller.tasks = self.tasks;
+//	[self.mainNavController pushViewController:controller animated:TRUE];
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }
@@ -128,13 +138,13 @@
 	UIButton *button = (UIButton *)sender;
 	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.tasksDataSource rowForTag:button.tag]inSection:0];
 	
-	Task *task = [self.tasksDataSource taskForIndexPath:indexPath];
+	NSDictionary *task = [self.tasksDataSource taskForIndexPath:indexPath];
 	
-	if (task.completed) {
-		task.completedAt = nil;
-	} else {
-		task.completedAt = [NSDate date];
-	}
+//	if (task.completed) {
+//		task.completedAt = nil;
+//	} else {
+//		task.completedAt = [NSDate date];
+//	}
 	
 	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
 	// save todo
