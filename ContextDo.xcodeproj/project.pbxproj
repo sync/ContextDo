@@ -80,6 +80,10 @@
 		24B04F451302A88E00F27215 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B04F431302A88E00F27215 /* Icon.png */; };
 		24CFA4E513A1402A00DD426B /* TasksSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CFA4E413A1402A00DD426B /* TasksSearchViewController.m */; };
 		24CFA4E713A1406000DD426B /* TasksSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24CFA4E613A1406000DD426B /* TasksSearchView.xib */; };
+		24CFA4EC13A1579700DD426B /* btn_todo_done.png in Resources */ = {isa = PBXBuildFile; fileRef = 24CFA4E813A1579400DD426B /* btn_todo_done.png */; };
+		24CFA4ED13A1579700DD426B /* btn_todo_done@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24CFA4E913A1579400DD426B /* btn_todo_done@2x.png */; };
+		24CFA4EE13A1579700DD426B /* btn_todo_std.png in Resources */ = {isa = PBXBuildFile; fileRef = 24CFA4EA13A1579500DD426B /* btn_todo_std.png */; };
+		24CFA4EF13A1579700DD426B /* btn_todo_std@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24CFA4EB13A1579600DD426B /* btn_todo_std@2x.png */; };
 		24E4496D12EBA56600F08B7E /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* TagsViewController.m */; };
 		24E4497112EBA5A400F08B7E /* TagsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* TagsView.xib */; };
 		24E44A1412EBB58500F08B7E /* TasksInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44A1312EBB58500F08B7E /* TasksInfoCell.m */; };
@@ -237,6 +241,10 @@
 		24CFA4E313A1402A00DD426B /* TasksSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksSearchViewController.h; sourceTree = "<group>"; };
 		24CFA4E413A1402A00DD426B /* TasksSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksSearchViewController.m; sourceTree = "<group>"; };
 		24CFA4E613A1406000DD426B /* TasksSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TasksSearchView.xib; sourceTree = "<group>"; };
+		24CFA4E813A1579400DD426B /* btn_todo_done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_todo_done.png; sourceTree = "<group>"; };
+		24CFA4E913A1579400DD426B /* btn_todo_done@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_todo_done@2x.png"; sourceTree = "<group>"; };
+		24CFA4EA13A1579500DD426B /* btn_todo_std.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_todo_std.png; sourceTree = "<group>"; };
+		24CFA4EB13A1579600DD426B /* btn_todo_std@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_todo_std@2x.png"; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* TagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagsViewController.h; sourceTree = "<group>"; };
 		24E4496C12EBA56600F08B7E /* TagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsViewController.m; sourceTree = "<group>"; };
 		24E4497012EBA5A400F08B7E /* TagsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagsView.xib; sourceTree = "<group>"; };
@@ -746,6 +754,10 @@
 				24E5BBF41389F72F008D10A2 /* 15-tags@2x.png */,
 				24E5BC63138A0314008D10A2 /* calendar.png */,
 				24E5BC64138A0314008D10A2 /* calendar@2x.png */,
+				24CFA4E813A1579400DD426B /* btn_todo_done.png */,
+				24CFA4E913A1579400DD426B /* btn_todo_done@2x.png */,
+				24CFA4EA13A1579500DD426B /* btn_todo_std.png */,
+				24CFA4EB13A1579600DD426B /* btn_todo_std@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -932,6 +944,10 @@
 				24E5BC65138A0314008D10A2 /* calendar.png in Resources */,
 				24E5BC66138A0314008D10A2 /* calendar@2x.png in Resources */,
 				24CFA4E713A1406000DD426B /* TasksSearchView.xib in Resources */,
+				24CFA4EC13A1579700DD426B /* btn_todo_done.png in Resources */,
+				24CFA4ED13A1579700DD426B /* btn_todo_done@2x.png in Resources */,
+				24CFA4EE13A1579700DD426B /* btn_todo_std.png in Resources */,
+				24CFA4EF13A1579700DD426B /* btn_todo_std@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -45,6 +45,7 @@
 - (void)tokenField:(TITokenField *)tokenField tokenTouched:(TIToken *)token;
 - (void)tokenFieldDidBeginEditing:(TITokenField *)tokenField;
 - (void)tokenFieldDidEndEditing:(TITokenField *)tokenField;
+- (void)tokenField:(TITokenField *)tokenField editingTextDidChangeTo:(NSString *)text locationRect:(CGRect)locationRect;
 @end
 
 //==========================================================

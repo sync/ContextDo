@@ -102,6 +102,14 @@
 #pragma mark -
 #pragma mark TableView Delegate
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TasksDataSource *dataSource = (TasksDataSource *)self.tableView.dataSource;
+	NSDictionary *task  = [dataSource taskForIndexPath:indexPath];
+    
+    
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 	TasksDataSource *dataSource = (TasksDataSource *)self.tableView.dataSource;

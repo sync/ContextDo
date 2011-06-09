@@ -246,7 +246,9 @@
 }
 
 - (BOOL)textField:(UITextField *)aTextField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-	if ([string isEqualToString:@""] && [aTextField.text isEqualToString:textEmpty] && self.tokensArray.count){
+	[self.delegate tokenField:self editingTextDidChangeTo:string locationRect:aTextField.frame];
+    
+    if ([string isEqualToString:@""] && [aTextField.text isEqualToString:textEmpty] && self.tokensArray.count){
 		//When the backspace is pressed, we capture it, highlight the last token, and hide the cursor.
 		TIToken * tok = [self.tokensArray lastObject];
         tok.highlighted = YES;

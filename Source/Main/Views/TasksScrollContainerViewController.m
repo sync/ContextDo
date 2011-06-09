@@ -604,6 +604,15 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [aTokenField becomeFirstResponder];
 }
 
+- (void)tokenField:(TITokenField *)aTokenField editingTextDidChangeTo:(NSString *)text locationRect:(CGRect)locationRect
+{
+    // here autocomplete
+    
+    UIMenuController * controller = [UIMenuController sharedMenuController];
+    [controller setTargetRect:locationRect inView:self.view];
+    [controller setMenuVisible:TRUE animated:TRUE];
+}
+
 #pragma mark - EKCalendarChooserDelegate
 
 - (void)calendarChooserDidCancel:(EKCalendarChooser *)calendarChooser
@@ -611,7 +620,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [self dismissModalViewControllerAnimated:TRUE];
 }
 
-- (void)calendarChooserDidFinish:(EKCalendarChooser *)calendarChooser
+- (void)calendarChooserSelectionDidChange:(EKCalendarChooser *)calendarChooser
 {
     // todo selected calendar
     [self dismissModalViewControllerAnimated:TRUE];
