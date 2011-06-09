@@ -35,12 +35,12 @@
     
     NSMutableArray *tomorrowTasks = [NSMutableArray arrayWithCapacity:2];
     NSDictionary * task3 = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"3pm", @"date",
+                            @"10am", @"date",
                             @"Tutorial", @"title",
                             nil];
     [tomorrowTasks addObject:task3];
     NSDictionary * task4 = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"5pm", @"date",
+                            @"2pm", @"date",
                             @"Lecture", @"title",
                             nil];
     [tomorrowTasks addObject:task4];
