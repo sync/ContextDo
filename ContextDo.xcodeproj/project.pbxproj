@@ -78,6 +78,8 @@
 		2491273A12EE647B009191BA /* TaskDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2491273912EE647B009191BA /* TaskDetailsView.m */; };
 		24B04F441302A88E00F27215 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B04F421302A88E00F27215 /* Icon@2x.png */; };
 		24B04F451302A88E00F27215 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B04F431302A88E00F27215 /* Icon.png */; };
+		24CFA4E513A1402A00DD426B /* TasksSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CFA4E413A1402A00DD426B /* TasksSearchViewController.m */; };
+		24CFA4E713A1406000DD426B /* TasksSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24CFA4E613A1406000DD426B /* TasksSearchView.xib */; };
 		24E4496D12EBA56600F08B7E /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E4496C12EBA56600F08B7E /* TagsViewController.m */; };
 		24E4497112EBA5A400F08B7E /* TagsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24E4497012EBA5A400F08B7E /* TagsView.xib */; };
 		24E44A1412EBB58500F08B7E /* TasksInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E44A1312EBB58500F08B7E /* TasksInfoCell.m */; };
@@ -234,6 +236,9 @@
 		2491273912EE647B009191BA /* TaskDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailsView.m; sourceTree = "<group>"; };
 		24B04F421302A88E00F27215 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		24B04F431302A88E00F27215 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		24CFA4E313A1402A00DD426B /* TasksSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksSearchViewController.h; sourceTree = "<group>"; };
+		24CFA4E413A1402A00DD426B /* TasksSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksSearchViewController.m; sourceTree = "<group>"; };
+		24CFA4E613A1406000DD426B /* TasksSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TasksSearchView.xib; sourceTree = "<group>"; };
 		24E4496B12EBA56600F08B7E /* TagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagsViewController.h; sourceTree = "<group>"; };
 		24E4496C12EBA56600F08B7E /* TagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsViewController.m; sourceTree = "<group>"; };
 		24E4497012EBA5A400F08B7E /* TagsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagsView.xib; sourceTree = "<group>"; };
@@ -494,6 +499,7 @@
 				24E44F5C12EC06AE00F08B7E /* List */,
 				24E44F5D12EC06BF00F08B7E /* Map */,
 				24E44F5E12EC06D000F08B7E /* Calendar */,
+				24CFA4E213A13FBF00DD426B /* Search */,
 			);
 			name = Tasks;
 			sourceTree = "<group>";
@@ -540,6 +546,16 @@
 				2448D55312E8B2DF005EEEDA /* Date */,
 			);
 			name = Edition;
+			sourceTree = "<group>";
+		};
+		24CFA4E213A13FBF00DD426B /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				24CFA4E313A1402A00DD426B /* TasksSearchViewController.h */,
+				24CFA4E413A1402A00DD426B /* TasksSearchViewController.m */,
+				24CFA4E613A1406000DD426B /* TasksSearchView.xib */,
+			);
+			name = Search;
 			sourceTree = "<group>";
 		};
 		24E4496712EBA52600F08B7E /* Tags */ = {
@@ -923,6 +939,7 @@
 				24E5BC66138A0314008D10A2 /* calendar@2x.png in Resources */,
 				24E5BC69138A156E008D10A2 /* tabpanel.png in Resources */,
 				24E5BC6A138A156E008D10A2 /* tabpanel@2x.png in Resources */,
+				24CFA4E713A1406000DD426B /* TasksSearchView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -979,6 +996,7 @@
 				24E5BBE71389E316008D10A2 /* NSString+Additions.m in Sources */,
 				24E5BBED1389F534008D10A2 /* _Tag.m in Sources */,
 				24E5BBEE1389F534008D10A2 /* Tag.m in Sources */,
+				24CFA4E513A1402A00DD426B /* TasksSearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

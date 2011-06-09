@@ -1,5 +1,6 @@
 #import "TasksScrollContainerViewController.h"
 #import "NSString+Additions.h"
+#import "TasksSearchViewController.h"
 
 static CGFloat const kSentDateFontSize = 13.0f;
 static CGFloat const kMessageFontSize   = 16.0f;
@@ -525,7 +526,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)searchTouched
 {
-    
+    TasksSearchViewController * controller = [[[TasksSearchViewController alloc] initWithNibName:@"TasksSearchView" bundle:nil] autorelease];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)updateTitle
