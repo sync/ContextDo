@@ -1,3 +1,5 @@
+![ContextDo](https://img.skitch.com/20110329-8jhuj5h29wkqrhcce9js1rb124.jpg)
+
 Right after cloning the project, don't forget to 
 update the submodules:
 
