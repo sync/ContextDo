@@ -154,16 +154,42 @@
 	CLLocationDistance distanceFromLast = (self.lastCenterLocation) ? [centerLocation distanceFromLocation:self.lastCenterLocation] : NSNotFound;
 	
 	if (distance == 0 && distanceFromLast > RegionShouldUpdateCloseThresholdInMeters) {
-		CLLocationCoordinate2D coordinate = self.mapView.centerCoordinate;
 		if (reverseGeocoder) {
-			[reverseGeocoder cancel];
-			reverseGeocoder.delegate = nil;
-			[reverseGeocoder release];
-			reverseGeocoder = nil;
-		}
-		reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:coordinate];
-		reverseGeocoder.delegate = self;
-		[reverseGeocoder start];
+            [reverseGeocoder cancelGeocode];
+            [reverseGeocoder release];
+            reverseGeocoder = nil;
+        }
+        reverseGeocoder = [[CLGeocoder alloc] init];
+        [reverseGeocoder reverseGeocodeLocation:centerLocation 
+                              completionHandler:^(NSArray* placemarks, NSError* error) {
+                                  [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
+                                  
+                                  if (error || placemarks.count == 0) {
+                                      [placemark release];
+                                      placemark = nil;
+                                      return;
+                                  }
+                                  
+                                  placemark = [[placemarks objectAtIndex:0] retain];
+                                  
+                                  self.lastCenterLocation = centerLocation;
+                                  
+                                  [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
+                                  
+                                  if (!self.userEdited) {
+                                      NSString *street = @"";
+                                      NSString *separator = @"";
+                                      if (self.placemark.subThoroughfare.length > 0) {
+                                          street = [street stringByAppendingString:self.placemark.subThoroughfare];
+                                          separator = @" ";
+                                      }
+                                      if (self.placemark.thoroughfare.length > 0) {
+                                          street = [street stringByAppendingFormat:@"%@%@", separator, self.placemark.thoroughfare];
+                                      }
+                                      NSString *suburb = (self.placemark.locality.length > 0) ? self.placemark.locality : self.placemark.subLocality;
+                                      [self setStreet:street suburb:suburb];
+                                  }
+                              }];
 		[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:TRUE];
 	}
 }
@@ -172,46 +198,6 @@
 {	
 	CLLocation *currentCenterLocation = [[[CLLocation alloc]initWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude]autorelease];
 	[self performSelector:@selector(shouldReverseLocation:) withObject:currentCenterLocation afterDelay:1.5];
-}
-
-#pragma mark -
-#pragma mark MKReverseGeocoderDelegate methods
-
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)newPlacemark 
-{
-    self.lastCenterLocation = [[[CLLocation alloc]initWithLatitude:geocoder.coordinate.latitude longitude:geocoder.coordinate.longitude]autorelease];
-	
-	placemark = [newPlacemark retain];
-    reverseGeocoder.delegate = nil;
-	[reverseGeocoder release];
-	reverseGeocoder = nil;
-	
-	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
-	
-	if (!self.userEdited) {
-		NSString *street = @"";
-		NSString *separator = @"";
-		if (self.placemark.subThoroughfare.length > 0) {
-			street = [street stringByAppendingString:self.placemark.subThoroughfare];
-			separator = @" ";
-		}
-		if (self.placemark.thoroughfare.length > 0) {
-			street = [street stringByAppendingFormat:@"%@%@", separator, self.placemark.thoroughfare];
-		}
-		NSString *suburb = (self.placemark.locality.length > 0) ? self.placemark.locality : self.placemark.subLocality;
-		[self setStreet:street suburb:suburb];
-	}
-}
-
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error 
-{
-    [placemark release];
-	placemark = nil;
-	reverseGeocoder.delegate = nil;
-	[reverseGeocoder release];
-	reverseGeocoder = nil;
-	
-	[[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:FALSE];
 }
 
 #pragma mark -

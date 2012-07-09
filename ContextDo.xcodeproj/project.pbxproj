@@ -305,6 +305,8 @@
 		2456815D12F078D30004189D /* tick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2456815C12F078D30004189D /* tick.wav */; };
 		245681B712F07C1C0004189D /* panel_swipe.png in Resources */ = {isa = PBXBuildFile; fileRef = 245681B512F07C1C0004189D /* panel_swipe.png */; };
 		245681B812F07C1C0004189D /* panel_swipe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 245681B612F07C1C0004189D /* panel_swipe@2x.png */; };
+		2465321215AAF19C009B1712 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2465321115AAF19C009B1712 /* Parse.framework */; };
+		2465321415AAF207009B1712 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2465321315AAF207009B1712 /* AudioToolbox.framework */; };
 		2481FF5F12FF3E92003EEAB6 /* libKitDeps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FF5E12FF3E92003EEAB6 /* libKitDeps.a */; };
 		2481FF9B12FF477F003EEAB6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FF9A12FF477F003EEAB6 /* MapKit.framework */; };
 		2481FFB112FF4874003EEAB6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FFB012FF4873003EEAB6 /* MessageUI.framework */; };
@@ -729,6 +731,8 @@
 		2456815C12F078D30004189D /* tick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tick.wav; sourceTree = "<group>"; };
 		245681B512F07C1C0004189D /* panel_swipe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = panel_swipe.png; sourceTree = "<group>"; };
 		245681B612F07C1C0004189D /* panel_swipe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "panel_swipe@2x.png"; sourceTree = "<group>"; };
+		2465321115AAF19C009B1712 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		2465321315AAF207009B1712 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		2481FF5E12FF3E92003EEAB6 /* libKitDeps.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libKitDeps.a; sourceTree = SOURCE_ROOT; };
 		2481FF9A12FF477F003EEAB6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2481FFB012FF4873003EEAB6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -837,11 +841,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2465321415AAF207009B1712 /* AudioToolbox.framework in Frameworks */,
 				2481FFB112FF4874003EEAB6 /* MessageUI.framework in Frameworks */,
 				2481FF9B12FF477F003EEAB6 /* MapKit.framework in Frameworks */,
 				2481FF5F12FF3E92003EEAB6 /* libKitDeps.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				2465321215AAF19C009B1712 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1073,6 +1079,7 @@
 		2465321015AAF0BB009B1712 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				2465321115AAF19C009B1712 /* Parse.framework */,
 			);
 			path = External;
 			sourceTree = "<group>";
@@ -1265,6 +1272,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				2465321315AAF207009B1712 /* AudioToolbox.framework */,
 				3A57FEDC11FFB24F00248D1D /* Source */,
 				3A57FED411FFB24F00248D1D /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -2137,7 +2145,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Source/External\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Source/Main/Prefix.pch";
@@ -2155,7 +2166,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Source/External\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Source/Main/Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -2179,7 +2193,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
@@ -2197,7 +2211,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BDC43187-5913-4445-BA27-7D56E421FD03";
 				SDKROOT = iphoneos;

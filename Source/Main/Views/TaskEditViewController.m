@@ -178,7 +178,7 @@
 	UIButton *button = (UIButton *)sender;
 	NSIndexPath *index = [self.taskEditDataSource indexPathForTag:button.tag];
 	
-	MKPlacemark *placemark = [AppDelegate sharedAppDelegate].placemark;
+	CLPlacemark *placemark = [AppDelegate sharedAppDelegate].placemark;
 	
 	if ([AppDelegate sharedAppDelegate].hasValidCurrentLocation) {
 		CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;

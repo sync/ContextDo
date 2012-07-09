@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "MyLocationGetter.h"
 
-@interface AppDelegate : NSObject <UIApplicationDelegate, MKReverseGeocoderDelegate, UINavigationControllerDelegate> {
+@interface AppDelegate : NSObject <UIApplicationDelegate, UINavigationControllerDelegate> {
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
@@ -14,8 +14,8 @@
 
 @property (nonatomic, readonly) BOOL hasValidCurrentLocation;
 
-@property (nonatomic, readonly) MKPlacemark *placemark;
-@property (nonatomic, readonly) MKReverseGeocoder *reverseGeocoder;
+@property (nonatomic, readonly) CLPlacemark *placemark;
+@property (nonatomic, readonly) CLGeocoder *reverseGeocoder;
 
 @property (nonatomic) BOOL firstGPSFix;
 

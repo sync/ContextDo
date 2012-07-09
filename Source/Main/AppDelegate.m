@@ -20,7 +20,7 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
-@synthesize window, navigationController, placemark, reverseGeocoder, locationGetter, firstGPSFix, blackedOutView, lastCurrentLocation;
+@synthesize window, navigationController, reverseGeocoder, placemark, locationGetter, firstGPSFix, blackedOutView, lastCurrentLocation;
 @synthesize backgrounding;
 
 #pragma mark -
@@ -278,16 +278,24 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 		if (!self.lastCurrentLocation || [self.currentLocation distanceFromLocation:self.lastCurrentLocation] >= distance) {
 			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 		}
-			
-		if (reverseGeocoder) {
-			[reverseGeocoder cancel];
-			reverseGeocoder.delegate = nil;
-			[reverseGeocoder release];
-			reverseGeocoder = nil;
-		}
-		reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:coordinate];
-		reverseGeocoder.delegate = self;
-		[reverseGeocoder start];
+        
+        if (reverseGeocoder) {
+            [reverseGeocoder cancelGeocode];
+            [reverseGeocoder release];
+            reverseGeocoder = nil;
+        }
+        reverseGeocoder = [[CLGeocoder alloc] init];
+        [reverseGeocoder reverseGeocodeLocation:self.currentLocation 
+                              completionHandler:^(NSArray* placemarks, NSError* error) {
+                                  if (error || placemarks.count == 0) {
+                                      [placemark release];
+                                      placemark = nil;
+                                      return;
+                                  }
+                                  
+                                  placemark = [[placemarks objectAtIndex:0] retain];
+                                  [[NSNotificationCenter defaultCenter] postNotificationName:PlacemarkDidChangeNotification object:nil userInfo:nil];
+                              }];
 	}
 	
 	self.lastCurrentLocation = self.currentLocation;
@@ -301,29 +309,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (BOOL)hasValidCurrentLocation
 {
 	return (self.currentLocation && CLLocationCoordinate2DIsValid(self.currentLocation.coordinate));
-}
-
-
-#pragma mark -
-#pragma mark MKReverseGeocoderDelegate methods
-
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)newPlacemark 
-{
-    placemark = [newPlacemark retain];
-    reverseGeocoder.delegate = nil;
-	[reverseGeocoder release];
-	reverseGeocoder = nil;
-	[[NSNotificationCenter defaultCenter] postNotificationName:PlacemarkDidChangeNotification object:nil userInfo:nil];
-}
-
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error 
-{
-    DLog(@"reverseGeocoder failed with error:%@", [error localizedDescription]);
-	[placemark release];
-	placemark = nil;
-	reverseGeocoder.delegate = nil;
-	[reverseGeocoder release];
-	reverseGeocoder = nil;
 }
 
 #pragma mark -

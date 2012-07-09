@@ -3,14 +3,14 @@
 #import "TaskLocationDataSource.h"
 
 
-@interface TaskLocationViewController : TaskEditViewController <MKMapViewDelegate, MKReverseGeocoderDelegate> {
+@interface TaskLocationViewController : TaskEditViewController <MKMapViewDelegate> {
 
 }
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 
-@property (nonatomic, readonly) MKPlacemark *placemark;
-@property (nonatomic, readonly) MKReverseGeocoder *reverseGeocoder;
+@property (nonatomic, readonly) CLPlacemark *placemark;
+@property (nonatomic, readonly) CLGeocoder *reverseGeocoder;
 
 @property (nonatomic, retain) CLLocation *lastCenterLocation;
 

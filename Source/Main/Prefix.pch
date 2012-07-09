@@ -11,6 +11,7 @@
     #import "SynthesizeSingleton.h"
 	#import <QuartzCore/QuartzCore.h>
 	#import <MapKit/MapKit.h>
+    #import <CoreLocation/CoreLocation.h>
 	#import "Define.h"
     #import "ObjectiveDump3.h"
 	#import "UIColor+i7HexColor.h"
