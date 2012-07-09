@@ -1,4 +1,5 @@
 #import "ResetPasswordViewController.h"
+#import <Parse/Parse.h>
 
 @interface ResetPasswordViewController ()
 
@@ -17,7 +18,6 @@
 	
 	self.title = @"Reset Password";
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:UserDidResetPasswordNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:UserDidResetPasswordNotification];
 	
 	[self startEditing];
@@ -55,8 +55,8 @@
 - (IBAction)shouldResetPassword;
 {
 	[self endEditing];
-	
-	[[APIServices sharedAPIServices] resetPasswordWithUsername:self.usernameTextField.text];
+    
+    [PFUser requestPasswordResetForEmailInBackground:self.usernameTextField.text];
 }
 
 #pragma mark -
@@ -121,7 +121,6 @@
 
 - (void)dealloc 
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:UserDidResetPasswordNotification];
 	
 	[usernameTextField release];
