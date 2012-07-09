@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,7 +32,6 @@
 		241EBD1912FFFA5D00F871B5 /* TapkuLibrary.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 241EBD0412FFFA5D00F871B5 /* TapkuLibrary.bundle */; };
 		24269EC812F846F300969CBB /* CacheServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 24269EC712F846F300969CBB /* CacheServices.m */; };
 		2426AC3712F9A1CF00969CBB /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 2426AC3612F9A1CF00969CBB /* iTunesArtwork */; };
-		242C911612FD097B00F557AA /* Kit.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 242C911212FD097B00F557AA /* Kit.xcconfig */; };
 		2434D66F12B59F32007B8A13 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2434D66E12B59F32007B8A13 /* ResetPasswordViewController.m */; };
 		2434D67112B59F56007B8A13 /* ResetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2434D67012B59F56007B8A13 /* ResetPasswordView.xib */; };
 		2437358E1302FE2A002231E1 /* btn_fb_touch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2437358A1302FE2A002231E1 /* btn_fb_touch@2x.png */; };
@@ -1071,6 +1070,13 @@
 			name = "Pull to Refresh";
 			sourceTree = "<group>";
 		};
+		2465321015AAF0BB009B1712 /* External */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
 		248921C3128ED27000DC9712 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -1601,6 +1607,7 @@
 		3A57FEDC11FFB24F00248D1D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				2465321015AAF0BB009B1712 /* External */,
 				242C910E12FD08ED00F557AA /* Kits */,
 				3A57FFA011FFB24F00248D1D /* Main */,
 				3A57002D11FFB2AC00248D1D /* Other */,
@@ -1694,8 +1701,11 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "ContextDo" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -2009,7 +2019,6 @@
 				245681B712F07C1C0004189D /* panel_swipe.png in Resources */,
 				245681B812F07C1C0004189D /* panel_swipe@2x.png in Resources */,
 				2426AC3712F9A1CF00969CBB /* iTunesArtwork in Resources */,
-				242C911612FD097B00F557AA /* Kit.xcconfig in Resources */,
 				241EBD0512FFFA5D00F871B5 /* blackArrow.png in Resources */,
 				241EBD0612FFFA5D00F871B5 /* blackArrow@2x.png in Resources */,
 				241EBD0712FFFA5D00F871B5 /* blueArrow.png in Resources */,
@@ -2171,7 +2180,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
@@ -2191,7 +2199,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BDC43187-5913-4445-BA27-7D56E421FD03";
 				SDKROOT = iphoneos;
 			};

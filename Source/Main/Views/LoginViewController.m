@@ -77,7 +77,7 @@
 	[self.navigationController pushViewController:controller animated:TRUE];
 }
 
-- (IBAction)shouldResetPassword
+- (void)shouldResetPassword
 {
 	ResetPasswordViewController *controller = [[[ResetPasswordViewController alloc]initWithNibName:@"ResetPasswordView"
 																							bundle:nil]autorelease];
