@@ -36,21 +36,23 @@
 {
 	NSDictionary *info = request.userInfo;
 	
-	if (request.responseStatusCode != 500)  {
+	if (request.responseStatusCode == 500)  {
+        [self notifyFailed:request withError:@"Account already exists!"];
+	} else if (request.responseStatusCode >= 400) {
+        [self notifyFailed:request withError:@"Unable to create account!"];
+    } else {
 		self.username = [info valueForKey:@"username"];
 		self.password = [info valueForKey:@"password"];
 		[self notifyDone:request object:nil];
-	} else {
-		[self notifyFailed:request withError:@"Account already exists!"];
 	}
 }
 
 - (void)parseResetPassword:(ASIHTTPRequest *)request
 {
-	if (request.responseStatusCode != 500)  {
-		[self notifyDone:request object:nil];
+	if (request.responseStatusCode >= 400)  {
+        [self notifyFailed:request withError:@"Unable to Reset Password!"];
 	} else {
-		[self notifyFailed:request withError:@"Unable to Reset Password!"];
+		[self notifyDone:request object:nil];
 	}
 }
 
