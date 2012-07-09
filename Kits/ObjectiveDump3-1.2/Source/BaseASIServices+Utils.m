@@ -23,40 +23,30 @@
 	}
 }
 
-- (void)notifyDone:(NSDictionary *)dictionary
+- (void)notifyDoneForKey:(NSString *)key withObject:(id)object
 {
-	NSString *notificationName = [dictionary valueForKey:@"notificationName"];
-	id object = [dictionary valueForKey:@"object"];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:object];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStopLoadingForKey:notificationName];
+	[[NSNotificationCenter defaultCenter] postNotificationName:key object:object];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStopLoadingForKey:key];
 }
 
-- (void)notifyDone:(ASIHTTPRequest *)request object:(id)object;
+- (void)notifyDone:(ASIHTTPRequest *)request withObject:(id)object;
 {
-	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-								[self notificationNameForRequest:request], @"notificationName",
-								object, @"object",
-								nil];
-	[self performSelectorOnMainThread:@selector(notifyDone:) withObject:dictionary waitUntilDone:YES];
+	dispatch_async(dispatch_get_main_queue(), ^{
+        [self notifyDoneForKey:[self notificationNameForRequest:request] withObject:object];
+    });
 }
 
-- (void)notifyFailed:(NSDictionary *)dictionary
+- (void)notifyFailedForKey:(NSString *)key withError:(NSString *)errorString
 {
-	NSString *notificationName = [dictionary valueForKey:@"notificationName"];
-	NSString *errorString = [dictionary valueForKey:@"errorString"];
-	
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:errorString forKey:notificationName];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStopLoadingForKey:notificationName];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:errorString forKey:key];
+	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStopLoadingForKey:key];
 }
 
 - (void)notifyFailed:(ASIHTTPRequest *)request withError:(NSString *)errorString
 {
-	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-								[self notificationNameForRequest:request], @"notificationName",
-								errorString, @"errorString",
-								nil];
-	[self performSelectorOnMainThread:@selector(notifyFailed:) withObject:dictionary waitUntilDone:YES];
+	dispatch_async(dispatch_get_main_queue(), ^{
+        [self notifyFailedForKey:[self notificationNameForRequest:request] withError:errorString];
+    });
 }
 
 @end

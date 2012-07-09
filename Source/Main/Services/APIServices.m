@@ -80,27 +80,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 #pragma mark -
 #pragma mark User Related Storage
 
-- (NSString *)apiToken
-{	
-	return [[NSUserDefaults standardUserDefaults]stringForKey:APITokenUserDefaults];
-}
-
-- (void)setApiToken:(NSString *)apiToken
-{
-	if (!apiToken) {
-		[[NSUserDefaults standardUserDefaults]removeObjectForKey:APITokenUserDefaults];
-	} else {
-		[[NSUserDefaults standardUserDefaults]setValue:apiToken forKey:APITokenUserDefaults];
-	}
-	
-	[[NSUserDefaults standardUserDefaults]synchronize];
-}
-
 - (NSString *)username
 {
-	if (self.apiToken && APITokenEabled) {
-		return self.apiToken;
-	}
 	return [[NSUserDefaults standardUserDefaults]stringForKey:UsernameUserDefaults];
 }
 
@@ -120,9 +101,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
 - (NSString *)password
 {
-	if (self.apiToken && APITokenEabled) {
-		return @"X";
-	}
 	return [SFHFKeychainUtils getPasswordForUsername:self.username andServiceName:CTXDOService error:nil];
 }
 
@@ -156,87 +134,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	}
 	
 	[[NSUserDefaults standardUserDefaults]synchronize];
-}
-
-#pragma mark -
-#pragma mark Login
-
-- (void)loginWithUsername:(NSString *)aUsername password:(NSString *)aPassword
-{
-	if (!aUsername || !aPassword) {
-		return;
-	}
-	
-	self.username = nil;
-	self.password = nil;
-	
-	NSString *notificationName = UserDidLoginNotification;
-	NSString *path = @"login";
-	
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-							  path, @"path",
-							  notificationName, @"notificationName",
-							  nil];
-	
-	NSString *url = CTXDOURL(BASE_URL, LOGIN_PATH);
-	ASIHTTPRequest *request = [self requestWithUrl:url];	
-	request.userInfo = userInfo;
-	request.delegate = self;
-	
-	[request setUsername:aUsername];
-	[request setPassword:aPassword];
-	
-	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
-		NSString *offlineUserPassword = [SFHFKeychainUtils getPasswordForUsername:OfflineService andServiceName:OfflineService error:nil];
-		NSArray *components = [offlineUserPassword componentsSeparatedByString:@"|-|--_/_/_/--|-|"];
-		if (components.count == 2 &&
-			aUsername && 
-			aPassword &&
-			[aUsername isEqualToString:[components objectAtIndex:0]] &&
-			[aPassword isEqualToString:[components objectAtIndex:1]]) {
-			[self notifyDone:request object:nil];
-			return;
-		}
-	}
-	
-	[self.networkQueue addOperation:request];
-	[self.networkQueue go];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
-}
-
-#pragma mark -
-#pragma mark Registration
-
-- (void)registerWithUsername:(NSString *)aUsername password:(NSString *)aPassword
-{
-	if (!aUsername || !aPassword) {
-		return;
-	}
-	
-	NSString *notificationName = UserDidRegisterNotification;
-	NSString *path = @"register";
-	
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-							  path, @"path",
-							  notificationName, @"notificationName",
-							  aUsername, @"username",
-							  aPassword, @"password",
-							  nil];
-	
-	NSString *url = CTXDOURL(BASE_URL, REGISTER_PATH);
-	ASIFormDataRequest *request = [self formRequestWithUrl:url];
-	request.userInfo = userInfo;
-	request.delegate = self;
-	
-	[request setPostValue:aUsername forKey:@"user[email]"];
-	[request setPostValue:aPassword forKey:@"user[password]"];
-	[request setPostValue:aPassword forKey:@"user[password_confirmation]"];
-	
-	[request addRequestHeader:@"X-Requested-With" value:@"XMLHttpRequest"];
-	
-	[self.networkQueue addOperation:request];
-	[self.networkQueue go];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];	
 }
 
 #pragma mark -
@@ -903,11 +800,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSDictionary *info = request.userInfo;
 	NSString *path = [info valueForKey:@"path"];
 	
-	if ([path isEqualToString:@"login"]) {
-		[self parseLogin:request];
-	} else if ([path isEqualToString:@"register"]) {
-		[self parseRegister:request];
-	} else if ([path isEqualToString:@"resetPasswordWithUsername"]) {
+    if ([path isEqualToString:@"resetPasswordWithUsername"]) {
 		[self parseResetPassword:request];
 	} else if ([path isEqualToString:GroupsKey]) {
 		[self parseGroups:request];
@@ -944,7 +837,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		} else {
 			[[AppDelegate sharedAppDelegate]showLoginView:TRUE];
 		}
-		self.apiToken = nil;
 	} else {
 		//[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:[request.error localizedDescription] forKey:[self notificationNameForRequest:request]];
 	}

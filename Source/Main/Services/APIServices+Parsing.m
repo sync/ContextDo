@@ -7,52 +7,12 @@
 #pragma mark -
 #pragma mark Credentials
 
-- (void)parseLogin:(ASIHTTPRequest *)request
-{
-	NSString *responseString = [request responseString];
-	if ([responseString length] != 0 && request.responseStatusCode == 200)  {
-		NSError *error = nil;
-		
-		SBJsonParser *json = [[[SBJsonParser alloc]init] autorelease];
-		
-		// {"api_token":"H3dU4mqVrpBoh9qZQ9TO"}
-		
-		NSString *apiToken = [(NSString *)[[[json objectWithString:responseString error:&error]niledNull]valueForKey:@"api_token"]niledNull];
-		if (!error && apiToken) {		
-			self.username = request.username;
-			self.password = request.password;
-			self.apiToken = apiToken;
-			[self notifyDone:request object:nil];
-		} else {
-			[self notifyFailed:request withError:@"Unable to Login!"];
-		}
-	} else {
-		[self notifyFailed:request withError:@"Unable to Login!"];
-	}
-	
-}
-
-- (void)parseRegister:(ASIHTTPRequest *)request
-{
-	NSDictionary *info = request.userInfo;
-	
-	if (request.responseStatusCode == 500)  {
-        [self notifyFailed:request withError:@"Account already exists!"];
-	} else if (request.responseStatusCode >= 400) {
-        [self notifyFailed:request withError:@"Unable to create account!"];
-    } else {
-		self.username = [info valueForKey:@"username"];
-		self.password = [info valueForKey:@"password"];
-		[self notifyDone:request object:nil];
-	}
-}
-
 - (void)parseResetPassword:(ASIHTTPRequest *)request
 {
 	if (request.responseStatusCode >= 400)  {
         [self notifyFailed:request withError:@"Unable to Reset Password!"];
 	} else {
-		[self notifyDone:request object:nil];
+		[self notifyDone:request withObject:nil];
 	}
 }
 
@@ -80,7 +40,7 @@
 		[[CacheServices sharedCacheServices].groupsDict addEntriesFromDictionary:dict];
 		[[CacheServices sharedCacheServices]saveGroups];
 		
-		[self notifyDone:request object:content];
+		[self notifyDone:request withObject:content];
 	}
 }
 
@@ -107,7 +67,7 @@
 			[[CacheServices sharedCacheServices]deleteCachedGroup:nonSyncedGroup syncId:nonSyncedGroup.syncId];
 			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
 			[[CacheServices sharedCacheServices]saveGroups];
-			[self notifyDone:request object:nil];
+			[self notifyDone:request withObject:nil];
 			return;
 		}
 		
@@ -131,7 +91,7 @@
 			}
 			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
 			[[CacheServices sharedCacheServices]saveGroups];
-			[self notifyDone:request object:group];
+			[self notifyDone:request withObject:group];
 		} else {
 			if ([[self notificationNameForRequest:request]isEqualToString:GroupAddNotification]) {
 				[self notifyFailed:request withError:@"Unable to Create Group"];
@@ -198,7 +158,7 @@
 		}
 		
 		
-		[self notifyDone:request object:content];
+		[self notifyDone:request withObject:content];
 	}
 }
 
@@ -251,7 +211,7 @@
 			[[CacheServices sharedCacheServices]saveTasksWithDue];
 			[[CacheServices sharedCacheServices]saveTasksWithLatitude];
 			[[CacheServices sharedCacheServices]saveEditedTasks];
-			[self notifyDone:request object:nil];
+			[self notifyDone:request withObject:nil];
 			return;
 		}
         
@@ -274,7 +234,7 @@
 			[[CacheServices sharedCacheServices]saveTasksWithDue];
 			[[CacheServices sharedCacheServices]saveTasksWithLatitude];
 			[[CacheServices sharedCacheServices]saveEditedTasks];
-			[self notifyDone:request object:task];
+			[self notifyDone:request withObject:task];
 		} else {
 			if ([[self notificationNameForRequest:request]isEqualToString:TaskAddNotification]) {
                 [[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:nonSyncedTask forPathToId:@"syncId" forKey:AddedKey];
@@ -307,7 +267,7 @@
 		}
 		self.user = user;
 		if (user) {
-			[self notifyDone:request object:user];
+			[self notifyDone:request withObject:user];
 		} else {
 			if ([[self notificationNameForRequest:request]isEqualToString:UserEditNotification]) {
 				[self notifyFailed:request withError:@"Unable to Edit Settings"];

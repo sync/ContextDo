@@ -1,4 +1,5 @@
 #import "RegisterViewController.h"
+#import <Parse/Parse.h>
 
 @implementation RegisterViewController
 
@@ -13,7 +14,6 @@
 	
 	self.title = @"Register";
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:UserDidRegisterNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:UserDidRegisterNotification];
 	
 	[self startEditing];
@@ -48,9 +48,23 @@
 - (IBAction)shouldRegister;
 {
 	[self endEditing];
-	
-	[[APIServices sharedAPIServices] registerWithUsername:self.usernameTextField.text
-												 password:self.passwordTextField.text];
+    
+    NSString *notificationName = UserDidRegisterNotification;
+    [[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:notificationName];	
+    
+    PFUser *user = [PFUser user];
+    user.username = self.usernameTextField.text;
+    user.password = self.passwordTextField.text;
+    
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            [[APIServices sharedAPIServices] notifyDoneForKey:notificationName withObject:user];
+            [self shouldReloadContent:nil];
+        } else {
+            NSString *errorString = [[error userInfo] objectForKey:@"error"];
+            [[APIServices sharedAPIServices] notifyFailedForKey:notificationName withError:errorString];
+        }
+    }];
 }
 
 #pragma mark -
@@ -122,7 +136,6 @@
 
 - (void)dealloc 
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:UserDidRegisterNotification];
 	
 	[passwordConfirmationTextField release];

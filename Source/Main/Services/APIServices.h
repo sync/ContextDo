@@ -11,11 +11,8 @@
 @property (nonatomic, retain) ASINetworkQueue *serialNetworkQueue;
 - (void)downloadSeriallyContentForUrl:(NSString *)url withObject:(id)object path:(NSString *)path notificationName:(NSString *)notificationName;
 
-@property (nonatomic, assign) NSString *apiToken;
 @property (nonatomic, assign) NSString *username;
 @property (nonatomic, assign) NSString *password;
-- (void)loginWithUsername:(NSString *)username password:(NSString *)password;
-- (void)registerWithUsername:(NSString *)username password:(NSString *)password;
 - (void)resetPasswordWithUsername:(NSString *)username;
 
 - (void)refreshGroups;

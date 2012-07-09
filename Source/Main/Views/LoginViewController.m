@@ -1,6 +1,7 @@
 #import "LoginViewController.h"
 #import "RegisterViewController.h"
 #import "ResetPasswordViewController.h"
+#import <Parse/Parse.h>
 
 @interface LoginViewController ()
 
@@ -21,9 +22,8 @@
     [super viewDidLoad];
 	
 	self.title = @"Sign In";
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:UserDidLoginNotification object:nil];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:UserDidLoginNotification];
+    
+    [[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:UserDidLoginNotification];
 	
 	[self startEditing];
 }
@@ -65,9 +65,20 @@
 - (IBAction)shouldLogin;
 {
 	[self endEditing];
-	
-	[[APIServices sharedAPIServices] loginWithUsername:self.usernameTextField.text
-											  password:self.passwordTextField.text];
+    
+    NSString *notificationName = UserDidLoginNotification;
+    [[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:notificationName];
+    
+    [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text 
+                                    block:^(PFUser *user, NSError *error) {
+                                        if (user) {
+                                            [[APIServices sharedAPIServices] notifyDoneForKey:notificationName withObject:user];
+                                            [self shouldReloadContent:nil];
+                                        } else {
+                                            NSString *errorString = [[error userInfo] objectForKey:@"error"];
+                                            [[APIServices sharedAPIServices] notifyFailedForKey:notificationName withError:errorString];
+                                        }
+                                    }];
 }
 
 - (void)shouldRegister
@@ -158,7 +169,6 @@
 
 - (void)dealloc 
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]removeObserver:self forKey:UserDidLoginNotification];
 	
 	[usernameTextField release];

@@ -204,7 +204,7 @@
     NSDictionary *settings = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:toKmValue]
 														 forKey:AlertsDistanceWithin];
 	[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:toKmValue];
-	User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken]; // todo remember fb token and pass it there
+	User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken];
 	[[APIServices sharedAPIServices]updateUser:user];
 	return user;
 }

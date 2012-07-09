@@ -51,6 +51,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
     [Parse setApplicationId:@"0rA5BgKOKUwhSdspvhywcS0GA6Dy4DXmJLUdHX2E"
                   clientKey:@"t7HxxxdlUSgh6dLGrKxP3amfYDGmHKztcdSjipKH"];
     [FacebookServices sharedFacebookServices].facebookApplicationId = FacebookApplicationId;
+    
+    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
+    [testObject setObject:@"bar" forKey:@"foo"];
+    [testObject save];
 	
 	// Add the navigation controller's view to the window and display.
     [window addSubview:self.navigationController.view];
@@ -63,10 +67,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	[self.navigationController.customToolbar setShadowImage:[DefaultStyleSheet sharedDefaultStyleSheet].toolbarShadowImage
 												forBarStyle:UIBarStyleBlackOpaque];
 	
-	NSString *apiToken = [APIServices sharedAPIServices].apiToken;
-	if (apiToken.length == 0) {
-		[self handleLocalNotification:launchOptions];
-	}
+	PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+        [self handleLocalNotification:launchOptions];
+    }
 	
     return YES;
 }
@@ -119,13 +123,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
      */
     [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
     
-	NSString *apiToken = [APIServices sharedAPIServices].apiToken;
-	if (apiToken.length == 0) {
-		if ([APIServices sharedAPIServices].username.length > 0 && [APIServices sharedAPIServices].password.length > 0) {
-			[[APIServices sharedAPIServices]loginWithUsername:[APIServices sharedAPIServices].username password:[APIServices sharedAPIServices].password];
-		} else {
-			[self showLoginView:FALSE];
-		}
+	PFUser *currentUser = [PFUser currentUser];
+    if (!currentUser) {
+		[self showLoginView:FALSE];
 	} else {
 		[self checkUserSettings];
 		[self enableGPS];
@@ -145,8 +145,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)logout:(BOOL)showingLogin animated:(BOOL)animated
 {
-	// clear apiKey
-	[APIServices sharedAPIServices].apiToken = nil;
+	// clear user
+    [PFUser logOut];
 	// clear username / password
 	[APIServices sharedAPIServices].username = nil;
 	[APIServices sharedAPIServices].password = nil;

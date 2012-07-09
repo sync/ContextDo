@@ -3,7 +3,6 @@
 
 // User Defaults
 #define UsernameUserDefaults @"UsernameUserDefaults"
-#define APITokenUserDefaults @"APITokenUserDefaults"
 #define AlertsDistanceWithin @"AlertsDistanceWithin"
 #define ShouldUseDevServer @"ShouldUseDevServer"
 #define DevServerIp @"DevServerIp"
@@ -14,9 +13,6 @@
 
 // Other
 #define GroupShouldDismissInfo @"GroupShouldDismissInfo"
-
-// Developer
-#define APITokenEabled TRUE
 
 // Map View Default span
 #define MapViewLocationDefaultSpanInMeters 2000.0
