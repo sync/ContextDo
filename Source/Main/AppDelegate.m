@@ -50,11 +50,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
     
     [Parse setApplicationId:@"0rA5BgKOKUwhSdspvhywcS0GA6Dy4DXmJLUdHX2E"
                   clientKey:@"t7HxxxdlUSgh6dLGrKxP3amfYDGmHKztcdSjipKH"];
+    [PFACL setDefaultACL:[PFACL ACL] withAccessForCurrentUser:YES];
     [FacebookServices sharedFacebookServices].facebookApplicationId = FacebookApplicationId;
-    
-    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-    [testObject setObject:@"bar" forKey:@"foo"];
-    [testObject save];
 	
 	// Add the navigation controller's view to the window and display.
     [window addSubview:self.navigationController.view];
