@@ -1272,7 +1272,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				2465321315AAF207009B1712 /* AudioToolbox.framework */,
 				3A57FEDC11FFB24F00248D1D /* Source */,
 				3A57FED411FFB24F00248D1D /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -1284,6 +1283,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2465321315AAF207009B1712 /* AudioToolbox.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				2481FFB012FF4873003EEAB6 /* MessageUI.framework */,
