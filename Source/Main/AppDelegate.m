@@ -48,6 +48,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 															 [NSNumber numberWithFloat:AlertsDistanceWithinDefaultValue], AlertsDistanceWithin,
 															 nil]];
     
+    [[BWHockeyManager sharedHockeyManager] setAppIdentifier:@"0cd352d4bb42e74001d69675a1337a31"];
+    [[BWHockeyManager sharedHockeyManager] setDelegate:self];
+    
     [Parse setApplicationId:@"0rA5BgKOKUwhSdspvhywcS0GA6Dy4DXmJLUdHX2E"
                   clientKey:@"t7HxxxdlUSgh6dLGrKxP3amfYDGmHKztcdSjipKH"];
     [PFACL setDefaultACL:[PFACL ACL] withAccessForCurrentUser:YES];
@@ -161,6 +164,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
  */
 - (void)applicationWillTerminate:(UIApplication *)application {
 	[self.locationGetter stopUpdates];
+}
+
+#pragma mark -
+#pragma mark Hockey
+
+- (NSString *)customDeviceIdentifier {
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(uniqueIdentifier)]) {
+        return [[UIDevice currentDevice] performSelector:@selector(uniqueIdentifier)];
+    }
+    
+    return nil;
 }
 
 #pragma mark -

@@ -1,7 +1,8 @@
 #import <UIKit/UIKit.h>
 #import "MyLocationGetter.h"
+#import "BWHockeyManager.h"
 
-@interface AppDelegate : NSObject <UIApplicationDelegate, UINavigationControllerDelegate> {
+@interface AppDelegate : NSObject <UIApplicationDelegate, UINavigationControllerDelegate, BWHockeyManagerDelegate> {
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
