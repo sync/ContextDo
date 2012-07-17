@@ -1,18 +1,25 @@
 #import "FacebookServices.h"
 
+@interface FacebookServices ()
+
+@property (nonatomic, retain, readwrite) Facebook *facebook;
+
+@end
+
 @implementation FacebookServices
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(FacebookServices)
 
-@synthesize facebook, facebookApplicationId;
+@synthesize facebook = _facebook;
+@synthesize facebookApplicationId = _facebookApplicationId;
 
 - (Facebook *)facebook
 {
-	if (!facebook) {
-		facebook = [[Facebook alloc] init];
+	if (!_facebook) {
+		_facebook = [[Facebook alloc] init];
 	}
 	
-	return facebook;
+	return _facebook;
 }
 
 - (void)authorizeForPermissions:(NSArray *)permissions
@@ -93,8 +100,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(FacebookServices)
 #pragma mark Deallo
 
 - (void)dealloc {
-	[facebookApplicationId release];
-    [facebook release];
+	self.facebookApplicationId = nil;
+    self.facebook = nil;
 	
     [super dealloc];
 }

@@ -12,7 +12,10 @@
 
 @implementation SettingsViewController
 
-@synthesize settingsDataSource, lastSliderValue, settingsSliderView, fbButton;
+@synthesize settingsDataSource = _settingsDataSource;
+@synthesize lastSliderValue = _lastSliderValue;
+@synthesize settingsSliderView = _settingsSliderView;
+@synthesize fbButton = _fbButton;;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -54,7 +57,7 @@
 
 - (BOOL)isFacebookConnected
 {
-	return ([FacebookServices sharedFacebookServices].facebook.isSessionValid);
+	return ([[FacebookServices sharedFacebookServices].facebook isSessionValid]);
 }
 
 - (void)setupFBButton
@@ -89,16 +92,16 @@
 
 - (SettingsSliderView *)settingsSliderView
 {
-	if (!settingsSliderView) {
-		settingsSliderView = [[SettingsSliderView alloc]initWithFrame:CGRectZero];
-		[settingsSliderView.slider addTarget:self action:@selector(sliderDidChangeValue:) forControlEvents:UIControlEventValueChanged];
-		settingsSliderView.slider.minimumValue = 0.0;
-		settingsSliderView.slider.maximumValue = 4.0;
+	if (!_settingsSliderView) {
+		_settingsSliderView = [[SettingsSliderView alloc]initWithFrame:CGRectZero];
+		[_settingsSliderView.slider addTarget:self action:@selector(sliderDidChangeValue:) forControlEvents:UIControlEventValueChanged];
+		_settingsSliderView.slider.minimumValue = 0.0;
+		_settingsSliderView.slider.maximumValue = 4.0;
 		CGFloat value = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
 		self.settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];
 	}
 	
-	return settingsSliderView;
+	return _settingsSliderView;
 	
 	
 }
@@ -242,10 +245,11 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [fbButton release];
-	[settingsSliderView release];
-	[settingsDataSource release];
-	
+    self.fbButton = nil;
+    self.settingsDataSource = nil;
+	[_settingsSliderView release];
+    _settingsSliderView = nil;
+    
 	[super dealloc];
 }
 

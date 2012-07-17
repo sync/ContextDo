@@ -18,6 +18,6 @@
 @property (nonatomic) CGFloat lastSliderValue;
 @property (nonatomic, readonly) SettingsSliderView *settingsSliderView;
 
-@property (nonatomic, readonly) BOOL isFacebookConnected;
+@property (nonatomic, readonly, getter=isFacebookConnected) BOOL facebookConnected;
 
 @end

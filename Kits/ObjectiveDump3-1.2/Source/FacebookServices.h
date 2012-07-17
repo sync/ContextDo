@@ -8,7 +8,7 @@
 
 }
 
-@property (nonatomic, readonly) Facebook *facebook;
+@property (nonatomic, retain, readonly) Facebook *facebook;
 @property (nonatomic, copy) NSString *facebookApplicationId;
 
 + (FacebookServices *)sharedFacebookServices;
