@@ -85,7 +85,6 @@
 	[self.groupsEditDataSource.content removeObjectAtIndex:fromIndexPath.row];
 	[self.groupsEditDataSource.content insertObject:group atIndex:toIndexPath.row];
 	
-	
 	[self syncGroups];
 	
 	group = [[[self.groupsEditDataSource groupForIndexPath:toIndexPath]copy]autorelease];

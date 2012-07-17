@@ -11,7 +11,6 @@
 - (void)addGroup:(Group *)group;
 - (void)updateGroup:(Group *)group;
 - (void)deleteGroup:(Group *)group;
-- (void)syncGroups;
 
 - (void)refreshTasksWithGroupId:(NSNumber *)groupId;
 - (void)refreshTasksWithDue:(NSString *)due;

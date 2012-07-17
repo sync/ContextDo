@@ -181,15 +181,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
-- (void)syncGroups
-{
-	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable) {
-		if (self.networkQueue.requestsCount > 0) {
-			[self performSelector:@selector(syncGroups) withObject:nil afterDelay:0.5];
-		}
-	}
-}
-
 #pragma mark -
 #pragma mark Tasks
 
