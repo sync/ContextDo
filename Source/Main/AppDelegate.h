@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "MyLocationGetter.h"
 #import "BWHockeyManager.h"
+#import "BWQuincyManager.h"
 
 @interface AppDelegate : NSObject <UIApplicationDelegate, UINavigationControllerDelegate, BWHockeyManagerDelegate> {
 }

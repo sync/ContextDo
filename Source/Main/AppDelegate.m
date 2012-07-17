@@ -48,12 +48,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 															 [NSNumber numberWithFloat:AlertsDistanceWithinDefaultValue], AlertsDistanceWithin,
 															 nil]];
     
+    // Setup HockeyKit
     [[BWHockeyManager sharedHockeyManager] setAppIdentifier:@"0cd352d4bb42e74001d69675a1337a31"];
     [[BWHockeyManager sharedHockeyManager] setDelegate:self];
     
+    // Setup QuincyKit
+    [[BWQuincyManager sharedQuincyManager] setAppIdentifier:@"0cd352d4bb42e74001d69675a1337a31"];
+    
+    // Setup Parse
     [Parse setApplicationId:@"0rA5BgKOKUwhSdspvhywcS0GA6Dy4DXmJLUdHX2E"
                   clientKey:@"t7HxxxdlUSgh6dLGrKxP3amfYDGmHKztcdSjipKH"];
     [PFACL setDefaultACL:[PFACL ACL] withAccessForCurrentUser:YES];
+    
+    // Setup Facebook
     [FacebookServices sharedFacebookServices].facebookApplicationId = FacebookApplicationId;
 	
 	// Add the navigation controller's view to the window and display.
