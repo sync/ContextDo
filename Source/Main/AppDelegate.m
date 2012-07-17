@@ -5,6 +5,7 @@
 #import "CTXDONotificationsServices.h"
 #import "FacebookServices.h"
 #import <Parse/Parse.h>
+#import "PFUser+CTXDO.h"
 
 @interface AppDelegate ()
 
@@ -41,11 +42,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
 	self.backgrounding = FALSE;
-	
-	// Override point for customization after application launch.
-	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
-															 [NSNumber numberWithFloat:AlertsDistanceWithinDefaultValue], AlertsDistanceWithin,
-															 nil]];
     
     // Setup HockeyKit
     [[BWHockeyManager sharedHockeyManager] setAppIdentifier:@"0cd352d4bb42e74001d69675a1337a31"];
@@ -272,7 +268,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 	if (self.hasValidCurrentLocation) {
 		CLLocationCoordinate2D coordinate = self.currentLocation.coordinate;
 		
-		CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue * 1000;
+		CGFloat distance = [PFUser currentUser].alertsDistanceWithin * 1000;
 		if (!self.lastCurrentLocation || [self.currentLocation distanceFromLocation:self.lastCurrentLocation] >= distance) {
 			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 		}

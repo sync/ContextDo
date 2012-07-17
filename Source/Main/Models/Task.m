@@ -1,5 +1,7 @@
 #import "Task.h"
 #import "NSDate-Utilities.h"
+#import <Parse/Parse.h>
+#import "PFUser+CTXDO.h"
 
 @implementation Task
 
@@ -53,7 +55,7 @@
 
 - (BOOL)isClose
 {
-	CGFloat distance = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue * 1000;
+	CGFloat distance = [PFUser currentUser].alertsDistanceWithin * 1000;
 	return ((!self.completed || self.completedWithin24hours) && self.distance < distance);
 }
 

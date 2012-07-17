@@ -1,10 +1,6 @@
 // Timeout Request
 #define RequestTimeOutSeconds 35.0
 
-// User Defaults
-#define AlertsDistanceWithin @"AlertsDistanceWithin"
-#define AlertsDistanceWithinDefaultValue 1.0
-
 #define FacebookApplicationId @"125665877503636"
 
 // Other

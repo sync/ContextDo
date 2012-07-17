@@ -2,10 +2,14 @@
 #import "SettingsCell.h"
 #import "CTXDOTableHeaderView.h"
 #import "FacebookServices.h"
+#import <Parse/Parse.h>
+#import "PFUser+CTXDO.h"
 
 @interface SettingsViewController ()
 
 - (void)setupFBButton;
+- (CGFloat)alertsDistancKmToSliderValue:(CGFloat)value;
+- (CGFloat)sliderValueToAlertsDistancKm:(CGFloat)value;
 
 @end
 
@@ -87,8 +91,8 @@
 		[_settingsSliderView.slider addTarget:self action:@selector(sliderDidChangeValue:) forControlEvents:UIControlEventValueChanged];
 		_settingsSliderView.slider.minimumValue = 0.0;
 		_settingsSliderView.slider.maximumValue = 4.0;
-		CGFloat value = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
-		self.settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];
+		CGFloat value = [PFUser currentUser].alertsDistanceWithin;
+		self.settingsSliderView.slider.value = [self alertsDistancKmToSliderValue:value];
 	}
 	
 	return _settingsSliderView;
@@ -112,8 +116,8 @@
 	}
 	
 	if (indexPath.section == 0) {
-		CGFloat value = [APIServices sharedAPIServices].alertsDistanceWithin.floatValue;
-		self.settingsSliderView.slider.value = [[APIServices sharedAPIServices]alertsDistancKmToSliderValue:value];
+		CGFloat value = [PFUser currentUser].alertsDistanceWithin;
+		self.settingsSliderView.slider.value = [self alertsDistancKmToSliderValue:value];
 		self.settingsSliderView.frame = cell.contentView.bounds;
 		[cell addSubview:self.settingsSliderView];
 	}
@@ -193,8 +197,10 @@
 - (void)doneTouched
 {
 	if (self.lastSliderValue != -1.0) {
-        CGFloat toKmValue = [[APIServices sharedAPIServices]sliderValueToAlertsDistancKm:self.settingsSliderView.slider.value];
-        [APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:toKmValue];
+        CGFloat toKmValue = [self sliderValueToAlertsDistancKm:self.settingsSliderView.slider.value];
+        [PFUser currentUser].alertsDistanceWithin = toKmValue;
+        // don't really care if fail or not
+        [[PFUser currentUser] saveInBackground];
 	}
 	
 	[self dismissModalViewControllerAnimated:TRUE];
@@ -214,6 +220,43 @@
 	} else {
 		[[FacebookServices sharedFacebookServices].facebook logout:[FacebookServices sharedFacebookServices]];
 	}
+}
+
+#pragma mark -
+#pragma mark Utilities
+
+- (CGFloat)alertsDistancKmToSliderValue:(CGFloat)value
+{
+	CGFloat sliderValue = 0.0;
+	if (value < 0.25) {
+		sliderValue = 0.0;
+	} else if (value < 0.75) {
+		sliderValue = 1.0;
+	} else if (value < 2.0) {
+		sliderValue = 2.0;
+	} else if (value < 4.0) {
+		sliderValue = 3.0;
+	} else {
+		sliderValue = 5.0;
+	}
+	return sliderValue;
+}
+
+- (CGFloat)sliderValueToAlertsDistancKm:(CGFloat)value
+{
+	CGFloat kmValue = 0.0;
+	if (value < 0.5) {
+		kmValue = 0.1;
+	} else if (value < 1.5) {
+		kmValue = 0.5;
+	} else if (value < 2.5) {
+		kmValue = 1.0;
+	} else if (value < 3.5) {
+		kmValue = 3.0;
+	} else {
+		kmValue = 5.0;
+	}
+	return kmValue;
 }
 
 #pragma mark -

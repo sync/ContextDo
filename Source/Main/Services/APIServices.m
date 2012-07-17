@@ -5,6 +5,8 @@
 #import "Reachability.h"
 #import "SFHFKeychainUtils.h"
 #import "ObjectiveSupport.h"
+#import <Parse/Parse.h>
+#import "PFUser+CTXDO.h"
 
 @implementation APIServices
 
@@ -265,7 +267,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	NSString *latLngString = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
 	
-	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, self.alertsDistanceWithin.floatValue);
+	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, [PFUser currentUser].alertsDistanceWithin);
 	[self downloadContentForUrl:url withObject:latLngString path:path notificationName:notificationName];
 }
 
@@ -424,59 +426,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
-}
-
-#pragma mark -
-#pragma mark Settings
-
-- (NSNumber *)alertsDistanceWithin
-{
-	return [[NSUserDefaults standardUserDefaults]objectForKey:AlertsDistanceWithin];
-}
-
-- (void)setAlertsDistanceWithin:(NSNumber *)alertsDistanceWithin
-{
-	if (!alertsDistanceWithin) {
-		[[NSUserDefaults standardUserDefaults]setValue:[NSNumber numberWithFloat:AlertsDistanceWithinDefaultValue] forKey:AlertsDistanceWithin];
-	} else {
-		[[NSUserDefaults standardUserDefaults]setValue:alertsDistanceWithin forKey:AlertsDistanceWithin];
-	}
-	
-	[[NSUserDefaults standardUserDefaults]synchronize];
-}
-
-- (CGFloat)alertsDistancKmToSliderValue:(CGFloat)value
-{
-	CGFloat sliderValue = 0.0;
-	if (value < 0.25) {
-		sliderValue = 0.0;
-	} else if (value < 0.75) {
-		sliderValue = 1.0;
-	} else if (value < 2.0) {
-		sliderValue = 2.0;
-	} else if (value < 4.0) {
-		sliderValue = 3.0;
-	} else {
-		sliderValue = 5.0;
-	}
-	return sliderValue;
-}
-
-- (CGFloat)sliderValueToAlertsDistancKm:(CGFloat)value
-{
-	CGFloat kmValue = 0.0;
-	if (value < 0.5) {
-		kmValue = 0.1;
-	} else if (value < 1.5) {
-		kmValue = 0.5;
-	} else if (value < 2.5) {
-		kmValue = 1.0;
-	} else if (value < 3.5) {
-		kmValue = 3.0;
-	} else {
-		kmValue = 5.0;
-	}
-	return kmValue;
 }
 
 #pragma mark -

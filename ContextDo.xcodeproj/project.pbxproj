@@ -321,6 +321,7 @@
 		2465324615B57CF4009B1712 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2465324215B57CF4009B1712 /* CrashReporter.framework */; };
 		2465324715B57CF4009B1712 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2465324315B57CF4009B1712 /* LICENSE.txt */; };
 		2465324815B57CF4009B1712 /* Quincy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2465324415B57CF4009B1712 /* Quincy.bundle */; };
+		2465324B15B59B9A009B1712 /* PFUser+CTXDO.m in Sources */ = {isa = PBXBuildFile; fileRef = 2465324A15B59B9A009B1712 /* PFUser+CTXDO.m */; };
 		2481FF5F12FF3E92003EEAB6 /* libKitDeps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FF5E12FF3E92003EEAB6 /* libKitDeps.a */; };
 		2481FF9B12FF477F003EEAB6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FF9A12FF477F003EEAB6 /* MapKit.framework */; };
 		2481FFB112FF4874003EEAB6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2481FFB012FF4873003EEAB6 /* MessageUI.framework */; };
@@ -769,6 +770,8 @@
 		2465324215B57CF4009B1712 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
 		2465324315B57CF4009B1712 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		2465324415B57CF4009B1712 /* Quincy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Quincy.bundle; sourceTree = "<group>"; };
+		2465324915B59B9A009B1712 /* PFUser+CTXDO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFUser+CTXDO.h"; sourceTree = "<group>"; };
+		2465324A15B59B9A009B1712 /* PFUser+CTXDO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFUser+CTXDO.m"; sourceTree = "<group>"; };
 		2481FF5E12FF3E92003EEAB6 /* libKitDeps.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libKitDeps.a; sourceTree = SOURCE_ROOT; };
 		2481FF9A12FF477F003EEAB6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2481FFB012FF4873003EEAB6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -1722,6 +1725,8 @@
 				2489C9CC12BDEB1E00C1A58A /* Group.m */,
 				2489CA7412BDFCC500C1A58A /* Task.h */,
 				2489CA7512BDFCC500C1A58A /* Task.m */,
+				2465324915B59B9A009B1712 /* PFUser+CTXDO.h */,
+				2465324A15B59B9A009B1712 /* PFUser+CTXDO.m */,
 				24E44FC912EC0E5700F08B7E /* Annotations */,
 			);
 			path = Models;
@@ -2212,6 +2217,7 @@
 				2465323915B29677009B1712 /* PSWebTableViewCell.m in Sources */,
 				2465323A15B29677009B1712 /* UIImage+HockeyAdditions.m in Sources */,
 				2465324515B57CF4009B1712 /* BWQuincyManager.m in Sources */,
+				2465324B15B59B9A009B1712 /* PFUser+CTXDO.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

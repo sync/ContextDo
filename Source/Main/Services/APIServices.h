@@ -28,8 +28,4 @@
 - (void)updateTask:(Task *)task;
 - (void)deleteTask:(Task *)task;
 
-@property (nonatomic, assign) NSNumber *alertsDistanceWithin;
-- (CGFloat)alertsDistancKmToSliderValue:(CGFloat)value;
-- (CGFloat)sliderValueToAlertsDistancKm:(CGFloat)value;
-
 @end
