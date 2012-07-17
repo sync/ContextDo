@@ -8,7 +8,6 @@
 + (APIServices *)sharedAPIServices;
 
 - (void)refreshGroups;
-- (void)refreshGroups;
 - (void)addGroup:(Group *)group;
 - (void)updateGroup:(Group *)group;
 - (void)deleteGroup:(Group *)group;
