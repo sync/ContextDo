@@ -161,15 +161,8 @@
 - (void)parseUser:(ASIHTTPRequest *)request
 {
 	if ([request.responseData length] != 0)  {
-		
-		// check fix from bo todo, got empty dict back
-		
 		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
 		User *user = [User fromJSONData:request.responseData];
-		if (![user.userId isEqual:self.user.userId]) {
-            // here clear data?
-		}
-		self.user = user;
 		if (user) {
 			[self notifyDone:request withObject:user];
 		} else {

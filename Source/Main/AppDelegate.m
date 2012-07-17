@@ -84,8 +84,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 
 - (void)checkUserSettings
 {
-	[[APIServices sharedAPIServices]refreshUser];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserSettings:) name:UserDidLoadNotification object:nil];
+	// todo update / refresh user settings here
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserSettings:) name:UserDidLoadNotification object:nil];
 }
 
 - (void)handleUserSettings:(NSNotification *)notification
@@ -154,9 +154,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	// clear user
     [PFUser logOut];
-	// clear username / password
-	[APIServices sharedAPIServices].username = nil;
-	[APIServices sharedAPIServices].password = nil;
 	// clear all sessions + cookies
 	[ASIHTTPRequest clearSession];
 	// go back to user login

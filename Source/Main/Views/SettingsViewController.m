@@ -54,7 +54,7 @@
 
 - (BOOL)isFacebookConnected
 {
-	return ([APIServices sharedAPIServices].user.hasFacebookAccessToken.boolValue);
+	return ([FacebookServices sharedFacebookServices].facebook.isSessionValid);
 }
 
 - (void)setupFBButton
@@ -170,7 +170,6 @@
 	BOOL success = [[infoDict valueForKey:@"success"]boolValue];
 	NSArray *permissions = [infoDict valueForKey:@"permissions"];
 	[[FacebookServices sharedFacebookServices]setFacebookAuthorizedForPemissions:permissions remove:!success];
-	[[APIServices sharedAPIServices]updateUser:[self buildUser]];
 	[self setupFBButton];
 }
 
@@ -205,14 +204,14 @@
 														 forKey:AlertsDistanceWithin];
 	[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:toKmValue];
 	User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken];
-	[[APIServices sharedAPIServices]updateUser:user];
 	return user;
 }
 
 - (void)doneTouched
 {
 	if (self.lastSliderValue != -1.0) {
-		[[APIServices sharedAPIServices]updateUser:[self buildUser]];
+        // todo refresh user here
+        [self buildUser];
 	}
 	
 	[self dismissModalViewControllerAnimated:TRUE];
@@ -231,7 +230,8 @@
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socialServicesFacebookNotification:) name:FacebookNotification object:nil];
 	} else {
 		[[FacebookServices sharedFacebookServices].facebook logout:[FacebookServices sharedFacebookServices]];
-		[[APIServices sharedAPIServices]updateUser:[self buildUser]];
+		// todo refresh user here
+        [self buildUser];
 	}
 }
 

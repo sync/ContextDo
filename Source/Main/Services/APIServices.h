@@ -10,10 +10,6 @@
 @property (nonatomic, retain) ASINetworkQueue *serialNetworkQueue;
 - (void)downloadSeriallyContentForUrl:(NSString *)url withObject:(id)object path:(NSString *)path notificationName:(NSString *)notificationName;
 
-@property (nonatomic, assign) NSString *username;
-@property (nonatomic, assign) NSString *password;
-- (void)resetPasswordWithUsername:(NSString *)username;
-
 - (void)refreshGroups;
 - (void)refreshGroups;
 - (void)addGroup:(Group *)group;
@@ -32,9 +28,6 @@
 - (void)updateTask:(Task *)task;
 - (void)deleteTask:(Task *)task;
 
-@property (nonatomic, assign) User *user;
-- (void)refreshUser;
-- (void)updateUser:(User *)user;
 @property (nonatomic, assign) NSNumber *alertsDistanceWithin;
 - (CGFloat)alertsDistancKmToSliderValue:(CGFloat)value;
 - (CGFloat)sliderValueToAlertsDistancKm:(CGFloat)value;

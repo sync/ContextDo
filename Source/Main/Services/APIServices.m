@@ -78,94 +78,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 }
 
 #pragma mark -
-#pragma mark User Related Storage
-
-- (NSString *)username
-{
-	return [[NSUserDefaults standardUserDefaults]stringForKey:UsernameUserDefaults];
-}
-
-- (void)setUsername:(NSString *)username
-{
-	if (!username) {
-		[[NSUserDefaults standardUserDefaults]removeObjectForKey:UsernameUserDefaults];
-	} else {
-		[[NSUserDefaults standardUserDefaults]setValue:username forKey:UsernameUserDefaults];
-	}
-	
-	[[NSUserDefaults standardUserDefaults]synchronize];
-}
-
-#define CTXDOService @"CTXDOService"
-#define OfflineService @"OfflineService"
-
-- (NSString *)password
-{
-	return [SFHFKeychainUtils getPasswordForUsername:self.username andServiceName:CTXDOService error:nil];
-}
-
-- (void)setPassword:(NSString *)password
-{
-	if (!password) {
-		[SFHFKeychainUtils deleteItemForUsername:self.username andServiceName:CTXDOService error:nil];
-	} else {
-		[SFHFKeychainUtils storeUsername:self.username andPassword:password forServiceName:CTXDOService updateExisting:1 error:nil];
-		[SFHFKeychainUtils storeUsername:OfflineService andPassword:[NSString stringWithFormat:@"%@|-|--_/_/_/--|-|%@", self.username, password] forServiceName:OfflineService updateExisting:1 error:nil];
-	}
-}
-
-- (User *)user
-{
-	NSData *data = [[NSUserDefaults standardUserDefaults]objectForKey:UserUserDefaults];
-	if(data.length == 0) {
-		return nil; 
-	}
-	
-	return [NSKeyedUnarchiver unarchiveObjectWithData:data];
-}
-
-- (void)setUser:(User *)user
-{
-	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
-	if(data.length > 0) {
-		[[NSUserDefaults standardUserDefaults]setObject:data forKey:UserUserDefaults];
-	} else {
-		[[NSUserDefaults standardUserDefaults]removeObjectForKey:UserUserDefaults];
-	}
-	
-	[[NSUserDefaults standardUserDefaults]synchronize];
-}
-
-#pragma mark -
-#pragma mark Reset Password
-
-- (void)resetPasswordWithUsername:(NSString *)aUsername
-{
-	if (!aUsername) {
-		return;
-	}
-	
-	NSString *notificationName = UserDidResetPasswordNotification;
-	NSString *path = @"resetPasswordWithUsername";
-	
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-							  path, @"path",
-							  notificationName, @"notificationName",
-							  nil];
-	
-	NSString *url = CTXDOURL(BASE_URL, RESET_PASSWORD_PATH);
-	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
-	request.userInfo = userInfo;
-	request.delegate = self;
-	
-	[request setPostValue:aUsername forKey:@"user[email]"];
-	
-	[self.networkQueue addOperation:request];
-	[self.networkQueue go];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
-}
-
-#pragma mark -
 #pragma mark Groups
 
 - (void)refreshGroups
@@ -515,50 +427,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 }
 
 #pragma mark -
-#pragma mark User
-
-- (void)refreshUser
-{
-	NSString *notificationName = UserDidLoadNotification;
-	NSString *path = @"user";
-	
-	NSString *url = CTXDOURL(BASE_URL, USER_PATH);
-	[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
-}
-
-- (void)updateUser:(User *)user
-{
-	if (!user) {
-		return;
-	}
-	
-	NSString *notificationName = UserEditNotification;
-	NSString *path = @"updateUser";
-	
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-							  path, @"path",
-							  notificationName, @"notificationName",
-							  user, @"object",
-							  nil];
-	
-	NSString *url = CTXDOURL(BASE_URL, USER_PATH);
-	ASIFormDataRequest *request = [self formRequestWithUrl:url];	
-	request.userInfo = userInfo;
-	request.delegate = self;
-	
-	[request setRequestMethod:@"PUT"];
-	
-	
-	NSArray *excluding = [NSArray arrayWithObjects:
-						  @"userId",
-						  nil];
-	NSString *string = [user toJSONExcluding:excluding];
-	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
-	
-	[self.networkQueue addOperation:request];
-	[self.networkQueue go];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
-}
+#pragma mark Settings
 
 - (NSNumber *)alertsDistanceWithin
 {
@@ -625,9 +494,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	request.userInfo = userInfo;
 	request.delegate = self;
 	
-	request.username = self.username;
-	request.password = self.password;
-	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
@@ -644,9 +510,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	ASIHTTPRequest *request = [self requestWithUrl:url];
 	request.userInfo = userInfo;
 	request.delegate = self;
-	
-	request.username = self.username;
-	request.password = self.password;
 	
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
