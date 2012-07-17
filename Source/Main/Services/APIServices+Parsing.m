@@ -158,20 +158,4 @@
 	}
 }
 
-- (void)parseUser:(ASIHTTPRequest *)request
-{
-	if ([request.responseData length] != 0)  {
-		[ObjectiveResourceDateFormatter setSerializeFormat:DateTime];
-		User *user = [User fromJSONData:request.responseData];
-		if (user) {
-			[self notifyDone:request withObject:user];
-		} else {
-			if ([[self notificationNameForRequest:request]isEqualToString:UserEditNotification]) {
-				[self notifyFailed:request withError:@"Unable to Edit Settings"];
-			}
-			
-		}
-	}
-}
-
 @end

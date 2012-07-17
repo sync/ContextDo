@@ -2,12 +2,8 @@
 #define RequestTimeOutSeconds 35.0
 
 // User Defaults
-#define UsernameUserDefaults @"UsernameUserDefaults"
 #define AlertsDistanceWithin @"AlertsDistanceWithin"
-#define ShouldUseDevServer @"ShouldUseDevServer"
-#define DevServerIp @"DevServerIp"
 #define AlertsDistanceWithinDefaultValue 1.0
-#define UserUserDefaults @"UserUserDefaults"
 
 #define FacebookApplicationId @"125665877503636"
 
@@ -22,7 +18,7 @@
 #define MapViewLocationDefaultHightSpanInMeters 4000.0
 
 // URL
-#define BASE_URL ([[NSUserDefaults standardUserDefaults]boolForKey:ShouldUseDevServer]) ? [[NSUserDefaults standardUserDefaults]stringForKey:DevServerIp] : @"http://contextdo.heroku.com"
+#define BASE_URL @"http://contextdo.heroku.com"
 #define CTXDOURL(base, path) [NSString stringWithFormat:@"%@%@", base, path]
 // Login
 #define LOGIN_PATH @"/api_token"
@@ -65,8 +61,6 @@
 #define GroupAddNotification @"GroupAddNotification"
 #define GroupEditNotification @"GroupEditNotification"
 #define GroupDeleteNotification @"GroupDeleteNotification"
-#define UserDidLoadNotification @"UserDidLoadNotification"
-#define UserEditNotification @"UserDidLoadNotification"
 
 #define TodaysTasksPlacholder @"Todays tasks"
 #define NearTasksPlacholder @"Near tasks"

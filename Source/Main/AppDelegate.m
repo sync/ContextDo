@@ -12,7 +12,6 @@
 - (void)locationDidFix;
 - (void)locationDidStop;
 - (void)handleLocalNotification:(NSDictionary *)launchOptions;
-- (void)checkUserSettings;
 
 @end
 
@@ -82,24 +81,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
     return YES;
 }
 
-- (void)checkUserSettings
-{
-	// todo update / refresh user settings here
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserSettings:) name:UserDidLoadNotification object:nil];
-}
-
-- (void)handleUserSettings:(NSNotification *)notification
-{
-	if (notification.object) {
-		User *user = (User *)notification.object;
-		NSDictionary *settings = user.settings;
-		if (settings) {
-			NSNumber *alertsDistanceWithin = [settings valueForKey:AlertsDistanceWithin];
-			[APIServices sharedAPIServices].alertsDistanceWithin = alertsDistanceWithin;
-		}
-	}
-}
-
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -130,11 +111,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
      */
     [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
     
-	PFUser *currentUser = [PFUser currentUser];
+	// todo perhpas refresh user
+    PFUser *currentUser = [PFUser currentUser];
     if (!currentUser) {
 		[self showLoginView:FALSE];
 	} else {
-		[self checkUserSettings];
 		[self enableGPS];
 		[[CTXDONotificationsServices sharedCTXDONotificationsServices]refreshTasksForLocalNotification];
 	}
@@ -188,7 +169,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(AppDelegate)
 {
 	[self.navigationController dismissModalViewControllerAnimated:animated];
 	
-	[self checkUserSettings];
 	[self enableGPS];
 	[[CTXDONotificationsServices sharedCTXDONotificationsServices]refreshTasksForLocalNotification];
 	[[APIServices sharedAPIServices]refreshGroups];

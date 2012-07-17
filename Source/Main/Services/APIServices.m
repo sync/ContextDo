@@ -543,9 +543,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 			   [path isEqualToString:@"updateTask"] ||
 			   [path isEqualToString:@"deleteTaskWitId"]) {
 		[self parseTask:request];
-	} else if ([path isEqualToString:@"user"]|| 
-			   [path isEqualToString:@"updateUser"]) {
-		[self parseUser:request];
 	}
 	
 	DLog(@"fetch completed for url:%@", request.originalURL);

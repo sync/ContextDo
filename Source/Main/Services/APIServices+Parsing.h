@@ -12,6 +12,4 @@
 - (void)parseTasks:(ASIHTTPRequest *)request;
 - (void)parseTask:(ASIHTTPRequest *)request;
 
-- (void)parseUser:(ASIHTTPRequest *)request;
-
 @end

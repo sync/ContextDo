@@ -6,7 +6,6 @@
 @interface SettingsViewController ()
 
 - (void)setupFBButton;
-- (User *)buildUser;
 
 @end
 
@@ -43,9 +42,6 @@
 {
 	[super setupDataSource];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:UserDidLoadNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refresh) name:UserEditNotification object:nil];
-	
 	NSArray *section1 = [NSArray arrayWithObjects:@"", nil];
 	NSArray *choicesList = [NSArray arrayWithObjects:section1, nil];
 	
@@ -68,12 +64,6 @@
 		[self.fbButton setTitle:@"Facebook Connect" forState:UIControlStateNormal];
 	}
 	
-}
-
-- (void)refresh
-{
-	// todo
-	[self setupFBButton];
 }
 
 #pragma mark -
@@ -200,21 +190,11 @@
 	self.lastSliderValue = value;
 }
 
-- (User *)buildUser
-{
-	CGFloat toKmValue = [[APIServices sharedAPIServices]sliderValueToAlertsDistancKm:self.settingsSliderView.slider.value];
-    NSDictionary *settings = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:toKmValue]
-														 forKey:AlertsDistanceWithin];
-	[APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:toKmValue];
-	User *user = [User userWithSettings:settings facebookAccessToken:[FacebookServices sharedFacebookServices].facebook.accessToken];
-	return user;
-}
-
 - (void)doneTouched
 {
 	if (self.lastSliderValue != -1.0) {
-        // todo refresh user here
-        [self buildUser];
+        CGFloat toKmValue = [[APIServices sharedAPIServices]sliderValueToAlertsDistancKm:self.settingsSliderView.slider.value];
+        [APIServices sharedAPIServices].alertsDistanceWithin = [NSNumber numberWithFloat:toKmValue];
 	}
 	
 	[self dismissModalViewControllerAnimated:TRUE];
@@ -233,8 +213,6 @@
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socialServicesFacebookNotification:) name:FacebookNotification object:nil];
 	} else {
 		[[FacebookServices sharedFacebookServices].facebook logout:[FacebookServices sharedFacebookServices]];
-		// todo refresh user here
-        [self buildUser];
 	}
 }
 
