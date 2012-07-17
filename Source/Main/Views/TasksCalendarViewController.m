@@ -8,7 +8,6 @@
 
 - (NSArray *)filteredTasksForDate:(NSDate *)date;
 - (void)reloadTasks:(NSArray *)newTasks;
-- (void)restoreFromCached;
 
 @end
 
@@ -48,7 +47,6 @@
 
 - (void)setupDataSource
 {
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphDueDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueDidLoadNotification];
 	
@@ -62,8 +60,6 @@
 
 - (void)refreshTasks
 {
-	[self restoreFromCached];
-	
 	[[APIServices sharedAPIServices]refreshTasksWithDue:[self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]];
 }
 
@@ -74,14 +70,6 @@
 {
 	NSArray *newTasks = [notification object];
 	[self reloadTasks:newTasks];
-}
-
-- (void)restoreFromCached
-{
-	NSArray *archivedContent = [[CacheServices sharedCacheServices].tasksWithDueDict 
-								valueForKeyPath:[NSString stringWithFormat:@"%@.content", [self.monthView.monthDate getUTCDateWithformat:@"yyyy-MM"]]];
-	self.hasCachedData = (archivedContent != nil);
-	[self reloadTasks:archivedContent];
 }
 
 - (void)reloadTasks:(NSArray *)newTasks

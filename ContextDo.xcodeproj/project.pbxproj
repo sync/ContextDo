@@ -30,7 +30,6 @@
 		241EBD1712FFFA5D00F871B5 /* signinHello@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBD0112FFFA5D00F871B5 /* signinHello@2x.png */; };
 		241EBD1812FFFA5D00F871B5 /* signinSeparator.png in Resources */ = {isa = PBXBuildFile; fileRef = 241EBD0212FFFA5D00F871B5 /* signinSeparator.png */; };
 		241EBD1912FFFA5D00F871B5 /* TapkuLibrary.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 241EBD0412FFFA5D00F871B5 /* TapkuLibrary.bundle */; };
-		24269EC812F846F300969CBB /* CacheServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 24269EC712F846F300969CBB /* CacheServices.m */; };
 		2426AC3712F9A1CF00969CBB /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 2426AC3612F9A1CF00969CBB /* iTunesArtwork */; };
 		2434D66F12B59F32007B8A13 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2434D66E12B59F32007B8A13 /* ResetPasswordViewController.m */; };
 		2434D67112B59F56007B8A13 /* ResetPasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2434D67012B59F56007B8A13 /* ResetPasswordView.xib */; };
@@ -437,8 +436,6 @@
 		241EBD0112FFFA5D00F871B5 /* signinHello@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signinHello@2x.png"; sourceTree = "<group>"; };
 		241EBD0212FFFA5D00F871B5 /* signinSeparator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = signinSeparator.png; sourceTree = "<group>"; };
 		241EBD0412FFFA5D00F871B5 /* TapkuLibrary.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TapkuLibrary.bundle; sourceTree = "<group>"; };
-		24269EC612F846F300969CBB /* CacheServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheServices.h; sourceTree = "<group>"; };
-		24269EC712F846F300969CBB /* CacheServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheServices.m; sourceTree = "<group>"; };
 		2426AC3612F9A1CF00969CBB /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		242C910F12FD097B00F557AA /* KitDeps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = KitDeps.xcodeproj; sourceTree = "<group>"; };
 		242C911212FD097B00F557AA /* Kit.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Kit.xcconfig; sourceTree = "<group>"; };
@@ -974,15 +971,6 @@
 			path = tapkulibrary;
 			sourceTree = "<group>";
 		};
-		24269EC512F846CC00969CBB /* Cache */ = {
-			isa = PBXGroup;
-			children = (
-				24269EC612F846F300969CBB /* CacheServices.h */,
-				24269EC712F846F300969CBB /* CacheServices.m */,
-			);
-			name = Cache;
-			sourceTree = "<group>";
-		};
 		242C910E12FD08ED00F557AA /* Kits */ = {
 			isa = PBXGroup;
 			children = (
@@ -1186,7 +1174,6 @@
 				248921C5128ED28700DC9712 /* APIServices.m */,
 				248921C9128EDE0200DC9712 /* APIServices+Parsing.h */,
 				248921CA128EDE0200DC9712 /* APIServices+Parsing.m */,
-				24269EC512F846CC00969CBB /* Cache */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -2223,7 +2210,6 @@
 				24567E1912F04A740004189D /* CTXDORefreshTableHeaderView.m in Sources */,
 				24567E2F12F04C650004189D /* CTXDOTableViewRefreshController.m in Sources */,
 				245680FF12F072730004189D /* TasksCalendarCell.m in Sources */,
-				24269EC812F846F300969CBB /* CacheServices.m in Sources */,
 				24FA42F71302F7BD001B1972 /* CTXDOBlueButton.m in Sources */,
 				2465323115B29677009B1712 /* BWApp.m in Sources */,
 				2465323215B29677009B1712 /* BWGlobal.m in Sources */,

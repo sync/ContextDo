@@ -67,12 +67,6 @@
 #define GroupDeleteNotification @"GroupDeleteNotification"
 #define UserDidLoadNotification @"UserDidLoadNotification"
 #define UserEditNotification @"UserDidLoadNotification"
-#define TasksGraphDidLoadNotification @"TasksGraphDidLoadNotification"
-#define TasksGraphDueDidLoadNotification @"TasksGraphDueDidLoadNotification"
-#define TasksGraphDueTodayDidLoadNotification @"TasksGraphDueTodayDidLoadNotification"
-#define TasksGraphWithinDidLoadNotification @"TasksGraphWithinDidLoadNotification"
-#define TasksGraphUpdatedSinceDidLoadNotification @"TasksGraphUpdatedSinceDidLoadNotification"
-#define GroupsGraphDidLoadNotification @"GroupsGraphDidLoadNotification"
 
 #define TodaysTasksPlacholder @"Todays tasks"
 #define NearTasksPlacholder @"Near tasks"

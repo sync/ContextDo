@@ -23,7 +23,6 @@
 - (void)blackOutMainViewAnimated:(BOOL)animated;
 - (void)hideBlackOutMainViewAnimated:(BOOL)animated;
 - (void)shouldCheckWithinTasks:(NSArray *)tasks updateCell:(BOOL)updateCell;
-- (void)restoreFromCached;
 - (void)cancelSearch;
 - (void)reloadTasks:(NSArray *)newTasks;
 @property (nonatomic, readonly) BOOL searchIsActive;
@@ -115,9 +114,7 @@
 	[super setupDataSource];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldHidInfo) name:GroupShouldDismissInfo object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasksGraph:) name:TasksGraphWithinDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGetWithinTasks:) name:TasksWithinDidLoadNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:GroupsGraphDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupAddNotification];
@@ -148,13 +145,6 @@
 	[self reloadGroups:newGroups];
 }
 
-- (void)restoreFromCached
-{
-	NSArray *archivedContent = [[CacheServices sharedCacheServices].groupsDict valueForKey:@"content"];
-	self.hasCachedData = (archivedContent != nil);
-	[self reloadGroups:archivedContent];
-}
-
 - (void)reloadGroups:(NSArray *)newGroups
 {
 	[self.groupsDataSource resetContent];
@@ -174,7 +164,7 @@
 	
 	self.tableView.tableHeaderView = (self.groups.count > 0) ? self.tableHeaderView : nil;
 	
-	NSArray *tasksWithin = [CacheServices sharedCacheServices].tasksWithin;
+	NSArray *tasksWithin = nil; // todo get tasks within
 	[self shouldCheckWithinTasks:tasksWithin updateCell:FALSE];
 	
 	[self.tableView reloadData];
@@ -192,12 +182,6 @@
 {
 	NSArray *newTasks = [notification object];
 	[self shouldCheckWithinTasks:newTasks updateCell:TRUE];
-}
-
-- (void)didGetWithinTasksGraph:(NSNotification *)notification
-{
-	NSArray *tasksWithin = [CacheServices sharedCacheServices].tasksWithin;
-	[self shouldCheckWithinTasks:tasksWithin updateCell:TRUE];
 }
 
 - (void)shouldCheckWithinTasks:(NSArray *)aTasks updateCell:(BOOL)updateCell
@@ -415,7 +399,6 @@
 
 - (void)refreshGroups
 {
-	[self restoreFromCached];
 	[[APIServices sharedAPIServices]refreshGroups];
 }
 

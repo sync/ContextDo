@@ -171,15 +171,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 - (void)refreshGroups
 {
 	NSString *notificationName = GroupsDidLoadNotification;
-	NSString *path = GroupsKey;
-	
-	NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
-	if ([CacheServices sharedCacheServices].groupOperationsShouldUseSerialQueue) {
-		[self syncGroups];
-		[self downloadSeriallyContentForUrl:url withObject:nil path:path notificationName:notificationName];
-	} else {
-		[self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
-	}
+	NSString *path = @"groups";
+    
+    NSString *url = CTXDOURL(BASE_URL, GROUPS_PATH);
+    [self downloadContentForUrl:url withObject:nil path:path notificationName:notificationName];
 }
 
 - (void)addGroup:(Group *)group
@@ -190,8 +185,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!group.syncId) {
 		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forPathToId:@"syncId" forKey:AddedKey];
-		[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
 	}
 	
 	NSString *notificationName = GroupAddNotification;
@@ -221,8 +214,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	[[CacheServices sharedCacheServices] addCachedGroup:group syncId:nil];
-	
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
 	
@@ -237,16 +228,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!group.syncId) {
 		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forPathToId:@"syncId" forKey:UpdatedKey];
-		[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
-	} else {
-		if ([[CacheServices sharedCacheServices].groupsOutOfSyncDict objectUnderArray:group forPathToId:@"syncId" forKey:AddedKey]) {
-			[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forPathToId:@"syncId" forKey:AddedKey];
-			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:UpdatedKey];
-			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
-			[[CacheServices sharedCacheServices]updateCachedGroup:group syncId:group.syncId];
-			return;
-		}
 	}
 	
 	NSString *notificationName = GroupEditNotification;
@@ -278,8 +259,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	[[CacheServices sharedCacheServices] updateCachedGroup:group syncId:(!group.groupId) ? group.syncId : nil];
-	
 	
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
@@ -294,19 +273,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!group.syncId) {
 		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].groupsOutOfSyncDict setObjectUnderArray:group forPathToId:@"syncId" forKey:DeletedKey];
-	} else {
-		if ([[CacheServices sharedCacheServices].groupsOutOfSyncDict objectUnderArray:group forPathToId:@"syncId" forKey:UpdatedKey]) {
-			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:UpdatedKey];
-			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
-		}
-		if ([[CacheServices sharedCacheServices].groupsOutOfSyncDict objectUnderArray:group forPathToId:@"syncId" forKey:AddedKey]) {
-			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:AddedKey];
-			[[CacheServices sharedCacheServices].groupsOutOfSyncDict removeObjectUnderArray:group forPathToId:@"syncId" forKey:DeletedKey];
-			[[CacheServices sharedCacheServices]saveGroupsOutOfSync];
-			[[CacheServices sharedCacheServices] deleteCachedGroup:group syncId:group.syncId];
-			return;
-		}
 	}
 	
 	NSString *notificationName = GroupDeleteNotification;
@@ -325,8 +291,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request setRequestMethod:@"DELETE"];
 	
-	[[CacheServices sharedCacheServices] deleteCachedGroup:group syncId:(!group.groupId) ? group.syncId : nil];
-	
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
@@ -337,19 +301,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable) {
 		if (self.serialNetworkQueue.requestsCount > 0) {
 			[self performSelector:@selector(syncGroups) withObject:nil afterDelay:0.5];
-			return;
-		}
-		NSArray *addedGroups = [[[[CacheServices sharedCacheServices].groupsOutOfSyncDict valueForKey:AddedKey]copy]autorelease];
-		for (Group *group in addedGroups) {
-			[self addGroup:group];
-		}
-		NSArray *updatedGroups = [[[[CacheServices sharedCacheServices].groupsOutOfSyncDict valueForKey:UpdatedKey]copy]autorelease];
-		for (Group *group in updatedGroups) {
-			[self updateGroup:group];
-		}
-		NSArray *deletedGroups = [[[[CacheServices sharedCacheServices].groupsOutOfSyncDict valueForKey:DeletedKey]copy]autorelease];
-		for (Group *group in deletedGroups) {
-			[self deleteGroup:group];
 		}
 	}
 }
@@ -364,15 +315,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	}
 	
 	NSString *notificationName = TasksDidLoadNotification;
-	NSString *path = TasksWithGroupIdKey;
+	NSString *path = @"tasksWithGroupId";
 	
 	NSString *url = TASKSURL(BASE_URL, TASKS_PATH, groupId);
-	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
-		[self syncTasks];
-		[self downloadSeriallyContentForUrl:url withObject:[groupId stringValue] path:path notificationName:notificationName];
-	} else {
-		[self downloadContentForUrl:url withObject:[groupId stringValue] path:path notificationName:notificationName];
-	}
+	[self downloadContentForUrl:url withObject:[groupId stringValue] path:path notificationName:notificationName];
 }
 
 - (void)refreshTasksWithDue:(NSString *)due
@@ -382,48 +328,33 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	}
 	
 	NSString *notificationName = TasksDueDidLoadNotification;
-	NSString *path = TasksWithDueKey;
+	NSString *path = @"tasksWithDue";
 	
 	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due);
-	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
-		[self syncTasks];
-		[self downloadSeriallyContentForUrl:url withObject:due path:path notificationName:notificationName];
-	} else {
-		[self downloadContentForUrl:url withObject:due path:path notificationName:notificationName];
-	}
+	[self downloadContentForUrl:url withObject:due path:path notificationName:notificationName];
 }
 
 - (void)refreshTasksDueToday
 {
 	NSString *notificationName = TasksDueTodayDidLoadNotification;
-	NSString *path = TasksDueTodaydKey;
+	NSString *path = @"tasksDueToday";
 	
 	NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
 	
 	NSString *url = TASKSDUEURL(BASE_URL, TASKS_PATH, due);
-	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
-		[self syncTasks];
-		[self downloadSeriallyContentForUrl:url withObject:due path:path notificationName:notificationName];
-	} else {
-		[self downloadContentForUrl:url withObject:due path:path notificationName:notificationName];
-	}
+	[self downloadContentForUrl:url withObject:due path:path notificationName:notificationName];
 }
 
 - (void)refreshTasksWithLatitude:(CLLocationDegrees)latitude
 					   longitude:(CLLocationDegrees)longitude
 {
 	NSString *notificationName = TasksWithinDidLoadNotification;
-	NSString *path = TasksWithLatitudeKey;
+	NSString *path = @"tasksWithLatitude";
 	
 	NSString *latLngString = [NSString stringWithFormat:@"%f,%f", latitude, longitude];
 	
 	NSString *url = TASKSWITHINURL(BASE_URL, TASKS_PATH, latitude, longitude, self.alertsDistanceWithin.floatValue);
-	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
-		[self syncTasks];
-		[self downloadSeriallyContentForUrl:url withObject:latLngString path:path notificationName:notificationName];
-	} else {
-		[self downloadContentForUrl:url withObject:latLngString path:path notificationName:notificationName];
-	}
+	[self downloadContentForUrl:url withObject:latLngString path:path notificationName:notificationName];
 }
 
 - (void)refreshTasksWithQuery:(NSString *)query;
@@ -433,31 +364,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	}
 	
 	NSString *notificationName = TasksSearchDidLoadNotification;
-	NSString *path = TasksWithQueryKey;
+	NSString *path = @"tasksWithQuery";
 	
 	NSString *url = TASKSSEARCHURL(BASE_URL, TASKS_PATH, [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
-	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
-		[self syncTasks];
-		[self downloadSeriallyContentForUrl:url withObject:query path:path notificationName:notificationName];
-	} else {
-		[self downloadContentForUrl:url withObject:query path:path notificationName:notificationName];
-	}
+	[self downloadContentForUrl:url withObject:query path:path notificationName:notificationName];
 }
 
 - (void)refreshTasksEdited
 {
 	NSString *notificationName = TasksUpdatedSinceDidLoadNotification;
-	NSString *path = EditedTasksKey;
+	NSString *path = @"editedTasks";
 	
 	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
 	
 	NSString *url = TASKSUPDATEDSINCEURL(BASE_URL, TASKS_PATH, [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"]);
-	if ([CacheServices sharedCacheServices].taskOperationsShouldUseSerialQueue) {
-		[self syncTasks];
-		[self downloadSeriallyContentForUrl:url withObject:editedAt path:path notificationName:notificationName];
-	} else {
-		[self downloadContentForUrl:url withObject:editedAt path:path notificationName:notificationName];
-	}
+	[self downloadContentForUrl:url withObject:editedAt path:path notificationName:notificationName];
 }
 
 - (void)addTask:(Task *)task
@@ -468,15 +389,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!task.syncId) {
 		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
-		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
 	}
-	
-//	if ([[CacheServices sharedCacheServices]hasCachedTask:task syncId:task.syncId]) {
-//		[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
-//		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
-//		return;
-//	}
 	
 	NSString *notificationName = TaskAddNotification;
 	NSString *path = @"addTask";
@@ -513,8 +426,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	[[CacheServices sharedCacheServices] addCachedTask:task syncId:(!task.taskId) ? task.syncId : nil];
-	
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
@@ -528,16 +439,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!task.syncId) {
 		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:UpdatedKey];
-		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
-	} else {
-		if ([[CacheServices sharedCacheServices].tasksOutOfSyncDict objectUnderArray:task forPathToId:@"syncId" forKey:AddedKey]) {
-			[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
-			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:task forPathToId:@"syncId" forKey:UpdatedKey];
-			[[CacheServices sharedCacheServices]saveTasksOutOfSync];
-			[[CacheServices sharedCacheServices]updateCachedTask:task syncId:task.syncId];
-			return;
-		}
 	}
 	
 	NSString *notificationName = TaskEditNotification;
@@ -577,8 +478,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	[[CacheServices sharedCacheServices] updateCachedTask:task syncId:(!task.taskId) ? task.syncId : nil];
-	
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
@@ -592,21 +491,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	if (!task.syncId) {
 		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-		[[CacheServices sharedCacheServices].tasksOutOfSyncDict setObjectUnderArray:task forPathToId:@"syncId" forKey:DeletedKey];
-		[[CacheServices sharedCacheServices]saveTasksOutOfSync];
-	} else {
-		if ([[CacheServices sharedCacheServices].tasksOutOfSyncDict objectUnderArray:task forPathToId:@"syncId" forKey:UpdatedKey]) {
-			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:task forPathToId:@"syncId" forKey:UpdatedKey];
-			[[CacheServices sharedCacheServices]saveTasksOutOfSync];
-		}
-		if ([[CacheServices sharedCacheServices].tasksOutOfSyncDict objectUnderArray:task forPathToId:@"syncId" forKey:AddedKey]) {
-			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:task forPathToId:@"syncId" forKey:AddedKey];
-			[[CacheServices sharedCacheServices].tasksOutOfSyncDict removeObjectUnderArray:task forPathToId:@"syncId" forKey:DeletedKey];
-			[[CacheServices sharedCacheServices]saveTasksOutOfSync];
-			[[CacheServices sharedCacheServices] deleteCachedTask:task syncId:task.syncId];
-			return;
-		}
-	}
+    }
 	
 	NSString *notificationName = TaskDeleteNotification;
 	NSString *path = @"deleteTaskWitId";
@@ -624,33 +509,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request setRequestMethod:@"DELETE"];
 	
-	[[CacheServices sharedCacheServices] deleteCachedTask:task syncId:(!task.taskId) ? task.syncId : nil];
-	
 	[self.serialNetworkQueue addOperation:request];
 	[self.serialNetworkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
-}
-
-- (void)syncTasks
-{
-	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable) {
-		if (self.serialNetworkQueue.requestsCount > 0 && ![CacheServices sharedCacheServices].groupOperationsShouldUseSerialQueue) {
-			[self performSelector:@selector(syncTasks) withObject:nil afterDelay:0.5];
-			return;
-		}
-		NSArray *addedTasks = [[[[CacheServices sharedCacheServices].tasksOutOfSyncDict valueForKey:AddedKey]copy]autorelease];
-		for (Task *task in addedTasks) {
-			[self addTask:task];
-		}
-		NSArray *updatedTasks = [[[[CacheServices sharedCacheServices].tasksOutOfSyncDict valueForKey:UpdatedKey]copy]autorelease];
-		for (Task *task in updatedTasks) {
-			[self updateTask:task];
-		}
-		NSArray *deletedTasks = [[[[CacheServices sharedCacheServices].tasksOutOfSyncDict valueForKey:DeletedKey]copy]autorelease];
-		for (Task *task in deletedTasks) {
-			[self deleteTask:task];
-		}
-	}
 }
 
 #pragma mark -
@@ -802,14 +663,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
     if ([path isEqualToString:@"resetPasswordWithUsername"]) {
 		[self parseResetPassword:request];
-	} else if ([path isEqualToString:GroupsKey]) {
+	} else if ([path isEqualToString:@"groups"]) {
 		[self parseGroups:request];
-	} else if ([path isEqualToString:TasksWithGroupIdKey]|| 
-			   [path isEqualToString:TasksWithDueKey] ||
-			   [path isEqualToString:TasksWithLatitudeKey] ||
-			   [path isEqualToString:TasksWithQueryKey] || 
-			   [path isEqualToString:EditedTasksKey] || 
-			   [path isEqualToString:TasksDueTodaydKey]) {
+	} else if ([path isEqualToString:@"tasksWithGroupId"]|| 
+			   [path isEqualToString:@"tasksWithDue"] ||
+			   [path isEqualToString:@"tasksWithLatitude"] ||
+			   [path isEqualToString:@"tasksWithQuery"] || 
+			   [path isEqualToString:@"editedTasks"] || 
+			   [path isEqualToString:@"tasksDueToday"]) {
 		[self parseTasks:request];
 	} else if ([path isEqualToString:@"addGroupWithName"]|| 
 			   [path isEqualToString:@"editGroupWithId"] ||

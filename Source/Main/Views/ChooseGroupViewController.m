@@ -5,7 +5,6 @@
 
 - (void)reloadGroups:(NSArray *)newGroups;
 - (void)refreshGroups;
-- (void)restoreFromCached;
 
 @end
 
@@ -48,7 +47,6 @@
 {
 	[super setupDataSource];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:GroupsGraphDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:GroupsDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:GroupsDidLoadNotification];
 	
@@ -68,13 +66,6 @@
 {
 	NSArray *newGroups = [notification object];
 	[self reloadGroups:newGroups];
-}
-
-- (void)restoreFromCached
-{
-	NSArray *archivedContent = [[CacheServices sharedCacheServices].groupsDict valueForKey:@"content"];
-	self.hasCachedData = (archivedContent != nil);
-	[self reloadGroups:archivedContent];
 }
 
 - (void)reloadGroups:(NSArray *)newGroups
@@ -128,7 +119,6 @@
 
 - (void)refreshGroups
 {
-	[self restoreFromCached];
 	[[APIServices sharedAPIServices]refreshGroups];
 }
 

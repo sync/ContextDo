@@ -14,7 +14,6 @@
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 - (void)addAllAnnotationsTasksIncludingToday:(BOOL)includingToday;
 - (void)reloadTasks:(NSArray *)newTasks;
-- (void)restoreFromCached;
 - (TaskAnnotation *)annotationForTask:(Task *)aTask;
 
 @end
@@ -59,15 +58,12 @@
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksSearchDidLoadNotification];
 	
 	if (self.isTodayTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphDueTodayDidLoadNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDueTodayDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDueTodayDidLoadNotification];
 	} else if (self.isNearTasks) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphWithinDidLoadNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksWithinDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksWithinDidLoadNotification];
 	} else {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksGraphDidLoadNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksDidLoadNotification object:nil];
 		[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksDidLoadNotification];
 	}
@@ -125,17 +121,11 @@
 {
 	if (!self.tasksSave) {
 		if (self.isTodayTasks) {
-			[self restoreFromCached];
-			
 			[[APIServices sharedAPIServices]refreshTasksDueToday];
 		} else if (self.isNearTasks) {
-			[self restoreFromCached];
-			
 			CLLocationCoordinate2D coordinate = [AppDelegate sharedAppDelegate].currentLocation.coordinate;
 			[[APIServices sharedAPIServices]refreshTasksWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 		} else {
-			[self restoreFromCached];
-			
 			[[APIServices sharedAPIServices]refreshTasksWithGroupId:self.group.groupId];
 		}
 	} else {
@@ -155,27 +145,6 @@
 		return;
 	}
 	[self reloadTasks:newTasks];
-}
-
-- (void)restoreFromCached
-{
-	NSArray *archivedContent = nil;
-	if (self.isTodayTasks) {
-		NSString *due = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-		archivedContent = [[CacheServices sharedCacheServices].tasksDueTodayDict
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", due]];
-		self.hasCachedData = (archivedContent != nil);
-		[self reloadTasks:archivedContent];
-	} else if (self.isNearTasks) {
-		archivedContent = [CacheServices sharedCacheServices].tasksWithin;
-		self.hasCachedData = (archivedContent != nil);
-		[self reloadTasks:archivedContent];
-	} else {
-		archivedContent = [[CacheServices sharedCacheServices].tasksWithGroupIdDict 
-						   valueForKeyPath:[NSString stringWithFormat:@"%@.content", self.group.groupId]];
-		self.hasCachedData = (archivedContent != nil);
-		[self reloadTasks:archivedContent];
-	}
 }
 
 - (void)reloadTasks:(NSArray *)newTasks

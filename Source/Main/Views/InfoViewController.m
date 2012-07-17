@@ -7,7 +7,6 @@
 
 - (void)refreshTasks;
 - (void)reloadTasks:(NSArray *)newTasks;
-- (void)restoreFromCached;
 
 @end
 
@@ -33,7 +32,6 @@
 {
 	[super setupDataSource];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreFromCached) name:TasksUpdatedSinceDidLoadNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldReloadContent:) name:TasksUpdatedSinceDidLoadNotification object:nil];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]addObserver:self forKey:TasksUpdatedSinceDidLoadNotification];
 	
@@ -44,7 +42,6 @@
 
 - (void)refreshTasks
 {
-	[self restoreFromCached];
 	[[APIServices sharedAPIServices]refreshTasksEdited];
 }
 
@@ -56,16 +53,6 @@
 	NSArray *newTasks = [notification object];
 	[self reloadTasks:newTasks];
 }
-
-- (void)restoreFromCached
-{
-	NSString *editedAt = [[NSDate date] getUTCDateWithformat:@"yyyy-MM-dd"];
-	NSArray *archivedContent = [[CacheServices sharedCacheServices].editedTasksDict
-								valueForKeyPath:[NSString stringWithFormat:@"%@.content", editedAt]];
-	self.hasCachedData = (archivedContent != nil);
-	[self reloadTasks:archivedContent];
-}
-
 
 - (void)reloadTasks:(NSArray *)newTasks
 {

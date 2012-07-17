@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import "BaseASIServices.h"
-#import "CacheServices.h"
 
 @interface APIServices : BaseASIServices {
 
@@ -32,7 +31,6 @@
 - (void)addTask:(Task *)task;
 - (void)updateTask:(Task *)task;
 - (void)deleteTask:(Task *)task;
-- (void)syncTasks;
 
 @property (nonatomic, assign) User *user;
 - (void)refreshUser;
