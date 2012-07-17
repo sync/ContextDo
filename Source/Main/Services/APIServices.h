@@ -7,9 +7,6 @@
 
 + (APIServices *)sharedAPIServices;
 
-@property (nonatomic, retain) ASINetworkQueue *serialNetworkQueue;
-- (void)downloadSeriallyContentForUrl:(NSString *)url withObject:(id)object path:(NSString *)path notificationName:(NSString *)notificationName;
-
 - (void)refreshGroups;
 - (void)refreshGroups;
 - (void)addGroup:(Group *)group;

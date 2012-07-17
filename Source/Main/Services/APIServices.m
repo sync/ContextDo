@@ -12,35 +12,6 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 
-@synthesize serialNetworkQueue;
-
-#pragma mark -
-#pragma mark Serial Queue
-
-- (ASINetworkQueue *)serialNetworkQueue
-{
-	if (!serialNetworkQueue) {
-		serialNetworkQueue = [[ASINetworkQueue alloc] init];
-		[serialNetworkQueue setMaxConcurrentOperationCount:1];
-		if ([self respondsToSelector:@selector(fetchStarted:)]) {
-			[serialNetworkQueue setRequestDidStartSelector:@selector(fetchStarted:)];
-		}
-		if ([self respondsToSelector:@selector(fetchCompleted:)]) {
-			[serialNetworkQueue setRequestDidFinishSelector:@selector(fetchCompleted:)];
-		}
-		if ([self respondsToSelector:@selector(fetchFailed:)]) {
-			[serialNetworkQueue setRequestDidFailSelector:@selector(fetchFailed:)];
-		}
-		if ([self respondsToSelector:@selector(queueFinished:)]) {
-			[serialNetworkQueue setQueueDidFinishSelector:@selector(queueFinished:)];
-		}
-		
-		[serialNetworkQueue setDelegate:self];
-	}
-	
-	return serialNetworkQueue;
-}
-
 #pragma mark -
 #pragma mark Request Constructors
 
@@ -128,8 +99,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	[self.serialNetworkQueue addOperation:request];
-	[self.serialNetworkQueue go];
+	[self.networkQueue addOperation:request];
+	[self.networkQueue go];
 	
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
@@ -174,8 +145,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
 	
-	[self.serialNetworkQueue addOperation:request];
-	[self.serialNetworkQueue go];
+	[self.networkQueue addOperation:request];
+	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
@@ -205,15 +176,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request setRequestMethod:@"DELETE"];
 	
-	[self.serialNetworkQueue addOperation:request];
-	[self.serialNetworkQueue go];
+	[self.networkQueue addOperation:request];
+	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
 - (void)syncGroups
 {
 	if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable) {
-		if (self.serialNetworkQueue.requestsCount > 0) {
+		if (self.networkQueue.requestsCount > 0) {
 			[self performSelector:@selector(syncGroups) withObject:nil afterDelay:0.5];
 		}
 	}
@@ -340,8 +311,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	[self.serialNetworkQueue addOperation:request];
-	[self.serialNetworkQueue go];
+	[self.networkQueue addOperation:request];
+	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
@@ -392,8 +363,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	NSString *string = [task toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	[self.serialNetworkQueue addOperation:request];
-	[self.serialNetworkQueue go];
+	[self.networkQueue addOperation:request];
+	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
@@ -423,8 +394,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[request setRequestMethod:@"DELETE"];
 	
-	[self.serialNetworkQueue addOperation:request];
-	[self.serialNetworkQueue go];
+	[self.networkQueue addOperation:request];
+	[self.networkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
@@ -445,23 +416,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	
 	[self.networkQueue addOperation:request];
 	[self.networkQueue go];
-	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
-}
-
-- (void)downloadSeriallyContentForUrl:(NSString *)url withObject:(id)object path:(NSString *)path notificationName:(NSString *)notificationName
-{
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-							  path, @"path",
-							  notificationName, @"notificationName",
-							  object, @"object",
-							  nil];
-	
-	ASIHTTPRequest *request = [self requestWithUrl:url];
-	request.userInfo = userInfo;
-	request.delegate = self;
-	
-	[self.serialNetworkQueue addOperation:request];
-	[self.serialNetworkQueue go];
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStartLoadingForKey:[self notificationNameForRequest:request]];
 }
 
@@ -511,16 +465,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		//[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]showErrorMsg:[request.error localizedDescription] forKey:[self notificationNameForRequest:request]];
 	}
 	[[BaseLoadingViewCenter sharedBaseLoadingViewCenter]didStopLoadingForKey:[self notificationNameForRequest:request]];
-}
-
-#pragma mark -
-#pragma mark Dealloc
-
-- (void)dealloc
-{
-	[serialNetworkQueue release];
-	
-	[super dealloc];
 }
 
 @end
