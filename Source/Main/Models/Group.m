@@ -4,7 +4,7 @@
 @implementation Group
 
 @synthesize groupId, name, createdAt, updatedAt, position, expiredCount, dueCount, userId;
-@synthesize taskWithin, syncId;
+@synthesize taskWithin;
 
 - (id)init
 {
@@ -43,14 +43,6 @@
 	group.position = aPosition;
 	
 	return group;
-}
-
-- (NSNumber *)groupId
-{
-	if (!groupId && syncId) {
-		return [NSNumber numberWithInteger:-syncId.integerValue];
-	}
-	return groupId;
 }
 
 @end

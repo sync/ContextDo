@@ -68,10 +68,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		return;
 	}
 	
-	if (!group.syncId) {
-		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-	}
-	
 	NSString *notificationName = GroupAddNotification;
 	NSString *path = @"addGroupWithName";
 	
@@ -94,7 +90,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"dueCount",
 						  @"expiredCount",
 						  @"userId",
-						  @"syncId",
 						  nil];
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
@@ -109,10 +104,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 {
 	if (!group) {
 		return;
-	}
-	
-	if (!group.syncId) {
-		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
 	}
 	
 	NSString *notificationName = GroupEditNotification;
@@ -139,7 +130,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"dueCount",
 						  @"expiredCount",
 						  @"userId",
-						  @"syncId",
 						  nil];
 	NSString *string = [group toJSONExcluding:excluding];
 	[request appendPostData:[string dataUsingEncoding:NSUTF8StringEncoding]];
@@ -154,10 +144,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 {
 	if (!group) {
 		return;
-	}
-	
-	if (!group.syncId) {
-		group.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
 	}
 	
 	NSString *notificationName = GroupDeleteNotification;
@@ -263,10 +249,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 		return;
 	}
 	
-	if (!task.syncId) {
-		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-	}
-	
 	NSString *notificationName = TaskAddNotification;
 	NSString *path = @"addTask";
 	
@@ -295,7 +277,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"dueToday",
 						  @"isFacebook",
 						  @"latLngString",
-						  @"syncId",
 						  @"editedToday",
 						  @"completedWithin24hours",
 						  nil];
@@ -311,10 +292,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 {
 	if (!task) {
 		return;
-	}
-	
-	if (!task.syncId) {
-		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
 	}
 	
 	NSString *notificationName = TaskEditNotification;
@@ -347,7 +324,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 						  @"dueToday",
 						  @"isFacebook",
 						  @"latLngString",
-						  @"syncId",
 						  @"editedToday",
 						  @"completedWithin24hours",
 						  nil];
@@ -364,10 +340,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(APIServices)
 	if (!task) {
 		return;
 	}
-	
-	if (!task.syncId) {
-		task.syncId = [NSNumber numberWithInteger:[[[NSProcessInfo processInfo] globallyUniqueString]hash]];
-    }
 	
 	NSString *notificationName = TaskDeleteNotification;
 	NSString *path = @"deleteTaskWitId";

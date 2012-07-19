@@ -23,8 +23,6 @@
 @property (nonatomic, copy) NSString *sourceName;
 @property (nonatomic, copy) NSNumber *sourceId;
 
-@property (nonatomic, copy) NSNumber *syncId;
-
 @property (nonatomic, readonly) CLLocationDistance distance;
 @property (nonatomic, readonly) BOOL isClose;
 @property (nonatomic, readonly) BOOL expired;

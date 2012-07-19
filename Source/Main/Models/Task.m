@@ -7,7 +7,7 @@
 
 @synthesize taskId, action, contactDetail, contactName, dueAt, location, name;
 @synthesize updatedAt, createdAt, groupId, latitude, longitude, groupName, completedAt, info;
-@synthesize sourceName, sourceId, syncId;
+@synthesize sourceName, sourceId;
 
 - (id)init
 {
@@ -37,14 +37,6 @@
 	task.longitude = [NSNumber numberWithDouble:aLongitude];
 	
 	return task;
-}
-
-- (NSNumber *)taskId
-{
-	if (!taskId && syncId) {
-		return [NSNumber numberWithInteger:-syncId.integerValue];
-	}
-	return taskId;
 }
 
 - (CLLocationDistance)distance
